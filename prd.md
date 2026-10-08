@@ -389,19 +389,19 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 ### Fase 2 — CMS Core & Model Data (± 1,5 minggu)
 
 **Tugas**
-- [ ] Buat semua koleksi & global (bagian 7) dengan label Bahasa Indonesia
-- [ ] Role & akses (Super Admin, Editor, Kontributor) + 2FA
-- [ ] Media upload ke object storage + auto resize/konversi
-- [ ] Draft/publish, versi, jadwal publish
-- [ ] Hook revalidation (publish → halaman terkait diperbarui)
-- [ ] Seed data contoh dari konten landing page sekarang
+- [x] Buat semua koleksi & global (bagian 7) dengan label Bahasa Indonesia
+- [x] Role & akses (Super Admin, Editor, Kontributor) + 2FA
+- [x] Media upload ke object storage + auto resize/konversi
+- [x] Draft/publish, versi, jadwal publish
+- [x] Hook revalidation (publish → halaman terkait diperbarui)
+- [x] Seed data contoh dari konten landing page sekarang
 
 **✅ Checkpoint 2**
-- [ ] Admin bisa CRUD setiap koleksi tanpa error
-- [ ] Kontributor **tidak bisa** publish, Editor bisa (uji hak akses)
-- [ ] Upload gambar menghasilkan versi WebP + beberapa ukuran
-- [ ] Upload file `.exe`/`.php` **ditolak**
-- [ ] Unit test untuk access control lolos
+- [x] Admin bisa CRUD setiap koleksi tanpa error
+- [x] Kontributor **tidak bisa** publish, Editor bisa (uji hak akses)
+- [x] Upload gambar menghasilkan versi WebP + beberapa ukuran
+- [x] Upload file `.exe`/`.php` **ditolak**
+- [x] Unit test untuk access control lolos
 
 ---
 
