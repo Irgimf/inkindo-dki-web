@@ -5,10 +5,10 @@ import News from '@/components/News';
 import Footer from '@/components/Footer';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
-
-export const revalidate = 60; // 1 minute ISR revalidation
+import { connection } from 'next/server';
 
 export async function generateMetadata() {
+  await connection();
   const payload = await getPayload({ config });
   const homepage = await payload.findGlobal({ slug: 'homepage' });
   const meta = homepage?.meta || {};
@@ -19,6 +19,7 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
+  await connection();
   const payload = await getPayload({ config });
 
   // Fetch Globals

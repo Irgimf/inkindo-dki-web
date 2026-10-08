@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor, isAnyUser } from './access/roles'
+import { ContentBlock } from '../blocks/ContentBlock'
+import { ImageBlock } from '../blocks/ImageBlock'
+import { VisionMissionBlock } from '../blocks/VisionMissionBlock'
+import { TimelineBlock } from '../blocks/TimelineBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -44,10 +48,15 @@ export const Pages: CollectionConfig = {
       unique: true,
     },
     {
-      name: 'content',
-      type: 'richText',
-      label: 'Konten',
-      required: true,
+      name: 'layout',
+      type: 'blocks',
+      label: 'Layout Halaman',
+      blocks: [
+        ContentBlock,
+        ImageBlock,
+        VisionMissionBlock,
+        TimelineBlock,
+      ],
     },
     {
       name: 'seo',

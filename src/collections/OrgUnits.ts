@@ -26,6 +26,13 @@ export const OrgUnits: CollectionConfig = {
       label: 'Induk Badan (Opsional)',
     },
     {
+      name: 'members',
+      type: 'relationship',
+      relationTo: 'org_members',
+      hasMany: true,
+      label: 'Daftar Pengurus (Drag & Drop untuk mengurutkan)',
+    },
+    {
       name: 'order',
       type: 'number',
       label: 'Urutan Tampil',

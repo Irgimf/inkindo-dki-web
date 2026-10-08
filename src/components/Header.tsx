@@ -65,8 +65,8 @@ export default function Header({ settings }: { settings?: any }) {
             <li className={`has-dropdown ${openDropdown === 'tentang' ? 'is-open' : ''}`}>
               <a href="#tentang" className="main-nav__link" onClick={(e) => toggleDropdown('tentang', e)}>Tentang Kami</a>
               <ul className="dropdown">
-                <li><Link href="#">Profil Inkindo</Link></li>
-                <li><Link href="#">Struktur Organisasi</Link></li>
+                <li><Link href="/profil" onClick={() => setMenuOpen(false)}>Profil Inkindo</Link></li>
+                <li><Link href="/struktur-organisasi" onClick={() => setMenuOpen(false)}>Struktur Organisasi</Link></li>
               </ul>
             </li>
             

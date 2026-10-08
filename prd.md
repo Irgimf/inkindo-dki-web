@@ -424,14 +424,14 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 ### Fase 4 — Tentang Kami (± 1 minggu)
 
 **Tugas**
-- [ ] Halaman Profil (layout builder: teks, gambar, visi-misi, timeline)
-- [ ] Halaman Struktur Organisasi dengan tab DPP (DPPH, DPPL, Badan-badan, Komite), DKP, DPOP, Setprov
-- [ ] Kartu pengurus + urutan drag & drop
+- [x] Halaman Profil (layout builder: teks, gambar, visi-misi, timeline)
+- [x] Halaman Struktur Organisasi dengan tab DPP (DPPH, DPPL, Badan-badan, Komite), DKP, DPOP, Setprov
+- [x] Kartu pengurus + urutan drag & drop
 
 **✅ Checkpoint 4**
-- [ ] Semua tab tampil benar, responsif, dan bisa diakses lewat keyboard
-- [ ] Admin bisa menambah/memindah pengurus tanpa bantuan developer
-- [ ] Link di dropdown navbar terhubung
+- [x] Semua tab tampil benar, responsif, dan bisa diakses lewat keyboard
+- [x] Admin bisa menambah/memindah pengurus tanpa bantuan developer
+- [x] Link di dropdown navbar terhubung
 
 ---
 
