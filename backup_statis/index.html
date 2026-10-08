@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPP INKINDO DKI Jakarta - Ekosistem Konsultansi Digital Jakarta</title>
+    <meta name="description"
+        content="DPP INKINDO DKI Jakarta menaungi 900+ badan usaha konsultan profesional dengan standar integritas, kepatuhan SMAP, dan layanan anggota digital terintegrasi.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER (transparan di atas hero, solid saat scroll) ================= -->
+    <header class="main-header" id="main-header">
+        <div class="container main-header__inner">
+            <a href="#" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+            </a>
+
+            <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
+                <ul class="main-nav__menu">
+                    <li><a href="#" class="main-nav__link is-active" id="nav-home">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="#tentang" class="main-nav__link" id="nav-tentang">Tentang Kami</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Profil Inkindo</a></li>
+                            <li><a href="#">Struktur Organisasi</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#regulasi" class="main-nav__link" id="nav-regulasi">Regulasi</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Regulasi Inkindo</a></li>
+                            <li><a href="#">Regulasi Jasa Konsultasi</a></li>
+                            <li><a href="#">Regulasi Terkait</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#berita" class="main-nav__link" id="nav-berita">Berita &amp; Informasi</a></li>
+                    <li class="main-nav__icon-item">
+                        <button type="button" class="main-nav__icon" id="header-search-toggle" aria-label="Cari">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="lang-switch" id="lang-switch">
+                            <button type="button" class="lang-switch__btn is-active" data-lang="id">ID</button>
+                            <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Buka menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <!-- Header search bar -->
+        <div class="header-search" id="header-search">
+            <form class="container header-search__form" id="header-search-form">
+                <input type="text" id="header-search-input" class="header-search__input" placeholder="Cari di sini?"
+                    autocomplete="off">
+                <button type="submit" class="header-search__btn" aria-label="Cari">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- ================= SIDE NAV KANAN (BCA style) ================= -->
+    <aside class="side-nav" id="side-nav" aria-label="Menu layanan">
+        <div class="side-nav__list">
+            <button type="button" class="side-nav__link" data-panel="login" id="side-login">
+                <span class="material-symbols-outlined side-nav__icon">login</span>
+                <span class="side-nav__label">Login</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="lelang" id="side-lelang">
+                <span class="material-symbols-outlined side-nav__icon">gavel</span>
+                <span class="side-nav__label">Info Lelang</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="anggota" id="side-anggota">
+                <span class="material-symbols-outlined side-nav__icon">groups</span>
+                <span class="side-nav__label">Anggota</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="mitra" id="side-mitra">
+                <span class="material-symbols-outlined side-nav__icon">handshake</span>
+                <span class="side-nav__label">Mitra Kerja</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="klinik" id="side-klinik">
+                <span class="material-symbols-outlined side-nav__icon">medical_information</span>
+                <span class="side-nav__label">Klinik Konsultasi</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="kontak" id="side-kontak">
+                <span class="material-symbols-outlined side-nav__icon">call</span>
+                <span class="side-nav__label">Hubungi Kami</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="chat" id="side-chat">
+                <span class="material-symbols-outlined side-nav__icon">forum</span>
+                <span class="side-nav__label">Chat</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Panel geser dari kanan -->
+    <div class="side-panel" id="side-panel" aria-hidden="true">
+        <div class="side-panel__top">
+            <button type="button" class="side-panel__close" id="side-panel-close" aria-label="Tutup panel">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Login -->
+        <div class="side-panel__content" data-content="login">
+            <h3 class="side-panel__title">Login</h3>
+            <ul class="panel-links">
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">groups</span>
+                        <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">handshake</span>
+                        <span><strong>Mitra Kerja</strong><small>Portal kolaborasi dan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">admin_panel_settings</span>
+                        <span><strong>Admin Kesekretariatan</strong><small>Akses khusus pengurus DPP</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Info Lelang -->
+        <div class="side-panel__content" data-content="lelang">
+            <h3 class="side-panel__title">Info Lelang</h3>
+            <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah melalui kanal resmi
+                berikut.</p>
+            <ul class="panel-links">
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">shopping_cart_checkout</span>
+                        <span><strong>LKPP</strong><small>Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">campaign</span>
+                        <span><strong>Info Lelang Lainnya</strong><small>Informasi paket pengadaan alternatif</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Anggota -->
+        <div class="side-panel__content" data-content="anggota">
+            <h3 class="side-panel__title">Anggota</h3>
+            <ul class="panel-links">
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">person_add</span>
+                        <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan INKINDO</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">autorenew</span>
+                        <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan tahunan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">fact_check</span>
+                        <span><strong>Anggota Terdaftar</strong><small>Direktori badan usaha terverifikasi</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Mitra Kerja -->
+        <div class="side-panel__content" data-content="mitra">
+            <h3 class="side-panel__title">Mitra Kerja</h3>
+            <ul class="panel-links">
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">rule</span>
+                        <span><strong>Ketentuan Mitra Kerja</strong><small>Syarat dan panduan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">format_list_bulleted</span>
+                        <span><strong>Daftar Mitra Kerja</strong><small>Katalog mitra resmi INKINDO</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+            <h4 style="margin-top: 24px; font-size: 14px; font-weight: 700; color: var(--slate-900); display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-outlined" style="color: var(--royal); font-size: 20px;">verified</span>
+                Mitra Kerja Terdaftar
+            </h4>
+            <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/avian.jpg" alt="Avian" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/lesso.jpg" alt="Lesso" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/seven.jpg" alt="Seven" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/alila.jpg" alt="Alila" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/propan.jpg" alt="Propan" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Klinik Konsultasi -->
+        <div class="side-panel__content" data-content="klinik">
+            <h3 class="side-panel__title">Klinik Konsultasi</h3>
+            <p class="side-panel__desc">Pendampingan gratis bagi anggota terkait regulasi, sertifikasi, dan
+                pengadaan jasa konsultansi.</p>
+            <div class="topic-list">
+                <span class="topic-chip">Regulasi Pengadaan</span>
+                <span class="topic-chip">SBU &amp; LPJK</span>
+                <span class="topic-chip">SMAP ISO 37001</span>
+                <span class="topic-chip">Billing Rate</span>
+                <span class="topic-chip">Kontrak &amp; Sengketa</span>
+                <span class="topic-chip">Perpajakan Jasa</span>
+            </div>
+            <div class="panel-info">
+                <span class="material-symbols-outlined">schedule</span>
+                <span>Sesi tatap muka &amp; daring<br><small>Senin - Jumat: 08.30 - 17.00 WIB</small></span>
+            </div>
+            <a href="mailto:dpp_dki@inkindo.org?subject=Klinik%20Konsultasi" class="btn btn--primary btn--block"
+                id="klinik-cta">Ajukan Konsultasi</a>
+        </div>
+
+        <!-- Hubungi Kami -->
+        <div class="side-panel__content" data-content="kontak">
+            <h3 class="side-panel__title">Hubungi Kami</h3>
+            <ul class="panel-links">
+                <li><a href="tel:0217971582" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">call</span>
+                        <span><strong>(021) 797-1582 / 797-1583</strong><small>Telepon sekretariat</small></span>
+                    </a></li>
+                <li><a href="mailto:dpp_dki@inkindo.org" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">mail</span>
+                        <span><strong>dpp_dki@inkindo.org</strong><small>Email resmi</small></span>
+                    </a></li>
+                <li>
+                    <div class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">location_on</span>
+                        <span><strong>Sekretariat DPP</strong><small>Jl. Pertani No. 7, Duren Tiga - Pancoran,
+                                Jakarta Selatan 12760</small></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">schedule</span>
+                        <span><strong>Jam Operasional</strong><small>Senin - Jumat: 08.30 - 17.00 WIB</small></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chat -->
+        <div class="side-panel__content side-panel__content--chat" data-content="chat">
+            <div class="chat-head">
+                <div class="chat-head__avatar"><span class="material-symbols-outlined">smart_toy</span></div>
+                <div>
+                    <h3 class="side-panel__title side-panel__title--chat">Asisten INKINDO</h3>
+                    <span class="chat-head__status">Online</span>
+                </div>
+            </div>
+            <div class="chat-body" id="chat-body"></div>
+            <div class="chat-quick" id="chat-quick">
+                <button type="button" class="chat-quick__btn">Cara daftar anggota</button>
+                <button type="button" class="chat-quick__btn">Info SBU</button>
+                <button type="button" class="chat-quick__btn">Jam operasional</button>
+            </div>
+            <form class="chat-form" id="chat-form">
+                <input type="text" id="chat-input" class="chat-form__input" placeholder="Ketik pesan..."
+                    autocomplete="off">
+                <button type="submit" class="chat-form__btn" aria-label="Kirim">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <main>
+        <!-- ================= HERO ================= -->
+        <section class="hero" id="hero">
+            <div class="hero__bg" style="background-image: url('assets/jakarta.jpg');"></div>
+            <div class="hero__shade"></div>
+
+            <div class="container hero__container">
+                <div class="hero__content">
+                    <h1 class="sr-only">DPP INKINDO DKI Jakarta – Ekosistem Konsultansi Digital Jakarta</h1>
+
+                    <!-- Search besar dengan efek ketik -->
+                    <form class="hero-search" id="hero-search">
+                        <input type="text" id="hero-search-input" class="hero-search__input" autocomplete="off"
+                            aria-label="Cari layanan">
+                    </form>
+
+                    <!-- Carousel banner -->
+                    <div class="carousel" id="hero-carousel">
+                        <div class="carousel__track">
+                            <div class="carousel__slide is-active">
+                                <img src="assets/hero-bg.jpg" alt="Dewan Pengurus Provinsi INKINDO DKI Jakarta">
+                                <div class="carousel__caption">
+                                    <span class="carousel__intro">DPP Masa Bakti 2026–2030</span>
+                                    <a href="#tentang" class="carousel__title">Dewan Pengurus Provinsi INKINDO DKI
+                                        Jakarta</a>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <img src="assets/gambar.png" alt="INKINDO DKI Goes to Campus">
+                                <div class="carousel__caption">
+                                    <span class="carousel__intro">Kemitraan Kampus</span>
+                                    <a href="#berita" class="carousel__title">INKINDO DKI Goes to Campus</a>
+                                </div>
+                            </div>
+                            <div class="carousel__slide carousel__slide--graphic">
+                                <img src="assets/gambar2.jpg" alt="Agenda Mendatang">
+                                <span class="material-symbols-outlined carousel__graphic">verified_user</span>
+                                <div class="carousel__caption">
+                                    <span class="carousel__intro">Agenda Mendatang</span>
+                                    <a href="#berita" class="carousel__title">Pelatihan Audit Internal ISO 37001</a>
+                                </div>
+                            </div>
+                            <div class="carousel__slide carousel__slide--graphic carousel__slide--dark">
+                                <img src="assets/gambar1.jpg" alt="Majalah INKINDO DKI Jakarta">
+                                <span class="material-symbols-outlined carousel__graphic">auto_stories</span>
+                                <div class="carousel__caption">
+                                    <span class="carousel__intro">e-Magazine Edisi 79</span>
+                                    <a href="#berita" class="carousel__title">Majalah INKINDO DKI Jakarta</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="carousel__nav carousel__nav--prev" id="carousel-prev"
+                            aria-label="Sebelumnya">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button type="button" class="carousel__nav carousel__nav--next" id="carousel-next"
+                            aria-label="Berikutnya">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                        <div class="carousel__dots" id="carousel-dots"></div>
+                    </div>
+
+                    <!-- Akses cepat (setara "Login Cepat" BCA) -->
+                    <div class="hero-bottom-bar">
+                        <div class="mitra-kerja">
+                            <div class="mitra-kerja__head">
+                                <h2 class="mitra-kerja__title">Mitra Kerja</h2>
+                            </div>
+                            <div class="mitra-kerja__marquee-wrapper">
+                                <div class="mitra-kerja__marquee">
+                                    <!-- Track 1 -->
+                                    <div class="mitra-kerja__track">
+                                        <div class="mitra-card"><img src="mitra_logos/avian.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/lesso.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/seven.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/dekkson.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/alila.jpg" alt=""></div>
+                                    </div>
+                                    <!-- Track 2 (Duplicate for infinite loop) -->
+                                    <div class="mitra-kerja__track">
+                                        <div class="mitra-card"><img src="mitra_logos/kulitbatu.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/lesso.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/kjpp.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/amtyas.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/dc.jpg" alt=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scroll-hint">
+                            <span class="material-symbols-outlined scroll-hint__icon">keyboard_double_arrow_down</span>
+                            <p>Scroll untuk melihat lebih</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget strip (setara Kurs eRate BCA) -->
+            <div class="widget-strip">
+                <div class="container widget-strip__inner">
+                    <a href="#tentang" class="widget-strip__label">Tentang INKINDO DKI</a>
+                    <div class="ticker" id="stats-ticker">
+                        <button type="button" class="ticker__nav" id="ticker-prev" aria-label="Sebelumnya">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <div class="ticker__viewport">
+                            <div class="ticker__item is-active"><strong>900+</strong> Konsultan Aktif <em>Badan usaha
+                                    terdaftar</em></div>
+                            <div class="ticker__item"><strong>#1</strong> Provinsi Terbesar <em>Dari 33 DPP</em></div>
+                            <div class="ticker__item"><strong>Hybrid</strong> Layanan Terpadu <em>Online &amp; tatap
+                                    muka</em></div>
+                            <div class="ticker__item"><strong>ISO 37001</strong> Standar SMAP <em>Anti
+                                    penyuapan</em></div>
+                        </div>
+                        <button type="button" class="ticker__nav" id="ticker-next" aria-label="Berikutnya">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <p class="widget-strip__note">Data keanggotaan diperbarui berkala.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= BERITA & INFORMASI  ================= -->
+        <section class="news" id="berita">
+            <div class="news__container">
+                <div class="news__head">
+                    <div class="news__tabs">
+                        <button type="button" class="news__tab is-active">Berita &amp; Informasi</button>
+                    </div>
+                    <a href="#" class="news__all" id="news-all">
+                        Lihat Selengkapnya <span class="material-symbols-outlined">chevron_right</span>
+                    </a>
+                </div>
+
+                <div class="bento">
+                    <!-- Card 1: Highlight -->
+                    <article class="bento__feature reveal" id="bento-highlight">
+                        <div class="bento__media">
+                            <img src="assets/gambar.png"
+                                alt="INKINDO DKI Goes to Campus: Gandeng UTA '45 Bangun Kemitraan Strategis">
+                        </div>
+                        <div class="bento__body">
+                            <div class="bento__meta">
+                                04 Sep 2026 | Kolaborasi Akademik
+                            </div>
+                            <h3 class="bento__heading">INKINDO DKI Goes to Campus: Gandeng UTA '45 Bangun Kemitraan
+                                Strategis</h3>
+                        </div>
+                    </article>
+
+                    <div class="bento__side">
+                        <!-- Card 2: Agenda -->
+                        <article class="bento__card bento__card--horizontal reveal">
+                            <div class="bento__media-side">
+                                <img src="assets/gambar2.jpg" alt="Agenda">
+                            </div>
+                            <div class="bento__body-side">
+                                <div class="bento__meta">
+                                    28 Nov 2025 | Agenda Mendatang
+                                </div>
+                                <h3 class="bento__heading-side">Pelatihan Audit Internal ISO 37001:2016 (SMAP)</h3>
+                            </div>
+                        </article>
+
+                        <!-- Card 3: e-Magazine -->
+                        <article class="bento__card bento__card--horizontal reveal">
+                            <div class="bento__media-side">
+                                <img src="assets/gambar1.jpg" alt="e-Magazine">
+                            </div>
+                            <div class="bento__body-side">
+                                <div class="bento__meta">
+                                    01 Sep 2026 | e-Magazine Edisi 79
+                                </div>
+                                <h3 class="bento__heading-side">Majalah INKINDO DKI Jakarta</h3>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" id="kontak">
+        <div class="site-footer__container">
+            <div class="site-footer__grid">
+                <!-- Col 1: Identity & Bio -->
+                <div class="site-footer__brand">
+                    <div class="site-footer__logo">
+                        <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
+                    </div>
+                    <p class="site-footer__bio">
+                        Ikatan Nasional Konsultan Indonesia (INKINDO) Provinsi DKI Jakarta merupakan wadah asosiasi
+                        perusahaan jasa konsultansi independen yang profesional dan berintegritas.
+                    </p>
+                    <div class="site-footer__social">
+                        <a href="#" aria-label="Website"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" aria-label="Email"><span class="material-symbols-outlined">mail</span></a>
+                        <a href="#" aria-label="Telepon"><span class="material-symbols-outlined">call</span></a>
+                    </div>
+                </div>
+                <!-- Col 2: Navigation Links -->
+                <div class="site-footer__col site-footer__col--nav">
+                    <h4>Akses Cepat</h4>
+                    <ul>
+                        <li><a href="#">Sistem Informasi Anggota (SIA)</a></li>
+                        <li><a href="#">Pendaftaran &amp; SBU Online</a></li>
+                        <li><a href="#">Standar Billing Rate Remunerasi</a></li>
+                        <li><a href="#">Direktori Anggota Terverifikasi</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3: Contact Snippet -->
+                <div class="site-footer__col site-footer__col--contact">
+                    <h4>Sekretariat DPP</h4>
+                    <p>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</p>
+                    <div class="site-footer__contact">
+                        <span>Telepon: (021) 797-1582 / 797-1583</span>
+                        <span>Email: dpp_dki@inkindo.org</span>
+                        <span class="site-footer__hours">Senin - Jumat: 08.30 - 17.00 WIB</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright & Bottom Policy -->
+            <div class="site-footer__bottom">
+                <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
+                <div class="site-footer__policy">
+                    <a href="#">Kebijakan Privasi</a>
+                    <a href="#">Syarat Layanan</a>
+                    <a href="#">LPJK PUPR</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
