@@ -408,16 +408,16 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 ### Fase 3 — Home Dinamis & Global Settings (± 1 minggu)
 
 **Tugas**
-- [ ] Carousel, marquee mitra, ticker statistik, bento berita, footer, kontak panel → data CMS
-- [ ] Teks efek ketik hero dari CMS
-- [ ] Tautan Login (3 opsi) & tautan eksternal dari Global `external-links`
-- [ ] Metadata SEO Home dari CMS
+- [x] Carousel, marquee mitra, ticker statistik, bento berita, footer, kontak panel → data CMS
+- [x] Teks efek ketik hero dari CMS
+- [x] Tautan Login (3 opsi) & tautan eksternal dari Global `external-links`
+- [x] Metadata SEO Home dari CMS
 
 **✅ Checkpoint 3**
-- [ ] Ubah banner/berita di CMS → tampil di Home **< 1 menit** setelah publish
-- [ ] Banner dengan jadwal tayang muncul/hilang sesuai jadwal
-- [ ] Semua link Login mengarah ke URL eksternal yang benar
-- [ ] Visual tetap sama dengan Checkpoint 1
+- [x] Ubah banner/berita di CMS → tampil di Home **< 1 menit** setelah publish
+- [x] Banner dengan jadwal tayang muncul/hilang sesuai jadwal
+- [x] Semua link Login mengarah ke URL eksternal yang benar
+- [x] Visual tetap sama dengan Checkpoint 1
 
 ---
 

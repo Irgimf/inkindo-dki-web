@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
-export default function Hero() {
+export default function Hero({ banners, homepage, partners }: { banners?: any[], homepage?: any, partners?: any[] }) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [tickerIndex, setTickerIndex] = useState(0);
   
-  const slides = [
+  const staticSlides = [
     {
       img: '/assets/hero-bg.jpg',
       intro: 'DPP Masa Bakti 2026–2030',
@@ -40,12 +40,22 @@ export default function Hero() {
     }
   ];
 
-  const stats = [
+  const slides = banners && banners.length > 0 ? banners.map((b: any) => ({
+    img: b.image?.url || '/assets/hero-bg.jpg',
+    intro: b.intro,
+    title: b.title,
+    link: b.link || '#',
+    graphic: null
+  })) : staticSlides;
+
+  const staticStats = [
     { value: '900+', label: 'Konsultan Aktif', sub: 'Badan usaha terdaftar' },
     { value: '#1', label: 'Provinsi Terbesar', sub: 'Dari 33 DPP' },
     { value: 'Hybrid', label: 'Layanan Terpadu', sub: 'Online & tatap muka' },
     { value: 'ISO 37001', label: 'Standar SMAP', sub: 'Anti penyuapan' }
   ];
+
+  const stats = homepage?.statsTicker?.length > 0 ? homepage.statsTicker : staticStats;
 
   // Auto carousel
   useEffect(() => {
@@ -54,6 +64,41 @@ export default function Hero() {
     }, 5000);
     return () => clearInterval(interval);
   }, [slides.length]);
+
+  const staticTypingTexts = [
+    'Sistem Informasi Anggota...',
+    'Pendaftaran Anggota Baru...',
+    'Direktori Anggota Aktif...',
+    'Klinik Konsultasi INKINDO...'
+  ];
+
+  const typingTexts = homepage?.heroTypingText?.length > 0 
+    ? homepage.heroTypingText.map((t: any) => t.text) 
+    : staticTypingTexts;
+
+  const [placeholder, setPlaceholder] = useState('');
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentText = typingTexts[textIndex];
+    const typingSpeed = isDeleting ? 50 : 100;
+    
+    const timer = setTimeout(() => {
+      if (!isDeleting && charIndex === currentText.length) {
+        setTimeout(() => setIsDeleting(true), 1500);
+      } else if (isDeleting && charIndex === 0) {
+        setIsDeleting(false);
+        setTextIndex((prev) => (prev + 1) % typingTexts.length);
+      } else {
+        setPlaceholder(currentText.substring(0, charIndex + (isDeleting ? -1 : 1)));
+        setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
+      }
+    }, typingSpeed);
+    
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, textIndex, typingTexts]);
 
   return (
     <section className="hero" id="hero">
@@ -65,7 +110,14 @@ export default function Hero() {
           <h1 className="sr-only">DPP INKINDO DKI Jakarta – Ekosistem Konsultansi Digital Jakarta</h1>
 
           <form className="hero-search" id="hero-search" onSubmit={e => e.preventDefault()}>
-            <input type="text" id="hero-search-input" className="hero-search__input" autoComplete="off" aria-label="Cari layanan" placeholder="Cari layanan..." />
+            <input 
+              type="text" 
+              id="hero-search-input" 
+              className="hero-search__input" 
+              autoComplete="off" 
+              aria-label="Cari layanan" 
+              placeholder={placeholder || 'Cari layanan...'} 
+            />
           </form>
 
           {/* Carousel */}
@@ -103,18 +155,18 @@ export default function Hero() {
               <div className="mitra-kerja__marquee-wrapper">
                 <div className="mitra-kerja__marquee">
                   <div className="mitra-kerja__track">
-                    <div className="mitra-card"><img src="/mitra_logos/avian.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/lesso.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/seven.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/dekkson.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/alila.jpg" alt="" /></div>
+                    {(partners && partners.length > 0 ? partners : Array(5).fill(null)).map((p: any, idx: number) => (
+                      <div key={`m1-${idx}`} className="mitra-card">
+                        <img src={p?.logo?.url || `/mitra_logos/${idx % 5 === 0 ? 'avian' : idx % 5 === 1 ? 'lesso' : idx % 5 === 2 ? 'seven' : idx % 5 === 3 ? 'dekkson' : 'alila'}.jpg`} alt={p?.name || ''} />
+                      </div>
+                    ))}
                   </div>
                   <div className="mitra-kerja__track">
-                    <div className="mitra-card"><img src="/mitra_logos/kulitbatu.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/lesso.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/kjpp.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/amtyas.jpg" alt="" /></div>
-                    <div className="mitra-card"><img src="/mitra_logos/dc.jpg" alt="" /></div>
+                    {(partners && partners.length > 0 ? partners : Array(5).fill(null)).map((p: any, idx: number) => (
+                      <div key={`m2-${idx}`} className="mitra-card">
+                        <img src={p?.logo?.url || `/mitra_logos/${idx % 5 === 0 ? 'kulitbatu' : idx % 5 === 1 ? 'lesso' : idx % 5 === 2 ? 'kjpp' : idx % 5 === 3 ? 'amtyas' : 'dc'}.jpg`} alt={p?.name || ''} />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -135,9 +187,9 @@ export default function Hero() {
               <span className="material-symbols-outlined">chevron_left</span>
             </button>
             <div className="ticker__viewport">
-              {stats.map((s, idx) => (
+              {stats.map((s: any, idx: number) => (
                 <div key={idx} className={`ticker__item ${idx === tickerIndex ? 'is-active' : ''}`}>
-                  <strong>{s.value}</strong> {s.label} <em>{s.sub}</em>
+                  <strong>{s.value}</strong> {s.label} <em>{s.sublabel || s.sub}</em>
                 </div>
               ))}
             </div>

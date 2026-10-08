@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function Header() {
+export default function Header({ settings }: { settings?: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -54,7 +55,7 @@ export default function Header() {
     <header className={`main-header ${isScrolled || searchOpen ? 'is-scrolled' : ''}`} id="main-header">
       <div className="container main-header__inner">
         <Link href="/" className="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
-          <img src="/assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta" />
+          <img src={settings?.logo?.url || "/assets/logo-inkindo.png"} alt="Logo DPP INKINDO DKI Jakarta" />
         </Link>
 
         <nav className="main-nav" id="main-nav" aria-label="Navigasi utama">

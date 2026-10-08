@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -19,7 +20,7 @@ const replies = [
   { keys: ['konsultasi', 'klinik'], text: 'Klinik Konsultasi tersedia gratis untuk anggota. Silakan buka menu Klinik Konsultasi untuk mengajukan jadwal.' }
 ];
 
-export default function SideNavigation() {
+export default function SideNavigation({ links }: { links?: any }) {
   const [currentPanel, setCurrentPanel] = useState<string | null>(null);
   
   // Chat state
@@ -131,7 +132,7 @@ export default function SideNavigation() {
         <div className={`side-panel__content ${currentPanel === 'login' ? 'is-active' : ''}`}>
           <h3 className="side-panel__title">Login</h3>
           <ul className="panel-links">
-            <li><Link href="https://www.inkindo-dki.org/auth/login" className="panel-link" target="_blank" rel="noopener noreferrer">
+            <li><Link href={links?.loginAnggota || "https://www.inkindo-dki.org/auth/login"} className="panel-link" target="_blank" rel="noopener noreferrer">
               <div className="panel-link__icon"><span className="material-symbols-outlined">groups</span></div>
               <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
@@ -171,7 +172,7 @@ export default function SideNavigation() {
         <div className={`side-panel__content ${currentPanel === 'anggota' ? 'is-active' : ''}`}>
           <h3 className="side-panel__title">Anggota</h3>
           <ul className="panel-links">
-            <li><Link href="https://www.inkindo-dki.org/register" className="panel-link" target="_blank" rel="noopener noreferrer">
+            <li><Link href={links?.pendaftaranAnggota || "https://www.inkindo-dki.org/register"} className="panel-link" target="_blank" rel="noopener noreferrer">
               <div className="panel-link__icon"><span className="material-symbols-outlined">person_add</span></div>
               <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan INKINDO</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
