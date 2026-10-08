@@ -379,10 +379,10 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 - [ ] Template halaman generik: `PageHero`, `Breadcrumb`, `ContentLayout`, `Card`, `Pagination`, `EmptyState`, `404`
 
 **✅ Checkpoint 1 — Visual Parity**
-- [ ] Home di Next.js **identik secara visual** dengan `index.html` (bandingkan screenshot desktop & mobile)
-- [ ] Semua interaksi (dropdown klik, panel, carousel, marquee, chat UI) berjalan sama
-- [ ] Lighthouse Performance ≥ 90 untuk Home (data masih statis)
-- [ ] Tidak ada error console
+- [x] Home di Next.js **identik secara visual** dengan `index.html` (bandingkan screenshot desktop & mobile)
+- [x] Semua interaksi (dropdown klik, panel, carousel, marquee, chat UI) berjalan sama
+- [x] Lighthouse Performance ≥ 90 untuk Home (data masih statis)
+- [x] Tidak ada error console
 
 ---
 

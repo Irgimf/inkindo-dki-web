@@ -1,13 +1,46 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+
+type ChatMsg = {
+  id: number;
+  text: string;
+  who: 'user' | 'bot';
+  typing?: boolean;
+};
+
+const replies = [
+  { keys: ['daftar', 'anggota', 'registrasi', 'kta'], text: 'Untuk menjadi anggota, siapkan akta pendirian, NIB, dan NPWP badan usaha, lalu lakukan registrasi melalui Portal KTA. Tim sekretariat akan memverifikasi berkas Anda.' },
+  { keys: ['sbu', 'sertifikat', 'lpjk'], text: 'Pengajuan rekomendasi SBU dilakukan melalui menu Login → Pengajuan SBU. Pastikan KTA Anda masih aktif sebelum mengajukan.' },
+  { keys: ['jam', 'operasional', 'buka'], text: 'Sekretariat DPP INKINDO DKI Jakarta buka Senin - Jumat pukul 08.30 - 17.00 WIB.' },
+  { keys: ['alamat', 'lokasi', 'kantor'], text: 'Sekretariat kami berada di Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760.' },
+  { keys: ['lelang', 'tender'], text: 'Informasi lelang dapat dipantau melalui menu Info Lelang di sisi kanan, termasuk LPSE DKI Jakarta dan SPSE LKPP.' },
+  { keys: ['konsultasi', 'klinik'], text: 'Klinik Konsultasi tersedia gratis untuk anggota. Silakan buka menu Klinik Konsultasi untuk mengajukan jadwal.' }
+];
 
 export default function SideNavigation() {
   const [currentPanel, setCurrentPanel] = useState<string | null>(null);
+  
+  // Chat state
+  const [chatMsgs, setChatMsgs] = useState<ChatMsg[]>([]);
+  const [chatStarted, setChatStarted] = useState(false);
+  const [chatInput, setChatInput] = useState('');
+  const chatBodyRef = useRef<HTMLDivElement>(null);
+  const nextMsgId = useRef(1);
 
   const openPanel = (name: string) => {
-    setCurrentPanel(prev => prev === name ? null : name);
+    if (currentPanel === name) {
+      setCurrentPanel(null);
+    } else {
+      setCurrentPanel(name);
+      if (name === 'chat' && !chatStarted) {
+        setChatStarted(true);
+        setTimeout(() => {
+          setChatMsgs([{ id: nextMsgId.current++, text: 'Halo! Saya Asisten INKINDO DKI Jakarta. Ada yang bisa saya bantu hari ini?', who: 'bot' }]);
+        }, 300);
+      }
+    }
   };
 
   const closePanel = () => {
@@ -21,6 +54,34 @@ export default function SideNavigation() {
       document.body.style.overflow = '';
     }
   }, [currentPanel]);
+
+  useEffect(() => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }
+  }, [chatMsgs, currentPanel]);
+
+  const handleSendChat = (text: string) => {
+    if (!text.trim()) return;
+    const q = text.trim();
+    setChatMsgs(prev => [...prev, { id: nextMsgId.current++, text: q, who: 'user' }, { id: nextMsgId.current++, text: '', who: 'bot', typing: true }]);
+    setChatInput('');
+    
+    setTimeout(() => {
+      const lower = q.toLowerCase();
+      const hit = replies.find(r => r.keys.some(k => lower.includes(k)));
+      const ans = hit ? hit.text : 'Terima kasih atas pertanyaannya. Untuk informasi lebih lanjut, hubungi sekretariat di (021) 797-1582 atau email dpp_dki@inkindo.org.';
+      
+      setChatMsgs(prev => {
+        const newMsgs = [...prev];
+        const lastIdx = newMsgs.length - 1;
+        if (newMsgs[lastIdx].typing) {
+          newMsgs[lastIdx] = { ...newMsgs[lastIdx], typing: false, text: ans };
+        }
+        return newMsgs;
+      });
+    }, 800);
+  };
 
   return (
     <>
@@ -71,17 +132,17 @@ export default function SideNavigation() {
           <h3 className="side-panel__title">Login</h3>
           <ul className="panel-links">
             <li><Link href="https://www.inkindo-dki.org/auth/login" className="panel-link" target="_blank" rel="noopener noreferrer">
-              <span className="material-symbols-outlined panel-link__icon">groups</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">groups</span></div>
               <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">handshake</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">handshake</span></div>
               <span><strong>Mitra Kerja</strong><small>Segera Hadir</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">admin_panel_settings</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">admin_panel_settings</span></div>
               <span><strong>Admin Kesekretariatan</strong><small>Segera Hadir</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
@@ -94,12 +155,12 @@ export default function SideNavigation() {
           <p className="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah melalui kanal resmi berikut.</p>
           <ul className="panel-links">
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">shopping_cart_checkout</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">shopping_cart_checkout</span></div>
               <span><strong>LKPP</strong><small>Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">campaign</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">campaign</span></div>
               <span><strong>Info Lelang Lainnya</strong><small>Informasi paket pengadaan alternatif</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
@@ -111,17 +172,17 @@ export default function SideNavigation() {
           <h3 className="side-panel__title">Anggota</h3>
           <ul className="panel-links">
             <li><Link href="https://www.inkindo-dki.org/register" className="panel-link" target="_blank" rel="noopener noreferrer">
-              <span className="material-symbols-outlined panel-link__icon">person_add</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">person_add</span></div>
               <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan INKINDO</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">autorenew</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">autorenew</span></div>
               <span><strong>Perpanjangan Anggota</strong><small>Segera Hadir</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">fact_check</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">fact_check</span></div>
               <span><strong>Anggota Terdaftar</strong><small>Direktori badan usaha terverifikasi</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
@@ -133,12 +194,12 @@ export default function SideNavigation() {
           <h3 className="side-panel__title">Mitra Kerja</h3>
           <ul className="panel-links">
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">rule</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">rule</span></div>
               <span><strong>Ketentuan Mitra Kerja</strong><small>Syarat dan panduan kemitraan</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
             <li><Link href="#" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">format_list_bulleted</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">format_list_bulleted</span></div>
               <span><strong>Daftar Mitra Kerja</strong><small>Katalog mitra resmi INKINDO</small></span>
               <span className="material-symbols-outlined panel-link__arrow">chevron_right</span>
             </Link></li>
@@ -169,7 +230,7 @@ export default function SideNavigation() {
             <span className="topic-chip">Perpajakan Jasa</span>
           </div>
           <div className="panel-info">
-            <span className="material-symbols-outlined">schedule</span>
+            <div className="panel-link__icon" style={{background:'transparent'}}><span className="material-symbols-outlined">schedule</span></div>
             <span>Sesi tatap muka &amp; daring<br/><small>Senin - Jumat: 08.30 - 17.00 WIB</small></span>
           </div>
           <a href="mailto:dpp_dki@inkindo.org?subject=Klinik%20Konsultasi" className="btn btn--primary btn--block">Ajukan Konsultasi</a>
@@ -180,22 +241,22 @@ export default function SideNavigation() {
           <h3 className="side-panel__title">Hubungi Kami</h3>
           <ul className="panel-links">
             <li><a href="tel:0217971582" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">call</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">call</span></div>
               <span><strong>(021) 797-1582 / 797-1583</strong><small>Telepon sekretariat</small></span>
             </a></li>
             <li><a href="mailto:dpp_dki@inkindo.org" className="panel-link">
-              <span className="material-symbols-outlined panel-link__icon">mail</span>
+              <div className="panel-link__icon"><span className="material-symbols-outlined">mail</span></div>
               <span><strong>dpp_dki@inkindo.org</strong><small>Email resmi</small></span>
             </a></li>
             <li>
               <div className="panel-link">
-                <span className="material-symbols-outlined panel-link__icon">location_on</span>
+                <div className="panel-link__icon"><span className="material-symbols-outlined">location_on</span></div>
                 <span><strong>Sekretariat DPP</strong><small>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760</small></span>
               </div>
             </li>
             <li>
               <div className="panel-link">
-                <span className="material-symbols-outlined panel-link__icon">schedule</span>
+                <div className="panel-link__icon"><span className="material-symbols-outlined">schedule</span></div>
                 <span><strong>Jam Operasional</strong><small>Senin - Jumat: 08.30 - 17.00 WIB</small></span>
               </div>
             </li>
@@ -205,20 +266,32 @@ export default function SideNavigation() {
         {/* Chat */}
         <div className={`side-panel__content side-panel__content--chat ${currentPanel === 'chat' ? 'is-active' : ''}`}>
           <div className="chat-head">
-            <div className="chat-head__avatar"><span className="material-symbols-outlined">smart_toy</span></div>
+            <div className="chat-head__avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span className="material-symbols-outlined" style={{ display: 'block', lineHeight: 1 }}>smart_toy</span>
+            </div>
             <div>
               <h3 className="side-panel__title side-panel__title--chat">Asisten INKINDO</h3>
               <span className="chat-head__status">Online</span>
             </div>
           </div>
-          <div className="chat-body" id="chat-body"></div>
-          <div className="chat-quick" id="chat-quick">
-            <button type="button" className="chat-quick__btn">Cara daftar anggota</button>
-            <button type="button" className="chat-quick__btn">Info SBU</button>
-            <button type="button" className="chat-quick__btn">Jam operasional</button>
+          <div className="chat-body" id="chat-body" ref={chatBodyRef}>
+            {chatMsgs.map(msg => (
+              <div key={msg.id} className={`chat-msg chat-msg--${msg.who} ${msg.typing ? 'chat-msg--typing' : ''}`}>
+                {msg.typing ? (
+                  <><i></i><i></i><i></i></>
+                ) : (
+                  msg.text
+                )}
+              </div>
+            ))}
           </div>
-          <form className="chat-form" onSubmit={(e) => e.preventDefault()}>
-            <input type="text" className="chat-form__input" placeholder="Ketik pesan..." autoComplete="off" />
+          <div className="chat-quick" id="chat-quick">
+            <button type="button" className="chat-quick__btn" onClick={() => handleSendChat('Cara daftar anggota')}>Cara daftar anggota</button>
+            <button type="button" className="chat-quick__btn" onClick={() => handleSendChat('Info SBU')}>Info SBU</button>
+            <button type="button" className="chat-quick__btn" onClick={() => handleSendChat('Jam operasional')}>Jam operasional</button>
+          </div>
+          <form className="chat-form" onSubmit={(e) => { e.preventDefault(); handleSendChat(chatInput); }}>
+            <input type="text" className="chat-form__input" placeholder="Ketik pesan..." autoComplete="off" value={chatInput} onChange={e => setChatInput(e.target.value)} />
             <button type="submit" className="chat-form__btn" aria-label="Kirim">
               <span className="material-symbols-outlined">send</span>
             </button>

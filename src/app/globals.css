@@ -679,7 +679,7 @@ a.panel-link:hover {
 .side-panel__content--chat.is-active {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 92px);
+    height: calc(100vh - 180px);
 }
 
 .chat-head {
