@@ -73,9 +73,9 @@ export default function Header({ settings }: { settings?: any }) {
             <li className={`has-dropdown ${openDropdown === 'regulasi' ? 'is-open' : ''}`}>
               <a href="#regulasi" className="main-nav__link" onClick={(e) => toggleDropdown('regulasi', e)}>Regulasi</a>
               <ul className="dropdown">
-                <li><Link href="#">Regulasi Inkindo</Link></li>
-                <li><Link href="#">Regulasi Jasa Konsultasi</Link></li>
-                <li><Link href="#">Regulasi Terkait</Link></li>
+                <li><Link href="/regulasi/inkindo" onClick={() => setMenuOpen(false)}>Regulasi Inkindo</Link></li>
+                <li><Link href="/regulasi/jasa-konsultansi" onClick={() => setMenuOpen(false)}>Regulasi Jasa Konsultasi</Link></li>
+                <li><Link href="/regulasi/terkait" onClick={() => setMenuOpen(false)}>Regulasi Terkait</Link></li>
               </ul>
             </li>
             

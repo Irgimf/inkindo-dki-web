@@ -438,16 +438,16 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 ### Fase 5 — Pustaka Regulasi (± 1,5 minggu)
 
 **Tugas**
-- [ ] Halaman Regulasi Inkindo, Jasa Konsultasi (filter Konstruksi/Non Konstruksi/Umum), Terkait
-- [ ] Filter tahun & status berlaku, pencarian judul/nomor
-- [ ] Detail dokumen + preview PDF + tombol unduh + counter unduhan
-- [ ] URL filter bisa dibagikan (query string)
+- [x] Halaman Regulasi Inkindo, Jasa Konsultasi (filter Konstruksi/Non Konstruksi/Umum), Terkait
+- [x] Filter tahun & status berlaku, pencarian judul/nomor
+- [x] Detail dokumen + preview PDF + tombol unduh + counter unduhan
+- [x] URL filter bisa dibagikan (query string)
 
 **✅ Checkpoint 5**
-- [ ] Filter & pencarian akurat (uji dengan ≥ 50 dokumen contoh)
-- [ ] PDF besar (20 MB) bisa dipreview & diunduh lancar
-- [ ] Counter unduhan tidak bisa di-spam (rate limit)
-- [ ] Test e2e (Playwright) alur cari → buka → unduh lolos
+- [x] Filter & pencarian akurat (uji dengan ≥ 50 dokumen contoh)
+- [x] PDF besar (20 MB) bisa dipreview & diunduh lancar
+- [x] Counter unduhan tidak bisa di-spam (rate limit)
+- [x] Test e2e (Playwright) alur cari → buka → unduh lolos
 
 ---
 
