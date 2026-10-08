@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - DPP INKINDO DKI Jakarta</title>
+    <meta name="description" content="Profil INKINDO DKI Jakarta: Sejarah, Visi, Misi, dan Kode Etik.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Mengamankan agar padding menyesuaikan adanya side-nav di desktop */
+        @media (min-width: 1024px) {
+            .tentang-content .container {
+                padding-right: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" id="main-header"
+        style="background: rgba(11, 30, 51, 1); box-shadow: 0 2px 20px rgba(0,0,0,0.2);">
+        <div class="container main-header__inner">
+            <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
+                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="main-nav__menu">
+                    <li><a href="index.html" class="main-nav__link" id="nav-home">Home</a></li>
+                    <li>
+                        <a href="tentang.html" class="main-nav__link is-active" id="nav-tentang">Tentang Kami</a>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="index.html#regulasi" class="main-nav__link" id="nav-regulasi">Regulasi</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Regulasi Inkindo</a></li>
+                            <li><a href="#">Regulasi Jasa Konsultasi</a></li>
+                            <li><a href="#">Regulasi Terkait</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#berita" class="main-nav__link" id="nav-berita">Berita &amp; Informasi</a>
+                    </li>
+                    <li class="main-nav__icon-item">
+                        <button type="button" class="main-nav__icon" id="header-search-toggle" aria-label="Cari">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="lang-switch" id="lang-switch">
+                            <button type="button" class="lang-switch__btn is-active" data-lang="id">ID</button>
+                            <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Buka menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <!-- Header search bar -->
+        <div class="header-search" id="header-search">
+            <form class="container header-search__form" id="header-search-form">
+                <input type="text" id="header-search-input" class="header-search__input" placeholder="Cari di sini?"
+                    autocomplete="off">
+                <button type="submit" class="header-search__btn" aria-label="Cari">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- SIDE NAV KANAN untuk Struktur Organisasi -->
+    <aside class="side-nav" id="side-nav" aria-label="Menu layanan">
+        <div class="side-nav__list">
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">account_balance</span>
+                <span class="side-nav__label">DPPH</span>
+            </button>
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">account_tree</span>
+                <span class="side-nav__label">DPPL</span>
+            </button>
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">corporate_fare</span>
+                <span class="side-nav__label">Badan Badan</span>
+            </button>
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">groups_3</span>
+                <span class="side-nav__label">Komite</span>
+            </button>
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">gavel</span>
+                <span class="side-nav__label">DKP</span>
+            </button>
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">manage_accounts</span>
+                <span class="side-nav__label">DPOP</span>
+            </button>
+            <button type="button" class="side-nav__link">
+                <span class="material-symbols-outlined side-nav__icon">admin_panel_settings</span>
+                <span class="side-nav__label">Setprov</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="side-panel" id="side-panel" aria-hidden="true">
+        <div class="side-panel__top">
+            <button type="button" class="side-panel__close" id="side-panel-close" aria-label="Tutup panel">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="tentang-content">
+        <!-- 1. Tentang Kami (Hero) -->
+        <section
+            style="position: relative; padding: 180px 0 100px; color: var(--white); background: url('assets/jakarta.jpg') center/cover no-repeat;">
+            <div style="position: absolute; inset: 0; background: rgba(11, 30, 51, 0.75);"></div>
+            <div class="container" style="position: relative; z-index: 2; text-align: center;">
+                <h1 style="font-size: 48px; font-weight: 700; margin-bottom: 24px;">Tentang Kami</h1>
+                <p style="font-size: 18px; max-width: 700px; margin: 0 auto; line-height: 1.6;">Profil INKINDO DKI
+                    Jakarta: Mengenal lebih dekat sejarah, visi, misi, dan kode etik yang kami junjung dalam memajukan
+                    jasa konsultansi di Indonesia.</p>
+            </div>
+        </section>
+
+        <!-- 2. Sejarah (White Background) -->
+        <section style="padding: 80px 0; background: var(--white);">
+            <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
+                <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: center;">
+                    <!-- Teks Sejarah -->
+                    <div>
+                        <h2 style="font-size: 36px; color: var(--royal); margin-bottom: 24px; font-weight: 700;">Sejarah
+                            INKINDO DKI Jakarta</h2>
+                        <div
+                            style="font-size: 17px; line-height: 1.8; color: var(--slate-700); display: flex; flex-direction: column; gap: 20px;">
+                            <p>INKINDO (Ikatan Nasional Konsultan Indonesia) merupakan asosiasi perusahaan konsultan
+                                independen yang didirikan pada tanggal 29 Juni 1979, sebagai hasil fusi antara IKINDO
+                                (Ikatan Konsultan Indonesia) dan PKTPI (Persatuan Konsultan Teknik Pembangunan
+                                Indonesia). Anggota INKINDO tersebar di 33 provinsi di seluruh Indonesia dan total
+                                memiliki anggota 7000 perusahaan konsultan.
+                            </p>
+                            <p>INKINDO DKI Jakarta teletak di Provinsi Daerah Khusus Ibukota Jakarta, sekarang memiliki
+                                anggota aktif 900 perusahaan, merupakan INKINDO provinsi terbesar diantara 33 provinsi
+                                di Indonesia. Anggota INKINDO DKI Jakarta dikelompokan dalam 3 (tiga) kualifikasi :
+                                Besar (20%), Menengah (45%), dan Kecil (35%). Beberapa anggota INKINDO DKI Jakarta telah
+                                menangani banyak proyek-proyek terkemuka, di Indonesia dan di manca negara.</p>
+                        </div>
+                    </div>
+                    <!-- Gambar -->
+                    <div>
+                        <img src="assets/hero-bg.jpg" alt="Sejarah INKINDO"
+                            style="width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Visi & Misi (Image Background) -->
+        <section
+            style="position: relative; padding: 80px 0; color: var(--white); background: url('assets/jakarta.jpg') center/cover no-repeat fixed;">
+            <div style="position: absolute; inset: 0; background: rgba(0, 90, 156, 0.85);"></div>
+            <div class="container" style="position: relative; z-index: 2; max-width: 900px; margin: 0 auto;">
+                <h2 style="font-size: 32px; margin-bottom: 40px; font-weight: 700; text-align: center;">Visi &amp; Misi
+                </h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+                    <div>
+                        <h3
+                            style="font-size: 24px; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--white); padding-bottom: 8px; display: inline-block;">
+                            Visi</h3>
+                        <p style="font-size: 16px; line-height: 1.8;">Gerak Cepat Memajukan Anggota yang Berkelanjutan.
+                        </p>
+                    </div>
+                    <div>
+                        <h3
+                            style="font-size: 24px; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--white); padding-bottom: 8px; display: inline-block;">
+                            Misi</h3>
+                        <ul
+                            style="font-size: 16px; line-height: 1.8; list-style-type: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 12px;">
+                            <li>Meningkatkan pelayanan yang proaktif, cepat, mudah, dan terjangkau.</li>
+                            <li>Memperkuat kapasitas dan kolaborasi antara Anggota (pelatihan, akses informasi dan
+                                permodalan, SDM).</li>
+                            <li>Memperkuat peran sebagai mitra strategis pemerintah, swasta dan sinergi dengan DPN
+                                INKINDO, DPP provinsi lain, mitra kerja, serta asosiasi.
+                            </li>
+                            <li>Membina Anggota dalam menghadapi dinamika regulasi.</li>
+                            <li>Menjadikan INKINDO DKI sebagai organisasi yang inovatif, adaptif, transparan dan
+                                akuntabel.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Kode Etik (White Background) -->
+        <section style="padding: 80px 0; background: var(--white);">
+            <div class="container" style="max-width: 1100px; margin: 0 auto;">
+                <h2
+                    style="font-size: 36px; color: var(--royal); margin-bottom: 32px; font-weight: 700; text-align: center;">
+                    Kode Etik</h2>
+                <p style="font-size: 17px; line-height: 1.8; color: var(--slate-700); margin-bottom: 48px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Dengan menjunjung tinggi Etika Ikatan Nasional Konsultan Indonesia sebagai dasar yang dinamis untuk melayani sesama manusia, maka tiap Anggota Ikatan Nasional Konsultan Indonesia wajib untuk:
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <!-- Poin 1 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">01</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menjunjung tinggi kehormatan, kemuliaan, dan nama baik profesi konsultan dalam hubungan kerja dengan pemberi tugas sesama rekan konsultan dan masyarakat.</p>
+                    </div>
+                    <!-- Poin 2 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">02</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Bertindak jujur, tidak memihak, serta penuh dedikasi melayani pemberi tugas dan masyarakat.</p>
+                    </div>
+                    <!-- Poin 3 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">03</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Tukar menukar pengetahuan bidang keahlian secara wajar dengan rekan konsultan dan kelompok profesi serta meningkatkan pengetahuan masyarakat terhadap profesi konsultan sehingga dapat lebih menghayati karya konsultan.</p>
+                    </div>
+                    <!-- Poin 4 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">04</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menghormati prinsip pemberian imbalan jasa yang layak dan memadai bagi konsultan, sehingga dapat dipertanggungjawabkan secara profesional dan moral yang menjamin dapat dilaksanakannya tugas yang dipercayakan memenuhi semua persyaratan yang terkait dengan keahlian, kompetensi, dan integritas tinggi.</p>
+                    </div>
+                    <!-- Poin 5 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">05</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menghargai dan menghormati reputasi profesional rekan konsultan dan setiap perjanjian kerja yang berhubungan dengan profesinya.</p>
+                    </div>
+                    <!-- Poin 6 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">06</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Mendapatkan tugas terutama berdasarkan standar keahlian profesional tanpa melalui cara-cara persaingan yang tidak sehat.</p>
+                    </div>
+                    <!-- Poin 7 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">07</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Bekerjasama sebagai konsultan hanya dengan rekan konsultan atau tenaga ahli lain yang memiliki integritas tinggi.</p>
+                    </div>
+                    <!-- Poin 8 -->
+                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">08</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menjalankan asas pembangunan berkelanjutan dalam semua aspek pelayanan jasa konsultan sebagai bagian integral dari tanggungjawabnya terhadap sesama, lingkungan kehidupan yang luas, dan generasi yang akan datang.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" id="kontak">
+        <div class="site-footer__container">
+            <div class="site-footer__grid">
+                <!-- Col 1: Identity & Bio -->
+                <div class="site-footer__brand">
+                    <div class="site-footer__logo">
+                        <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
+                    </div>
+                    <p class="site-footer__bio">
+                        Ikatan Nasional Konsultan Indonesia (INKINDO) Provinsi DKI Jakarta merupakan wadah asosiasi
+                        perusahaan jasa konsultansi independen yang profesional dan berintegritas.
+                    </p>
+                    <div class="site-footer__social">
+                        <a href="#" aria-label="Website"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" aria-label="Email"><span class="material-symbols-outlined">mail</span></a>
+                        <a href="#" aria-label="Telepon"><span class="material-symbols-outlined">call</span></a>
+                    </div>
+                </div>
+                <!-- Col 2: Navigation Links -->
+                <div class="site-footer__col site-footer__col--nav">
+                    <h4>Akses Cepat</h4>
+                    <ul>
+                        <li><a href="#">Sistem Informasi Anggota (SIA)</a></li>
+                        <li><a href="#">Pendaftaran &amp; SBU Online</a></li>
+                        <li><a href="#">Standar Billing Rate Remunerasi</a></li>
+                        <li><a href="#">Direktori Anggota Terverifikasi</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3: Contact Snippet -->
+                <div class="site-footer__col site-footer__col--contact">
+                    <h4>Sekretariat DPP</h4>
+                    <p>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</p>
+                    <div class="site-footer__contact">
+                        <span>Telepon: (021) 797-1582 / 797-1583</span>
+                        <span>Email: dpp_dki@inkindo.org</span>
+                        <span class="site-footer__hours">Senin - Jumat: 08.30 - 17.00 WIB</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright & Bottom Policy -->
+            <div class="site-footer__bottom">
+                <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
+                <div class="site-footer__policy">
+                    <a href="#">Kebijakan Privasi</a>
+                    <a href="#">Syarat Layanan</a>
+                    <a href="#">LPJK PUPR</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Mencegah header transparan saat scroll di halaman ini, karena kita selalu butuh header yang solid
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (header) {
+                header.style.background = 'rgba(11, 30, 51, 1)'; // Force solid blue
+            }
+        });
+    </script>
+</body>
+
+</html>

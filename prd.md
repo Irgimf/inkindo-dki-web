@@ -65,25 +65,25 @@ Proyek lanjutan ini bertujuan untuk:
 
 | Lapisan | Teknologi | Alasan |
 |---|---|---|
-| **Frontend** | **Next.js (App Router) + TypeScript** | Mendukung SSG/ISR (halaman statis yang otomatis diperbarui), SEO bagus, optimasi gambar bawaan. CSS vanilla yang ada bisa dipakai langsung sebagai global CSS / CSS Modules |
+| **Frontend** | **Laravel Blade** | Native dengan ekosistem Laravel, memanfaatkan HTML/CSS/JS statis yang sudah ada dengan sangat mudah. |
 | **Styling** | **Vanilla CSS** (port dari `style.css`) + CSS Variables | Mempertahankan desain 100%, tanpa framework CSS tambahan |
-| **CMS + Backend API** | **Payload CMS 3** (berjalan di dalam Next.js yang sama) | Open-source, admin panel modern dan mudah dipakai, ada draft/publish, versi konten, live preview, multi-bahasa, role-based access. Satu aplikasi = deploy lebih sederhana |
-| **Database** | **PostgreSQL 16** | Stabil, cepat, mendukung full-text search, relasi data kuat |
-| **Penyimpanan Media** | **Object Storage S3-compatible** (Cloudflare R2 / IDCloudHost Object Storage) | File PDF regulasi & gambar tidak membebani server, murah, bisa lewat CDN |
+| **CMS + Backend API** | **Laravel 11 + Filament 3** | Ekosistem PHP terdepan, admin panel modern (Filament) sangat mudah dikembangkan, stabil, dan ramah pengguna |
+| **Database** | **MySQL / PostgreSQL** | Stabil, cepat, mendukung pencarian kompleks dan relasi data kuat |
+| **Penyimpanan Media** | **Local Storage / S3-compatible** | File PDF regulasi & gambar disimpan secara efisien |
 | **CDN + WAF + DNS** | **Cloudflare** | Cache global, proteksi DDoS, WAF, SSL gratis, Turnstile (captcha) |
-| **Pencarian** | PostgreSQL Full-Text Search (fase awal), opsional **Meilisearch** jika data sudah besar | Hemat infrastruktur di awal, bisa di-upgrade |
+| **Pencarian** | Database Full-Text Search | Menggunakan fitur native database untuk query pencarian |
 | **Email** | SMTP transactional (Brevo / Mailgun / SMTP domain inkindo) | Notifikasi form Klinik & Hubungi Kami |
-| **Hosting** | **VPS Indonesia** (mis. Biznet Gio / IDCloudHost, 2 vCPU / 4 GB RAM) + **Docker Compose** + **Nginx** | Latensi rendah untuk pengguna Indonesia, biaya terkontrol, data di dalam negeri (sesuai UU PDP) |
+| **Hosting** | **VPS Indonesia** (mis. Biznet Gio / IDCloudHost, 2 vCPU / 4 GB RAM) + **Nginx** | Latensi rendah untuk pengguna Indonesia, biaya terkontrol, data di dalam negeri (sesuai UU PDP) |
 | **CI/CD** | GitHub Actions | Lint, test, build, dan deploy otomatis |
-| **Monitoring** | Uptime Kuma / BetterStack, Sentry (error), Cloudflare Analytics / Umami | Pantau uptime, error, dan trafik tanpa cookie pihak ketiga |
+| **Monitoring** | Uptime Kuma / Sentry (error) | Pantau uptime dan error aplikasi |
 
 ### 4.3 Alternatif yang Dipertimbangkan
 
 | Opsi | Kelebihan | Kekurangan | Keputusan |
 |---|---|---|---|
-| Next.js + Payload + PostgreSQL | 1 codebase, TypeScript penuh, CMS ramah | Butuh server Node.js | ✅ **Dipilih** |
+| Laravel + Filament + MySQL | Ekosistem PHP familiar, hosting murah, admin panel modern yang powerful | - | ✅ **Dipilih** |
+| Next.js + Payload + PostgreSQL | 1 codebase, TypeScript penuh, CMS ramah | Butuh server Node.js | Cadangan jika tim lebih paham JS |
 | Astro + Strapi + PostgreSQL | Astro sangat ringan | 2 aplikasi terpisah, deploy & maintenance lebih rumit | Cadangan |
-| Laravel + Filament + MySQL | Ekosistem PHP familiar, hosting murah | Frontend interaktif kurang optimal, SSG/ISR tidak native | Cadangan jika tim lebih paham PHP |
 | WordPress | Admin sangat dikenal | Rawan celah plugin, performa butuh banyak tuning, desain custom lebih sulit | ❌ |
 
 ### 4.4 Diagram Arsitektur
@@ -93,9 +93,9 @@ flowchart LR
     U["Pengunjung"] --> CF["Cloudflare CDN + WAF"]
     A["Admin Sekretariat"] --> CF
     CF --> NG["Nginx Reverse Proxy"]
-    NG --> APP["Next.js + Payload CMS"]
-    APP --> DB[("PostgreSQL")]
-    APP --> S3[("Object Storage - PDF dan Gambar")]
+    NG --> APP["Laravel App (Blade + Filament)"]
+    APP --> DB[("Database (MySQL/PostgreSQL)")]
+    APP --> S3[("Storage - PDF dan Gambar")]
     APP --> MAIL["SMTP Email"]
     CF -.cache.-> S3
     U -.Login atau Daftar.-> EXT["Portal Eksternal (SIA)"]
@@ -105,11 +105,11 @@ flowchart LR
 
 | Jenis Halaman | Strategi | Keterangan |
 |---|---|---|
-| Home, Profil, Struktur, Ketentuan | **SSG + On-demand Revalidation** | Halaman dibuat statis. Saat admin klik "Publish", halaman terkait otomatis diperbarui |
-| Daftar & detail Berita/Regulasi | **ISR** + revalidate saat publish | Halaman detail dibuat saat pertama diakses lalu di-cache |
-| Direktori Anggota (search/filter) | **Server-side + cache 5 menit** | Query dibatasi & dipaginasi |
-| Form (Klinik, Kontak) | **Server Action / API** | Rate-limit + captcha |
-| Admin panel `/admin` | Dinamis, **tidak di-cache** | Dilindungi tambahan (lihat Keamanan) |
+| Home, Profil, Struktur, Ketentuan | **Response Cache / Blade Cache** | Halaman di-cache untuk mempercepat response. Cache di-clear saat konten diperbarui. |
+| Daftar & detail Berita/Regulasi | **Route/Query Caching** | Query database dan response di-cache (mis. pakai Redis/Memcached/File) |
+| Direktori Anggota (search/filter) | **Paginasi + Cache Dinamis** | Query dibatasi & dipaginasi |
+| Form (Klinik, Kontak) | **Form Request** | Rate-limit + validasi native Laravel |
+| Admin panel `/admin` | Dinamis, **tidak di-cache** | Autentikasi dan sesi aman (Filament) |
 
 ---
 
@@ -357,7 +357,7 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 
 **Tugas**
 - [ ] Setup repository Git (branch `main`, `staging`, `feature/*`)
-- [ ] Inisialisasi Next.js + TypeScript + Payload CMS + PostgreSQL (Docker Compose lokal)
+- [ ] Inisialisasi Laravel 11 + Filament 3 + MySQL/PostgreSQL (Laravel Sail / Docker Compose)
 - [ ] ESLint, Prettier, Husky (pre-commit), konvensi commit
 - [ ] GitHub Actions: lint → type-check → build
 - [ ] Server staging + domain staging (mis. `staging.inkindo-dki.org`)
@@ -379,7 +379,7 @@ Setiap fase **wajib lolos checkpoint** sebelum lanjut ke fase berikutnya.
 - [ ] Template halaman generik: `PageHero`, `Breadcrumb`, `ContentLayout`, `Card`, `Pagination`, `EmptyState`, `404`
 
 **✅ Checkpoint 1 — Visual Parity**
-- [x] Home di Next.js **identik secara visual** dengan `index.html` (bandingkan screenshot desktop & mobile)
+- [x] Home di Laravel (Blade) **identik secara visual** dengan `index.html` (bandingkan screenshot desktop & mobile)
 - [x] Semua interaksi (dropdown klik, panel, carousel, marquee, chat UI) berjalan sama
 - [x] Lighthouse Performance ≥ 90 untuk Home (data masih statis)
 - [x] Tidak ada error console

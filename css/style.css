@@ -913,6 +913,7 @@ a.panel-link:hover {
     padding-bottom: 12px;
     border-bottom: 2px solid var(--white);
     margin-bottom: 24px;
+    max-width: 740px;
 }
 
 .hero-search__input {
