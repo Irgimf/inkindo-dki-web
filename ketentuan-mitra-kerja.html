@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketentuan Mitra Kerja - DPP INKINDO DKI Jakarta</title>
+    <meta name="description"
+        content="Informasi Tentang Mitra Kerja, Maksud & Tujuan, Syarat, dan Ketentuan Mitra Kerja DPP INKINDO DKI Jakarta.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @media (min-width: 1024px) {
+            .mitra-content .container {
+                padding-right: 120px;
+            }
+        }
+
+        /* Hero Animation */
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-anim-title {
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .hero-anim-line {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+        }
+
+        .hero-anim-desc {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+        }
+
+        .hero-anim-btns {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s forwards;
+        }
+
+        /* Benefit Cards - iOS Glassmorphism */
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            border-radius: 24px;
+            padding: 36px 30px;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.02),
+                0 12px 28px -4px rgba(15, 23, 42, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(255, 255, 255, 1);
+            box-shadow: 
+                0 8px 12px -2px rgba(0, 0, 0, 0.03),
+                0 22px 38px -6px rgba(15, 23, 42, 0.09),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        .benefit-icon-wrap {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .benefit-card:hover .benefit-icon-wrap {
+            transform: scale(1.08);
+        }
+
+        .benefit-icon-wrap--blue {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            color: #0284c7;
+            border: 1px solid rgba(186, 230, 253, 0.8);
+        }
+
+        .benefit-icon-wrap--amber {
+            background: linear-gradient(135deg, #fef3c7 0%, #ffedd5 100%);
+            color: #d97706;
+            border: 1px solid rgba(254, 215, 170, 0.8);
+        }
+
+        .benefit-icon-wrap--green {
+            background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+            color: #16a34a;
+            border: 1px solid rgba(187, 247, 208, 0.8);
+        }
+
+        .benefit-list {
+            margin: auto 0 0;
+            padding: 20px 0 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid rgba(226, 232, 240, 0.7);
+        }
+
+        .benefit-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: #334155;
+        }
+
+        .benefit-list-icon {
+            font-size: 18px;
+            line-height: 1.25;
+            flex-shrink: 0;
+        }
+
+        /* Syarat Grid */
+        .syarat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .syarat-item {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 10px;
+            padding: 24px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .syarat-item:hover {
+            border-color: var(--royal);
+            transform: translateX(4px);
+        }
+
+        .syarat-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: var(--royal);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        /* Ketentuan Cards */
+        .ketentuan-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 28px;
+            transition: background 0.3s ease;
+        }
+
+        .ketentuan-card:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        /* Partner Logos Showcase */
+        .partner-logo-item {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .partner-logo-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-color: var(--royal);
+        }
+
+        .partner-logo-item img {
+            max-height: 48px;
+            max-width: 100%;
+            width: auto;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+        }
+
+        /* CTA Card */
+        .mitra-cta-box {
+            background: linear-gradient(135deg, #0b2545 0%, #005a9c 100%);
+            border-radius: 16px;
+            padding: 56px 40px;
+            color: var(--white);
+            box-shadow: 0 20px 40px rgba(11, 37, 69, 0.25);
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .mitra-cta-box {
+                grid-template-columns: 1fr;
+                padding: 36px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ================= HEADER UTAMA ================= -->
+    <header class="main-header" id="main-header">
+        <div class="container main-header__inner">
+            <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
+                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="main-nav__menu">
+                    <li><a href="index.html" class="main-nav__link" id="nav-home">Home</a></li>
+                    <li><a href="tentang.html" class="main-nav__link" id="nav-tentang">Tentang Kami</a></li>
+                    <li><a href="regulasi.html" class="main-nav__link" id="nav-regulasi">Regulasi</a></li>
+                    <li><a href="berita.html" class="main-nav__link" id="nav-berita">Berita &amp; Informasi</a></li>
+                    <li class="main-nav__icon-item">
+                        <button type="button" class="main-nav__icon" id="header-search-toggle" aria-label="Cari">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="lang-switch" id="lang-switch">
+                            <button type="button" class="lang-switch__btn is-active" data-lang="id">ID</button>
+                            <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Buka menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <div class="header-search" id="header-search">
+            <form class="container header-search__form" id="header-search-form">
+                <input type="text" id="header-search-input" class="header-search__input" placeholder="Cari di sini..."
+                    autocomplete="off">
+                <button type="submit" class="header-search__btn" aria-label="Cari">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- ================= SIDE NAV KANAN (BCA style) ================= -->
+    <aside class="side-nav" id="side-nav" aria-label="Menu layanan">
+        <div class="side-nav__list">
+            <button type="button" class="side-nav__link" data-panel="login" id="side-login">
+                <span class="material-symbols-outlined side-nav__icon">login</span>
+                <span class="side-nav__label">Login</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="lelang" id="side-lelang">
+                <span class="material-symbols-outlined side-nav__icon">gavel</span>
+                <span class="side-nav__label">Info Lelang</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="anggota" id="side-anggota">
+                <span class="material-symbols-outlined side-nav__icon">groups</span>
+                <span class="side-nav__label">Anggota</span>
+            </button>
+            <button type="button" class="side-nav__link is-active" data-panel="mitra" id="side-mitra">
+                <span class="material-symbols-outlined side-nav__icon">handshake</span>
+                <span class="side-nav__label">Mitra Kerja</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="klinik" id="side-klinik">
+                <span class="material-symbols-outlined side-nav__icon">medical_information</span>
+                <span class="side-nav__label">Klinik Konsultasi</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="kontak" id="side-kontak">
+                <span class="material-symbols-outlined side-nav__icon">call</span>
+                <span class="side-nav__label">Hubungi Kami</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="chat" id="side-chat">
+                <span class="material-symbols-outlined side-nav__icon">forum</span>
+                <span class="side-nav__label">Chat</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Panel geser dari kanan -->
+    <div class="side-panel" id="side-panel" aria-hidden="true">
+        <div class="side-panel__top">
+            <button type="button" class="side-panel__close" id="side-panel-close" aria-label="Tutup panel">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Login -->
+        <div class="side-panel__content" data-content="login">
+            <h3 class="side-panel__title">Login</h3>
+            <ul class="panel-links">
+                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">groups</span>
+                        <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="https://www.inkindo-dki.org/mitra/login" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">handshake</span>
+                        <span><strong>Mitra Kerja</strong><small>Portal kolaborasi dan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">admin_panel_settings</span>
+                        <span><strong>Admin Kesekretariatan</strong><small>Akses khusus pengurus DPP</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Info Lelang -->
+        <div class="side-panel__content" data-content="lelang">
+            <h3 class="side-panel__title">Info Lelang</h3>
+            <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah melalui kanal resmi
+                berikut.</p>
+            <ul class="panel-links">
+                <li><a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">shopping_cart_checkout</span>
+                        <span><strong>LKPP</strong><small>Lembaga Kebijakan Pengadaan Barang/Jasa
+                                Pemerintah</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="lelang-lainnya.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">campaign</span>
+                        <span><strong>Info Lelang Lainnya</strong><small>Informasi paket pengadaan
+                                alternatif</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Anggota -->
+        <div class="side-panel__content" data-content="anggota">
+            <h3 class="side-panel__title">Anggota</h3>
+            <ul class="panel-links">
+                <li><a href="https://www.inkindo-dki.org/register" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">person_add</span>
+                        <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan
+                                INKINDO</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">autorenew</span>
+                        <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan
+                                tahunan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="anggota-terdaftar.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">fact_check</span>
+                        <span><strong>Anggota Terdaftar</strong><small>Direktori badan usaha
+                                terverifikasi</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Mitra Kerja -->
+        <div class="side-panel__content is-active" data-content="mitra">
+            <h3 class="side-panel__title">Mitra Kerja</h3>
+            <ul class="panel-links">
+                <li><a href="ketentuan-mitra-kerja.html" class="panel-link is-current">
+                        <span class="material-symbols-outlined panel-link__icon">rule</span>
+                        <span><strong>Ketentuan Mitra Kerja</strong><small>Syarat dan panduan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="javascript:void(0)" class="panel-link" onclick="openDaftarMitraModal(event)">
+                        <span class="material-symbols-outlined panel-link__icon">how_to_reg</span>
+                        <span><strong>Daftar Mitra Kerja</strong><small>Formulir registrasi kemitraan baru</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+            <h4
+                style="margin-top: 24px; font-size: 14px; font-weight: 700; color: var(--slate-900); display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-outlined" style="color: var(--royal); font-size: 20px;">verified</span>
+                Mitra Kerja Terdaftar
+            </h4>
+            <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
+                <div class="partner-card"
+                    style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                        style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card"
+                    style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                        style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card"
+                    style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                        style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card"
+                    style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                        style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card"
+                    style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                        style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card"
+                    style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                        style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Klinik Konsultasi -->
+        <div class="side-panel__content" data-content="klinik">
+            <h3 class="side-panel__title">Klinik Konsultasi</h3>
+            <p class="side-panel__desc">Pendampingan gratis bagi anggota terkait regulasi, sertifikasi, dan
+                pengadaan jasa konsultansi.</p>
+            <div class="topic-list">
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Advokasi & Mediasi')">Advokasi &amp; Mediasi</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Regulasi')">Regulasi</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Perpajakan')">Perpajakan</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Pelayanan')">Pelayanan (KTA, SBU, OSS, dll)</span>
+            </div>
+            <div class="panel-info">
+                <span class="material-symbols-outlined">schedule</span>
+                <span>Sesi tatap muka &amp; daring<br><small>Senin - Jumat: 08.00 - 16.30 WIB</small></span>
+            </div>
+            <button type="button" class="btn btn--primary btn--block" id="klinik-cta" onclick="openKlinikKonsultasiModal(event)">Ajukan Konsultasi</button>
+        </div>
+
+        <!-- Hubungi Kami -->
+        <div class="side-panel__content" data-content="kontak">
+            <h3 class="side-panel__title">Hubungi Kami</h3>
+            <ul class="panel-links">
+                <li><a href="tel:+62217942940" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">call</span>
+                        <span><strong>Telp: +62217942940(H) / +6282112079750</strong><small>Fax: +62217942941</small></span>
+                    </a></li>
+                <li><a href="mailto:sekretariat@inkindo-dki.org" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">mail</span>
+                        <span><strong>sekretariat@inkindo-dki.org</strong><small>inkindo_dki@yahoo.com</small></span>
+                    </a></li>
+                <li>
+                    <div class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">location_on</span>
+                        <span><strong>Sekretariat DPP</strong><small>Jl. Pertani No. 7, Duren Tiga - Pancoran,
+                                Jakarta Selatan 12760</small></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">schedule</span>
+                        <span><strong>Jam Operasional</strong><small>Senin - Jumat: 08.00 - 16.30 WIB</small></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chat -->
+        <div class="side-panel__content side-panel__content--chat" data-content="chat">
+            <div class="chat-head">
+                <div class="chat-head__avatar"><span class="material-symbols-outlined">smart_toy</span></div>
+                <div>
+                    <h3 class="side-panel__title side-panel__title--chat">Asisten INKINDO</h3>
+                    <span class="chat-head__status">Online</span>
+                </div>
+            </div>
+            <div class="chat-body" id="chat-body"></div>
+            <div class="chat-quick" id="chat-quick">
+                <button type="button" class="chat-quick__btn">Cara daftar anggota</button>
+                <button type="button" class="chat-quick__btn">Info SBU</button>
+                <button type="button" class="chat-quick__btn">Jam operasional</button>
+            </div>
+            <form class="chat-form" id="chat-form">
+                <input type="text" id="chat-input" class="chat-form__input" placeholder="Ketik pesan..."
+                    autocomplete="off">
+                <button type="submit" class="chat-form__btn" aria-label="Kirim">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="mitra-content">
+
+        <!-- 1. Hero Section (Identik tentang.html: Full Screen 100vh & Warna Biru Identik) -->
+        <section
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat;">
+            <div style="position: absolute; inset: 0; background: rgba(11, 30, 51, 0.75);"></div>
+            <div class="container" style="position: relative; z-index: 2; text-align: left; width: 100%;">
+                <h1 class="hero-anim-title"
+                    style="font-size: clamp(38px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; text-shadow: 0 8px 30px rgba(0,0,0,0.4);">
+                    Tentang Mitra Kerja</h1>
+                <div class="hero-anim-line"
+                    style="width: 70px; height: 5px; background: var(--accent, #f59e0b); margin: 0 0 24px; border-radius: 4px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);">
+                </div>
+                <div class="hero-anim-desc"
+                    style="font-size: clamp(16px, 1.8vw, 19px); max-width: 780px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); text-shadow: 0 4px 16px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 16px;">
+                    <p style="margin: 0;">
+                        Halaman ini didedikasikan bagi para pihak yang bekerjasama dengan <strong>INKINDO DKI Jakarta</strong> baik untuk <strong>Kontraktor</strong>, <strong>Produsen</strong>, <strong>Suplier</strong> dan lain-lain.
+                    </p>
+                    <p style="margin: 0; padding-left: 16px; border-left: 3px solid var(--accent, #f59e0b); color: #f8fafc;">
+                        Apabila Bapak/Ibu berminat menjadi Mitra Kerja INKINDO DKI Jakarta dapat menghubungi Sekretariat INKINDO DKI Jakarta.
+                    </p>
+                </div>
+                <div class="hero-anim-btns" style="margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn--primary" onclick="openDaftarMitraModal()"
+                        style="padding: 14px 28px; font-size: 15px; font-weight: 700; border-radius: 10px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0, 90, 156, 0.4);">
+                        <span class="material-symbols-outlined" style="font-size: 22px;">how_to_reg</span>
+                        Daftar Mitra Kerja
+                    </button>
+                    <a href="#maksud-tujuan" class="btn btn--outline"
+                        style="padding: 14px 28px; font-size: 15px; font-weight: 600; border-radius: 10px; color: var(--white); border-color: rgba(255,255,255,0.6); display: inline-flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">info</span>
+                        Pelajari Selengkapnya
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Maksud & Tujuan Mitra Kerja (iOS Glassmorphism & Soft Ambient Background) -->
+        <section id="maksud-tujuan" style="padding: 96px 0; background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%); position: relative; overflow: hidden;">
+            <!-- Ambient Blur Glows for Glassmorphism Effect -->
+            <div style="position: absolute; top: -60px; left: 10%; width: 440px; height: 440px; background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0) 70%); filter: blur(60px); pointer-events: none;"></div>
+            <div style="position: absolute; bottom: -80px; right: 10%; width: 480px; height: 480px; background: radial-gradient(circle, rgba(245, 158, 11, 0.10) 0%, rgba(245, 158, 11, 0) 70%); filter: blur(70px); pointer-events: none;"></div>
+
+            <div class="container" style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: left;">
+                <div style="text-align: center; max-width: 860px; margin: 0 auto 56px;">
+                    <span
+                        style="color: var(--royal); font-weight: 700; font-size: 13.5px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
+                        Kolaborasi &amp; Sinergi Strategis
+                    </span>
+                    <h2 style="font-size: clamp(28px, 3.5vw, 38px); color: var(--slate-900); font-weight: 800; margin-bottom: 20px; line-height: 1.3;">
+                        Maksud &amp; Tujuan Mitra Kerja
+                    </h2>
+                    <div style="width: 50px; height: 4px; background: var(--royal); margin: 0 auto 24px; border-radius: 2px;"></div>
+                    <p style="font-size: 17px; line-height: 1.8; color: var(--slate-700); margin: 0;">
+                        Dengan halaman mitra kerja ini diharapkan dapat memberikan manfaat khususnya bagi <strong>Anggota</strong>, para <strong>Mitra Kerja</strong> dan <strong>Masyarakat</strong> pada umumnya, baik dalam mencari barang/jasa maupun informasi yang dibutuhkan untuk kegiatan usaha terkait usaha jasa konsultansi.
+                    </p>
+                </div>
+
+                <!-- 3 Pillars Benefit Grid (iOS Glassmorphism) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+                    <!-- Card 1: Anggota -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrap benefit-icon-wrap--blue">
+                            <span class="material-symbols-outlined" style="font-size: 30px;">group</span>
+                        </div>
+                        <h3 style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
+                            Bagi Anggota INKINDO
+                        </h3>
+                        <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
+                            Mempermudah 900+ badan usaha konsultan dalam mengakses referensi material bersertifikasi, teknologi terkini, penawaran harga korporat terbaik, serta vendor pelaksana yang terpercaya.
+                        </p>
+                        <ul class="benefit-list">
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #0284c7;">check_circle</span>
+                                <span>Akses langsung ke katalog produk &amp; spesifikasi teknis</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #0284c7;">check_circle</span>
+                                <span>Dukungan transfer keahlian &amp; workshop material</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #0284c7;">check_circle</span>
+                                <span>Jaminan mutu pengadaan dalam rancang bangun</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2: Mitra Kerja -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrap benefit-icon-wrap--amber">
+                            <span class="material-symbols-outlined" style="font-size: 30px;">handshake</span>
+                        </div>
+                        <h3 style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
+                            Bagi Para Mitra Kerja
+                        </h3>
+                        <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
+                            Membuka jembatan interaksi promosi langsung dengan para perencana, perancang, pengawas, dan konsultan manajemen proyek di seluruh DKI Jakarta dan proyek nasional.
+                        </p>
+                        <ul class="benefit-list">
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #d97706;">check_circle</span>
+                                <span>Publikasi resmi di portal direktori INKINDO DKI</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #d97706;">check_circle</span>
+                                <span>Peluang business matching &amp; sponsorship event</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #d97706;">check_circle</span>
+                                <span>Sinergi penawaran pada proyek pemerintah &amp; swasta</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3: Masyarakat -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrap benefit-icon-wrap--green">
+                            <span class="material-symbols-outlined" style="font-size: 30px;">public</span>
+                        </div>
+                        <h3 style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
+                            Bagi Masyarakat Luas
+                        </h3>
+                        <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
+                            Mendorong terwujudnya hasil karya pembangunan infrastruktur dan gedung yang lebih kokoh, aman, ramah lingkungan, serta memenuhi standar kepatuhan nasional.
+                        </p>
+                        <ul class="benefit-list">
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #16a34a;">check_circle</span>
+                                <span>Standar konstruksi yang transparan dan akuntabel</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #16a34a;">check_circle</span>
+                                <span>Penerapan material ramah lingkungan (Green Building)</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined benefit-list-icon" style="color: #16a34a;">check_circle</span>
+                                <span>Hasil investasi proyek yang berdaya tahan lama</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Syarat Mitra Kerja (Subtle Slate Background) -->
+        <section id="syarat" style="padding: 88px 0; background: var(--slate-50); border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);">
+            <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
+                <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; align-items: flex-start;">
+                    <div>
+                        <span style="color: var(--royal); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
+                            Kriteria &amp; Legalitas
+                        </span>
+                        <h2 style="font-size: clamp(28px, 3.5vw, 36px); color: var(--slate-900); font-weight: 800; margin-bottom: 20px; line-height: 1.3;">
+                            Syarat Mitra Kerja
+                        </h2>
+                        <div style="width: 50px; height: 4px; background: var(--royal); margin: 0 0 24px; border-radius: 2px;"></div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-600); margin-bottom: 24px;">
+                            Program kemitraan ini terbuka bagi seluruh pelaku usaha yang berkomitmen menjalin kerjasama secara profesional, transparan, dan berintegritas tinggi bersama DPP INKINDO DKI Jakarta.
+                        </p>
+                        <div style="background: #eff6ff; border-left: 4px solid var(--royal); padding: 18px; border-radius: 8px;">
+                            <h4 style="margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--royal); display: flex; align-items: center; gap: 6px;">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">verified_user</span>
+                                Siapa yang Dapat Bermitra?
+                            </h4>
+                            <p style="margin: 0; font-size: 13.5px; color: var(--slate-700); line-height: 1.6;">
+                                Kontraktor Pelaksana, Produsen Material Bahan Bangunan, Suplier Peralatan &amp; Mesin, Penyedia Solusi Software/IT Desain (BIM, CAD), Perbankan, Penjaminan/Asuransi Proyek, dan Laboratorium Pengujian Teknis.
+                            </p>
+                        </div>
+                        <div style="margin-top: 32px;">
+                            <button type="button" class="btn btn--primary" onclick="openDaftarMitraModal()"
+                                style="padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;">
+                                <span class="material-symbols-outlined">how_to_reg</span>
+                                Daftar Mitra Sekarang
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Daftar Persyaratan -->
+                    <div class="syarat-grid">
+                        <div class="syarat-item">
+                            <div class="syarat-badge">1</div>
+                            <div>
+                                <h4 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                    Badan Usaha Resmi
+                                </h4>
+                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                    Perusahaan berbadan hukum sah di Indonesia (PT, CV, Koperasi, Distributor Resmi / Agen Tunggal) dengan domisili usaha yang jelas.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="syarat-item">
+                            <div class="syarat-badge">2</div>
+                            <div>
+                                <h4 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                    Legalitas &amp; Izin Usaha
+                                </h4>
+                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                    Memiliki Nomor Induk Berusaha (NIB) berbasis risiko aktif, Nomor Pokok Wajib Pajak (NPWP) Badan, serta izin operasional sektor terkait.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="syarat-item">
+                            <div class="syarat-badge">3</div>
+                            <div>
+                                <h4 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                    Bidang Usaha yang Relevan
+                                </h4>
+                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                    Bergerak di bidang yang menunjang aktivitas jasa konstruksi, jasa konsultansi keteknikan, dan layanan penunjang profesional lainnya.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="syarat-item">
+                            <div class="syarat-badge">4</div>
+                            <div>
+                                <h4 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                    Penunjukan PIC Resmi
+                                </h4>
+                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                    Menunjuk Person in Charge (PIC) tetap sebagai narahubung resmi dan berwenang melakukan koordinasi teknis dengan INKINDO DKI Jakarta.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="syarat-item">
+                            <div class="syarat-badge">5</div>
+                            <div>
+                                <h4 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                    Komitmen Mutu &amp; SMAP
+                                </h4>
+                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                    Menyediakan produk/jasa berstandar SNI/internasional dan berkomitmen mematuhi Sistem Manajemen Anti Penyuapan (ISO 37001).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="syarat-item">
+                            <div class="syarat-badge">6</div>
+                            <div>
+                                <h4 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                    Registrasi Administratif
+                                </h4>
+                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                    Mengisi formulir pendaftaran kemitraan secara daring dan menandatangani kesepahaman kemitraan bersama sekretariat.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Ketentuan Mitra Kerja (Image Background Identik Visi Misi tentang.html) -->
+        <section id="ketentuan"
+            style="position: relative; padding: 96px 0; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat fixed;">
+            <div style="position: absolute; inset: 0; background: rgba(0, 90, 156, 0.88);"></div>
+            <div class="container" style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: left;">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto 56px;">
+                    <span
+                        style="color: var(--accent, #f59e0b); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
+                        Tata Tertib &amp; Regulasi Kerjasama
+                    </span>
+                    <h2 style="font-size: clamp(28px, 3.5vw, 38px); margin-bottom: 16px; font-weight: 800;">
+                        Ketentuan Mitra Kerja
+                    </h2>
+                    <div style="width: 50px; height: 4px; background: var(--accent, #f59e0b); margin: 0 auto 20px; border-radius: 2px;"></div>
+                    <p style="font-size: 16px; line-height: 1.7; color: rgba(255, 255, 255, 0.9);">
+                        Seluruh hubungan kemitraan diatur secara profesional untuk melindungi reputasi asosiasi serta menjamin keterbukaan hak dan kewajiban kedua belah pihak.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px;">
+                    <!-- Ketentuan 1 -->
+                    <div class="ketentuan-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent, #f59e0b);">balance</span>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">1. Prinsip &amp; Asas Kemitraan</h3>
+                        </div>
+                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                            Hubungan kemitraan bersifat <em>non-eksklusif</em> dan berorientasi pada sinergi saling menguntungkan (<em>mutual benefit</em>). Kemitraan tidak membatasi independensi para konsultan anggota INKINDO dalam menentukan keputusan teknis.
+                        </p>
+                    </div>
+
+                    <!-- Ketentuan 2 -->
+                    <div class="ketentuan-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent, #f59e0b);">campaign</span>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">2. Hak &amp; Fasilitas Mitra</h3>
+                        </div>
+                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                            Mitra resmi berhak mencantumkan logo di direktori website INKINDO DKI, mengikuti agenda <em>knowledge sharing</em> / seminar teknis, serta berpeluang mempresentasikan inovasi produk dalam temu anggota asosiasi.
+                        </p>
+                    </div>
+
+                    <!-- Ketentuan 3 -->
+                    <div class="ketentuan-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent, #f59e0b);">assignment_turned_in</span>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">3. Kewajiban &amp; Akuntabilitas</h3>
+                        </div>
+                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                            Mitra berkewajiban memberikan informasi spesifikasi material/jasa yang akurat, menjamin ketersediaan barang/layanan purnajual, serta menjaga harga yang kompetitif bagi para konsultan anggota.
+                        </p>
+                    </div>
+
+                    <!-- Ketentuan 4 -->
+                    <div class="ketentuan-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent, #f59e0b);">calendar_clock</span>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">4. Masa Berlaku &amp; Evaluasi</h3>
+                        </div>
+                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                            Status kemitraan berlaku selama 1 (satu) tahun kalender sejak tanggal pengesahan registrasi. DPP INKINDO DKI Jakarta melaksanakan evaluasi berkala untuk perpanjangan masa kemitraan berikutnya.
+                        </p>
+                    </div>
+
+                    <!-- Ketentuan 5 -->
+                    <div class="ketentuan-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent, #f59e0b);">security</span>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">5. Integritas &amp; Etika Bisnis</h3>
+                        </div>
+                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                            Mitra wajib menjunjung tinggi etika bisnis yang sehat, tidak melakukan praktik monopoli, gratifikasi ilegal, atau penyuapan yang bertentangan dengan standar SMAP ISO 37001 dan hukum Republik Indonesia.
+                        </p>
+                    </div>
+
+                    <!-- Ketentuan 6 -->
+                    <div class="ketentuan-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                            <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent, #f59e0b);">cancel</span>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">6. Pengakhiran Kemitraan</h3>
+                        </div>
+                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                            DPP INKINDO DKI Jakarta berhak menghentikan kemitraan secara sepihak apabila mitra terbukti melakukan pelanggaran hukum, wanprestasi kontrak, atau merugikan harkat dan martabat asosiasi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Showcase Mitra Kerja Terdaftar -->
+        <section style="padding: 88px 0 100px; background: var(--white);">
+            <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto 48px;">
+                    <span style="color: var(--royal); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
+                        Jejaring Rekanan Resmi
+                    </span>
+                    <h2 style="font-size: clamp(26px, 3.2vw, 36px); color: var(--slate-900); font-weight: 800; margin-bottom: 16px;">
+                        Mitra Kerja Terdaftar INKINDO DKI Jakarta
+                    </h2>
+                    <div style="width: 50px; height: 4px; background: var(--royal); margin: 0 auto 20px; border-radius: 2px;"></div>
+                    <p style="font-size: 16px; line-height: 1.7; color: var(--slate-600); margin: 0;">
+                        Sinergi terpercaya bersama perusahaan-perusahaan terkemuka di sektor industri material, teknologi rancang bangun, dan jasa konstruksi nasional.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;">
+                    <div class="partner-logo-item"><img src="mitra_logos/avian.jpg" alt="Avian Brands"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/lesso.jpg" alt="Lesso Group"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/seven.jpg" alt="Seven ACP"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/dekkson.jpg" alt="Dekkson Architectural Hardware"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/alila.jpg" alt="Alila"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/propan.jpg" alt="Propan Raya"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/kulitbatu.jpg" alt="Kulit Batu"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/kjpp.jpg" alt="KJPP"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/amtyas.jpg" alt="Amtyas"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/dc.jpg" alt="DC"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/cbm.jpg" alt="CBM"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/cec.jpg" alt="CEC"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" id="kontak">
+        <div class="site-footer__container">
+            <div class="site-footer__grid">
+                <!-- Col 1: Identity & Bio & Social Media -->
+                <div class="site-footer__brand">
+                    <div class="site-footer__logo">
+                        <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
+                    </div>
+                    <p class="site-footer__bio">
+                        Ikatan Nasional Konsultan Indonesia (INKINDO) Provinsi DKI Jakarta merupakan wadah asosiasi
+                        perusahaan jasa konsultansi independen yang profesional dan berintegritas.
+                    </p>
+                    <div class="site-footer__social">
+                        <a href="https://www.youtube.com/@inkindodkiofficial" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--youtube" aria-label="YouTube INKINDO DKI" title="YouTube">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/inkindodki" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--facebook" aria-label="Facebook INKINDO DKI" title="Facebook">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://x.com/inkindoD" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--x" aria-label="X (Twitter) INKINDO DKI" title="X (Twitter)">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/inkindo_dki/" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--instagram" aria-label="Instagram INKINDO DKI" title="Instagram">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Col 2: Sekretariat DPP -->
+                <div class="site-footer__col site-footer__col--contact">
+                    <h4>Sekretariat DPP</h4>
+                    <p class="site-footer__address">
+                        <span class="material-symbols-outlined site-footer__icon">location_on</span>
+                        <span>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</span>
+                    </p>
+                    <div class="site-footer__contact">
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">call</span>
+                            <span>Telp: <a href="tel:+62217942940" class="site-footer__link">+62217942940</a>(H), <a href="tel:+6282112079750" class="site-footer__link">+6282112079750</a>, Fax: +62217942941</span>
+                        </div>
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">mail</span>
+                            <span>
+                                <a href="mailto:sekretariat@inkindo-dki.org" class="site-footer__link">sekretariat@inkindo-dki.org</a>
+                                <span style="opacity: 0.5; margin: 0 4px;">-</span>
+                                <a href="mailto:inkindo_dki@yahoo.com" class="site-footer__link">inkindo_dki@yahoo.com</a>
+                            </span>
+                        </div>
+                        <div class="site-footer__contact-item site-footer__hours">
+                            <span class="material-symbols-outlined site-footer__icon">schedule</span>
+                            <span>Senin - Jumat: 08.00 - 16.30 WIB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="site-footer__bottom">
+                <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

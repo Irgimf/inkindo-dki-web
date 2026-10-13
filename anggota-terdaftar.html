@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direktori Anggota Terdaftar - DPP INKINDO DKI Jakarta</title>
+    <meta name="description" content="Direktori resmi badan usaha jasa konsultansi yang terdaftar dan terverifikasi sebagai anggota aktif DPP INKINDO DKI Jakarta.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Mengamankan agar padding menyesuaikan adanya side-nav di desktop seperti tentang.html */
+        @media (min-width: 1024px) {
+            .anggota-content .container {
+                padding-right: 120px;
+            }
+        }
+
+        /* Animasi Hero Persis tentang.html */
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-anim-title {
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .hero-anim-line {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+        }
+
+        .hero-anim-desc {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+            border-color: #cbd5e1;
+        }
+
+        .stat-card__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .stat-card__icon--blue {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .stat-card__icon--amber {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .stat-card__icon--emerald {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .stat-card__icon--indigo {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .stat-card__number {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--slate-900);
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .stat-card__label {
+            font-size: 13px;
+            color: var(--slate-600);
+            margin: 4px 0 0;
+            font-weight: 500;
+        }
+
+        /* Filter & Search Box */
+        .directory-filter-box {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 32px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr 1.2fr auto;
+            gap: 16px;
+            align-items: flex-end;
+        }
+
+        @media (max-width: 991px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-700);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-input-wrap {
+            position: relative;
+        }
+
+        .filter-input-wrap span {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--slate-400);
+            font-size: 20px;
+            pointer-events: none;
+        }
+
+        .filter-input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--slate-800);
+            font-family: inherit;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #0284c7;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--slate-800);
+            font-family: inherit;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #0284c7;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .btn-reset-filter {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            color: var(--slate-700);
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            height: 44px;
+            white-space: nowrap;
+        }
+
+        .btn-reset-filter:hover {
+            background: #fee2e2;
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+
+        /* Pill quick filters */
+        .filter-pills {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
+
+        .filter-pills-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-500);
+            margin-right: 4px;
+        }
+
+        .pill-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            background: #e2e8f0;
+            color: var(--slate-900);
+        }
+
+        .pill-btn.is-active {
+            background: var(--royal, #0f4c81);
+            color: #ffffff;
+            border-color: var(--royal, #0f4c81);
+        }
+
+        /* Directory Table Card */
+        .directory-table-card {
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .directory-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 28px;
+            border-bottom: 1px solid #f1f5f9;
+            background: #fafbfd;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .directory-table-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .record-counter {
+            font-size: 14px;
+            color: var(--slate-600);
+            font-weight: 500;
+        }
+
+        .record-counter strong {
+            color: var(--royal, #0f4c81);
+            font-weight: 700;
+        }
+
+        /* Table Design */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .directory-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .directory-table th {
+            background: #f8fafc;
+            color: var(--slate-700);
+            font-weight: 700;
+            padding: 16px 20px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .directory-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--slate-800);
+            vertical-align: middle;
+            transition: background 0.15s ease;
+        }
+
+        .directory-table tbody tr:hover td {
+            background: #f8fafc;
+        }
+
+        .company-name-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--slate-900);
+            cursor: pointer;
+            transition: color 0.2s;
+            display: inline-block;
+        }
+
+        .company-name-text:hover {
+            color: #0284c7;
+            text-decoration: underline;
+        }
+
+        .npa-cell {
+            font-family: 'Inter', monospace;
+            font-size: 13px;
+            color: var(--slate-600);
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Status & Kualifikasi Badges */
+        .badge-keanggotaan {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .badge-kualifikasi {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-kualifikasi--besar {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .badge-kualifikasi--menengah {
+            background: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
+        }
+
+        .badge-kualifikasi--kecil {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .wilayah-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--slate-600);
+            font-weight: 500;
+        }
+
+        .btn-view-detail {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-view-detail:hover {
+            background: #1d4ed8;
+            color: #ffffff;
+        }
+
+        /* Pagination Controls */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 28px;
+            border-top: 1px solid #f1f5f9;
+            background: #fafbfd;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: var(--slate-600);
+        }
+
+        .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .page-btn {
+            min-width: 36px;
+            height: 36px;
+            padding: 0 8px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: var(--slate-700);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: #f1f5f9;
+            color: var(--slate-900);
+            border-color: #94a3b8;
+        }
+
+        .page-btn.is-active {
+            background: var(--royal, #0f4c81);
+            color: #ffffff;
+            border-color: var(--royal, #0f4c81);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Detail Modal Popup */
+        .member-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .member-modal.is-open {
+            display: flex;
+        }
+
+        .member-modal__card {
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 780px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: heroFadeUp 0.3s ease-out forwards;
+        }
+
+        .member-modal__header {
+            background: #0f4c81;
+            color: #ffffff;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-modal__title-bar {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .member-modal__close {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #ffffff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .member-modal__close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .member-modal__body {
+            padding: 32px;
+            overflow-y: auto;
+        }
+
+        .modal-company-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--slate-900);
+            text-align: center;
+            margin: 0 0 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Info Profil Anggota Table */
+        .detail-table-wrap {
+            margin-bottom: 28px;
+        }
+
+        .detail-table-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin: 0 0 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .detail-table td {
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            color: var(--slate-800);
+            line-height: 1.5;
+        }
+
+        .detail-table td:first-child {
+            width: 220px;
+            font-weight: 600;
+            color: var(--slate-700);
+            background: #f8fafc;
+        }
+
+        /* Info SBU Section */
+        .sbu-section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px 24px;
+        }
+
+        .sbu-category-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--royal, #0f4c81);
+            margin: 0 0 14px;
+        }
+
+        .sbu-list {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .sbu-list > li {
+            margin-bottom: 14px;
+            font-size: 14px;
+            color: var(--slate-900);
+            line-height: 1.6;
+        }
+
+        .sbu-sublist {
+            list-style-type: circle;
+            padding-left: 24px;
+            margin-top: 6px;
+            color: var(--slate-600);
+            font-size: 13.5px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .member-modal__footer {
+            padding: 16px 24px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-kembali {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--royal, #0f4c81);
+            color: #ffffff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-kembali:hover {
+            background: #0284c7;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--slate-500);
+        }
+
+        .empty-state span {
+            font-size: 48px;
+            color: var(--slate-400);
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ================= HEADER ================= -->
+    <header class="main-header" id="main-header">
+        <div class="container main-header__inner">
+            <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
+                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+            </a>
+
+            <nav class="main-nav" id="main-nav">
+                <ul class="main-nav__menu">
+                    <li><a href="index.html" class="main-nav__link" id="nav-home">Home</a></li>
+                    <li><a href="tentang.html" class="main-nav__link" id="nav-tentang">Tentang Kami</a></li>
+                    <li><a href="regulasi.html" class="main-nav__link" id="nav-regulasi">Regulasi</a></li>
+                    <li><a href="berita.html" class="main-nav__link" id="nav-berita">Berita &amp; Informasi</a></li>
+                    <li class="main-nav__icon-item">
+                        <button type="button" class="main-nav__icon" id="header-search-toggle" aria-label="Cari">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="lang-switch" id="lang-switch">
+                            <button type="button" class="lang-switch__btn is-active" data-lang="id">ID</button>
+                            <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Buka menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <!-- Header search bar -->
+        <div class="header-search" id="header-search">
+            <form class="container header-search__form" id="header-search-form">
+                <input type="text" id="header-search-input" class="header-search__input" placeholder="Cari di sini?"
+                    autocomplete="off">
+                <button type="submit" class="header-search__btn" aria-label="Cari">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- ================= SIDE NAV KANAN (BCA style) ================= -->
+    <aside class="side-nav" id="side-nav" aria-label="Menu layanan">
+        <div class="side-nav__list">
+            <button type="button" class="side-nav__link" data-panel="login" id="side-login">
+                <span class="material-symbols-outlined side-nav__icon">login</span>
+                <span class="side-nav__label">Login</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="lelang" id="side-lelang">
+                <span class="material-symbols-outlined side-nav__icon">gavel</span>
+                <span class="side-nav__label">Info Lelang</span>
+            </button>
+            <button type="button" class="side-nav__link is-active" data-panel="anggota" id="side-anggota">
+                <span class="material-symbols-outlined side-nav__icon">groups</span>
+                <span class="side-nav__label">Anggota</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="mitra" id="side-mitra">
+                <span class="material-symbols-outlined side-nav__icon">handshake</span>
+                <span class="side-nav__label">Mitra Kerja</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="klinik" id="side-klinik">
+                <span class="material-symbols-outlined side-nav__icon">medical_information</span>
+                <span class="side-nav__label">Klinik Konsultasi</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="kontak" id="side-kontak">
+                <span class="material-symbols-outlined side-nav__icon">call</span>
+                <span class="side-nav__label">Hubungi Kami</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="chat" id="side-chat">
+                <span class="material-symbols-outlined side-nav__icon">forum</span>
+                <span class="side-nav__label">Chat</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Panel geser dari kanan -->
+    <div class="side-panel" id="side-panel" aria-hidden="true">
+        <div class="side-panel__top">
+            <button type="button" class="side-panel__close" id="side-panel-close" aria-label="Tutup panel">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Login -->
+        <div class="side-panel__content" data-content="login">
+            <h3 class="side-panel__title">Login</h3>
+            <ul class="panel-links">
+                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">groups</span>
+                        <span><strong>Anggota INKINDO</strong><small>Login Sistem Informasi Anggota (SIA)</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="https://www.inkindo-dki.org/mitra/login" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">handshake</span>
+                        <span><strong>Mitra Kerja</strong><small>Login Portal Rekanan &amp; Mitra Terdaftar</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">shield_person</span>
+                        <span><strong>Admin Kesekretariatan</strong><small>Login Petugas DPP INKINDO</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Info Lelang -->
+        <div class="side-panel__content" data-content="lelang">
+            <h3 class="side-panel__title">Info Lelang</h3>
+            <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah dan BUMN melalui kanal resmi berikut.</p>
+            <ul class="panel-links">
+                <li><a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">public</span>
+                        <span><strong>LKPP (SPSE)</strong><small>Portal Pengadaan Nasional LKPP</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="lelang-lainnya.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">domain</span>
+                        <span><strong>Info Lelang Lainnya</strong><small>BUMN, Multilateral, &amp; Peluang Proyek</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Anggota -->
+        <div class="side-panel__content is-active" data-content="anggota">
+            <h3 class="side-panel__title">Anggota</h3>
+            <ul class="panel-links">
+                <li><a href="https://www.inkindo-dki.org/register" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">person_add</span>
+                        <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan INKINDO</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">autorenew</span>
+                        <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan tahunan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="anggota-terdaftar.html" class="panel-link is-current" style="background: rgba(0, 119, 197, 0.08); border-left: 3px solid var(--royal, #0f4c81);">
+                        <span class="material-symbols-outlined panel-link__icon" style="color: var(--royal, #0f4c81);">fact_check</span>
+                        <span><strong style="color: var(--royal, #0f4c81);">Anggota Terdaftar</strong><small>Direktori badan usaha terverifikasi</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow" style="color: var(--royal, #0f4c81);">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Mitra Kerja -->
+        <div class="side-panel__content" data-content="mitra">
+            <h3 class="side-panel__title">Mitra Kerja</h3>
+            <ul class="panel-links">
+                <li><a href="ketentuan-mitra-kerja.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">rule</span>
+                        <span><strong>Ketentuan Mitra Kerja</strong><small>Syarat dan panduan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="javascript:void(0)" class="panel-link" onclick="openDaftarMitraModal(event)">
+                        <span class="material-symbols-outlined panel-link__icon">how_to_reg</span>
+                        <span><strong>Daftar Mitra Kerja</strong><small>Formulir registrasi kemitraan baru</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+            <h4
+                style="margin-top: 24px; font-size: 14px; font-weight: 700; color: var(--slate-900); display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-outlined" style="color: var(--royal); font-size: 20px;">verified</span>
+                Mitra Kerja Terdaftar
+            </h4>
+            <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/avian.jpg" alt="Avian" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/lesso.jpg" alt="Lesso" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/seven.jpg" alt="Seven" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/alila.jpg" alt="Alila" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+                <div class="partner-card" style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
+                    <img src="mitra_logos/propan.jpg" alt="Propan" style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Klinik Konsultasi -->
+        <div class="side-panel__content" data-content="klinik">
+            <h3 class="side-panel__title">Klinik Konsultasi</h3>
+            <p class="side-panel__desc">Pendampingan gratis bagi anggota terkait regulasi, sertifikasi, dan pengadaan jasa konsultansi.</p>
+            <div class="topic-list">
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Advokasi & Mediasi')">Advokasi &amp; Mediasi</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Regulasi')">Regulasi</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Perpajakan')">Perpajakan</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Pelayanan')">Pelayanan (KTA, SBU, OSS, dll)</span>
+            </div>
+            <button type="button" class="btn btn--primary btn--block" id="klinik-cta" onclick="openKlinikKonsultasiModal(event)" style="margin-bottom: 10px;">Ajukan Konsultasi</button>
+            <a href="https://wa.me/6282112079750" target="_blank" class="chat-quick__btn"
+                style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #25d366; color: white; padding: 12px; border-radius: 8px; font-weight: 600; text-decoration: none;">
+                <span class="material-symbols-outlined">support_agent</span>
+                Konsultasi via WhatsApp
+            </a>
+        </div>
+
+        <!-- Hubungi Kami -->
+        <div class="side-panel__content" data-content="kontak">
+            <h3 class="side-panel__title">Hubungi Kami</h3>
+            <ul class="panel-links">
+                <li><a href="tel:+62217942940" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">phone</span>
+                        <span><strong>Telepon Kantor</strong><small>Telp: +62217942940(H) / +6282112079750</small></span>
+                    </a></li>
+                <li><a href="https://wa.me/6282112079750" target="_blank" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">chat</span>
+                        <span><strong>WhatsApp Hotline</strong><small>+62 821-1207-9750 (Fax: +62217942941)</small></span>
+                    </a></li>
+                <li><a href="mailto:sekretariat@inkindo-dki.org" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">mail</span>
+                        <span><strong>Email Resmi</strong><small>sekretariat@inkindo-dki.org - inkindo_dki@yahoo.com</small></span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Chat -->
+        <div class="side-panel__content side-panel__content--chat" data-content="chat">
+            <div class="chat-head">
+                <div class="chat-head__avatar"><span class="material-symbols-outlined">smart_toy</span></div>
+                <div>
+                    <h3 class="side-panel__title side-panel__title--chat">Asisten INKINDO</h3>
+                    <span class="chat-head__status">Online</span>
+                </div>
+            </div>
+            <div class="chat-body" id="chat-body"></div>
+            <div class="chat-quick" id="chat-quick">
+                <button type="button" class="chat-quick__btn">Cara daftar anggota</button>
+                <button type="button" class="chat-quick__btn">Info SBU</button>
+                <button type="button" class="chat-quick__btn">Jam operasional</button>
+            </div>
+            <form class="chat-form" id="chat-form">
+                <input type="text" id="chat-input" class="chat-form__input" placeholder="Ketik pesan..."
+                    autocomplete="off">
+                <button type="submit" class="chat-form__btn" aria-label="Kirim">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="anggota-content">
+
+        <!-- 1. Hero Section (Desain Identik tentang.html: Full Screen 100vh & Background Foto Jakarta) -->
+        <section
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat;">
+            <div style="position: absolute; inset: 0; background: rgba(11, 30, 51, 0.75);"></div>
+            <div class="container" style="position: relative; z-index: 2; text-align: left; width: 100%;">
+                <h1 class="hero-anim-title"
+                    style="font-size: clamp(40px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; text-shadow: 0 8px 30px rgba(0,0,0,0.4);">
+                    Direktori Anggota Terdaftar</h1>
+                <div class="hero-anim-line"
+                    style="width: 70px; height: 5px; background: var(--accent, #f59e0b); margin: 0 0 24px; border-radius: 4px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);">
+                </div>
+                <p class="hero-anim-desc"
+                    style="font-size: clamp(16px, 1.8vw, 20px); max-width: 740px; line-height: 1.7; color: rgba(255, 255, 255, 0.95); text-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+                    Direktori resmi badan usaha jasa konsultansi yang terverifikasi dan berstatus aktif di lingkungan <strong>DPP INKINDO DKI Jakarta</strong>. Menghubungkan pengguna jasa konstruksi dan non-konstruksi dengan konsultan berintegritas.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Bagian Direktori & Tabel (White Background) -->
+        <section style="padding: 40px 0 80px; background: #f8fafc;">
+            <div class="container" style="max-width: 1240px; margin: 0 auto; text-align: left;">
+
+                <!-- Stats Overview Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card__icon stat-card__icon--blue">
+                            <span class="material-symbols-outlined">corporate_fare</span>
+                        </div>
+                        <div>
+                            <h3 class="stat-card__number" id="stat-total">695+</h3>
+                            <p class="stat-card__label">Total Perusahaan Anggota</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon stat-card__icon--indigo">
+                            <span class="material-symbols-outlined">business_center</span>
+                        </div>
+                        <div>
+                            <h3 class="stat-card__number">20%</h3>
+                            <p class="stat-card__label">Kualifikasi Besar</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon stat-card__icon--amber">
+                            <span class="material-symbols-outlined">apartment</span>
+                        </div>
+                        <div>
+                            <h3 class="stat-card__number">45%</h3>
+                            <p class="stat-card__label">Kualifikasi Menengah</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon stat-card__icon--emerald">
+                            <span class="material-symbols-outlined">store</span>
+                        </div>
+                        <div>
+                            <h3 class="stat-card__number">35%</h3>
+                            <p class="stat-card__label">Kualifikasi Kecil</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter & Pencarian Box -->
+                <div class="directory-filter-box">
+                    <div class="filter-row">
+                        <!-- Search input -->
+                        <div class="filter-group">
+                            <label for="search-input">
+                                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--royal);">search</span>
+                                Cari Anggota / Nama Perusahaan / No. Anggota
+                            </label>
+                            <div class="filter-input-wrap">
+                                <span class="material-symbols-outlined">search</span>
+                                <input type="text" id="search-input" class="filter-input"
+                                    placeholder="Contoh: Mega Trustlink, Virama Karya, 14642...">
+                            </div>
+                        </div>
+
+                        <!-- SBU Dropdown -->
+                        <div class="filter-group">
+                            <label for="sbu-select">
+                                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--royal);">verified</span>
+                                SBU
+                            </label>
+                            <select id="sbu-select" class="filter-select">
+                                <option value="">Semua SBU</option>
+                                <option value="Jasa Konstruksi">Jasa Konstruksi</option>
+                                <option value="Jasa Non Konstruksi">Jasa Non Konstruksi</option>
+                            </select>
+                        </div>
+
+                        <!-- Wilayah Dropdown -->
+                        <div class="filter-group">
+                            <label for="wilayah-select">
+                                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--royal);">location_on</span>
+                                Wilayah DKI Jakarta
+                            </label>
+                            <select id="wilayah-select" class="filter-select">
+                                <option value="">Semua Wilayah</option>
+                                <option value="Jakarta Selatan">Jakarta Selatan</option>
+                                <option value="Jakarta Pusat">Jakarta Pusat</option>
+                                <option value="Jakarta Barat">Jakarta Barat</option>
+                                <option value="Jakarta Timur">Jakarta Timur</option>
+                                <option value="Jakarta Utara">Jakarta Utara</option>
+                            </select>
+                        </div>
+
+                        <!-- Reset button -->
+                        <div class="filter-group">
+                            <label>&nbsp;</label>
+                            <button type="button" id="btn-reset" class="btn-reset-filter" title="Reset semua filter">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">refresh</span>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Filter Pills -->
+                    <div class="filter-pills">
+                        <span class="filter-pills-label">Filter Cepat:</span>
+                        <button type="button" class="pill-btn is-active" data-pill-kualifikasi="">Semua</button>
+                        <button type="button" class="pill-btn" data-pill-kualifikasi="Besar">Kualifikasi Besar</button>
+                        <button type="button" class="pill-btn" data-pill-kualifikasi="Menengah">Kualifikasi Menengah</button>
+                        <button type="button" class="pill-btn" data-pill-kualifikasi="Kecil">Kualifikasi Kecil</button>
+                    </div>
+                </div>
+
+                <!-- Directory Table Container -->
+                <div class="directory-table-card">
+                    <div class="directory-table-header">
+                        <h2>
+                            <span class="material-symbols-outlined" style="color: var(--royal); font-size: 24px;">view_list</span>
+                            Daftar Badan Usaha Konsultan
+                        </h2>
+                        <div class="record-counter">
+                            Menampilkan <strong id="record-showing-start">1</strong> - <strong id="record-showing-end">10</strong> dari <strong id="record-total-count">0</strong> Perusahaan
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="directory-table" id="directory-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px; text-align: center;">No.</th>
+                                    <th>Nama Perusahaan</th>
+                                    <th>No. Anggota (NPA)</th>
+                                    <th>Keanggotaan</th>
+                                    <th>Kualifikasi</th>
+                                    <th>Wilayah</th>
+                                    <th style="text-align: center;">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="directory-tbody">
+                                <!-- Generated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-container" id="pagination-wrapper">
+                        <div class="pagination-info" id="pagination-info">
+                            Halaman 1 dari 1
+                        </div>
+                        <div class="pagination-nav" id="pagination-controls">
+                            <!-- Page buttons -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL DETAIL ANGGOTA ================= -->
+    <div class="member-modal" id="member-modal" role="dialog" aria-hidden="true" aria-labelledby="modal-company-name">
+        <div class="member-modal__card">
+            <div class="member-modal__header">
+                <h3 class="member-modal__title-bar">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">badge</span>
+                    Detail Profil Anggota
+                </h3>
+                <button type="button" class="member-modal__close" id="modal-close-btn" aria-label="Tutup">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="member-modal__body">
+                <!-- Nama Perusahaan -->
+                <h2 class="modal-company-title" id="modal-company-name">PT .TIGACAKRA GEMAKARYA</h2>
+
+                <!-- Info Profil Anggota Table -->
+                <div class="detail-table-wrap">
+                    <h4 class="detail-table-title">Info Profil Anggota</h4>
+                    <table class="detail-table">
+                        <tbody>
+                            <tr>
+                                <td>No. Anggota :</td>
+                                <td id="modal-npa">8656/P/1633.DKI</td>
+                            </tr>
+                            <tr>
+                                <td>Keanggotaan :</td>
+                                <td id="modal-keanggotaan">Penuh</td>
+                            </tr>
+                            <tr>
+                                <td>Kualifikasi :</td>
+                                <td id="modal-kualifikasi">Menengah</td>
+                            </tr>
+                            <tr>
+                                <td>Alamat Domisili :</td>
+                                <td id="modal-alamat-domisili">Jl. Rawa Bambu Raya No.88 N RT/RW.013/005</td>
+                            </tr>
+                            <tr>
+                                <td>Wilayah :</td>
+                                <td id="modal-wilayah">Jakarta Selatan</td>
+                            </tr>
+                            <tr>
+                                <td>Alamat Surat-menyurat :</td>
+                                <td id="modal-alamat-surat">Jl. Rawa Bambu Raya No.88 N RT/RW.013/005</td>
+                            </tr>
+                            <tr>
+                                <td>No. Telepon :</td>
+                                <td id="modal-telepon">02178844205</td>
+                            </tr>
+                            <tr>
+                                <td>No. Fax :</td>
+                                <td id="modal-fax">7803378</td>
+                            </tr>
+                            <tr>
+                                <td>Email :</td>
+                                <td id="modal-email"><a href="mailto:cakra32000@yahoo.co.uk" id="modal-email-link">cakra32000@yahoo.co.uk</a></td>
+                            </tr>
+                            <tr>
+                                <td>Website :</td>
+                                <td id="modal-website">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Info Sertifikat Badan Usaha (SBU) -->
+                <div>
+                    <h4 class="detail-table-title">Info Sertifikat Badan Usaha (SBU)</h4>
+                    <div class="sbu-section">
+                        <h4 class="sbu-category-title" id="modal-sbu-category">Jasa Konstruksi</h4>
+                        <ol class="sbu-list" id="modal-sbu-list">
+                            <!-- Populated by JS -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="member-modal__footer">
+                <button type="button" class="btn-kembali" id="modal-close-btn-bottom">Kembali</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" id="kontak">
+        <div class="site-footer__container">
+            <div class="site-footer__grid">
+                <!-- Col 1: Identity & Bio & Social Media -->
+                <div class="site-footer__brand">
+                    <div class="site-footer__logo">
+                        <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
+                    </div>
+                    <p class="site-footer__bio">
+                        Ikatan Nasional Konsultan Indonesia (INKINDO) Provinsi DKI Jakarta merupakan wadah asosiasi
+                        perusahaan jasa konsultansi independen yang profesional dan berintegritas.
+                    </p>
+                    <div class="site-footer__social">
+                        <a href="https://www.youtube.com/@inkindodkiofficial" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--youtube" aria-label="YouTube INKINDO DKI" title="YouTube">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/inkindodki" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--facebook" aria-label="Facebook INKINDO DKI" title="Facebook">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://x.com/inkindoD" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--x" aria-label="X (Twitter) INKINDO DKI" title="X (Twitter)">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/inkindo_dki/" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--instagram" aria-label="Instagram INKINDO DKI" title="Instagram">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Col 2: Sekretariat DPP -->
+                <div class="site-footer__col site-footer__col--contact">
+                    <h4>Sekretariat DPP</h4>
+                    <p class="site-footer__address">
+                        <span class="material-symbols-outlined site-footer__icon">location_on</span>
+                        <span>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</span>
+                    </p>
+                    <div class="site-footer__contact">
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">call</span>
+                            <span>Telp: <a href="tel:+62217942940" class="site-footer__link">+62217942940</a>(H), <a href="tel:+6282112079750" class="site-footer__link">+6282112079750</a>, Fax: +62217942941</span>
+                        </div>
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">mail</span>
+                            <span>
+                                <a href="mailto:sekretariat@inkindo-dki.org" class="site-footer__link">sekretariat@inkindo-dki.org</a>
+                                <span style="opacity: 0.5; margin: 0 4px;">-</span>
+                                <a href="mailto:inkindo_dki@yahoo.com" class="site-footer__link">inkindo_dki@yahoo.com</a>
+                            </span>
+                        </div>
+                        <div class="site-footer__contact-item site-footer__hours">
+                            <span class="material-symbols-outlined site-footer__icon">schedule</span>
+                            <span>Senin - Jumat: 08.00 - 16.30 WIB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="site-footer__bottom">
+                <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // Data Anggota Real dari INKINDO DKI Jakarta beserta Detail Lengkap
+        const memberData = [
+            {
+                no: 1,
+                name: "PT . Mega Trustlink",
+                npa: "14642/P/3046.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Barat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Daan Mogot KM. 11 No. 45, Cengkareng",
+                alamatSurat: "Jl. Daan Mogot KM. 11 No. 45, Cengkareng, Jakarta Barat 11730",
+                telepon: "021-54398120",
+                fax: "021-54398121",
+                email: "megatrustlink@gmail.com",
+                website: "www.megatrustlink.co.id",
+                sbuItems: [
+                    {
+                        code: "AR1 - Perencanaan Arsitektur",
+                        kelas: "Besar",
+                        masaBerlaku: "2027-05-15",
+                        subbidang: [
+                            "AR101 - Jasa Nasihat dan Pra-Desain Arsitektural",
+                            "AR102 - Jasa Desain Arsitektural Bangunan Gedung",
+                            "AR104 - Jasa Desain Interior dan Tata Ruang"
+                        ]
+                    },
+                    {
+                        code: "SP1 - Perencanaan Rekayasa Sipil dan Struktur",
+                        kelas: "Besar",
+                        masaBerlaku: "2027-05-15",
+                        subbidang: [
+                            "SI101 - Jasa Perencanaan Struktur Gedung Bertingkat",
+                            "SI103 - Jasa Perencanaan Jembatan dan Jalan Layang"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 2,
+                name: "PT .Tigacakra Gemakarya",
+                npa: "8656/P/1633.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Rawa Bambu Raya No.88 N RT/RW.013/005",
+                alamatSurat: "Jl. Rawa Bambu Raya No.88 N RT/RW.013/005",
+                telepon: "02178844205",
+                fax: "7803378",
+                email: "cakra32000@yahoo.co.uk",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "PR1 - Perencanaan Penataan Ruang",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-12-31",
+                        subbidang: [
+                            "PR101 - Jasa Perencanaan dan Perancangan Perkotaan",
+                            "PR102 - Jasa Perencanaan Wilayah",
+                            "PR103 - Jasa Perencanaan dan Perancangan Lingkungan Bangunan dan Lansekap",
+                            "PR104 - jasa Pengembangan Pemanfaatan Ruang"
+                        ]
+                    },
+                    {
+                        code: "PR2 - Pengawasan Penataan Ruang",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-12-31",
+                        subbidang: [
+                            "PR201 - Jasa Pengawas dan Pengendali Penataan Ruang"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 3,
+                name: "PT Abdi Nusa Kreasi",
+                npa: "13948/P/2913.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Fatmawati No. 22B, Cilandak Barat",
+                alamatSurat: "Jl. Fatmawati No. 22B, Cilandak Barat, Jakarta Selatan 12430",
+                telepon: "021-75914560",
+                fax: "021-75914561",
+                email: "info@abdunusakreasi.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "AR1 - Perencanaan Arsitektur",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-08-20",
+                        subbidang: [
+                            "AR102 - Jasa Desain Arsitektural Gedung Fasilitas Publik",
+                            "AR104 - Jasa Desain Interior dan Lanskap"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 4,
+                name: "KJPP Abdullah Fitriantoro & Rekan",
+                npa: "14084/P/2940.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Non Konstruksi",
+                alamatDomisili: "Gedung Graha Mampang Lt. 3, Jl. Mampang Prapatan Raya No. 100",
+                alamatSurat: "Gedung Graha Mampang Lt. 3, Jl. Mampang Prapatan Raya No. 100, Jakarta Selatan 12790",
+                telepon: "021-7988355",
+                fax: "021-7988356",
+                email: "sekretariat@kjpp-afr.com",
+                website: "www.kjpp-afr.com",
+                sbuItems: [
+                    {
+                        code: "NK1 - Jasa Penilai Publik (Appraisal) & Studi Kelayakan",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-02-14",
+                        subbidang: [
+                            "NK101 - Penilaian Properti Sederhana dan Kompleks",
+                            "NK102 - Penilaian Usaha dan Aset Perusahaan",
+                            "NK103 - Studi Kelayakan Bisnis dan Proyek Investasi (Feasibility Study)"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 5,
+                name: "PT Abirama Prinsipa Indonesia",
+                npa: "19167/P/3480.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Plaza Kuningan Menara Selatan Lt. 8, Jl. H.R. Rasuna Said Kav. C 11-14",
+                alamatSurat: "Plaza Kuningan Menara Selatan Lt. 8, Jakarta Selatan 12940",
+                telepon: "021-52901234",
+                fax: "021-52901235",
+                email: "contact@abiramaprinsipa.co.id",
+                website: "www.abiramaprinsipa.co.id",
+                sbuItems: [
+                    {
+                        code: "SI1 - Rekayasa Struktur dan Transportasi",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-01-10",
+                        subbidang: [
+                            "SI101 - Jasa Rekayasa Struktur Bangunan Tinggi",
+                            "SI103 - Jasa Rekayasa Teknik Transportasi dan Jalan Tol",
+                            "SI104 - Jasa Geoteknik dan Penyelidikan Tanah Lapangan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 6,
+                name: "PT ABSOLUT CIPTASELARAS",
+                npa: "17397/P/3372.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Non Konstruksi",
+                alamatDomisili: "Jl. Tebet Barat Dalam Raya No. 41",
+                alamatSurat: "Jl. Tebet Barat Dalam Raya No. 41, Jakarta Selatan 12810",
+                telepon: "021-83705599",
+                fax: "021-83705598",
+                email: "ciptaselaras@absolutgroup.id",
+                website: "www.absolutgroup.id",
+                sbuItems: [
+                    {
+                        code: "MN1 - Jasa Konsultansi Manajemen dan Kelembagaan",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-09-30",
+                        subbidang: [
+                            "MN101 - Konsultansi Manajemen Operasional dan Bisnis",
+                            "MN102 - Pengembangan SDM dan Restrukturisasi Organisasi",
+                            "MN103 - Sistem Manajemen Mutu ISO & SMAP 37001"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 7,
+                name: "PT Actual Kencana Adhijaya",
+                npa: "02423/P/0795.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Barat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Komplek Taman Meruya Ilir Blok B3 No. 12",
+                alamatSurat: "Komplek Taman Meruya Ilir Blok B3 No. 12, Jakarta Barat 11620",
+                telepon: "021-5843210",
+                fax: "021-5843211",
+                email: "actual.kencana@cbn.net.id",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "PR1 - Perencanaan Penataan Ruang",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-11-18",
+                        subbidang: [
+                            "PR101 - Jasa Perencanaan Perkotaan dan Master Plan",
+                            "PR102 - Jasa Perencanaan Wilayah Pesisir dan Perdesaan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 8,
+                name: "PT Adhika Karsa Pratama",
+                npa: "8147/P/1415.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Pusat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Cempaka Putih Tengah No. 17",
+                alamatSurat: "Jl. Cempaka Putih Tengah No. 17, Jakarta Pusat 10510",
+                telepon: "021-4246870",
+                fax: "021-4246871",
+                email: "adhikakarsa@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "KL1 - Konsultansi Lingkungan Hidup",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-10-05",
+                        subbidang: [
+                            "KL101 - Penyusunan Dokumen AMDAL dan RKL/RPL",
+                            "KL102 - Kajian Lingkungan Hidup Strategis (KLHS)",
+                            "KL103 - Pengendalian Pencemaran Air dan Udara"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 9,
+                name: "PT Adhikara Mitracipta",
+                npa: "2822/P/0916.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Pasar Minggu Raya No. 15",
+                alamatSurat: "Jl. Pasar Minggu Raya No. 15, Jakarta Selatan 12520",
+                telepon: "021-79198765",
+                fax: "-",
+                email: "adhikara.mitra@yahoo.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "ME1 - Mekanikal dan Elektrikal",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-04-20",
+                        subbidang: [
+                            "ME101 - Desain Sistem Tata Udara (HVAC) Gedung",
+                            "ME102 - Sistem Kelistrikan dan Proteksi Kebakaran",
+                            "ME103 - Plumbing dan Distribusi Air Bersih"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 10,
+                name: "PT Adhimascipta Dwipantara",
+                npa: "7497/P/1242.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Tebet Timur Dalam III No. 8",
+                alamatSurat: "Jl. Tebet Timur Dalam III No. 8, Jakarta Selatan 12820",
+                telepon: "021-8312450",
+                fax: "021-8312451",
+                email: "adhimascipta@cbn.net.id",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "MK1 - Manajemen Konstruksi & Pengawasan",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-12-15",
+                        subbidang: [
+                            "MK101 - Jasa Pengawasan Gedung Bertingkat",
+                            "MK102 - Manajemen Konstruksi Fasilitas Pendidikan dan Rumah Sakit"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 11,
+                name: "PT ADHY DUTA PRIMA",
+                npa: "8278/P/1482.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Radin Inten II No. 62, Duren Sawit",
+                alamatSurat: "Jl. Radin Inten II No. 62, Duren Sawit, Jakarta Timur 13440",
+                telepon: "021-8629910",
+                fax: "021-8629911",
+                email: "adhydutaprima@adp.co.id",
+                website: "www.adp.co.id",
+                sbuItems: [
+                    {
+                        code: "SDA1 - Rekayasa Sumber Daya Air dan Irigasi",
+                        kelas: "Besar",
+                        masaBerlaku: "2027-11-25",
+                        subbidang: [
+                            "SDA101 - Perencanaan Bendungan dan Waduk",
+                            "SDA102 - Perencanaan Jaringan Irigasi dan Pengendalian Banjir",
+                            "SDA103 - Rekayasa Sungai dan Perlindungan Muara"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 12,
+                name: "PT Aditya Ridho Gumilang",
+                npa: "09358/P/1886.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Pondok Bambu Asri Blok A No. 19",
+                alamatSurat: "Jl. Pondok Bambu Asri Blok A No. 19, Jakarta Timur 13430",
+                telepon: "021-86603410",
+                fax: "-",
+                email: "aditya_ridho@yahoo.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "SV1 - Survei Pemetaan & Geodesi",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-07-31",
+                        subbidang: [
+                            "SV101 - Survei Topografi dan Pemetaan Terestris",
+                            "SV102 - Sistem Informasi Geografis (GIS) dan Pemetaan Tematik"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 13,
+                name: "PT Adizha Marathon",
+                npa: "11704/P/2392.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Jagakarsa Raya No. 44",
+                alamatSurat: "Jl. Jagakarsa Raya No. 44, Jakarta Selatan 12620",
+                telepon: "021-78891234",
+                fax: "021-78891235",
+                email: "adizhamarathon@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "MK1 - Manajemen Konstruksi",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-01-15",
+                        subbidang: [
+                            "MK101 - Jasa Pengawasan Teknis Jalan dan Jembatan",
+                            "MK103 - Manajemen Proyek Komersial"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 14,
+                name: "PT Adyastha Surya Perdana",
+                npa: "12165/P/3462.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Cyber 2 Tower Lt. 16, Jl. H.R. Rasuna Said Blok X-5 No. 13",
+                alamatSurat: "Cyber 2 Tower Lt. 16, Jakarta Selatan 12950",
+                telepon: "021-29021588",
+                fax: "021-29021589",
+                email: "contact@adyastha.co.id",
+                website: "www.adyastha.co.id",
+                sbuItems: [
+                    {
+                        code: "EL1 - Ketenagalistrikan & Energi",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-03-22",
+                        subbidang: [
+                            "EL101 - Desain Gardu Induk dan Transmisi Tegangan Tinggi",
+                            "EL102 - Studi Pembangkit Listrik Tenaga Surya & Energi Terbarukan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 15,
+                name: "PT Aerovisi Utama",
+                npa: "01657/P/0499.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Gedung Adhi Graha Lt. 10, Jl. Jend. Gatot Subroto Kav. 56",
+                alamatSurat: "Gedung Adhi Graha Lt. 10, Jakarta Selatan 12950",
+                telepon: "021-5265430",
+                fax: "021-5265431",
+                email: "info@aerovisi.com",
+                website: "www.aerovisi.com",
+                sbuItems: [
+                    {
+                        code: "SV1 - Pemetaan Udara & Fotogrametri",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-06-30",
+                        subbidang: [
+                            "SV103 - Pemetaan Udara dengan Lidar & Drone UAV",
+                            "SV104 - Penginderaan Jauh Satelit dan Pemodelan 3D Medan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 16,
+                name: "PT AFTER THE NOISES",
+                npa: "19264/P/3485.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Senopati No. 82, Kebayoran Baru",
+                alamatSurat: "Jl. Senopati No. 82, Kebayoran Baru, Jakarta Selatan 12110",
+                telepon: "021-72789012",
+                fax: "-",
+                email: "hello@afterthenoises.com",
+                website: "www.afterthenoises.com",
+                sbuItems: [
+                    {
+                        code: "AK1 - Desain Akustik & Tata Suara Khusus",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-08-14",
+                        subbidang: [
+                            "AK101 - Rekayasa Akustik Auditorium, Gedung Konser & Studio",
+                            "AK102 - Pengendalian Kebisingan Industri dan Getaran Struktur"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 17,
+                name: "PT Agrinas Jaladri Nusantara (PERSERO)",
+                npa: "0157/P/0076.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Sudirman Kav. 52-53, SCBD Lot 9",
+                alamatSurat: "Jl. Sudirman Kav. 52-53, SCBD Lot 9, Jakarta Selatan 12190",
+                telepon: "021-5152345",
+                fax: "021-5152346",
+                email: "sekretariat@agrinasjaladri.id",
+                website: "www.agrinasjaladri.id",
+                sbuItems: [
+                    {
+                        code: "MR1 - Infrastruktur Maritim & Pelabuhan",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-12-01",
+                        subbidang: [
+                            "MR101 - Desain Dermaga, Alur Pelayaran & Breakwater",
+                            "MR102 - Kajian Hidro-Oseanografi dan Pengerukan Alur Laut"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 18,
+                name: "PT Agrinas Palma Nusantara (PERSERO)",
+                npa: "0183/P/0086.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Non Konstruksi",
+                alamatDomisili: "Jl. D.I. Panjaitan Kav. 14, Cawang",
+                alamatSurat: "Jl. D.I. Panjaitan Kav. 14, Cawang, Jakarta Timur 13340",
+                telepon: "021-8519001",
+                fax: "021-8519002",
+                email: "info@agrinas-palma.co.id",
+                website: "www.agrinas-palma.co.id",
+                sbuItems: [
+                    {
+                        code: "AG1 - Studi Agribisnis & Perkebunan",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-10-15",
+                        subbidang: [
+                            "AG101 - Studi Kelayakan Perkebunan Berkelanjutan",
+                            "AG102 - Analisis Rantai Nilai dan Sertifikasi ISPO/RSPO"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 19,
+                name: "PT Agrinas Pangan Nusantara (PERSERO)",
+                npa: "0085/P/0052.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Non Konstruksi",
+                alamatDomisili: "Jl. Letjen MT Haryono Kav. 22",
+                alamatSurat: "Jl. Letjen MT Haryono Kav. 22, Jakarta Timur 13630",
+                telepon: "021-8194450",
+                fax: "021-8194451",
+                email: "korporasi@agrinaspangan.id",
+                website: "www.agrinaspangan.id",
+                sbuItems: [
+                    {
+                        code: "LG1 - Logistik & Ketahanan Pangan",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-09-20",
+                        subbidang: [
+                            "LG101 - Rancang Bangun Tata Kelola Cold Chain Logistik",
+                            "LG102 - Kajian Ketahanan Pangan Nasional dan Distribusi Pangan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 20,
+                name: "PT Agung Kusumo Asia Engineering",
+                npa: "14577/P/3034.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. TB Simatupang No. 71, Tanjung Barat",
+                alamatSurat: "Jl. TB Simatupang No. 71, Tanjung Barat, Jakarta Selatan 12530",
+                telepon: "021-78834567",
+                fax: "-",
+                email: "agungkusumo.asia@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "SI1 - Rekayasa Struktur Gedung",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-02-28",
+                        subbidang: [
+                            "SI101 - Perencanaan Struktur Beton Bertulang dan Baja",
+                            "SI104 - Audit Forensik Kerusakan Bangunan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 21,
+                name: "PT Airmas Asri",
+                npa: "2424/P/0796.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Pusat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Johar No. 8, Menteng",
+                alamatSurat: "Jl. Johar No. 8, Menteng, Jakarta Pusat 10350",
+                telepon: "021-3903828",
+                fax: "021-3903829",
+                email: "contact@airmasasri.com",
+                website: "www.airmasasri.com",
+                sbuItems: [
+                    {
+                        code: "AR1 - Perencanaan Arsitektur Master Plan",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-11-10",
+                        subbidang: [
+                            "AR101 - Desain Kompleks Superblock & Mixed-Use",
+                            "AR102 - Perencanaan High-Rise Building Komersial",
+                            "AR103 - Perancangan Perkotaan dan Transit Oriented Development (TOD)"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 22,
+                name: "PT Airmas Kreasi",
+                npa: "18161/P/3418.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Pusat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Teuku Cik Ditiro No. 45, Menteng",
+                alamatSurat: "Jl. Teuku Cik Ditiro No. 45, Menteng, Jakarta Pusat 10310",
+                telepon: "021-31908877",
+                fax: "-",
+                email: "airmas.kreasi@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "AR2 - Desain Lanskap & Urban Design",
+                        kelas: "Menengah",
+                        masaBerlaku: "2027-04-18",
+                        subbidang: [
+                            "AR103 - Perencanaan Taman Kota dan Lanskap Kawasan",
+                            "AR104 - Penataan Ruang Terbuka Hijau (RTH)"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 23,
+                name: "PT Ajisaka Destar Utama",
+                npa: "07869/P/1358.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Raya Bogor KM. 26 No. 12, Ciracas",
+                alamatSurat: "Jl. Raya Bogor KM. 26 No. 12, Ciracas, Jakarta Timur 13740",
+                telepon: "021-87701234",
+                fax: "021-87701235",
+                email: "ajisaka.destar@ajisaka.co.id",
+                website: "www.ajisaka.co.id",
+                sbuItems: [
+                    {
+                        code: "TR1 - Transportasi & Lalu Lintas",
+                        kelas: "Besar",
+                        masaBerlaku: "2027-07-22",
+                        subbidang: [
+                            "TR101 - Kajian Andalalin (Analisis Dampak Lalu Lintas)",
+                            "TR102 - Perencanaan Jaringan Jalan dan Terminal Transportasi"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 24,
+                name: "PT Akurat Supramindo Konsul",
+                npa: "07161/P/1135.DKI",
+                status: "Penuh",
+                kualifikasi: "Menengah",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Bangka Raya No. 33, Pela Mampang",
+                alamatSurat: "Jl. Bangka Raya No. 33, Pela Mampang, Jakarta Selatan 12720",
+                telepon: "021-7195432",
+                fax: "-",
+                email: "akurat.supramindo@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "SI1 - Audit Struktur dan Investigasi",
+                        kelas: "Menengah",
+                        masaBerlaku: "2026-09-12",
+                        subbidang: [
+                            "SI104 - Uji Kelaikan Fungsi Gedung (SLF)",
+                            "SI105 - Pengujian NDT (Non Destructive Testing) Beton & Baja"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 25,
+                name: "PT Aldaberta Indonesia",
+                npa: "12415/P/2600.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Menara Bidakara 2 Lt. 15, Jl. Jend. Gatot Subroto Kav. 71-73",
+                alamatSurat: "Menara Bidakara 2 Lt. 15, Jakarta Selatan 12870",
+                telepon: "021-83793450",
+                fax: "021-83793451",
+                email: "mail@aldaberta.com",
+                website: "www.aldaberta.com",
+                sbuItems: [
+                    {
+                        code: "OG1 - Rekayasa Minyak, Gas & Energi",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-04-10",
+                        subbidang: [
+                            "OG101 - Perencanaan Fasilitas Pengolahan Migas dan Petrokimia",
+                            "OG102 - Desain Perpipaan (Piping) dan Tangki Timbun"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 26,
+                name: "PT Bina Karya (Persero)",
+                npa: "0012/P/0009.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. D.I. Panjaitan Kav. 2, Cawang",
+                alamatSurat: "Jl. D.I. Panjaitan Kav. 2, Cawang, Jakarta Timur 13340",
+                telepon: "021-8198445",
+                fax: "021-8198446",
+                email: "sekretariat@binakarya.co.id",
+                website: "www.binakarya.co.id",
+                sbuItems: [
+                    {
+                        code: "MD1 - Konsultan Multi Disiplin Terpadu",
+                        kelas: "Besar",
+                        masaBerlaku: "2029-01-01",
+                        subbidang: [
+                            "MD101 - Master Plan Kawasan Ibu Kota Nusantara (IKN)",
+                            "MD102 - Manajemen Konstruksi Mega Proyek Infrastruktur Nasional",
+                            "MD103 - Perencanaan Tata Ruang Skala Metropolitan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 27,
+                name: "PT Virama Karya (Persero)",
+                npa: "0004/P/0004.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Hang Tuah Raya No. 26, Kebayoran Baru",
+                alamatSurat: "Jl. Hang Tuah Raya No. 26, Kebayoran Baru, Jakarta Selatan 12120",
+                telepon: "021-7397545",
+                fax: "021-7204331",
+                email: "corporate@viramakarya.co.id",
+                website: "www.viramakarya.co.id",
+                sbuItems: [
+                    {
+                        code: "SI1 - Rekayasa Sipil & Infrastruktur Nasional",
+                        kelas: "Besar",
+                        masaBerlaku: "2029-01-01",
+                        subbidang: [
+                            "SI101 - Jasa Perencanaan Jalan Bebas Hambatan dan Jalan Tol",
+                            "SI102 - Jasa Rekayasa Terowongan, Jembatan Bentang Panjang & Pelabuhan",
+                            "SI103 - Manajemen Konstruksi Proyek Strategis Nasional (PSN)"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 28,
+                name: "PT Yodya Karya (Persero)",
+                npa: "0002/P/0002.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. D.I. Panjaitan Kav. 8, Cawang",
+                alamatSurat: "Jl. D.I. Panjaitan Kav. 8, Cawang, Jakarta Timur 13340",
+                telepon: "021-8192607",
+                fax: "021-8192608",
+                email: "pusat@yodyakarya.com",
+                website: "www.yodyakarya.com",
+                sbuItems: [
+                    {
+                        code: "AR1 - Arsitektur, Bangunan Gedung & Rumah Sakit",
+                        kelas: "Besar",
+                        masaBerlaku: "2029-01-01",
+                        subbidang: [
+                            "AR101 - Perencanaan Rumah Sakit Khusus dan Bandara",
+                            "AR102 - Jasa Desain Stadion Olahraga dan Gedung Pemerintahan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 29,
+                name: "PT Indokoei International",
+                npa: "0321/P/0142.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Pusat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Sentral Senayan II Lt. 17, Jl. Asia Afrika No. 8",
+                alamatSurat: "Sentral Senayan II Lt. 17, Gelora, Jakarta Pusat 10270",
+                telepon: "021-57954001",
+                fax: "021-57954002",
+                email: "inquiry@indokoei.com",
+                website: "www.indokoei.com",
+                sbuItems: [
+                    {
+                        code: "ML1 - Infrastruktur Multilateral & MRT",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-08-15",
+                        subbidang: [
+                            "ML101 - Perencanaan Sistem Kereta Bawah Tanah (MRT Subway)",
+                            "ML102 - Pengawasan Pengendalian Banjir Jabodetabek Loan JICA"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 30,
+                name: "PT Ciriajasa Engineering Consultants",
+                npa: "0489/P/0211.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Gedung Ciriajasa, Jl. Raya Cilandak KKO No. 2",
+                alamatSurat: "Gedung Ciriajasa, Jl. Raya Cilandak KKO No. 2, Jakarta Selatan 12560",
+                telepon: "021-7801001",
+                fax: "021-7801002",
+                email: "info@ciriajasa.co.id",
+                website: "www.ciriajasa.co.id",
+                sbuItems: [
+                    {
+                        code: "MK1 - Manajemen Konstruksi Jalur Rel & Kereta Cepat",
+                        kelas: "Besar",
+                        masaBerlaku: "2028-05-20",
+                        subbidang: [
+                            "MK101 - Supervisi Konstruksi Jalur Kereta Api & LRT",
+                            "MK102 - Manajemen Rekayasa Jalan Tol Layang"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 31,
+                name: "PT Amythas Experts & Associates",
+                npa: "0512/P/0225.DKI",
+                status: "Penuh",
+                kualifikasi: "Besar",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Cipete Raya No. 11, Cilandak",
+                alamatSurat: "Jl. Cipete Raya No. 11, Cilandak, Jakarta Selatan 12410",
+                telepon: "021-7661234",
+                fax: "021-7661235",
+                email: "amythas@amythas.com",
+                website: "www.amythas.com",
+                sbuItems: [
+                    {
+                        code: "KW1 - Perencanaan Kawasan Pariwisata & Cagar Budaya",
+                        kelas: "Besar",
+                        masaBerlaku: "2027-12-10",
+                        subbidang: [
+                            "KW101 - Desain Kawasan Konservasi dan Heritage",
+                            "KW102 - Master Plan Destinasi Pariwisata Prioritas"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 32,
+                name: "PT Cakra Manggilingan Baru",
+                npa: "15822/P/3110.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Barat",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Kemanggisan Utama No. 34, Palmerah",
+                alamatSurat: "Jl. Kemanggisan Utama No. 34, Palmerah, Jakarta Barat 11480",
+                telepon: "021-53678901",
+                fax: "-",
+                email: "cakra_baru@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "MK1 - Pengawasan Bangunan Gedung",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-06-30",
+                        subbidang: [
+                            "MK101 - Jasa Pengawasan Rumah Tinggal & Ruko",
+                            "MK102 - Pengawasan Gedung Perkantoran Sederhana"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 33,
+                name: "PT Duta Cipta Mandiri",
+                npa: "16201/P/3204.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Timur",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Otista Raya No. 120, Jatinegara",
+                alamatSurat: "Jl. Otista Raya No. 120, Jatinegara, Jakarta Timur 13330",
+                telepon: "021-8197766",
+                fax: "-",
+                email: "dutacipta.mandiri@yahoo.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "SDA1 - Drainase Lingkungan",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-09-15",
+                        subbidang: [
+                            "SDA101 - Perencanaan Jaringan Drainase Perumahan",
+                            "SDA102 - Normalisasi Saluran Lingkungan Perkotaan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 34,
+                name: "PT Karya Graha Pratama",
+                npa: "17042/P/3312.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Utara",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Danau Sunter Utara Blok F No. 22",
+                alamatSurat: "Jl. Danau Sunter Utara Blok F No. 22, Tanjung Priok, Jakarta Utara 14350",
+                telepon: "021-65301234",
+                fax: "-",
+                email: "karyagraha.pratama@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "MK1 - Pengawasan Fasilitas Logistik",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-11-20",
+                        subbidang: [
+                            "MK101 - Supervisi Pembangunan Gudang & Depo Kontainer",
+                            "MK102 - Pengawasan Area Parkir Truk dan Akses Muatan"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 35,
+                name: "PT Mitra Rekayasa Konsultan",
+                npa: "18109/P/3401.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Selatan",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. RS Fatmawati No. 15 Blok A, Kebayoran Baru",
+                alamatSurat: "Jl. RS Fatmawati No. 15 Blok A, Jakarta Selatan 12140",
+                telepon: "021-7209988",
+                fax: "-",
+                email: "mitrarekayasa@consultant.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "GT1 - Uji Geoteknik & Sondir Tanah",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-10-31",
+                        subbidang: [
+                            "GT101 - Uji Sondir (Cone Penetration Test) Lapangan",
+                            "GT102 - Pengambilan Sampel Tanah & Uji Laboratorium Mekanika Tanah"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 36,
+                name: "PT Prima Desain Konsulindo",
+                npa: "18550/P/3440.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Pusat",
+                sbu: "Jasa Non Konstruksi",
+                alamatDomisili: "Jl. Percetakan Negara Raya No. 45",
+                alamatSurat: "Jl. Percetakan Negara Raya No. 45, Jakarta Pusat 10560",
+                telepon: "021-42881234",
+                fax: "-",
+                email: "primadesain.konsulindo@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "KM1 - Komunikasi, Media & Desain Grafis",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-08-10",
+                        subbidang: [
+                            "KM101 - Jasa Riset Komunikasi Publik dan Media Branding",
+                            "KM102 - Perancangan Desain Media Informasi Publik"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 37,
+                name: "PT Sarana Buana Multi",
+                npa: "19002/P/3471.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Barat",
+                sbu: "Jasa Non Konstruksi",
+                alamatDomisili: "Jl. Tanjung Duren Barat I No. 18",
+                alamatSurat: "Jl. Tanjung Duren Barat I No. 18, Grogol Petamburan, Jakarta Barat 11470",
+                telepon: "021-56983456",
+                fax: "-",
+                email: "saranabuanamulti@gmail.com",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "KU1 - Konsultansi Finansial & Tata Kelola",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-12-05",
+                        subbidang: [
+                            "KU101 - Analisis Kelayakan Investasi Finansial UMKM",
+                            "KU102 - Konsultansi Tata Kelola Usaha dan Akuntansi Sederhana"
+                        ]
+                    }
+                ]
+            },
+            {
+                no: 38,
+                name: "PT Wahana Tata Konsulindo",
+                npa: "19305/P/3490.DKI",
+                status: "Penuh",
+                kualifikasi: "Kecil",
+                wilayah: "Jakarta Utara",
+                sbu: "Jasa Konstruksi",
+                alamatDomisili: "Jl. Enggano Raya No. 14, Tanjung Priok",
+                alamatSurat: "Jl. Enggano Raya No. 14, Tanjung Priok, Jakarta Utara 14310",
+                telepon: "021-43931122",
+                fax: "-",
+                email: "wahanatata@yahoo.co.id",
+                website: "-",
+                sbuItems: [
+                    {
+                        code: "MR1 - Pengawasan Fasilitas Dermaga",
+                        kelas: "Kecil",
+                        masaBerlaku: "2026-07-20",
+                        subbidang: [
+                            "MR101 - Supervisi Dermaga Perahu Tradisional & Jetty Kayu/Beton",
+                            "MR102 - Pengawasan Turap dan Tanggul Pantai Sederhana"
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // State variables
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let selectedKualifikasi = '';
+        let filteredMembers = [...memberData];
+
+        // Elements
+        const searchInput = document.getElementById('search-input');
+        const sbuSelect = document.getElementById('sbu-select');
+        const wilayahSelect = document.getElementById('wilayah-select');
+        const btnReset = document.getElementById('btn-reset');
+        const tbody = document.getElementById('directory-tbody');
+        const recordShowingStart = document.getElementById('record-showing-start');
+        const recordShowingEnd = document.getElementById('record-showing-end');
+        const recordTotalCount = document.getElementById('record-total-count');
+        const paginationInfo = document.getElementById('pagination-info');
+        const paginationControls = document.getElementById('pagination-controls');
+        const pillBtns = document.querySelectorAll('.pill-btn');
+
+        // Modal Elements
+        const modal = document.getElementById('member-modal');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalCloseBtnBottom = document.getElementById('modal-close-btn-bottom');
+        const modalCompanyName = document.getElementById('modal-company-name');
+        const modalNpa = document.getElementById('modal-npa');
+        const modalKeanggotaan = document.getElementById('modal-keanggotaan');
+        const modalKualifikasi = document.getElementById('modal-kualifikasi');
+        const modalAlamatDomisili = document.getElementById('modal-alamat-domisili');
+        const modalWilayah = document.getElementById('modal-wilayah');
+        const modalAlamatSurat = document.getElementById('modal-alamat-surat');
+        const modalTelepon = document.getElementById('modal-telepon');
+        const modalFax = document.getElementById('modal-fax');
+        const modalEmailLink = document.getElementById('modal-email-link');
+        const modalWebsite = document.getElementById('modal-website');
+        const modalSbuCategory = document.getElementById('modal-sbu-category');
+        const modalSbuList = document.getElementById('modal-sbu-list');
+
+        // Filter Function
+        function applyFilter() {
+            const query = searchInput.value.toLowerCase().trim();
+            const sbuVal = sbuSelect.value;
+            const wilayahVal = wilayahSelect.value;
+
+            filteredMembers = memberData.filter(item => {
+                const matchQuery = !query ||
+                    item.name.toLowerCase().includes(query) ||
+                    item.npa.toLowerCase().includes(query) ||
+                    (item.alamatDomisili && item.alamatDomisili.toLowerCase().includes(query));
+
+                const matchSbu = !sbuVal || item.sbu === sbuVal;
+                const matchWilayah = !wilayahVal || item.wilayah === wilayahVal;
+                const matchKualifikasi = !selectedKualifikasi || item.kualifikasi === selectedKualifikasi;
+
+                return matchQuery && matchSbu && matchWilayah && matchKualifikasi;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        // Render Table Rows
+        function renderTable() {
+            const total = filteredMembers.length;
+            recordTotalCount.textContent = total;
+
+            if (total === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <span class="material-symbols-outlined">search_off</span>
+                                <h4 style="margin: 0 0 8px; color: var(--slate-800);">Tidak Ada Anggota Ditemukan</h4>
+                                <p style="margin: 0; font-size: 14px;">Silakan sesuaikan kata kunci atau bersihkan pilihan filter pencarian Anda.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                recordShowingStart.textContent = '0';
+                recordShowingEnd.textContent = '0';
+                paginationInfo.textContent = 'Halaman 0 dari 0';
+                paginationControls.innerHTML = '';
+                return;
+            }
+
+            const totalPages = Math.ceil(total / itemsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, total);
+
+            recordShowingStart.textContent = startIndex + 1;
+            recordShowingEnd.textContent = endIndex;
+
+            const currentItems = filteredMembers.slice(startIndex, endIndex);
+
+            tbody.innerHTML = currentItems.map((item, index) => {
+                const kualifikasiClass = item.kualifikasi.toLowerCase() === 'besar' ? 'badge-kualifikasi--besar' :
+                    (item.kualifikasi.toLowerCase() === 'menengah' ? 'badge-kualifikasi--menengah' : 'badge-kualifikasi--kecil');
+
+                return `
+                    <tr>
+                        <td style="text-align: center; font-weight: 600; color: var(--slate-500);">${startIndex + index + 1}</td>
+                        <td>
+                            <span class="company-name-text" onclick="openMemberModal('${item.name.replace(/'/g, "\\'")}')">${item.name}</span>
+                        </td>
+                        <td>
+                            <span class="npa-cell">${item.npa}</span>
+                        </td>
+                        <td>
+                            <span class="badge-keanggotaan">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">verified</span>
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge-kualifikasi ${kualifikasiClass}">${item.kualifikasi}</span>
+                        </td>
+                        <td>
+                            <span class="wilayah-tag">
+                                <span class="material-symbols-outlined" style="font-size: 16px; color: #0284c7;">location_on</span>
+                                ${item.wilayah}
+                            </span>
+                        </td>
+                        <td style="text-align: center;">
+                            <button type="button" class="btn-view-detail" onclick="openMemberModal('${item.name.replace(/'/g, "\\'")}')">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
+                                Detail
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            renderPagination(totalPages);
+        }
+
+        // Render Pagination
+        function renderPagination(totalPages) {
+            paginationInfo.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+
+            let btnsHtml = `
+                <button type="button" class="page-btn" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="Halaman Pertama">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">first_page</span>
+                </button>
+                <button type="button" class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Halaman Sebelumnya">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+                </button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    btnsHtml += `
+                        <button type="button" class="page-btn ${i === currentPage ? 'is-active' : ''}" onclick="goToPage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    btnsHtml += `<span style="padding: 0 4px; color: var(--slate-400);">...</span>`;
+                }
+            }
+
+            btnsHtml += `
+                <button type="button" class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Halaman Berikutnya">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+                </button>
+                <button type="button" class="page-btn" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Halaman Terakhir">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">last_page</span>
+                </button>
+            `;
+
+            paginationControls.innerHTML = btnsHtml;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderTable();
+            document.querySelector('.directory-table-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Open Modal Function (Exact Match https://www.inkindo-dki.org/anggota-detail/UTY2eUlQQzVtOEtFeFVxS1MreVZVdz09)
+        function openMemberModal(companyName) {
+            const member = memberData.find(m => m.name === companyName);
+            if (!member) return;
+
+            modalCompanyName.textContent = member.name;
+            modalNpa.textContent = member.npa;
+            modalKeanggotaan.textContent = member.status;
+            modalKualifikasi.textContent = member.kualifikasi;
+            modalAlamatDomisili.textContent = member.alamatDomisili || '-';
+            modalWilayah.textContent = member.wilayah || '-';
+            modalAlamatSurat.textContent = member.alamatSurat || member.alamatDomisili || '-';
+            modalTelepon.textContent = member.telepon || '-';
+            modalFax.textContent = member.fax || '-';
+
+            if (member.email && member.email !== '-') {
+                modalEmailLink.textContent = member.email;
+                modalEmailLink.href = 'mailto:' + member.email;
+            } else {
+                modalEmailLink.textContent = '-';
+                modalEmailLink.removeAttribute('href');
+            }
+
+            if (member.website && member.website !== '-') {
+                modalWebsite.innerHTML = `<a href="${member.website.startsWith('http') ? member.website : 'https://' + member.website}" target="_blank" rel="noopener noreferrer">${member.website}</a>`;
+            } else {
+                modalWebsite.textContent = '-';
+            }
+
+            modalSbuCategory.textContent = member.sbu || 'Jasa Konstruksi';
+
+            if (member.sbuItems && member.sbuItems.length > 0) {
+                modalSbuList.innerHTML = member.sbuItems.map(item => `
+                    <li>
+                        <strong>${item.code}</strong> (Kelas: <strong>${item.kelas}</strong>, Masa berlaku s/d : <em>${item.masaBerlaku}</em>)
+                        ${item.subbidang && item.subbidang.length > 0 ? `
+                            <ul class="sbu-sublist">
+                                ${item.subbidang.map(sub => `<li>${sub}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                    </li>
+                `).join('');
+            } else {
+                modalSbuList.innerHTML = `<li><em>Tidak ada rincian sub-bidang SBU tercatat.</em></li>`;
+            }
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMemberModal() {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', applyFilter);
+        sbuSelect.addEventListener('change', applyFilter);
+        wilayahSelect.addEventListener('change', applyFilter);
+
+        btnReset.addEventListener('click', () => {
+            searchInput.value = '';
+            sbuSelect.value = '';
+            wilayahSelect.value = '';
+            selectedKualifikasi = '';
+            pillBtns.forEach((btn, index) => {
+                if (index === 0) btn.classList.add('is-active');
+                else btn.classList.remove('is-active');
+            });
+            applyFilter();
+        });
+
+        // Pill button click (Kualifikasi: Besar, Menengah, Kecil)
+        pillBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                pillBtns.forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                selectedKualifikasi = btn.getAttribute('data-pill-kualifikasi') || '';
+                applyFilter();
+            });
+        });
+
+        // Modal close events
+        modalCloseBtn.addEventListener('click', closeMemberModal);
+        modalCloseBtnBottom.addEventListener('click', closeMemberModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeMemberModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                closeMemberModal();
+            }
+        });
+
+        // Initialize Table
+        applyFilter();
+    </script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

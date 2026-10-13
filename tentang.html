@@ -21,12 +21,38 @@
                 padding-right: 120px;
             }
         }
+
+        /* Animasi Hero Tentang Kami */
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-anim-title {
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .hero-anim-line {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+        }
+
+        .hero-anim-desc {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+        }
     </style>
 </head>
 
 <body>
-    <header class="main-header" id="main-header"
-        style="background: rgba(11, 30, 51, 1); box-shadow: 0 2px 20px rgba(0,0,0,0.2);">
+    <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
                 <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
@@ -38,15 +64,10 @@
                     <li>
                         <a href="tentang.html" class="main-nav__link is-active" id="nav-tentang">Tentang Kami</a>
                     </li>
-                    <li class="has-dropdown">
-                        <a href="index.html#regulasi" class="main-nav__link" id="nav-regulasi">Regulasi</a>
-                        <ul class="dropdown">
-                            <li><a href="#">Regulasi Inkindo</a></li>
-                            <li><a href="#">Regulasi Jasa Konsultasi</a></li>
-                            <li><a href="#">Regulasi Terkait</a></li>
-                        </ul>
+                    <li>
+                        <a href="regulasi.html" class="main-nav__link" id="nav-regulasi">Regulasi</a>
                     </li>
-                    <li><a href="index.html#berita" class="main-nav__link" id="nav-berita">Berita &amp; Informasi</a>
+                    <li><a href="berita.html" class="main-nav__link" id="nav-berita">Berita &amp; Informasi</a>
                     </li>
                     <li class="main-nav__icon-item">
                         <button type="button" class="main-nav__icon" id="header-search-toggle" aria-label="Cari">
@@ -82,7 +103,7 @@
     <!-- SIDE NAV KANAN untuk Struktur Organisasi -->
     <aside class="side-nav" id="side-nav" aria-label="Menu layanan">
         <div class="side-nav__list">
-            <button type="button" class="side-nav__link">
+            <button type="button" class="side-nav__link" data-panel="dpph">
                 <span class="material-symbols-outlined side-nav__icon">account_balance</span>
                 <span class="side-nav__label">DPPH</span>
             </button>
@@ -90,7 +111,7 @@
                 <span class="material-symbols-outlined side-nav__icon">account_tree</span>
                 <span class="side-nav__label">DPPL</span>
             </button>
-            <button type="button" class="side-nav__link">
+            <button type="button" class="side-nav__link" data-panel="badan">
                 <span class="material-symbols-outlined side-nav__icon">corporate_fare</span>
                 <span class="side-nav__label">Badan Badan</span>
             </button>
@@ -98,11 +119,11 @@
                 <span class="material-symbols-outlined side-nav__icon">groups_3</span>
                 <span class="side-nav__label">Komite</span>
             </button>
-            <button type="button" class="side-nav__link">
+            <button type="button" class="side-nav__link" data-panel="dkp">
                 <span class="material-symbols-outlined side-nav__icon">gavel</span>
                 <span class="side-nav__label">DKP</span>
             </button>
-            <button type="button" class="side-nav__link">
+            <button type="button" class="side-nav__link" data-panel="dpop">
                 <span class="material-symbols-outlined side-nav__icon">manage_accounts</span>
                 <span class="side-nav__label">DPOP</span>
             </button>
@@ -119,6 +140,296 @@
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
+
+        <div class="side-panel__content" data-content="dpph">
+            <h3 class="side-panel__title">DPPH</h3>
+            <p class="side-panel__desc">Dewan Pengurus Provinsi Harian</p>
+
+            <div style="background: var(--slate-50); padding: 16px; border-radius: 8px; border-left: 4px solid var(--accent); margin-bottom: 24px;">
+                <p style="margin: 0; font-size: 13px; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Ketua</p>
+                <p style="margin: 4px 0 0; font-size: 16px; font-weight: 700; color: var(--royal);">Afsdyah Eky Vitalina, SP., M.Si.</p>
+            </div>
+
+            <h4 style="font-size: 18px; font-weight: 700; color: var(--slate-900); margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">
+                <span style="display: grid; place-items: center; width: 28px; height: 28px; background: var(--royal); color: var(--white); border-radius: 50%; font-size: 14px;">1</span>
+                Kesekretariatan
+            </h4>
+            <div style="display: grid; gap: 12px; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dashed var(--slate-200);">
+                    <span style="color: var(--slate-600); font-size: 14px;">Sekretaris</span>
+                    <span style="font-weight: 600; color: var(--slate-900); font-size: 14px; text-align: right; max-width: 60%;">Aditya Prakarsa Yasin, BSc, M.M</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dashed var(--slate-200);">
+                    <span style="color: var(--slate-600); font-size: 14px;">Wakil Sekretaris</span>
+                    <span style="font-weight: 600; color: var(--slate-900); font-size: 14px; text-align: right; max-width: 60%;">Jufriady Tanjung S.T., M.T</span>
+                </div>
+            </div>
+
+            <h4 style="font-size: 18px; font-weight: 700; color: var(--slate-900); margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">
+                <span style="display: grid; place-items: center; width: 28px; height: 28px; background: var(--royal); color: var(--white); border-radius: 50%; font-size: 14px;">2</span>
+                Kebendaharaan
+            </h4>
+            <div style="display: grid; gap: 12px; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dashed var(--slate-200);">
+                    <span style="color: var(--slate-600); font-size: 14px;">Bendahara</span>
+                    <span style="font-weight: 600; color: var(--slate-900); font-size: 14px; text-align: right; max-width: 60%;">Tri Murdiatmoko, S.E.</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px dashed var(--slate-200);">
+                    <span style="color: var(--slate-600); font-size: 14px;">Wakil Bendahara</span>
+                    <span style="font-weight: 600; color: var(--slate-900); font-size: 14px; text-align: right; max-width: 60%;">Andina Larasati, S.Hum., M.M.</span>
+                </div>
+            </div>
+
+            <h4 style="font-size: 18px; font-weight: 700; color: var(--slate-900); margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">
+                <span style="display: grid; place-items: center; width: 28px; height: 28px; background: var(--royal); color: var(--white); border-radius: 50%; font-size: 14px;">3</span>
+                Bidang - Bidang
+            </h4>
+            <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 32px;">
+                
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">1) Bidang Pranata Usaha</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">lr. M. Saifullah, S.T., M.M., lPM.</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Muhammad Aufa lbadur Rahman, S.E., PMP</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">2) Bidang Pelayanan dan Pemberdayaan Anggota</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Pensong Benny, S.E., M.S.i</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Toni Haryanto S.T.</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">3) Bidang Penguatan Organisasi</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Fakhrudin, M.Si, Psikolog</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Hendri Prasetyo, S.lP</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">4) Bidang Pengembangan Jasa Konstruksi</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Ir. Mangiring Purba</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Yanwar Anang Prabowo</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">5) Bidang Pengembangan Non Jasa Konstruksi</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">lr. Chandra Rambey, M.Sc</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Diana Harmaini Syafei, S.T</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">6) Bidang Perencanaan Strategis dan Monitoring</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">lr. Rachmadi</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Taufan Setia Nusantara, S.E.,M.Ec.Dev. MAPPI (Cert.)</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">7) Bidang Kerjasama Antar Lembaga</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">lr. Agus Sudjatmiko</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">lr. lrza Ratnasari</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">8) Bidang Hukum dan Perlindungan Anggota</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Dewisari, M.M</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Dr. Ery Sunandar, S.Si., M.Si., SH., M.H.</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">9) Bidang Peluang Pasar Internasional</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Mohamad Imam Machfudin, S.T.</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Herdiansa Putra, S.P.</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">10) Bidang Digitalisasi dan Humas</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Munif Sofian, S.Kom</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Aditya Tubagus Maulana, S.T.</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">11) Bidang Environmental, Social and Governance (ESG) dan Keberlanjutan</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Dr. Zefri, M.SI</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Achmad Chairul Wafa, S.l.Kom</span></div>
+                    </div>
+                </div>
+
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;">
+                    <div style="background: var(--slate-50); padding: 12px 16px; font-weight: 600; color: var(--royal); font-size: 14px; border-bottom: 1px solid var(--slate-200);">12) Bidang Pasar Swasta dan BUMN</div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">lr. Setyo Triyono, AUt, HAEI, ACPE.</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: var(--slate-600); font-size: 13px;">Wakil Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 65%;">Ar. Doti Windajani M.T., lAl., AA.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-panel__content" data-content="badan">
+            <h3 class="side-panel__title">Badan - Badan</h3>
+            <p class="side-panel__desc">Struktur Organisasi Badan-Badan INKINDO DKI Jakarta</p>
+
+            <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 32px; margin-top: 24px;">
+                <!-- I -->
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;">I</span>
+                        Badan Sertifikasi Anggota Provinsi
+                    </div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Ir. Mangiring Purba</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Munif Sofian, S.Kom</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Bendahara</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Andina Larasati, S.Hum., M.M.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Baharun Nazir, S.E.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Rizky Agung, S.E</span></div>
+                    </div>
+                </div>
+
+                <!-- II -->
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;">II</span>
+                        Badan Advokasi dan Mediasi Anggota
+                    </div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Dr. Ery Sunandar, S.Si., M.Si., S.H., M.H.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Denok Wahyuni, S.H.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lsmail Yusuf, S.E., M.M.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Warwo, S.T</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Abel Kautsar</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Achmad Fahrur Rozi, S.Sos</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Reinhart T.P.S</span></div>
+                    </div>
+                </div>
+
+                <!-- III -->
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;">III</span>
+                        Badan Riset dan Bakti Profesi
+                    </div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Halomoan Tambun</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Achmad Henrawan, S.T.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Bayu Sulistianto, S.I.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Fahriza, S.P., M.P.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Budhianto</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lshari Thaib, S.E.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Muhammad Kamaruddin, M.T.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Joko Sujatmiko</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">DR. lng. lr. I Gede Oka Sindhu Pribadi, M.Sc, M.M.</span></div>
+                    </div>
+                </div>
+
+                <!-- IV -->
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;">IV</span>
+                        Badan Pengembangan Kapasitas Anggota
+                    </div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Derry P Sitorus, AT., S.E.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Siti Aisyah TW, S.E., M.M</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Zaenal Mustofa Djawahir</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Syaripin</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Harsyaf Nurman Djumiril S.T., M.Sc.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Steven Valerian Brouwer, S.T., M.T.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Gerrits S.B.C. Udjung, S.T., M.T.</span></div>
+                    </div>
+                </div>
+
+                <!-- V -->
+                <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;">V</span>
+                        Badan Pengembangan Kapasitas Anggota
+                    </div>
+                    <div style="padding: 16px; display: grid; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lslana Jati Waluya, S.E., M.l.Kom</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Wakil Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Ratna Ningrum, M.B.A</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Fahmi Anshari</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Rahyono, S.Kom</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Satrio Rama Widyowicaksono, S.lP., M.Sc.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Rimong Rukmiarta, ST., MT.</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Lila Andari</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">lr. Tati Lanniari Pulungan</span></div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 70%;">Adung Kurnaen</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-panel__content" data-content="dkp">
+            <h3 class="side-panel__title">DKP</h3>
+            <p class="side-panel__desc">Dewan Kehormatan Provinsi</p>
+
+            <div style="background: var(--slate-50); padding: 16px; border-radius: 8px; border-left: 4px solid var(--accent); margin: 24px 0;">
+                <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--slate-700);">Pengurus Inkindo DKI Jakarta merupakan pribadi-pribadi perwakilan dari pimpinan perusahaan Anggota Inkindo DKI Jakarta. Melalui acara konstitusional Musyawarah Provinsi setiap 4 (empat) tahun sekali melakukan pemilihan Ketua, Sekretaris dan Bendahara.</p>
+                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-700);">Kepengurusan terdiri atas Dewan Pengurus Provinsi, Dewan Kehormatan Provinsi, Dewan Pertimbangan Organisasi Provinsi.</p>
+            </div>
+
+            <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom: 32px;">
+                <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">gavel</span>
+                    DEWAN KEHORMATAN PROVINSI
+                </div>
+                <div style="padding: 16px; display: grid; gap: 12px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua merangkap Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Bambang Soendaroe, M.T.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Wakil Ketua merangkap Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Ir. Mukhsin Moechtar IPU., ACPE.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Sekretaris merangkap Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Novia Damayanti, M.B.A.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Ir. Istanto Oerip, IPU.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Ir. Jumadi S. Witopawiro, M.S.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Stefanus Hindarko</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Dr. lr. John P. Pantouw, M.S.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Jasman S.T., M.T.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Yulianto</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Siti Rochamayanti, M.M.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">ir. Yudi Setiabudi</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="side-panel__content" data-content="dpop">
+            <h3 class="side-panel__title">DPOP</h3>
+            <p class="side-panel__desc">Dewan Pertimbangan Organisasi Provinsi</p>
+
+            <div style="background: var(--slate-50); padding: 16px; border-radius: 8px; border-left: 4px solid var(--accent); margin: 24px 0;">
+                <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--slate-700);">Pengurus Inkindo DKI Jakarta merupakan pribadi-pribadi perwakilan dari pimpinan perusahaan Anggota Inkindo DKI Jakarta. Melalui acara konstitusional Musyawarah Provinsi setiap 4 (empat) tahun sekali melakukan pemilihan Ketua, Sekretaris dan Bendahara.</p>
+                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-700);">Kepengurusan terdiri atas Dewan Pengurus Provinsi, Dewan Kehormatan Provinsi, Dewan Pertimbangan Organisasi Provinsi.</p>
+            </div>
+
+            <div style="background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom: 32px;">
+                <div style="background: var(--royal); padding: 12px 16px; font-weight: 700; color: var(--white); font-size: 15px; display: flex; align-items: center; gap: 10px;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">manage_accounts</span>
+                    SUSUNAN DEWAN PERTIMBANGAN ORGANISASI PROVINSI
+                </div>
+                <div style="padding: 16px; display: grid; gap: 12px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Ketua</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Imam Hartawan, S.T., M.T.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Sekretaris</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Anton Gerbono</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Drs. Arry Budiyanto, M.Dev.Plg</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Suwendi, M.Sc.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">lr. Endang Nurzaman</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Jusarwanto, S.E., Ak.</span></div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--slate-100); padding-bottom: 8px;"><span style="color: var(--slate-500); font-size: 13px;">Anggota</span><span style="font-weight: 600; color: var(--slate-900); font-size: 13px; text-align: right; max-width: 60%;">Dr. lr. Lamidi, MTP, M.M.</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -126,13 +437,20 @@
     <main class="tentang-content">
         <!-- 1. Tentang Kami (Hero) -->
         <section
-            style="position: relative; padding: 180px 0 100px; color: var(--white); background: url('assets/jakarta.jpg') center/cover no-repeat;">
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat;">
             <div style="position: absolute; inset: 0; background: rgba(11, 30, 51, 0.75);"></div>
-            <div class="container" style="position: relative; z-index: 2; text-align: center;">
-                <h1 style="font-size: 48px; font-weight: 700; margin-bottom: 24px;">Tentang Kami</h1>
-                <p style="font-size: 18px; max-width: 700px; margin: 0 auto; line-height: 1.6;">Profil INKINDO DKI
-                    Jakarta: Mengenal lebih dekat sejarah, visi, misi, dan kode etik yang kami junjung dalam memajukan
-                    jasa konsultansi di Indonesia.</p>
+            <div class="container" style="position: relative; z-index: 2; text-align: left;">
+                <h1 class="hero-anim-title"
+                    style="font-size: clamp(40px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; text-shadow: 0 8px 30px rgba(0,0,0,0.4);">
+                    Tentang Kami</h1>
+                <div class="hero-anim-line"
+                    style="width: 70px; height: 5px; background: var(--accent, #f59e0b); margin: 0 0 24px; border-radius: 4px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);">
+                </div>
+                <p class="hero-anim-desc"
+                    style="font-size: clamp(16px, 1.8vw, 20px); max-width: 700px; line-height: 1.7; color: rgba(255, 255, 255, 0.95); text-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+                    Profil <strong>INKINDO DKI Jakarta</strong>: Mengenal lebih dekat sejarah, visi, misi, dan kode etik
+                    yang kami junjung tinggi dalam upaya memajukan ekosistem jasa konsultansi di Indonesia.
+                </p>
             </div>
         </section>
 
@@ -170,7 +488,7 @@
 
         <!-- 3. Visi & Misi (Image Background) -->
         <section
-            style="position: relative; padding: 80px 0; color: var(--white); background: url('assets/jakarta.jpg') center/cover no-repeat fixed;">
+            style="position: relative; padding: 80px 0; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat fixed;">
             <div style="position: absolute; inset: 0; background: rgba(0, 90, 156, 0.85);"></div>
             <div class="container" style="position: relative; z-index: 2; max-width: 900px; margin: 0 auto;">
                 <h2 style="font-size: 32px; margin-bottom: 40px; font-weight: 700; text-align: center;">Visi &amp; Misi
@@ -210,49 +528,94 @@
                 <h2
                     style="font-size: 36px; color: var(--royal); margin-bottom: 32px; font-weight: 700; text-align: center;">
                     Kode Etik</h2>
-                <p style="font-size: 17px; line-height: 1.8; color: var(--slate-700); margin-bottom: 48px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    Dengan menjunjung tinggi Etika Ikatan Nasional Konsultan Indonesia sebagai dasar yang dinamis untuk melayani sesama manusia, maka tiap Anggota Ikatan Nasional Konsultan Indonesia wajib untuk:
+                <p
+                    style="font-size: 17px; line-height: 1.8; color: var(--slate-700); margin-bottom: 48px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Dengan menjunjung tinggi Etika Ikatan Nasional Konsultan Indonesia sebagai dasar yang dinamis untuk
+                    melayani sesama manusia, maka tiap Anggota Ikatan Nasional Konsultan Indonesia wajib untuk:
                 </p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
                     <!-- Poin 1 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">01</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menjunjung tinggi kehormatan, kemuliaan, dan nama baik profesi konsultan dalam hubungan kerja dengan pemberi tugas sesama rekan konsultan dan masyarakat.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            01</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menjunjung
+                            tinggi kehormatan, kemuliaan, dan nama baik profesi konsultan dalam hubungan kerja dengan
+                            pemberi tugas sesama rekan konsultan dan masyarakat.</p>
                     </div>
                     <!-- Poin 2 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">02</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Bertindak jujur, tidak memihak, serta penuh dedikasi melayani pemberi tugas dan masyarakat.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            02</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Bertindak
+                            jujur, tidak memihak, serta penuh dedikasi melayani pemberi tugas dan masyarakat.</p>
                     </div>
                     <!-- Poin 3 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">03</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Tukar menukar pengetahuan bidang keahlian secara wajar dengan rekan konsultan dan kelompok profesi serta meningkatkan pengetahuan masyarakat terhadap profesi konsultan sehingga dapat lebih menghayati karya konsultan.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            03</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Tukar menukar
+                            pengetahuan bidang keahlian secara wajar dengan rekan konsultan dan kelompok profesi serta
+                            meningkatkan pengetahuan masyarakat terhadap profesi konsultan sehingga dapat lebih
+                            menghayati karya konsultan.</p>
                     </div>
                     <!-- Poin 4 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">04</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menghormati prinsip pemberian imbalan jasa yang layak dan memadai bagi konsultan, sehingga dapat dipertanggungjawabkan secara profesional dan moral yang menjamin dapat dilaksanakannya tugas yang dipercayakan memenuhi semua persyaratan yang terkait dengan keahlian, kompetensi, dan integritas tinggi.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            04</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menghormati
+                            prinsip pemberian imbalan jasa yang layak dan memadai bagi konsultan, sehingga dapat
+                            dipertanggungjawabkan secara profesional dan moral yang menjamin dapat dilaksanakannya tugas
+                            yang dipercayakan memenuhi semua persyaratan yang terkait dengan keahlian, kompetensi, dan
+                            integritas tinggi.</p>
                     </div>
                     <!-- Poin 5 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">05</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menghargai dan menghormati reputasi profesional rekan konsultan dan setiap perjanjian kerja yang berhubungan dengan profesinya.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            05</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menghargai dan
+                            menghormati reputasi profesional rekan konsultan dan setiap perjanjian kerja yang
+                            berhubungan dengan profesinya.</p>
                     </div>
                     <!-- Poin 6 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">06</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Mendapatkan tugas terutama berdasarkan standar keahlian profesional tanpa melalui cara-cara persaingan yang tidak sehat.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            06</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Mendapatkan
+                            tugas terutama berdasarkan standar keahlian profesional tanpa melalui cara-cara persaingan
+                            yang tidak sehat.</p>
                     </div>
                     <!-- Poin 7 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">07</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Bekerjasama sebagai konsultan hanya dengan rekan konsultan atau tenaga ahli lain yang memiliki integritas tinggi.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            07</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Bekerjasama
+                            sebagai konsultan hanya dengan rekan konsultan atau tenaga ahli lain yang memiliki
+                            integritas tinggi.</p>
                     </div>
                     <!-- Poin 8 -->
-                    <div style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
-                        <div style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">08</div>
-                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menjalankan asas pembangunan berkelanjutan dalam semua aspek pelayanan jasa konsultan sebagai bagian integral dari tanggungjawabnya terhadap sesama, lingkungan kehidupan yang luas, dan generasi yang akan datang.</p>
+                    <div
+                        style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
+                        <div
+                            style="font-size: 48px; font-weight: 800; color: var(--royal); opacity: 0.15; line-height: 0.8;">
+                            08</div>
+                        <p style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin: 0;">Menjalankan
+                            asas pembangunan berkelanjutan dalam semua aspek pelayanan jasa konsultan sebagai bagian
+                            integral dari tanggungjawabnya terhadap sesama, lingkungan kehidupan yang luas, dan generasi
+                            yang akan datang.</p>
                     </div>
                 </div>
             </div>
@@ -263,7 +626,7 @@
     <footer class="site-footer" id="kontak">
         <div class="site-footer__container">
             <div class="site-footer__grid">
-                <!-- Col 1: Identity & Bio -->
+                <!-- Col 1: Identity & Bio & Social Media -->
                 <div class="site-footer__brand">
                     <div class="site-footer__logo">
                         <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
@@ -273,54 +636,55 @@
                         perusahaan jasa konsultansi independen yang profesional dan berintegritas.
                     </p>
                     <div class="site-footer__social">
-                        <a href="#" aria-label="Website"><span class="material-symbols-outlined">public</span></a>
-                        <a href="#" aria-label="Email"><span class="material-symbols-outlined">mail</span></a>
-                        <a href="#" aria-label="Telepon"><span class="material-symbols-outlined">call</span></a>
+                        <a href="https://www.youtube.com/@inkindodkiofficial" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--youtube" aria-label="YouTube INKINDO DKI" title="YouTube">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/inkindodki" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--facebook" aria-label="Facebook INKINDO DKI" title="Facebook">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://x.com/inkindoD" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--x" aria-label="X (Twitter) INKINDO DKI" title="X (Twitter)">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/inkindo_dki/" target="_blank" rel="noopener noreferrer" class="site-footer__social-link site-footer__social-link--instagram" aria-label="Instagram INKINDO DKI" title="Instagram">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
                     </div>
                 </div>
-                <!-- Col 2: Navigation Links -->
-                <div class="site-footer__col site-footer__col--nav">
-                    <h4>Akses Cepat</h4>
-                    <ul>
-                        <li><a href="#">Sistem Informasi Anggota (SIA)</a></li>
-                        <li><a href="#">Pendaftaran &amp; SBU Online</a></li>
-                        <li><a href="#">Standar Billing Rate Remunerasi</a></li>
-                        <li><a href="#">Direktori Anggota Terverifikasi</a></li>
-                    </ul>
-                </div>
-                <!-- Col 3: Contact Snippet -->
+                <!-- Col 2: Sekretariat DPP -->
                 <div class="site-footer__col site-footer__col--contact">
                     <h4>Sekretariat DPP</h4>
-                    <p>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</p>
+                    <p class="site-footer__address">
+                        <span class="material-symbols-outlined site-footer__icon">location_on</span>
+                        <span>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</span>
+                    </p>
                     <div class="site-footer__contact">
-                        <span>Telepon: (021) 797-1582 / 797-1583</span>
-                        <span>Email: dpp_dki@inkindo.org</span>
-                        <span class="site-footer__hours">Senin - Jumat: 08.30 - 17.00 WIB</span>
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">call</span>
+                            <span>Telp: <a href="tel:+62217942940" class="site-footer__link">+62217942940</a>(H), <a href="tel:+6282112079750" class="site-footer__link">+6282112079750</a>, Fax: +62217942941</span>
+                        </div>
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">mail</span>
+                            <span>
+                                <a href="mailto:sekretariat@inkindo-dki.org" class="site-footer__link">sekretariat@inkindo-dki.org</a>
+                                <span style="opacity: 0.5; margin: 0 4px;">-</span>
+                                <a href="mailto:inkindo_dki@yahoo.com" class="site-footer__link">inkindo_dki@yahoo.com</a>
+                            </span>
+                        </div>
+                        <div class="site-footer__contact-item site-footer__hours">
+                            <span class="material-symbols-outlined site-footer__icon">schedule</span>
+                            <span>Senin - Jumat: 08.00 - 16.30 WIB</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Copyright & Bottom Policy -->
+            <!-- Copyright -->
             <div class="site-footer__bottom">
                 <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
-                <div class="site-footer__policy">
-                    <a href="#">Kebijakan Privasi</a>
-                    <a href="#">Syarat Layanan</a>
-                    <a href="#">LPJK PUPR</a>
-                </div>
             </div>
         </div>
     </footer>
 
     <script src="js/script.js"></script>
-    <script>
-        // Mencegah header transparan saat scroll di halaman ini, karena kita selalu butuh header yang solid
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            if (header) {
-                header.style.background = 'rgba(11, 30, 51, 1)'; // Force solid blue
-            }
-        });
-    </script>
 </body>
 
 </html>
