@@ -704,6 +704,84 @@
             color: var(--slate-400);
             margin-bottom: 12px;
         }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                margin-top: -30px;
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+
+            .directory-filter-box {
+                padding: 16px;
+                border-radius: 12px;
+                margin-bottom: 24px;
+            }
+
+            .filter-row {
+                gap: 12px;
+            }
+
+            .filter-pills {
+                gap: 8px;
+            }
+
+            .pill-btn {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+
+            .directory-table-card {
+                border-radius: 12px;
+                margin-bottom: 24px;
+            }
+
+            .directory-table-header {
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .directory-table {
+                min-width: 720px;
+            }
+
+            .pagination-container {
+                flex-direction: column;
+                gap: 12px;
+                align-items: center;
+                padding: 16px;
+            }
+
+            .member-modal {
+                padding: 12px;
+            }
+
+            .member-modal__body {
+                padding: 16px;
+            }
+
+            .modal-company-title {
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+
+            .detail-table td:first-child {
+                width: 120px;
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+
+            .detail-table td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .sbu-section {
+                padding: 14px 16px;
+            }
+        }
     </style>
 </head>
 
@@ -763,7 +841,7 @@
                 <span class="material-symbols-outlined side-nav__icon">gavel</span>
                 <span class="side-nav__label">Info Lelang</span>
             </button>
-            <button type="button" class="side-nav__link is-active" data-panel="anggota" id="side-anggota">
+            <button type="button" class="side-nav__link" data-panel="anggota" id="side-anggota">
                 <span class="material-symbols-outlined side-nav__icon">groups</span>
                 <span class="side-nav__label">Anggota</span>
             </button>
@@ -841,7 +919,7 @@
         </div>
 
         <!-- Anggota -->
-        <div class="side-panel__content is-active" data-content="anggota">
+        <div class="side-panel__content" data-content="anggota">
             <h3 class="side-panel__title">Anggota</h3>
             <ul class="panel-links">
                 <li><a href="https://www.inkindo-dki.org/register" target="_blank" rel="noopener noreferrer"

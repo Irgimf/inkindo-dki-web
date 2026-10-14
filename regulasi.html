@@ -17,32 +17,34 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* Prevent layout shift on regulasi page by fixing the sidebar width variable */
-        :root,
-        body,
-        body.is-scrolled {
-            --side-w: 70px !important;
-        }
+        @media (min-width: 1024px) {
+            /* Prevent layout shift on regulasi page by fixing the sidebar width variable */
+            :root,
+            body,
+            body.is-scrolled {
+                --side-w: 70px !important;
+            }
 
-        /* Custom Side Nav behavior for Regulasi page */
-        .side-nav {
-            background: #0ea5e9 !important;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-            width: 70px !important;
-            overflow: hidden;
-            transition: width 0.35s ease, background 0.35s ease !important;
-        }
+            /* Custom Side Nav behavior for Regulasi page */
+            .side-nav {
+                background: #0ea5e9 !important;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+                width: 70px !important;
+                overflow: hidden;
+                transition: width 0.35s ease, background 0.35s ease !important;
+            }
 
-        .side-nav:hover {
-            width: 220px !important;
-        }
+            .side-nav:hover {
+                width: 220px !important;
+            }
 
-        .side-nav .side-nav__label {
-            /* Force label to take its full space but be clipped by the parent's width */
-            max-width: 150px !important;
-            opacity: 1 !important;
-            margin-right: 14px !important;
-            white-space: nowrap;
+            .side-nav .side-nav__label {
+                /* Force label to take its full space but be clipped by the parent's width */
+                max-width: 150px !important;
+                opacity: 1 !important;
+                margin-right: 14px !important;
+                white-space: nowrap;
+            }
         }
 
         .regulasi-page {
@@ -510,6 +512,50 @@
             .top-actions {
                 width: 100%;
                 justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .tab-menu {
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+                gap: 18px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 4px;
+            }
+
+            .tab-menu::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab-btn {
+                font-size: 16px;
+                padding: 10px 0;
+                flex-shrink: 0;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .regulasi-subheader {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .sub-category-menu {
+                margin-left: 0;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 4px;
             }
         }
     </style>

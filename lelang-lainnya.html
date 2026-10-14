@@ -15,35 +15,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
     <style>
-        /* Mengamankan agar padding menyesuaikan adanya side-nav di desktop */
-        :root,
-        body,
-        body.is-scrolled {
-            --side-w: 70px !important;
-        }
-
-        .side-nav {
-            background: rgba(0, 119, 197, 0.85) !important;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-            width: 70px !important;
-            overflow: hidden;
-            transition: width 0.35s ease, background 0.35s ease !important;
-        }
-
-        .side-nav:hover {
-            width: 220px !important;
-        }
-
-        .side-nav .side-nav__label {
-            max-width: 150px !important;
-            opacity: 1 !important;
-            margin-right: 14px !important;
-            white-space: nowrap;
-        }
-
         @media (min-width: 1024px) {
+            /* Mengamankan agar padding menyesuaikan adanya side-nav di desktop */
+            :root,
+            body,
+            body.is-scrolled {
+                --side-w: 70px !important;
+            }
+
+            .side-nav {
+                background: rgba(0, 119, 197, 0.85) !important;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+                width: 70px !important;
+                overflow: hidden;
+                transition: width 0.35s ease, background 0.35s ease !important;
+            }
+
+            .side-nav:hover {
+                width: 220px !important;
+            }
+
+            .side-nav .side-nav__label {
+                max-width: 150px !important;
+                opacity: 1 !important;
+                margin-right: 14px !important;
+                white-space: nowrap;
+            }
+
             .lelang-content .container {
                 padding-right: 120px;
             }
@@ -311,7 +310,7 @@
                 <span class="material-symbols-outlined side-nav__icon">login</span>
                 <span class="side-nav__label">Login</span>
             </button>
-            <button type="button" class="side-nav__link is-active" data-panel="lelang" id="side-lelang">
+            <button type="button" class="side-nav__link" data-panel="lelang" id="side-lelang">
                 <span class="material-symbols-outlined side-nav__icon">gavel</span>
                 <span class="side-nav__label">Info Lelang</span>
             </button>
@@ -371,7 +370,7 @@
         </div>
 
         <!-- Info Lelang -->
-        <div class="side-panel__content is-active" data-content="lelang">
+        <div class="side-panel__content" data-content="lelang">
             <h3 class="side-panel__title">Info Lelang</h3>
             <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah dan BUMN melalui kanal resmi
                 berikut.</p>

@@ -237,6 +237,74 @@
                 padding: 36px 24px;
             }
         }
+
+        .syarat-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 48px;
+            align-items: flex-start;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .ketentuan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .partner-logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .mitra-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            background: url('assets/jakarta3.jpg') center/cover no-repeat;
+        }
+
+        @media (max-width: 900px) {
+            .syarat-layout {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mitra-hero {
+                min-height: 70vh !important;
+                padding: 100px 0 50px !important;
+            }
+            .mitra-hero h1 {
+                font-size: 32px !important;
+            }
+            .benefit-card {
+                padding: 24px 20px !important;
+            }
+            .ketentuan-card {
+                padding: 20px 16px !important;
+            }
+            .mitra-content section {
+                padding: 60px 0 !important;
+            }
+            .syarat-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .syarat-item {
+                padding: 18px 16px;
+            }
+        }
     </style>
 </head>
 
@@ -299,7 +367,7 @@
                 <span class="material-symbols-outlined side-nav__icon">groups</span>
                 <span class="side-nav__label">Anggota</span>
             </button>
-            <button type="button" class="side-nav__link is-active" data-panel="mitra" id="side-mitra">
+            <button type="button" class="side-nav__link" data-panel="mitra" id="side-mitra">
                 <span class="material-symbols-outlined side-nav__icon">handshake</span>
                 <span class="side-nav__label">Mitra Kerja</span>
             </button>
@@ -400,7 +468,7 @@
         </div>
 
         <!-- Mitra Kerja -->
-        <div class="side-panel__content is-active" data-content="mitra">
+        <div class="side-panel__content" data-content="mitra">
             <h3 class="side-panel__title">Mitra Kerja</h3>
             <ul class="panel-links">
                 <li><a href="ketentuan-mitra-kerja.html" class="panel-link is-current">
@@ -533,8 +601,7 @@
     <main class="mitra-content">
 
         <!-- 1. Hero Section (Identik tentang.html: Full Screen 100vh & Warna Biru Identik) -->
-        <section
-            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat;">
+        <section class="mitra-hero">
             <div style="position: absolute; inset: 0; background: rgba(11, 30, 51, 0.75);"></div>
             <div class="container" style="position: relative; z-index: 2; text-align: left; width: 100%;">
                 <h1 class="hero-anim-title"
@@ -605,7 +672,7 @@
                 </div>
 
                 <!-- 3 Pillars Benefit Grid (iOS Glassmorphism) -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+                <div class="benefits-grid">
                     <!-- Card 1: Anggota -->
                     <div class="benefit-card">
                         <div class="benefit-icon-wrap benefit-icon-wrap--blue">
@@ -709,7 +776,7 @@
         <section id="syarat"
             style="padding: 88px 0; background: var(--slate-50); border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);">
             <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
-                <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; align-items: flex-start;">
+                <div class="syarat-layout">
                     <div>
                         <span
                             style="color: var(--royal); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
@@ -861,7 +928,7 @@
                     </p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px;">
+                <div class="ketentuan-grid">
                     <!-- Ketentuan 1 -->
                     <div class="ketentuan-card">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
@@ -976,7 +1043,7 @@
                     </p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;">
+                <div class="partner-logos-grid">
                     <div class="partner-logo-item"><img src="mitra_logos/avian.jpg" alt="Avian Brands"></div>
                     <div class="partner-logo-item"><img src="mitra_logos/lesso.jpg" alt="Lesso Group"></div>
                     <div class="partner-logo-item"><img src="mitra_logos/seven.jpg" alt="Seven ACP"></div>

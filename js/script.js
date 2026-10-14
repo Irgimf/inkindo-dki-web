@@ -352,11 +352,13 @@
         setTimeout(() => chatInput.focus(), 450);
     }
 
-    chatForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        sendUser(chatInput.value);
-        chatInput.value = '';
-    });
+    if (chatForm && chatInput) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            sendUser(chatInput.value);
+            chatInput.value = '';
+        });
+    }
     $$('.chat-quick__btn').forEach((btn) =>
         btn.addEventListener('click', () => sendUser(btn.textContent)));
 

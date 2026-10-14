@@ -48,6 +48,56 @@
             opacity: 0;
             animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
         }
+
+        .sejarah-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .visi-misi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+
+        .kode-etik-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 991px) {
+            .sejarah-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tentang-content section {
+                padding: 48px 0 !important;
+            }
+
+            .visi-misi-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .kode-etik-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .hero-anim-title {
+                font-size: 32px !important;
+            }
+
+            .hero-anim-desc {
+                font-size: 15px !important;
+            }
+        }
     </style>
 </head>
 
@@ -457,7 +507,7 @@
         <!-- 2. Sejarah (White Background) -->
         <section style="padding: 80px 0; background: var(--white);">
             <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: left;">
-                <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: center;">
+                <div class="sejarah-grid">
                     <!-- Teks Sejarah -->
                     <div>
                         <h2 style="font-size: 36px; color: var(--royal); margin-bottom: 24px; font-weight: 700;">Sejarah
@@ -493,7 +543,7 @@
             <div class="container" style="position: relative; z-index: 2; max-width: 900px; margin: 0 auto;">
                 <h2 style="font-size: 32px; margin-bottom: 40px; font-weight: 700; text-align: center;">Visi &amp; Misi
                 </h2>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+                <div class="visi-misi-grid">
                     <div>
                         <h3
                             style="font-size: 24px; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--white); padding-bottom: 8px; display: inline-block;">
@@ -533,7 +583,7 @@
                     Dengan menjunjung tinggi Etika Ikatan Nasional Konsultan Indonesia sebagai dasar yang dinamis untuk
                     melayani sesama manusia, maka tiap Anggota Ikatan Nasional Konsultan Indonesia wajib untuk:
                 </p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div class="kode-etik-grid">
                     <!-- Poin 1 -->
                     <div
                         style="display: flex; gap: 24px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--slate-200);">
