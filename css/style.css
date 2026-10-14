@@ -1,8 +1,3 @@
-/* =========================================================
-   DPP INKINDO DKI Jakarta — Stylesheet (BCA-inspired layout)
-   Palet: royal / navy / dark (tanpa hijau)
-   ========================================================= */
-
 :root {
     --royal: #005A9C;
     --royal-light: #2F86C9;
@@ -246,7 +241,7 @@ body.menu-open .main-header .main-header__logo img {
     z-index: 100;
 }
 
-.has-dropdown.is-open > .dropdown {
+.has-dropdown.is-open>.dropdown {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -2027,7 +2022,7 @@ a.panel-link:hover {
     .bento__card {
         padding: 20px;
     }
-    
+
     .bento__card--horizontal {
         flex-direction: column;
     }
@@ -2251,9 +2246,9 @@ a.panel-link:hover {
     box-shadow: 0 0 0 4px rgba(0, 90, 156, 0.12);
 }
 
-.mitra-form-input:focus + .mitra-input-icon,
-.mitra-form-select:focus + .mitra-input-icon,
-.mitra-form-textarea:focus + .mitra-input-icon,
+.mitra-form-input:focus+.mitra-input-icon,
+.mitra-form-select:focus+.mitra-input-icon,
+.mitra-form-textarea:focus+.mitra-input-icon,
 .mitra-input-wrapper:focus-within .mitra-input-icon {
     color: var(--royal);
 }

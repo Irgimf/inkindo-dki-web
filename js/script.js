@@ -157,9 +157,9 @@
         { keys: ['lelang', 'tender', 'lpse', 'spse'], panel: 'lelang' },
         { keys: ['anggota', 'kta', 'registrasi', 'daftar', 'billing'], panel: 'anggota' },
         { keys: ['mitra', 'partner', 'pupr', 'lpjk', 'lkpp'], panel: 'mitra' },
-        { keys: ['klinik', 'konsultasi'], panel: 'klinik' },
+        { keys: ['klinik', 'konsultasi', 'sbu'], panel: 'klinik' },
         { keys: ['kontak', 'hubungi', 'telepon', 'email', 'alamat'], panel: 'kontak' },
-        { keys: ['login', 'sia', 'sbu', 'masuk'], panel: 'login' },
+        { keys: ['login', 'sia', 'masuk'], panel: 'login' },
         { keys: ['chat', 'tanya', 'bantuan'], panel: 'chat' }
     ];
 
@@ -290,7 +290,7 @@
         },
         {
             keys: ['sbu', 'sertifikat', 'lpjk'],
-            text: 'Pengajuan rekomendasi SBU dilakukan melalui menu Login → Pengajuan SBU. Pastikan KTA Anda masih aktif sebelum mengajukan.'
+            text: 'Untuk informasi dan pendampingan pengurusan Sertifikat Badan Usaha (SBU) serta regulasi LPJK, anggota dapat mengajukan jadwal melalui menu Klinik Konsultasi atau menghubungi sekretariat di +62217942940.'
         },
         {
             keys: ['jam', 'operasional', 'buka'],
