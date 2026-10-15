@@ -708,6 +708,349 @@
                 justify-content: center;
             }
         }
+
+        /* ===== GALERI: grid full-gambar ===== */
+        #tab-galeri .view-container.is-grid .reg-card {
+            display: block;
+            height: 280px;
+            cursor: pointer;
+            border: none;
+            background: #0f172a;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__img::after {
+            background: linear-gradient(to top, rgba(2, 6, 23, 0.88) 0%, rgba(2, 6, 23, 0.35) 45%, transparent 75%);
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card:hover .reg-card__img {
+            transform: scale(1.08);
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__badge {
+            font-size: 12px;
+            padding: 5px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__body {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 18px;
+            z-index: 3;
+            justify-content: flex-end;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__top {
+            margin-bottom: 6px;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__date,
+        #tab-galeri .view-container.is-grid .reg-card__date span,
+        #tab-galeri .view-container.is-grid .reg-card__meta-tag,
+        #tab-galeri .view-container.is-grid .reg-card__meta-tag span {
+            color: #cbd5e1;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__cat-pill {
+            background: rgba(14, 165, 233, 0.9);
+            color: #fff;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__title {
+            color: #fff;
+            font-size: 16px;
+            flex: none;
+            -webkit-line-clamp: 2;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card:hover .reg-card__title {
+            color: #7dd3fc;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__footer {
+            margin-top: 8px;
+            padding-top: 0;
+        }
+
+        #tab-galeri .view-container.is-grid .reg-card__more {
+            color: #e2e8f0;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lb {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(2, 6, 23, 0.96);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .lb.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lb__bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 28px;
+        }
+
+        .lb__title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lb__meta {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .lb__count {
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 6px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .lb__btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .lb__btn:hover {
+            background: #0ea5e9;
+            transform: scale(1.08);
+        }
+
+        .lb__stage {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 90px;
+        }
+
+        .lb__img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: lbIn 0.35s ease;
+            user-select: none;
+        }
+
+        @keyframes lbIn {
+            from {
+                opacity: 0;
+                transform: scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .lb__nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+        }
+
+        .lb__nav:hover {
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .lb__nav--prev {
+            left: 20px;
+        }
+
+        .lb__nav--next {
+            right: 20px;
+        }
+
+        .lb__caption {
+            text-align: center;
+            padding: 12px 24px 6px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+
+        .lb__thumbs {
+            display: flex;
+            gap: 8px;
+            padding: 10px 28px 20px;
+            overflow-x: auto;
+            justify-content: center;
+            scrollbar-width: thin;
+        }
+
+        .lb__thumb {
+            width: 72px;
+            height: 50px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            opacity: 0.5;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .lb__thumb:hover {
+            opacity: 0.85;
+        }
+
+        .lb__thumb.is-active {
+            opacity: 1;
+            border-color: #0ea5e9;
+        }
+
+        @media (max-width: 768px) {
+            .lb__stage {
+                padding: 0 12px;
+            }
+
+            .lb__nav {
+                width: 42px;
+                height: 42px;
+            }
+
+            .lb__nav--prev {
+                left: 8px;
+            }
+
+            .lb__nav--next {
+                right: 8px;
+            }
+
+            .lb__bar {
+                padding: 12px 16px;
+            }
+
+            .lb__thumbs {
+                justify-content: flex-start;
+                padding: 8px 16px 16px;
+            }
+        }
+
+        /* ===== E-MAGAZINE: kartu sampul buku ===== */
+        #magazine-grid.is-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        #magazine-grid.is-grid .reg-card {
+            flex-direction: column;
+            height: auto;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            overflow: visible;
+        }
+
+        #magazine-grid.is-grid .reg-card:hover {
+            box-shadow: none;
+            transform: translateY(-6px);
+        }
+
+        #magazine-grid.is-grid .reg-card__img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 6px 12px 12px 6px;
+            background-position: top center;
+            box-shadow: -6px 6px 18px rgba(15, 23, 42, 0.25), inset 6px 0 8px -4px rgba(0, 0, 0, 0.35);
+            transition: box-shadow 0.3s, transform 0.4s;
+            transform-origin: left center;
+        }
+
+        #magazine-grid.is-grid .reg-card:hover .reg-card__img {
+            box-shadow: -10px 12px 28px rgba(15, 23, 42, 0.35), inset 6px 0 8px -4px rgba(0, 0, 0, 0.35);
+            transform: perspective(900px) rotateY(-10deg);
+        }
+
+        #magazine-grid.is-grid .reg-card__img::after {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.18) 0%, transparent 8%, transparent 100%);
+        }
+
+        #magazine-grid.is-grid .reg-card__body {
+            width: 100%;
+            padding: 14px 4px 0;
+        }
+
+        #magazine-grid.is-grid .reg-card__title {
+            -webkit-line-clamp: 2;
+            flex: none;
+        }
+
+        #magazine-grid.is-grid .reg-card__footer {
+            margin-top: 10px;
+        }
+
+        #magazine-grid.is-list .reg-card__img {
+            width: 130px;
+            aspect-ratio: 3 / 4;
+            background-position: top center;
+        }
+
+        #magazine-grid.is-list .reg-card__body {
+            width: calc(100% - 130px);
+        }
+
+        @media (max-width: 1024px) {
+            #magazine-grid.is-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #magazine-grid.is-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
     </style>
 </head>
 
@@ -1750,164 +2093,7 @@
                     </a>
                 </div>
 
-                <div class="view-container is-grid">
-                    <!-- Mag 1 -->
-                    <a href="#" class="reg-card" data-category="2026">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar1.jpg');">
-                            <span class="reg-card__badge">Edisi Terbaru</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">auto_stories</span> Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Edisi 80</span>
-                            </div>
-                            <h3 class="reg-card__title">Warta INKINDO DKI Edisi 80: "Akselerasi Konsultan Menghadapi Era
-                                Jakarta Kota Global"</h3>
-                            <p class="reg-card__desc">Ulasan mendalam arah kebijakan tata ruang DKJ, strategi
-                                diversifikasi pasar konsultan independen, serta wawancara eksklusif ketua terpilih
-                                periode 2026–2030.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">visibility</span> 56 Halaman • Baca
-                                    Online</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Mag 2 -->
-                    <a href="#" class="reg-card" data-category="2026">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar2.jpg');">
-                            <span class="reg-card__badge">Tahun 2026</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">auto_stories</span> Jul 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Edisi 79</span>
-                            </div>
-                            <h3 class="reg-card__title">Warta INKINDO DKI Edisi 79: "Sinergi Hijau: Konsultan Menjawab
-                                Target Net Zero Emission"</h3>
-                            <p class="reg-card__desc">Kompilasi artikel teknis penerapan teknologi dekarbonisasi
-                                bangunan gedung, sertifikasi Greenship, dan peluang konsultan energi terbarukan.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">visibility</span> 52 Halaman • Baca
-                                    Online</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Mag 3 -->
-                    <a href="#" class="reg-card" data-category="2026">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar.png');">
-                            <span class="reg-card__badge">Tahun 2026</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">auto_stories</span> Apr 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Edisi 78</span>
-                            </div>
-                            <h3 class="reg-card__title">Warta INKINDO DKI Edisi 78: "Peluang &amp; Transformasi Industri
-                                Konsultansi Menyongsong DKJ"</h3>
-                            <p class="reg-card__desc">Analisis regulasi pengadaan barang dan jasa terkini serta peta
-                                kompetisi konsultan rekayasa dalam proyek infrastruktur aglomerasi Jabodetabekpunjur.
-                            </p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">visibility</span> 48 Halaman • Baca
-                                    Online</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Mag 4 -->
-                    <a href="#" class="reg-card" data-category="2026">
-                        <div class="reg-card__img" style="background-image: url('assets/hero-bg.jpg');">
-                            <span class="reg-card__badge">Tahun 2026</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">auto_stories</span> Jan 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Edisi 77</span>
-                            </div>
-                            <h3 class="reg-card__title">Warta INKINDO DKI Edisi 77: "Integritas &amp; Sertifikasi:
-                                Fondasi Tangguh Usaha Konsultansi"</h3>
-                            <p class="reg-card__desc">Edisi khusus komitmen penerapan SMAP ISO 37001 dan pengenalan
-                                regulasi baru LPJK seputar tata cara konversi sertifikasi standar.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">visibility</span> 60 Halaman • Baca
-                                    Online</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Mag 5 -->
-                    <a href="#" class="reg-card" data-category="2025">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta3.jpg');">
-                            <span class="reg-card__badge">Tahun 2025</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">auto_stories</span> Okt 2025
-                                </div>
-                                <span class="reg-card__cat-pill">Edisi 76</span>
-                            </div>
-                            <h3 class="reg-card__title">Warta INKINDO DKI Edisi 76: "Digitalisasi Jasa Konsultansi
-                                Melalui Building Information Modelling"</h3>
-                            <p class="reg-card__desc">Kupas tuntas adopsi software BIM 4D/5D, interoperabilitas format
-                                data terbuka, dan efisiensi waktu pelaksanaan proyek gedung bertingkat tinggi.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">visibility</span> 50 Halaman • Baca
-                                    Online</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Mag 6 -->
-                    <a href="#" class="reg-card" data-category="2025">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta2.jpg');">
-                            <span class="reg-card__badge">Tahun 2025</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">auto_stories</span> Jul 2025
-                                </div>
-                                <span class="reg-card__cat-pill">Edisi 75</span>
-                            </div>
-                            <h3 class="reg-card__title">Warta INKINDO DKI Edisi 75: "Standarisasi Remunerasi Billing
-                                Rate Demi Tenaga Ahli Unggul"</h3>
-                            <p class="reg-card__desc">Pentingnya kepatuhan para pengguna jasa terhadap pedoman standar
-                                upah minimum tenaga ahli guna menjaga mutu luaran perancangan dan pengawasan.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">visibility</span> 48 Halaman • Baca
-                                    Online</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                <div class="view-container is-grid" id="magazine-grid">
                 </div>
             </div>
 
@@ -2179,6 +2365,8 @@
         </div>
     </footer>
 
+    <script src="js/berita-data.js"></script>
+    <script src="js/magazine-data.js"></script>
     <!-- Interactive Script matching Regulasi Page with enhancements -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -2187,6 +2375,140 @@
             const activeCategoryTitle = document.getElementById('active-category-title');
             const emptyState = document.getElementById('empty-state');
             const searchInput = document.getElementById('news-search-input');
+
+            // Render kartu e-Magazine dari data (sumber: inkindo-dki.org/magazine/e-magazine)
+            const magGrid = document.getElementById('magazine-grid');
+            if (magGrid && window.MAGAZINE_DATA) {
+                const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+                magGrid.innerHTML = window.MAGAZINE_DATA.map(m =>
+                    '<a href="read-magazine.html?id=' + encodeURIComponent(m.slug) + '" class="reg-card" data-category="' + esc(m.kind.toLowerCase()) + '">' +
+                    '<div class="reg-card__img" style="background-image: url(\'' + esc(m.cover) + '\');"><span class="reg-card__badge">' + esc(m.edition) + '</span></div>' +
+                    '<div class="reg-card__body"><div class="reg-card__top"><div class="reg-card__date"><span class="material-symbols-outlined">auto_stories</span> ' + esc(m.date) + '</div>' +
+                    '<span class="reg-card__cat-pill">' + esc(m.kind) + '</span></div>' +
+                    '<h3 class="reg-card__title">' + esc(m.title) + '</h3><p class="reg-card__desc">' + esc(m.desc) + '</p>' +
+                    '<div class="reg-card__footer"><span class="reg-card__meta-tag"><span class="material-symbols-outlined">menu_book</span> Baca Online</span>' +
+                    '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div></div></div></a>'
+                ).join('');
+            }
+
+            // Tautkan kartu Agenda, Rilis Berita &amp; Publikasi ke halaman detail masing-masing
+            if (window.BERITA_DATA) {
+                Object.keys(window.BERITA_DATA).forEach(type => {
+                    const group = window.BERITA_DATA[type];
+                    const tab = document.getElementById(group.tab);
+                    if (!tab) return;
+                    tab.querySelectorAll('.reg-card').forEach((card, i) => {
+                        const item = group.items[i];
+                        if (item) {
+                            card.setAttribute('href', 'berita-detail.html?type=' + type + '&id=' + item.slug);
+                        }
+                    });
+                });
+            }
+
+            // Buka tab sesuai parameter ?tab= (kembali dari halaman detail)
+            const tabParam = new URLSearchParams(location.search).get('tab');
+            if (tabParam) {
+                const target = document.querySelector('.tab-btn[data-target="tab-' + tabParam + '"]');
+                if (target) setTimeout(() => target.click(), 0);
+            }
+
+            // ===== GALERI: lightbox album =====
+            (function initGallery() {
+                const galTab = document.getElementById('tab-galeri');
+                if (!galTab) return;
+                const pool = ['assets/hero-bg.jpg', 'assets/gambar.png', 'assets/gambar2.jpg', 'assets/jakarta.jpg',
+                    'assets/jakarta2.jpg', 'assets/jakarta3.jpg', 'assets/gambar1.jpg'];
+
+                const lb = document.createElement('div');
+                lb.className = 'lb';
+                lb.setAttribute('role', 'dialog');
+                lb.setAttribute('aria-modal', 'true');
+                lb.innerHTML =
+                    '<div class="lb__bar"><div style="min-width:0"><h3 class="lb__title" id="lb-title"></h3>' +
+                    '<div class="lb__meta" id="lb-meta"></div></div>' +
+                    '<div style="display:flex;align-items:center;gap:12px"><span class="lb__count" id="lb-count"></span>' +
+                    '<button type="button" class="lb__btn" id="lb-close" aria-label="Tutup"><span class="material-symbols-outlined">close</span></button></div></div>' +
+                    '<div class="lb__stage" id="lb-stage">' +
+                    '<button type="button" class="lb__btn lb__nav lb__nav--prev" id="lb-prev" aria-label="Foto sebelumnya"><span class="material-symbols-outlined">chevron_left</span></button>' +
+                    '<img class="lb__img" id="lb-img" alt="">' +
+                    '<button type="button" class="lb__btn lb__nav lb__nav--next" id="lb-next" aria-label="Foto berikutnya"><span class="material-symbols-outlined">chevron_right</span></button></div>' +
+                    '<div class="lb__caption" id="lb-caption"></div><div class="lb__thumbs" id="lb-thumbs"></div>';
+                document.body.appendChild(lb);
+
+                const $ = id => document.getElementById(id);
+                let photos = [], idx = 0, albumTitle = '';
+
+                function buildAlbum(cover, total) {
+                    const start = Math.max(0, pool.indexOf(cover));
+                    const list = [cover];
+                    for (let i = 1; i < total; i++) list.push(pool[(start + i) % pool.length]);
+                    return list;
+                }
+
+                function show(i) {
+                    idx = (i + photos.length) % photos.length;
+                    const img = $('lb-img');
+                    img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+                    img.src = photos[idx];
+                    img.alt = albumTitle + ' - foto ' + (idx + 1);
+                    $('lb-count').textContent = (idx + 1) + ' / ' + photos.length;
+                    $('lb-caption').textContent = albumTitle + ' — Foto ' + (idx + 1) + ' dari ' + photos.length;
+                    $('lb-thumbs').querySelectorAll('.lb__thumb').forEach((t, n) => {
+                        t.classList.toggle('is-active', n === idx);
+                        if (n === idx) t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+                    });
+                }
+
+                function open(card, start) {
+                    const bg = card.querySelector('.reg-card__img').style.backgroundImage;
+                    const m = bg.match(/url\(["']?([^"')]+)["']?\)/);
+                    const cover = m ? m[1] : pool[0];
+                    const total = parseInt((card.querySelector('.reg-card__badge')?.textContent || '').replace(/\D/g, ''), 10) || 12;
+                    albumTitle = (card.querySelector('.reg-card__title')?.textContent || '').replace(/\s+/g, ' ').trim();
+                    const cat = card.querySelector('.reg-card__cat-pill')?.textContent.trim() || '';
+                    const date = (card.querySelector('.reg-card__date')?.textContent || '').replace(/\s+/g, ' ').replace(/^\S+\s/, '').trim();
+                    photos = buildAlbum(cover, total);
+                    $('lb-title').textContent = albumTitle;
+                    $('lb-meta').textContent = [cat, date].filter(Boolean).join(' • ');
+                    $('lb-thumbs').innerHTML = photos.map((p, n) =>
+                        '<div class="lb__thumb" data-i="' + n + '" style="background-image:url(\'' + p + '\')"></div>').join('');
+                    lb.classList.add('is-open');
+                    document.body.style.overflow = 'hidden';
+                    show(start || 0);
+                }
+
+                function close() {
+                    lb.classList.remove('is-open');
+                    document.body.style.overflow = '';
+                }
+
+                galTab.querySelectorAll('.reg-card').forEach(card => {
+                    card.addEventListener('click', e => { e.preventDefault(); open(card); });
+                });
+                $('lb-close').addEventListener('click', close);
+                $('lb-prev').addEventListener('click', () => show(idx - 1));
+                $('lb-next').addEventListener('click', () => show(idx + 1));
+                $('lb-thumbs').addEventListener('click', e => {
+                    const t = e.target.closest('.lb__thumb');
+                    if (t) show(parseInt(t.dataset.i, 10));
+                });
+                $('lb-stage').addEventListener('click', e => { if (e.target.id === 'lb-stage') close(); });
+                document.addEventListener('keydown', e => {
+                    if (!lb.classList.contains('is-open')) return;
+                    if (e.key === 'Escape') close();
+                    else if (e.key === 'ArrowLeft') show(idx - 1);
+                    else if (e.key === 'ArrowRight') show(idx + 1);
+                });
+                let sx = null;
+                $('lb-stage').addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+                $('lb-stage').addEventListener('touchend', e => {
+                    if (sx === null) return;
+                    const dx = e.changedTouches[0].clientX - sx;
+                    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+                    sx = null;
+                }, { passive: true });
+            })();
 
             // Map sub-filters per tab
             // Switch Tab logic

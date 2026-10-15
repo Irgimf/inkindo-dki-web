@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baca e-Magazine - DPP INKINDO DKI Jakarta</title>
+    <meta name="description" content="Baca majalah, pedoman, dan buku DPP INKINDO DKI Jakarta secara online dengan tampilan buku interaktif.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @media (min-width: 1024px) {
+
+            :root,
+            body,
+            body.is-scrolled {
+                --side-w: 70px !important;
+            }
+
+            .side-nav {
+                background: #0ea5e9 !important;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+                width: 70px !important;
+                overflow: hidden;
+                transition: width 0.35s ease, background 0.35s ease !important;
+            }
+
+            .side-nav:hover {
+                width: 220px !important;
+            }
+
+            .side-nav .side-nav__label {
+                max-width: 150px !important;
+                opacity: 1 !important;
+                margin-right: 14px !important;
+                white-space: nowrap;
+            }
+        }
+
+        .reader-page {
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .detail-top {
+            position: relative;
+            padding: calc(var(--header-h) + 30px) 0 30px;
+            background: linear-gradient(135deg, #0f172a 0%, #0369a1 60%, #0ea5e9 100%);
+            overflow: hidden;
+        }
+
+        .detail-top::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('assets/jakarta2.jpg') center/cover;
+            opacity: 0.15;
+        }
+
+        .detail-top .container {
+            position: relative;
+        }
+
+        .detail-top__label {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #bae6fd;
+            margin-bottom: 6px;
+        }
+
+        .detail-top__title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 18px;
+            line-height: 1.2;
+        }
+
+        .detail-tabs {
+            display: flex;
+            gap: 28px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .detail-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .detail-tabs a {
+            color: #e0f2fe;
+            text-decoration: none;
+            font-size: 18px;
+            padding-bottom: 10px;
+            position: relative;
+            white-space: nowrap;
+            transition: color .2s;
+        }
+
+        .detail-tabs a:hover {
+            color: #fff;
+        }
+
+        .detail-tabs a.is-active {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .detail-tabs a.is-active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        /* ===== Pembaca flipbook ===== */
+        .reader-wrap {
+            max-width: 1280px;
+            margin: 28px auto 0;
+            padding: 0 20px;
+        }
+
+        .reader {
+            position: relative;
+            background: radial-gradient(ellipse at center, #1e293b 0%, #0b1220 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, .3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reader:fullscreen {
+            border-radius: 0;
+            height: 100vh;
+        }
+
+        .reader__bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 18px;
+            background: rgba(2, 6, 23, .55);
+            color: #fff;
+            flex-wrap: wrap;
+        }
+
+        .reader__title {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+            max-width: 40%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .reader__tools {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .rbtn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            cursor: pointer;
+            display: inline-grid;
+            place-items: center;
+            text-decoration: none;
+            transition: background .2s, transform .2s;
+        }
+
+        .rbtn:hover {
+            background: #0ea5e9;
+            transform: scale(1.08);
+        }
+
+        .rbtn:disabled {
+            opacity: .35;
+            pointer-events: none;
+        }
+
+        .rbtn .material-symbols-outlined {
+            font-size: 22px;
+        }
+
+        .reader__count {
+            font-size: 13px;
+            background: rgba(255, 255, 255, .12);
+            padding: 7px 14px;
+            border-radius: 20px;
+            min-width: 110px;
+            text-align: center;
+            margin: 0 6px;
+        }
+
+        .reader__stage {
+            position: relative;
+            flex: 1;
+            height: calc(100vh - 230px);
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .reader:fullscreen .reader__stage {
+            height: auto;
+        }
+
+        .reader__zoom {
+            transition: transform .3s ease;
+            transform-origin: center center;
+        }
+
+        #flipbook {
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .45));
+        }
+
+        .fb-page {
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .fb-page canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .fb-page.is-loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 34px;
+            height: 34px;
+            margin: -17px 0 0 -17px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #0ea5e9;
+            border-radius: 50%;
+            animation: spin .9s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            z-index: 5;
+        }
+
+        .nav-arrow:hover {
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .nav-arrow--prev {
+            left: 14px;
+        }
+
+        .nav-arrow--next {
+            right: 14px;
+        }
+
+        .reader__loading,
+        .reader__error {
+            position: absolute;
+            inset: 0;
+            z-index: 6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 24px;
+            background: rgba(11, 18, 32, .92);
+        }
+
+        .reader__loading[hidden],
+        .reader__error[hidden] {
+            display: none;
+        }
+
+        .loader-book {
+            width: 60px;
+            height: 44px;
+            position: relative;
+            perspective: 300px;
+        }
+
+        .loader-book i {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 28px;
+            height: 44px;
+            background: #38bdf8;
+            border-radius: 0 4px 4px 0;
+            transform-origin: left center;
+            animation: flipPage 1.4s infinite ease-in-out;
+        }
+
+        .loader-book i:nth-child(2) {
+            animation-delay: .25s;
+            background: #7dd3fc;
+        }
+
+        .loader-book i:nth-child(3) {
+            animation-delay: .5s;
+            background: #e0f2fe;
+        }
+
+        @keyframes flipPage {
+            0% {
+                transform: rotateY(0);
+            }
+
+            50%,
+            100% {
+                transform: rotateY(-160deg);
+            }
+        }
+
+        .reader__bar-progress {
+            width: 220px;
+            height: 6px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .reader__bar-progress span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #38bdf8;
+            transition: width .2s;
+        }
+
+        .reader__error .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #0ea5e9;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 24px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .reader__hint {
+            text-align: center;
+            font-size: 13px;
+            color: #94a3b8;
+            padding: 8px 0 14px;
+        }
+
+        .reader-info {
+            max-width: 1000px;
+            margin: 36px auto 0;
+            padding: 0 20px;
+        }
+
+        .reader-info h2 {
+            font-size: 26px;
+            color: #1c324e;
+            margin: 0 0 8px;
+        }
+
+        .reader-info p {
+            color: #475569;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .reader-info__meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .pill {
+            font-size: 12px;
+            font-weight: 600;
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .related {
+            background: #f1f5f8;
+            margin-top: 56px;
+            padding: 48px 20px 64px;
+        }
+
+        .related__inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .related h2 {
+            font-size: 26px;
+            margin: 0 0 24px;
+            color: #1c324e;
+        }
+
+        .related__grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .rel-mag {
+            text-decoration: none;
+            color: inherit;
+            transition: transform .3s;
+        }
+
+        .rel-mag:hover {
+            transform: translateY(-6px);
+        }
+
+        .rel-mag__img {
+            aspect-ratio: 3/4;
+            background-size: cover;
+            background-position: top center;
+            border-radius: 4px 10px 10px 4px;
+            box-shadow: -5px 5px 14px rgba(15, 23, 42, .25);
+        }
+
+        .rel-mag h3 {
+            font-size: 14px;
+            margin: 12px 0 0;
+            color: #0f172a;
+            line-height: 1.4;
+        }
+
+        .rel-mag:hover h3 {
+            color: #0ea5e9;
+        }
+
+        @media (max-width: 900px) {
+            .related__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .reader__title {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .related__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .detail-top__title {
+                font-size: 26px;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+            }
+
+            .reader__stage {
+                min-height: 460px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="main-header" id="main-header">
+        <div class="container main-header__inner">
+            <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+            </a>
+
+            <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
+                <ul class="main-nav__menu">
+                    <li><a href="index.html" class="main-nav__link" id="nav-home">Home</a></li>
+                    <li><a href="tentang.html" class="main-nav__link" id="nav-tentang">Tentang Kami</a></li>
+                    <li><a href="regulasi.html" class="main-nav__link" id="nav-regulasi">Regulasi</a></li>
+                    <li><a href="berita.html" class="main-nav__link is-active" id="nav-berita">Berita &amp;
+                            Informasi</a></li>
+                    <li class="main-nav__icon-item">
+                        <button type="button" class="main-nav__icon" id="header-search-toggle" aria-label="Cari">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="lang-switch" id="lang-switch">
+                            <button type="button" class="lang-switch__btn is-active" data-lang="id">ID</button>
+                            <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Buka menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <div class="header-search" id="header-search">
+            <form class="container header-search__form" id="header-search-form">
+                <input type="text" id="header-search-input" class="header-search__input" placeholder="Cari di sini?"
+                    autocomplete="off">
+                <button type="submit" class="header-search__btn" aria-label="Cari">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- ================= SIDE NAV KANAN ================= -->
+    <aside class="side-nav" id="side-nav" aria-label="Menu layanan">
+        <div class="side-nav__list">
+            <button type="button" class="side-nav__link" data-panel="login" id="side-login">
+                <span class="material-symbols-outlined side-nav__icon">login</span>
+                <span class="side-nav__label">Login</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="lelang" id="side-lelang">
+                <span class="material-symbols-outlined side-nav__icon">gavel</span>
+                <span class="side-nav__label">Info Lelang</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="anggota" id="side-anggota">
+                <span class="material-symbols-outlined side-nav__icon">groups</span>
+                <span class="side-nav__label">Anggota</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="mitra" id="side-mitra">
+                <span class="material-symbols-outlined side-nav__icon">handshake</span>
+                <span class="side-nav__label">Mitra Kerja</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="klinik" id="side-klinik">
+                <span class="material-symbols-outlined side-nav__icon">medical_information</span>
+                <span class="side-nav__label">Klinik Konsultasi</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="kontak" id="side-kontak">
+                <span class="material-symbols-outlined side-nav__icon">call</span>
+                <span class="side-nav__label">Hubungi Kami</span>
+            </button>
+            <button type="button" class="side-nav__link" data-panel="chat" id="side-chat">
+                <span class="material-symbols-outlined side-nav__icon">forum</span>
+                <span class="side-nav__label">Chat</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="side-panel" id="side-panel" aria-hidden="true">
+        <div class="side-panel__top">
+            <button type="button" class="side-panel__close" id="side-panel-close" aria-label="Tutup panel">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="side-panel__content" data-content="login">
+            <h3 class="side-panel__title">Login</h3>
+            <ul class="panel-links">
+                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer"
+                        class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">groups</span>
+                        <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="https://www.inkindo-dki.org/mitra/login" target="_blank" rel="noopener noreferrer"
+                        class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">handshake</span>
+                        <span><strong>Mitra Kerja</strong><small>Portal kolaborasi dan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="#" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">admin_panel_settings</span>
+                        <span><strong>Admin Kesekretariatan</strong><small>Akses khusus admin</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <div class="side-panel__content" data-content="lelang">
+            <h3 class="side-panel__title">Info Lelang</h3>
+            <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah melalui kanal resmi berikut.
+            </p>
+            <ul class="panel-links">
+                <li><a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer"
+                        class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">shopping_cart_checkout</span>
+                        <span><strong>LKPP</strong><small>Lembaga Kebijakan Pengadaan Barang/Jasa
+                                Pemerintah</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="lelang-lainnya.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">campaign</span>
+                        <span><strong>Info Lelang Lainnya</strong><small>Informasi paket pengadaan alternatif</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <div class="side-panel__content" data-content="anggota">
+            <h3 class="side-panel__title">Anggota</h3>
+            <ul class="panel-links">
+                <li><a href="https://www.inkindo-dki.org/register" target="_blank" rel="noopener noreferrer"
+                        class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">person_add</span>
+                        <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan INKINDO</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer"
+                        class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">autorenew</span>
+                        <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan tahunan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="anggota-terdaftar.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">fact_check</span>
+                        <span><strong>Anggota Terdaftar</strong><small>Direktori badan usaha terverifikasi</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <div class="side-panel__content" data-content="mitra">
+            <h3 class="side-panel__title">Mitra Kerja</h3>
+            <ul class="panel-links">
+                <li><a href="ketentuan-mitra-kerja.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">rule</span>
+                        <span><strong>Ketentuan Mitra Kerja</strong><small>Syarat dan panduan kemitraan</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+                <li><a href="javascript:void(0)" class="panel-link" onclick="openDaftarMitraModal(event)">
+                        <span class="material-symbols-outlined panel-link__icon">how_to_reg</span>
+                        <span><strong>Daftar Mitra Kerja</strong><small>Formulir registrasi kemitraan baru</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                    </a></li>
+            </ul>
+        </div>
+
+        <div class="side-panel__content" data-content="klinik">
+            <h3 class="side-panel__title">Klinik Konsultasi</h3>
+            <p class="side-panel__desc">Pendampingan gratis bagi anggota terkait regulasi, sertifikasi, dan pengadaan
+                jasa konsultansi.</p>
+            <div class="topic-list">
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Advokasi & Mediasi')">Advokasi &amp;
+                    Mediasi</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Regulasi')">Regulasi</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Perpajakan')">Perpajakan</span>
+                <span class="topic-chip" onclick="openKlinikKonsultasiModal(event, 'Pelayanan')">Pelayanan (KTA, SBU,
+                    OSS, dll)</span>
+            </div>
+            <div class="panel-info">
+                <span class="material-symbols-outlined">schedule</span>
+                <span>Sesi tatap muka &amp; daring<br><small>Senin - Jumat: 08.00 - 16.30 WIB</small></span>
+            </div>
+            <button type="button" class="btn btn--primary btn--block" id="klinik-cta"
+                onclick="openKlinikKonsultasiModal(event)">Ajukan Konsultasi</button>
+        </div>
+
+        <div class="side-panel__content" data-content="kontak">
+            <h3 class="side-panel__title">Hubungi Kami</h3>
+            <ul class="panel-links">
+                <li><a href="tel:+62217942940" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">call</span>
+                        <span><strong>Telp: +62217942940(H) / +6282112079750</strong><small>Fax:
+                                +62217942941</small></span>
+                    </a></li>
+                <li><a href="mailto:sekretariat@inkindo-dki.org" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">mail</span>
+                        <span><strong>sekretariat@inkindo-dki.org</strong><small>inkindo_dki@yahoo.com</small></span>
+                    </a></li>
+                <li>
+                    <div class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">location_on</span>
+                        <span><strong>Sekretariat DPP</strong><small>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta
+                                Selatan 12760</small></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">schedule</span>
+                        <span><strong>Jam Operasional</strong><small>Senin - Jumat: 08.00 - 16.30 WIB</small></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="side-panel__content side-panel__content--chat" data-content="chat">
+            <div class="chat-head">
+                <div class="chat-head__avatar"><span class="material-symbols-outlined">smart_toy</span></div>
+                <div>
+                    <h3 class="side-panel__title side-panel__title--chat">Asisten INKINDO</h3>
+                    <span class="chat-head__status">Online</span>
+                </div>
+            </div>
+            <div class="chat-body" id="chat-body"></div>
+            <div class="chat-quick" id="chat-quick">
+                <button type="button" class="chat-quick__btn">Cara daftar anggota</button>
+                <button type="button" class="chat-quick__btn">Jam operasional</button>
+            </div>
+            <form class="chat-form" id="chat-form">
+                <input type="text" id="chat-input" class="chat-form__input" placeholder="Ketik pesan..."
+                    autocomplete="off">
+                <button type="submit" class="chat-form__btn" aria-label="Kirim">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="reader-page">
+        <section class="detail-top">
+            <div class="container">
+                <p class="detail-top__label">DPP INKINDO DKI Jakarta</p>
+                <h1 class="detail-top__title">e-Magazine</h1>
+                <nav class="detail-tabs" aria-label="Kategori berita">
+                    <a href="berita.html?tab=agenda">Agenda Kegiatan</a>
+                    <a href="berita.html?tab=rilis">Rilis Berita</a>
+                    <a href="berita.html?tab=publikasi">Publikasi</a>
+                    <a href="berita.html?tab=galeri">Galeri</a>
+                    <a href="berita.html?tab=emagazine" class="is-active">e-Magazine</a>
+                    <a href="berita.html?tab=karya">Karya Anggota</a>
+                </nav>
+            </div>
+        </section>
+
+        <div class="reader-wrap">
+            <div class="reader" id="reader">
+                <div class="reader__bar">
+                    <h2 class="reader__title" id="reader-title">Memuat...</h2>
+                    <div class="reader__tools">
+                        <button type="button" class="rbtn" id="btn-first" aria-label="Halaman pertama"><span
+                                class="material-symbols-outlined">first_page</span></button>
+                        <button type="button" class="rbtn" id="btn-prev" aria-label="Sebelumnya"><span
+                                class="material-symbols-outlined">chevron_left</span></button>
+                        <span class="reader__count" id="reader-count">- / -</span>
+                        <button type="button" class="rbtn" id="btn-next" aria-label="Berikutnya"><span
+                                class="material-symbols-outlined">chevron_right</span></button>
+                        <button type="button" class="rbtn" id="btn-last" aria-label="Halaman terakhir"><span
+                                class="material-symbols-outlined">last_page</span></button>
+                        <span style="width:8px"></span>
+                        <button type="button" class="rbtn" id="btn-zoom-out" aria-label="Perkecil"><span
+                                class="material-symbols-outlined">zoom_out</span></button>
+                        <button type="button" class="rbtn" id="btn-zoom-in" aria-label="Perbesar"><span
+                                class="material-symbols-outlined">zoom_in</span></button>
+                        <button type="button" class="rbtn" id="btn-full" aria-label="Layar penuh"><span
+                                class="material-symbols-outlined">fullscreen</span></button>
+                        <a class="rbtn" id="btn-download" href="#" download aria-label="Unduh PDF"><span
+                                class="material-symbols-outlined">download</span></a>
+                    </div>
+                </div>
+
+                <div class="reader__stage" id="stage">
+                    <button type="button" class="rbtn nav-arrow nav-arrow--prev" id="arrow-prev"
+                        aria-label="Halaman sebelumnya"><span class="material-symbols-outlined">chevron_left</span></button>
+                    <div class="reader__zoom" id="zoom">
+                        <div id="flipbook"></div>
+                    </div>
+                    <button type="button" class="rbtn nav-arrow nav-arrow--next" id="arrow-next"
+                        aria-label="Halaman berikutnya"><span class="material-symbols-outlined">chevron_right</span></button>
+
+                    <div class="reader__loading" id="reader-loading">
+                        <div class="loader-book"><i></i><i></i><i></i></div>
+                        <div id="loading-text">Menyiapkan majalah...</div>
+                        <div class="reader__bar-progress"><span id="loading-bar"></span></div>
+                    </div>
+                    <div class="reader__error" id="reader-error" hidden>
+                        <span class="material-symbols-outlined" style="font-size:48px;color:#f59e0b">error</span>
+                        <strong id="error-title">Dokumen tidak dapat dimuat</strong>
+                        <p id="error-text" style="max-width:520px;margin:0;color:#94a3b8"></p>
+                        <a class="btn-link" id="error-open" href="#" target="_blank" rel="noopener noreferrer"><span
+                                class="material-symbols-outlined">open_in_new</span> Buka PDF di tab baru</a>
+                    </div>
+                </div>
+                <p class="reader__hint">Klik atau seret sudut halaman untuk membalik • Tombol ← → pada keyboard juga dapat
+                    digunakan</p>
+            </div>
+        </div>
+
+        <section class="reader-info" id="reader-info"></section>
+
+        <section class="related">
+            <div class="related__inner">
+                <h2>e-Magazine Lainnya</h2>
+                <div class="related__grid" id="related-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" id="kontak">
+        <div class="site-footer__container">
+            <div class="site-footer__grid">
+                <div class="site-footer__brand">
+                    <div class="site-footer__logo">
+                        <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
+                    </div>
+                    <p class="site-footer__bio">
+                        Ikatan Nasional Konsultan Indonesia (INKINDO) Provinsi DKI Jakarta merupakan wadah asosiasi
+                        perusahaan jasa konsultansi independen yang profesional dan berintegritas.
+                    </p>
+                </div>
+                <div class="site-footer__col site-footer__col--contact">
+                    <h4>Sekretariat DPP</h4>
+                    <p class="site-footer__address">
+                        <span class="material-symbols-outlined site-footer__icon">location_on</span>
+                        <span>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</span>
+                    </p>
+                    <div class="site-footer__contact">
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">call</span>
+                            <span>Telp: <a href="tel:+62217942940" class="site-footer__link">+62217942940</a>(H), <a
+                                    href="tel:+6282112079750" class="site-footer__link">+6282112079750</a>, Fax:
+                                +62217942941</span>
+                        </div>
+                        <div class="site-footer__contact-item">
+                            <span class="material-symbols-outlined site-footer__icon">mail</span>
+                            <span><a href="mailto:sekretariat@inkindo-dki.org"
+                                    class="site-footer__link">sekretariat@inkindo-dki.org</a></span>
+                        </div>
+                        <div class="site-footer__contact-item site-footer__hours">
+                            <span class="material-symbols-outlined site-footer__icon">schedule</span>
+                            <span>Senin - Jumat: 08.00 - 16.30 WIB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-footer__bottom">
+                <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script src="js/magazine-data.js"></script>
+    <script>
+        (function () {
+            var $ = function (id) { return document.getElementById(id); };
+            var list = window.MAGAZINE_DATA || [];
+            var id = new URLSearchParams(location.search).get('id');
+            var mag = list.filter(function (m) { return m.slug === id; })[0] || list[0];
+            var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+
+            /* ---- Info & terkait ---- */
+            document.title = mag.title + ' - e-Magazine DPP INKINDO DKI Jakarta';
+            $('reader-title').textContent = mag.title;
+            $('btn-download').href = mag.pdf;
+            $('btn-download').setAttribute('download', mag.slug + '.pdf');
+            $('error-open').href = mag.remote;
+            $('reader-info').innerHTML =
+                '<div class="reader-info__meta"><span class="pill">' + esc(mag.kind) + '</span><span class="pill">' + esc(mag.edition) +
+                '</span><span class="pill">' + esc(mag.date) + '</span></div><h2>' + esc(mag.title) + '</h2><p>' + esc(mag.desc) + '</p>';
+            $('related-grid').innerHTML = list.filter(function (m) { return m.slug !== mag.slug; }).slice(0, 5).map(function (m) {
+                return '<a class="rel-mag" href="read-magazine.html?id=' + encodeURIComponent(m.slug) + '"><div class="rel-mag__img" style="background-image:url(\'' + esc(m.cover) + '\')"></div><h3>' + esc(m.title) + '</h3></a>';
+            }).join('');
+
+            function showError(title, text) {
+                $('reader-loading').hidden = true;
+                $('error-title').textContent = title;
+                $('error-text').textContent = text;
+                $('reader-error').hidden = false;
+            }
+
+            if (!window.pdfjsLib || !window.St) {
+                showError('Pustaka pembaca gagal dimuat', 'Periksa koneksi internet Anda lalu muat ulang halaman ini.');
+                return;
+            }
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+            var pdf, total, ratio = 1.414, pageFlip = null, pageEls = [], rendered = {}, queue = Promise.resolve(), zoom = 1;
+            var stage = $('stage'), book = $('flipbook');
+
+            function renderPage(n) { /* n: 1-based */
+                if (rendered[n] || n < 1 || n > total) return;
+                rendered[n] = true;
+                queue = queue.then(function () {
+                    return pdf.getPage(n).then(function (page) {
+                        var vp0 = page.getViewport({ scale: 1 });
+                        var scale = Math.min(1100 / vp0.width, 2);
+                        var vp = page.getViewport({ scale: scale });
+                        var cv = document.createElement('canvas');
+                        cv.width = vp.width; cv.height = vp.height;
+                        return page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise.then(function () {
+                            var el = pageEls[n - 1];
+                            if (el) { el.innerHTML = ''; el.appendChild(cv); el.classList.remove('is-loading'); }
+                        });
+                    });
+                }).catch(function () { rendered[n] = false; });
+            }
+
+            function renderAround(idx) {
+                for (var i = idx - 2; i <= idx + 5; i++) renderPage(i + 1);
+            }
+
+            function updateUI() {
+                var idx = pageFlip.getCurrentPageIndex();
+                var portrait = pageFlip.getOrientation() === 'portrait';
+                var txt;
+                if (idx === 0) txt = 'Sampul';
+                else if (portrait || idx === total - 1 && total % 2 === 0) txt = 'Halaman ' + (idx + 1);
+                else txt = 'Halaman ' + (idx + 1) + (idx + 2 <= total ? '–' + (idx + 2) : '');
+                $('reader-count').textContent = txt + ' / ' + total;
+                var atStart = idx === 0, atEnd = idx >= total - 1;
+                ['btn-first', 'btn-prev', 'arrow-prev'].forEach(function (b) { $(b).disabled = atStart; });
+                ['btn-last', 'btn-next', 'arrow-next'].forEach(function (b) { $(b).disabled = atEnd; });
+                renderAround(idx);
+            }
+
+            function build(start) {
+                if (pageFlip) { try { pageFlip.destroy(); } catch (e) { } }
+                book.innerHTML = '';
+                pageEls = []; rendered = {}; queue = Promise.resolve();
+                for (var i = 0; i < total; i++) {
+                    var d = document.createElement('div');
+                    d.className = 'fb-page is-loading';
+                    d.style.position = 'relative';
+                    if (i === 0 || i === total - 1) d.setAttribute('data-density', 'hard');
+                    book.appendChild(d);
+                    pageEls.push(d);
+                }
+                var W = stage.clientWidth - 120, H = stage.clientHeight - 40;
+                var single = stage.clientWidth < 720;
+                var pw = single ? Math.min(W + 60, (H) / ratio) : Math.min(W / 2, H / ratio);
+                pw = Math.max(200, Math.floor(pw)); var ph = Math.floor(pw * ratio);
+                book.style.width = (single ? pw : pw * 2) + 'px';
+                book.style.height = ph + 'px';
+                pageFlip = new St.PageFlip(book, {
+                    width: pw, height: ph, size: 'fixed', showCover: true, maxShadowOpacity: 0.55,
+                    drawShadow: true, flippingTime: 900, usePortrait: true, mobileScrollSupport: false,
+                    startPage: start || 0, autoSize: false
+                });
+                pageFlip.loadFromHTML(pageEls);
+                pageFlip.on('flip', updateUI);
+                pageFlip.on('changeOrientation', updateUI);
+                updateUI();
+            }
+
+            /* ---- Muat PDF ---- */
+            var task = pdfjsLib.getDocument({ url: mag.pdf });
+            task.onProgress = function (p) {
+                if (p.total) {
+                    var pct = Math.round(p.loaded / p.total * 100);
+                    $('loading-bar').style.width = pct + '%';
+                    $('loading-text').textContent = 'Mengunduh dokumen... ' + pct + '%';
+                }
+            };
+            task.promise.then(function (doc) {
+                pdf = doc; total = doc.numPages;
+                return doc.getPage(1);
+            }).then(function (p1) {
+                var vp = p1.getViewport({ scale: 1 });
+                ratio = vp.height / vp.width;
+                $('reader-loading').hidden = true;
+                build(0);
+                var rt;
+                window.addEventListener('resize', function () {
+                    clearTimeout(rt);
+                    rt = setTimeout(function () { build(pageFlip.getCurrentPageIndex()); }, 350);
+                });
+            }).catch(function (err) {
+                var isFile = location.protocol === 'file:';
+                showError('Dokumen tidak dapat dimuat',
+                    isFile ? 'Halaman ini dibuka langsung dari file. Jalankan melalui server lokal (mis. ekstensi Live Server) agar PDF dapat dibaca, atau buka PDF aslinya di tab baru.'
+                        : 'Berkas PDF tidak ditemukan atau gagal diunduh. Anda dapat membukanya langsung dari situs INKINDO DKI.');
+                if (window.console) console.error(err);
+            });
+
+            /* ---- Kontrol ---- */
+            var go = function (fn) { return function () { if (pageFlip) fn(); }; };
+            $('btn-next').onclick = $('arrow-next').onclick = go(function () { pageFlip.flipNext(); });
+            $('btn-prev').onclick = $('arrow-prev').onclick = go(function () { pageFlip.flipPrev(); });
+            $('btn-first').onclick = go(function () { pageFlip.flip(0); });
+            $('btn-last').onclick = go(function () { pageFlip.flip(total - 1); });
+            document.addEventListener('keydown', function (e) {
+                if (!pageFlip) return;
+                if (e.key === 'ArrowRight') pageFlip.flipNext();
+                else if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+            });
+            function setZoom(z) {
+                zoom = Math.max(0.6, Math.min(1.8, z));
+                $('zoom').style.transform = 'scale(' + zoom + ')';
+            }
+            $('btn-zoom-in').onclick = function () { setZoom(zoom + 0.2); };
+            $('btn-zoom-out').onclick = function () { setZoom(zoom - 0.2); };
+            $('btn-full').onclick = function () {
+                var r = $('reader');
+                if (document.fullscreenElement) document.exitFullscreen();
+                else if (r.requestFullscreen) r.requestFullscreen();
+            };
+            document.addEventListener('fullscreenchange', function () {
+                $('btn-full').querySelector('span').textContent = document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen';
+                if (pageFlip) setTimeout(function () { build(pageFlip.getCurrentPageIndex()); }, 250);
+            });
+        })();
+    </script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
