@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=cerah8">
 </head>
 
 <body>
@@ -315,18 +315,43 @@
     <main>
         <!-- ================= HERO ================= -->
         <section class="hero" id="hero">
-            <div class="hero__bg" style="background-image: url('assets/jakarta.jpg');"></div>
+            <div class="hero__bg hero__bg--a" id="hero-bg-a"></div>
+            <div class="hero__bg hero__bg--b" id="hero-bg-b"></div>
+            <script>
+                (function () {
+                    var jakartaImages = [
+                        'assets/jakarta.jpg',
+                        'assets/jakarta2.jpg',
+                        'assets/jakarta3.jpg',
+                        'assets/jakarta4.jpg',
+                        'assets/jakarta5.jpg',
+                        'assets/jakarta6.jpg',
+                        'assets/jakarta7.jpg',
+                        'assets/jakarta8.jpg',
+                        'assets/jakarta9.jpg'
+                    ];
+                    var initIdx = Math.floor(Math.random() * jakartaImages.length);
+                    window.__currentJakartaBgIndex = initIdx;
+                    var elA = document.getElementById('hero-bg-a');
+                    if (elA) {
+                        elA.style.backgroundImage = "url('" + jakartaImages[initIdx] + "')";
+                    }
+                })();
+            </script>
             <div class="hero__shade"></div>
 
             <div class="container hero__container">
                 <div class="hero__content">
                     <h1 class="sr-only">DPP INKINDO DKI Jakarta – Ekosistem Konsultansi Digital Jakarta</h1>
 
-                    <!-- Search besar dengan efek ketik -->
-                    <form class="hero-search" id="hero-search">
-                        <input type="text" id="hero-search-input" class="hero-search__input" autocomplete="off"
-                            aria-label="Cari layanan">
-                    </form>
+                    <!-- Teks animasi selamat datang dengan garis dan tombol sesuai referensi gambar -->
+                    <div class="hero-search hero-search--display" id="hero-search" role="region"
+                        aria-label="Sambutan Interaktif">
+                        <div class="hero-search__display">
+                            <span class="hero-search__text" id="hero-type-text">Selamat Datang</span>
+                            <span class="hero-type__cursor" aria-hidden="true">|</span>
+                        </div>
+                    </div>
 
                     <!-- Carousel banner -->
                     <div class="carousel" id="hero-carousel">
@@ -379,6 +404,10 @@
                         <div class="mitra-kerja">
                             <div class="mitra-kerja__head">
                                 <h2 class="mitra-kerja__title">Mitra Kerja</h2>
+                                <a href="ketentuan-mitra-kerja.html"
+                                    style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.5); display: inline-flex; align-items: center; gap: 4px;">Info
+                                    Lengkap <span class="material-symbols-outlined"
+                                        style="font-size: 18px;">chevron_right</span></a>
                             </div>
                             <div class="mitra-kerja__marquee-wrapper">
                                 <div class="mitra-kerja__marquee">
@@ -583,7 +612,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=cerah7"></script>
 </body>
 
 </html>

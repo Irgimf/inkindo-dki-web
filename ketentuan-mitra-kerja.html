@@ -10,17 +10,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=cerah6">
     <style>
-        @media (min-width: 1024px) {
-            .mitra-content .container {
-                padding-right: 120px;
-            }
-        }
+
 
         /* Hero Animation */
         @keyframes heroFadeUp {
@@ -98,9 +94,9 @@
         }
 
         .benefit-icon-wrap--blue {
-            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
-            color: #0284c7;
-            border: 1px solid rgba(186, 230, 253, 0.8);
+            background: rgba(10, 18, 71, 0.08);
+            color: #0A1247;
+            border: 1px solid rgba(10, 18, 71, 0.15);
         }
 
         .benefit-icon-wrap--amber {
@@ -220,11 +216,11 @@
 
         /* CTA Card */
         .mitra-cta-box {
-            background: linear-gradient(135deg, #0b2545 0%, #005a9c 100%);
+            background: linear-gradient(135deg, #050924 0%, #0A1247 100%);
             border-radius: 16px;
             padding: 56px 40px;
             color: var(--white);
-            box-shadow: 0 20px 40px rgba(11, 37, 69, 0.25);
+            box-shadow: 0 20px 40px rgba(10, 18, 71, 0.35);
             display: grid;
             grid-template-columns: 1.4fr 1fr;
             gap: 40px;
@@ -269,7 +265,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
+            color: #0F172A;
             background: url('assets/jakarta7.jpg') center/cover no-repeat;
         }
 
@@ -608,35 +604,35 @@
 
         <!-- 1. Hero Section (Identik tentang.html: Full Screen 100vh & Warna Biru Identik) -->
         <section class="mitra-hero">
-            <div style="position: absolute; inset: 0; background: rgba(11, 30, 51, 0.75);"></div>
+            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%), linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);"></div>
             <div class="container" style="position: relative; z-index: 2; text-align: left; width: 100%;">
                 <h1 class="hero-anim-title"
-                    style="font-size: clamp(38px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; text-shadow: 0 8px 30px rgba(0,0,0,0.4);">
+                    style="font-size: clamp(38px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: #ffffff; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);">
                     Tentang Mitra Kerja</h1>
                 <div class="hero-anim-line"
-                    style="width: 70px; height: 5px; background: var(--accent, #f59e0b); margin: 0 0 24px; border-radius: 4px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);">
+                    style="width: 70px; height: 5px; background: #ffffff; margin: 0 0 24px; border-radius: 4px;">
                 </div>
                 <div class="hero-anim-desc"
-                    style="font-size: clamp(16px, 1.8vw, 19px); max-width: 780px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); text-shadow: 0 4px 16px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 16px;">
+                    style="font-size: clamp(16px, 1.8vw, 19px); max-width: 780px; line-height: 1.8; color: rgba(255, 255, 255, 0.92); font-weight: 400; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 16px;">
                     <p style="margin: 0;">
-                        Halaman ini didedikasikan bagi para pihak yang bekerjasama dengan <strong>INKINDO DKI
+                        Halaman ini didedikasikan bagi para pihak yang bekerjasama dengan <strong style="color: #ffffff;">INKINDO DKI
                             Jakarta</strong> baik untuk <strong>Kontraktor</strong>, <strong>Produsen</strong>,
                         <strong>Suplier</strong> dan lain-lain.
                     </p>
                     <p
-                        style="margin: 0; padding-left: 16px; border-left: 3px solid var(--accent, #f59e0b); color: #f8fafc;">
+                        style="margin: 0; padding-left: 16px; border-left: 3px solid #60a5fa; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);">
                         Apabila Bapak/Ibu berminat menjadi Mitra Kerja INKINDO DKI Jakarta dapat menghubungi Sekretariat
                         INKINDO DKI Jakarta.
                     </p>
                 </div>
                 <div class="hero-anim-btns" style="margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap;">
                     <button type="button" class="btn btn--primary" onclick="openDaftarMitraModal()"
-                        style="padding: 14px 28px; font-size: 15px; font-weight: 700; border-radius: 10px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0, 90, 156, 0.4);">
+                        style="padding: 14px 28px; font-size: 15px; font-weight: 700; border-radius: 10px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(10, 18, 71, 0.25);">
                         <span class="material-symbols-outlined" style="font-size: 22px;">how_to_reg</span>
                         Daftar Mitra Kerja
                     </button>
                     <a href="#maksud-tujuan" class="btn btn--outline"
-                        style="padding: 14px 28px; font-size: 15px; font-weight: 600; border-radius: 10px; color: var(--white); border-color: rgba(255,255,255,0.6); display: inline-flex; align-items: center; gap: 8px;">
+                        style="padding: 14px 28px; font-size: 15px; font-weight: 600; border-radius: 10px; color: #0A1247; border: 1.5px solid #0A1247; display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.8);">
                         <span class="material-symbols-outlined" style="font-size: 20px;">info</span>
                         Pelajari Selengkapnya
                     </a>
@@ -695,17 +691,17 @@
                         <ul class="benefit-list">
                             <li>
                                 <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #0284c7;">check_circle</span>
+                                    style="color: #0A1247;">check_circle</span>
                                 <span>Akses langsung ke katalog produk &amp; spesifikasi teknis</span>
                             </li>
                             <li>
                                 <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #0284c7;">check_circle</span>
+                                    style="color: #0A1247;">check_circle</span>
                                 <span>Dukungan transfer keahlian &amp; workshop material</span>
                             </li>
                             <li>
                                 <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #0284c7;">check_circle</span>
+                                    style="color: #0A1247;">check_circle</span>
                                 <span>Jaminan mutu pengadaan dalam rancang bangun</span>
                             </li>
                         </ul>
@@ -914,7 +910,7 @@
         <!-- 4. Ketentuan Mitra Kerja (Image Background Identik Visi Misi tentang.html) -->
         <section id="ketentuan"
             style="position: relative; padding: 96px 0; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat fixed;">
-            <div style="position: absolute; inset: 0; background: rgba(0, 90, 156, 0.88);"></div>
+            <div style="position: absolute; inset: 0; background: rgba(8, 14, 40, 0.72);"></div>
             <div class="container"
                 style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: left;">
                 <div style="text-align: center; max-width: 800px; margin: 0 auto 56px;">
@@ -1155,7 +1151,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=cerah6"></script>
 </body>
 
 </html>

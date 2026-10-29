@@ -86,6 +86,7 @@
         $$('.side-panel__content', panel).forEach((c) =>
             c.classList.toggle('is-active', c.dataset.content === name));
         panel.classList.add('is-open');
+        document.body.classList.add('panel-open');
         panel.setAttribute('aria-hidden', 'false');
         overlay.classList.add('is-visible');
         if (name === 'chat') initChat();
@@ -95,6 +96,7 @@
         currentPanel = null;
         sideLinks.forEach((l) => l.classList.remove('is-active'));
         panel.classList.remove('is-open');
+        document.body.classList.remove('panel-open');
         panel.setAttribute('aria-hidden', 'true');
         overlay.classList.remove('is-visible');
     };
@@ -117,39 +119,127 @@
         }
     });
 
-    /* ---------- Hero search: efek mengetik ---------- */
-    const heroInput = $('#hero-search-input');
-    if (heroInput) {
+    /* ---------- Hero: Efek Mengetik Teks Animasi (Sesuai referensi gambar) ---------- */
+    const heroTextEl = $('#hero-type-text');
+    if (heroTextEl) {
         const phrases = [
-            'Mau cari apa hari ini?',
             'Selamat Datang',
-            'Info Lelang',
-            'Registrasi Anggota',
-            'Sertifikasi SBU',
-            'Klinik Konsultasi',
-            'Standar Billing Rate'
+            'DPP INKINDO DKI Jakarta',
+            'Ekosistem Konsultansi Digital',
+            'Solusi Jasa Konsultansi Terpercaya',
+            'Integritas, Inovasi & Profesionalisme'
         ];
-        let pIndex = 0, cIndex = 0, deleting = false;
+        let pIndex = 0;
+        let cIndex = phrases[0].length; // Mulai langsung dari 'Selamat Datang' penuh
+        let deleting = false;
 
         const typeLoop = () => {
             const word = phrases[pIndex];
-            if (document.activeElement !== heroInput && !heroInput.value) {
-                heroInput.placeholder = word.slice(0, cIndex);
-            }
-            let delay = deleting ? 45 : 90;
+            heroTextEl.textContent = word.slice(0, cIndex);
+
+            let delay = deleting ? 45 : 85;
+
             if (!deleting && cIndex === word.length) {
-                delay = 1800;
+                delay = 2400; // Tahan lama saat teks lengkap
                 deleting = true;
             } else if (deleting && cIndex === 0) {
                 deleting = false;
                 pIndex = (pIndex + 1) % phrases.length;
-                delay = 400;
+                delay = 450;
             } else {
                 cIndex += deleting ? -1 : 1;
             }
+
             setTimeout(typeLoop, delay);
         };
-        typeLoop();
+
+        // Mulai animasi menghapus dan mengetik frase berikutnya setelah jeda pembuka
+        setTimeout(() => {
+            deleting = true;
+            typeLoop();
+        }, 2200);
+    }
+
+    /* Tombol pencarian hero: memicu pencarian header (jika tombol ada) */
+    const heroSearchBtn = $('#hero-search-btn');
+    if (heroSearchBtn) {
+        heroSearchBtn.addEventListener('click', () => {
+            const headerToggle = $('#header-search-toggle');
+            if (headerToggle) {
+                headerToggle.click();
+            } else {
+                const headerSearch = $('#header-search');
+                if (headerSearch) headerSearch.classList.add('is-open');
+            }
+        });
+    }
+
+    /* ---------- Hero Background: Random on Load & Auto-Rotate Tiap 5 Menit (index.html) ---------- */
+    const heroBgA = $('#hero-bg-a');
+    const heroBgB = $('#hero-bg-b');
+    if (heroBgA && heroBgB) {
+        const jakartaImages = [
+            'assets/jakarta.jpg',
+            'assets/jakarta2.jpg',
+            'assets/jakarta3.jpg',
+            'assets/jakarta4.jpg',
+            'assets/jakarta5.jpg',
+            'assets/jakarta6.jpg',
+            'assets/jakarta7.jpg',
+            'assets/jakarta8.jpg',
+            'assets/jakarta9.jpg'
+        ];
+
+        let currentIndex = typeof window.__currentJakartaBgIndex === 'number'
+            ? window.__currentJakartaBgIndex
+            : Math.floor(Math.random() * jakartaImages.length);
+
+        if (!heroBgA.style.backgroundImage) {
+            heroBgA.style.backgroundImage = `url('${jakartaImages[currentIndex]}')`;
+        }
+
+        let activeLayer = 'a';
+
+        const changeHeroBg = () => {
+            // Pilih acak gambar berikutnya dari daftar jakarta*.jpg yang berbeda dari saat ini
+            let nextIndex = Math.floor(Math.random() * (jakartaImages.length - 1));
+            if (nextIndex >= currentIndex) nextIndex++;
+            currentIndex = nextIndex;
+
+            const nextSrc = jakartaImages[currentIndex];
+
+            // Preload gambar terlebih dahulu sebelum cross-fade agar transisi mulus
+            const imgLoader = new Image();
+            imgLoader.onload = () => {
+                if (activeLayer === 'a') {
+                    heroBgB.style.backgroundImage = `url('${nextSrc}')`;
+                    heroBgB.style.opacity = '1';
+                    heroBgA.style.opacity = '0';
+                    activeLayer = 'b';
+                } else {
+                    heroBgA.style.backgroundImage = `url('${nextSrc}')`;
+                    heroBgA.style.opacity = '1';
+                    heroBgB.style.opacity = '0';
+                    activeLayer = 'a';
+                }
+            };
+            imgLoader.src = nextSrc;
+        };
+
+        // Ganti background otomatis setiap 5 menit (5 * 60 * 1000 milidetik = 300.000 ms)
+        const ROTATE_INTERVAL_MS = 5 * 60 * 1000;
+        setInterval(changeHeroBg, ROTATE_INTERVAL_MS);
+
+        // Helper global untuk verifikasi & testing
+        window.changeJakartaHeroBg = changeHeroBg;
+
+        // Preload seluruh gambar jakarta lainnya secara bertahap di background
+        setTimeout(() => {
+            jakartaImages.forEach((src) => {
+                const img = new Image();
+                img.src = src;
+            });
+        }, 2000);
     }
 
     /* Pencarian sederhana: arahkan ke panel / bagian terkait */
@@ -174,13 +264,6 @@
             if (beritaEl) beritaEl.scrollIntoView({ behavior: 'smooth' });
         }
     };
-
-    if ($('#hero-search')) {
-        $('#hero-search').addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleSearch(heroInput.value || (heroInput ? 'cari' : ''));
-        });
-    }
     $('#header-search-form').addEventListener('submit', (e) => {
         e.preventDefault();
         handleSearch($('#header-search-input').value);
@@ -534,7 +617,7 @@
                 <div class="daftar-mitra-modal-card" style="max-width: 620px;">
                     <div class="daftar-mitra-modal-header">
                         <div class="daftar-mitra-header-left">
-                            <div class="daftar-mitra-header-icon" style="background: #e0f2fe; color: #0284c7;">
+                            <div class="daftar-mitra-header-icon" style="background: rgba(10, 18, 71, 0.08); color: #0A1247;">
                                 <span class="material-symbols-outlined">support_agent</span>
                             </div>
                             <div>
@@ -687,7 +770,7 @@
         if (bodyEl && footerEl) {
             bodyEl.innerHTML = `
                 <div class="mitra-success-box">
-                    <div class="mitra-success-icon" style="background: #e0f2fe; color: #0284c7;">
+                    <div class="mitra-success-icon" style="background: rgba(10, 18, 71, 0.08); color: #0A1247;">
                         <span class="material-symbols-outlined">verified</span>
                     </div>
                     <h4 class="mitra-success-title">Permohonan Konsultasi Terkirim!</h4>

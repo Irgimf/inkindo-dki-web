@@ -10,40 +10,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=cerah6">
     <style>
-        @media (min-width: 1024px) {
 
-            :root,
-            body,
-            body.is-scrolled {
-                --side-w: 70px !important;
-            }
-
-            /* Custom Side Nav behavior - exact match with Regulasi & Berita page */
-            .side-nav {
-                background: #0ea5e9 !important;
-                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-                width: 70px !important;
-                overflow: hidden;
-                transition: width 0.35s ease, background 0.35s ease !important;
-            }
-
-            .side-nav:hover {
-                width: 220px !important;
-            }
-
-            .side-nav .side-nav__label {
-                max-width: 150px !important;
-                opacity: 1 !important;
-                margin-right: 14px !important;
-                white-space: nowrap;
-            }
-        }
 
         html,
         body {
@@ -78,7 +51,9 @@
         .page-hero__shade {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(14, 165, 233, 0.72) 100%);
+            background:
+                linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%),
+                linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);
             z-index: 2;
         }
 
@@ -94,17 +69,18 @@
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 16px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             line-height: 1.2;
             letter-spacing: -0.5px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         .page-hero__subtitle {
             font-size: 19px;
-            color: #f1f5f9;
+            color: rgba(255, 255, 255, 0.92);
             font-weight: 400;
             line-height: 1.6;
             max-width: 680px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
         }
 
         .tentang-page-content {
@@ -155,11 +131,11 @@
         }
 
         .tab-btn:hover {
-            color: #0284c7;
+            color: #0A1247;
         }
 
         .tab-btn.is-active {
-            color: #0ea5e9;
+            color: #0A1247;
             font-weight: 700;
         }
 
@@ -170,7 +146,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: #0ea5e9;
+            background: #0A1247;
         }
 
         .top-actions {
@@ -202,7 +178,7 @@
         }
 
         .search-box span {
-            color: #0ea5e9;
+            color: #0A1247;
             font-size: 20px;
             cursor: pointer;
         }
@@ -249,17 +225,17 @@
         }
 
         .sub-tab-btn:hover {
-            background: #e0f2fe;
-            color: #0284c7;
-            border-color: #bae6fd;
+            background: rgba(10, 18, 71, 0.08);
+            color: #0A1247;
+            border-color: #0A1247;
         }
 
         .sub-tab-btn.is-active {
-            background: #0ea5e9;
+            background: #0A1247;
             color: #ffffff;
-            border-color: #0ea5e9;
+            border-color: #0A1247;
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+            box-shadow: 0 2px 8px rgba(10, 18, 71, 0.35);
         }
 
         /* Content Tab Panels */
@@ -327,7 +303,7 @@
             width: 100%;
             padding: 85px 0;
             color: #ffffff;
-            background-image: url('assets/jakarta4.jpg');
+            background-image: url('assets/jakarta3.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -340,7 +316,7 @@
         .visi-misi-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 90, 156, 0.88);
+            background: rgba(8, 14, 40, 0.72);
             z-index: 1;
         }
 
@@ -444,11 +420,11 @@
         .kode-flat-item__num {
             font-size: 48px;
             font-weight: 800;
-            color: var(--royal, #0284c7);
+            color: var(--royal, #0A1247);
             opacity: 0.22;
             line-height: 0.8;
             flex-shrink: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .kode-flat-item__text {
@@ -549,8 +525,8 @@
             width: 48px;
             height: 48px;
             border-radius: 12px;
-            background: #e0f2fe;
-            color: #0284c7;
+            background: rgba(10, 18, 71, 0.08);
+            color: #0A1247;
             display: grid;
             place-items: center;
             font-size: 26px;
@@ -584,7 +560,7 @@
         .leader-card {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border: 1px solid #e2e8f0;
-            border-left: 6px solid #0284c7;
+            border-left: 6px solid #0A1247;
             border-radius: 12px;
             padding: 20px 24px;
             display: flex;
@@ -598,7 +574,7 @@
         .leader-card__role {
             font-size: 12px;
             font-weight: 700;
-            color: #0284c7;
+            color: #0A1247;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             margin-bottom: 4px;
@@ -616,8 +592,8 @@
 
         .leader-card__tag {
             background: #ffffff;
-            color: #0284c7;
-            border: 1px solid #bae6fd;
+            color: #0A1247;
+            border: 1px solid rgba(10, 18, 71, 0.2);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 13px;
@@ -638,7 +614,7 @@
         .org-sub-title .num-badge {
             width: 26px;
             height: 26px;
-            background: #0284c7;
+            background: #0A1247;
             color: #ffffff;
             border-radius: 50%;
             display: grid;
@@ -698,9 +674,9 @@
         }
 
         .bidang-card:hover {
-            border-color: #0ea5e9;
+            border-color: #0A1247;
             transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(14, 165, 233, 0.08);
+            box-shadow: 0 6px 14px rgba(10, 18, 71, 0.12);
         }
 
         .bidang-card__head {
@@ -709,7 +685,7 @@
             padding: 12px 16px;
             font-size: 13px;
             font-weight: 700;
-            color: #0284c7;
+            color: #0A1247;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -759,7 +735,7 @@
         }
 
         .badan-card__head {
-            background: #0284c7;
+            background: #0A1247;
             color: #ffffff;
             padding: 14px 18px;
             font-size: 15px;
@@ -1858,7 +1834,7 @@
                     </div>
 
                     <div
-                        style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0ea5e9; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
+                        style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0A1247; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
                         <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #334155;">
                             <strong>Dewan Kehormatan Provinsi (DKP)</strong> bertugas menjaga keluhuran martabat,
                             mengawasi penerapan Kode Etik dan Anggaran Dasar/Anggaran Rumah Tangga (AD/ART), serta
@@ -1867,15 +1843,15 @@
                     </div>
 
                     <div class="officers-grid">
-                        <div class="officer-item" style="border-left: 4px solid #0284c7;">
+                        <div class="officer-item" style="border-left: 4px solid #0A1247;">
                             <span class="officer-item__role">Ketua merangkap Anggota:</span>
                             <span class="officer-item__name">Ir. Bambang Soendaroe, M.T.</span>
                         </div>
-                        <div class="officer-item" style="border-left: 4px solid #0ea5e9;">
+                        <div class="officer-item" style="border-left: 4px solid #0A1247;">
                             <span class="officer-item__role">Wakil Ketua merangkap Anggota:</span>
                             <span class="officer-item__name">Ir. Mukhsin Moechtar, IPU., ACPE.</span>
                         </div>
-                        <div class="officer-item" style="border-left: 4px solid #38bdf8;">
+                        <div class="officer-item" style="border-left: 4px solid #0A1247;">
                             <span class="officer-item__role">Sekretaris merangkap Anggota:</span>
                             <span class="officer-item__name">Ir. Novia Damayanti, M.B.A.</span>
                         </div>
@@ -1930,7 +1906,7 @@
                     </div>
 
                     <div
-                        style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0ea5e9; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
+                        style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0A1247; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
                         <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #334155;">
                             <strong>Dewan Pertimbangan Organisasi Provinsi (DPOP)</strong> beranggotakan para tokoh
                             senior dan pimpinan purnatugas yang bertugas memberikan saran, nasihat, dan pertimbangan
@@ -1939,11 +1915,11 @@
                     </div>
 
                     <div class="officers-grid">
-                        <div class="officer-item" style="border-left: 4px solid #0284c7;">
+                        <div class="officer-item" style="border-left: 4px solid #0A1247;">
                             <span class="officer-item__role">Ketua:</span>
                             <span class="officer-item__name">Imam Hartawan, S.T., M.T.</span>
                         </div>
-                        <div class="officer-item" style="border-left: 4px solid #0ea5e9;">
+                        <div class="officer-item" style="border-left: 4px solid #0A1247;">
                             <span class="officer-item__role">Sekretaris:</span>
                             <span class="officer-item__name">Ir. Anton Gerbono</span>
                         </div>
@@ -2212,7 +2188,7 @@
         });
     </script>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=cerah6"></script>
 </body>
 
 </html>

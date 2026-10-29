@@ -10,39 +10,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=cerah6">
     <style>
-        @media (min-width: 1024px) {
 
-            :root,
-            body,
-            body.is-scrolled {
-                --side-w: 70px !important;
-            }
-
-            .side-nav {
-                background: #0ea5e9 !important;
-                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-                width: 70px !important;
-                overflow: hidden;
-                transition: width 0.35s ease, background 0.35s ease !important;
-            }
-
-            .side-nav:hover {
-                width: 220px !important;
-            }
-
-            .side-nav .side-nav__label {
-                max-width: 150px !important;
-                opacity: 1 !important;
-                margin-right: 14px !important;
-                white-space: nowrap;
-            }
-        }
 
         .reader-page {
             background: #f8fafc;
@@ -52,7 +26,8 @@
         .detail-top {
             position: relative;
             padding: calc(var(--header-h) + 30px) 0 30px;
-            background: linear-gradient(135deg, #0f172a 0%, #0369a1 60%, #0ea5e9 100%);
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             overflow: hidden;
         }
 
@@ -61,28 +36,41 @@
             position: absolute;
             inset: 0;
             background: url('assets/jakarta2.jpg') center/cover;
-            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .detail-top::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.2) 35%, rgba(8, 14, 40, 0.7) 100%),
+                linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);
+            z-index: 2;
         }
 
         .detail-top .container {
             position: relative;
+            z-index: 3;
         }
 
         .detail-top__label {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: #bae6fd;
+            color: #93c5fd;
             margin-bottom: 6px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
         }
 
         .detail-top__title {
             font-size: 34px;
             font-weight: 700;
-            color: #fff;
+            color: #ffffff;
             margin: 0 0 18px;
             line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         .detail-tabs {
@@ -97,7 +85,7 @@
         }
 
         .detail-tabs a {
-            color: #e0f2fe;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 18px;
             padding-bottom: 10px;
@@ -107,11 +95,11 @@
         }
 
         .detail-tabs a:hover {
-            color: #fff;
+            color: #ffffff;
         }
 
         .detail-tabs a.is-active {
-            color: #fff;
+            color: #ffffff;
             font-weight: 600;
         }
 
@@ -122,7 +110,7 @@
             right: 0;
             bottom: 0;
             height: 3px;
-            background: #fff;
+            background: #ffffff;
             border-radius: 2px;
         }
 
@@ -191,7 +179,7 @@
         }
 
         .rbtn:hover {
-            background: #0ea5e9;
+            background: #0A1247;
             transform: scale(1.08);
         }
 
@@ -258,7 +246,7 @@
             height: 34px;
             margin: -17px 0 0 -17px;
             border: 3px solid #e2e8f0;
-            border-top-color: #0ea5e9;
+            border-top-color: #0A1247;
             border-radius: 50%;
             animation: spin .9s linear infinite;
         }
@@ -371,7 +359,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #0ea5e9;
+            background: #0A1247;
             color: #fff;
             padding: 10px 20px;
             border-radius: 24px;
@@ -414,8 +402,8 @@
         .pill {
             font-size: 12px;
             font-weight: 600;
-            background: #e0f2fe;
-            color: #0284c7;
+            background: rgba(10, 18, 71, 0.08);
+            color: #0A1247;
             padding: 4px 10px;
             border-radius: 6px;
         }
@@ -469,7 +457,7 @@
         }
 
         .rel-mag:hover h3 {
-            color: #0ea5e9;
+            color: #0A1247;
         }
 
         @media (max-width: 900px) {
@@ -1040,7 +1028,7 @@
             });
         })();
     </script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=cerah6"></script>
 </body>
 
 </html>

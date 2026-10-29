@@ -10,43 +10,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=cerah6">
 
     <style>
-        @media (min-width: 1024px) {
 
-            /* Prevent layout shift on regulasi page by fixing the sidebar width variable */
-            :root,
-            body,
-            body.is-scrolled {
-                --side-w: 70px !important;
-            }
-
-            /* Custom Side Nav behavior for Regulasi page */
-            .side-nav {
-                background: #0ea5e9 !important;
-                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-                width: 70px !important;
-                overflow: hidden;
-                transition: width 0.35s ease, background 0.35s ease !important;
-            }
-
-            .side-nav:hover {
-                width: 220px !important;
-            }
-
-            .side-nav .side-nav__label {
-                /* Force label to take its full space but be clipped by the parent's width */
-                max-width: 150px !important;
-                opacity: 1 !important;
-                margin-right: 14px !important;
-                white-space: nowrap;
-            }
-        }
 
         .regulasi-page {
             padding: 0;
@@ -75,7 +46,9 @@
         .page-hero__shade {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(14, 165, 233, 0.7) 100%);
+            background:
+                linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%),
+                linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);
             z-index: 2;
         }
 
@@ -91,17 +64,18 @@
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 20px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             line-height: 1.2;
             letter-spacing: -0.5px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         .page-hero__subtitle {
             font-size: 20px;
-            color: #f1f5f9;
+            color: rgba(255, 255, 255, 0.92);
             font-weight: 400;
             line-height: 1.6;
             max-width: 600px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
         }
 
         .regulasi-page-content {
@@ -140,7 +114,7 @@
         }
 
         .tab-btn.is-active {
-            color: #0ea5e9;
+            color: #0A1247;
         }
 
         .tab-btn.is-active::after {
@@ -150,7 +124,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: #0ea5e9;
+            background: #0A1247;
         }
 
         .top-actions {
@@ -182,7 +156,7 @@
         }
 
         .search-box span {
-            color: #0ea5e9;
+            color: #0A1247;
             font-size: 20px;
             cursor: pointer;
         }
@@ -190,14 +164,14 @@
         .filter-box select {
             appearance: none;
             background: transparent;
-            border: 1px solid #0ea5e9;
-            color: #0ea5e9;
+            border: 1px solid #0A1247;
+            color: #0A1247;
             padding: 6px 36px 6px 16px;
             border-radius: 20px;
             font-size: 14px;
             outline: none;
             cursor: pointer;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M10%2018h4v-2h-4v2zM3%206v2h18V6H3zm3%207h12v-2H6v2z%22%20fill%3D%22%230ea5e9%22%2F%3E%3C%2Fsvg%3E');
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M10%2018h4v-2h-4v2zM3%206v2h18V6H3zm3%207h12v-2H6v2z%22%20fill%3D%22%230A1247%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
             background-position: right 8px center;
             background-size: 16px;
@@ -239,15 +213,15 @@
         }
 
         .sub-tab-btn:hover {
-            background: #e0f2fe;
-            color: #0ea5e9;
-            border-color: #bae6fd;
+            background: rgba(10, 18, 71, 0.08);
+            color: #0A1247;
+            border-color: #0A1247;
         }
 
         .sub-tab-btn.is-active {
-            background: #0ea5e9;
+            background: #0A1247;
             color: white;
-            border-color: #0ea5e9;
+            border-color: #0A1247;
         }
 
         .view-toggle {
@@ -273,7 +247,7 @@
         }
 
         .view-btn.is-active {
-            color: #0ea5e9;
+            color: #0A1247;
         }
 
         .regulasi-content {
@@ -359,9 +333,9 @@
             align-items: center;
             gap: 7px;
             padding: 7px 15px;
-            background: #f0f9ff;
-            color: #0284c7;
-            border: 1px solid #bae6fd;
+            background: rgba(10, 18, 71, 0.06);
+            color: #0A1247;
+            border: 1px solid rgba(10, 18, 71, 0.2);
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
@@ -373,10 +347,10 @@
         }
 
         .btn-download-pdf:hover {
-            background: #0284c7;
+            background: #0A1247;
             color: #ffffff;
-            border-color: #0284c7;
-            box-shadow: 0 3px 8px rgba(2, 132, 199, 0.22);
+            border-color: #0A1247;
+            box-shadow: 0 3px 8px rgba(10, 18, 71, 0.25);
         }
 
         .btn-download-pdf .material-symbols-outlined {
@@ -450,7 +424,7 @@
         }
 
         .page-item.is-active {
-            background: #0ea5e9;
+            background: #0A1247;
             color: white;
         }
 
@@ -860,7 +834,7 @@
     <main class="regulasi-page">
         <!-- New Hero Section -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('assets/jakarta8.jpg');"></div>
+            <div class="page-hero__bg" style="background-image: url('assets/jakarta9.jpg');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
                 <h1 class="page-hero__title">Regulasi & Kebijakan</h1>
@@ -1270,7 +1244,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=cerah6"></script>
 </body>
 
 </html>
