@@ -138,9 +138,7 @@ ul {
 /* =========================================================
    HEADER
    ========================================================= */
-/* =========================================================
-   HEADER
-   ========================================================= */
+
 .main-header {
     position: fixed;
     top: 0;
@@ -1064,8 +1062,15 @@ a.panel-link:hover {
 }
 
 @keyframes blinkHeroCursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .hero-search__btn {
@@ -1097,13 +1102,16 @@ a.panel-link:hover {
     .hero-search__text {
         font-size: 28px;
     }
+
     .hero-type__cursor {
         font-size: 26px;
     }
+
     .hero-search__btn {
         width: 44px;
         height: 44px;
     }
+
     .hero-search__btn .material-symbols-outlined {
         font-size: 22px;
     }
@@ -2680,26 +2688,32 @@ a.panel-link:hover {
     .daftar-mitra-modal-overlay {
         padding: 12px;
     }
+
     .daftar-mitra-modal-card {
         max-height: 94vh;
         border-radius: 12px;
     }
+
     .daftar-mitra-modal-header {
         padding: 16px 18px;
     }
+
     .daftar-mitra-modal-body {
         padding: 16px 18px;
     }
+
     .daftar-mitra-modal-footer {
         padding: 12px 18px;
         flex-direction: column-reverse;
         gap: 8px;
     }
+
     .daftar-mitra-modal-footer button {
         width: 100%;
         justify-content: center;
     }
+
     .daftar-mitra-modal-title {
         font-size: 16px;
     }
-}
+}

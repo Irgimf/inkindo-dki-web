@@ -1200,14 +1200,6 @@
                         Struktur Organisasi
                     </button>
                 </div>
-
-                <div class="top-actions">
-                    <div class="search-box">
-                        <input type="text" id="tentang-search-input" placeholder="Cari di halaman Tentang..."
-                            aria-label="Cari">
-                        <span class="material-symbols-outlined">search</span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -2063,15 +2055,10 @@
             // Main Tabs Switching: Profil Organisasi vs Struktur Organisasi
             const mainTabBtns = document.querySelectorAll('#tentang-main-tabs .tab-btn');
             const mainTabContents = document.querySelectorAll('.tentang-content-tab');
-            const searchInput = document.getElementById('tentang-search-input');
 
             function switchMainTab(targetId) {
                 mainTabBtns.forEach(b => b.classList.toggle('is-active', b.getAttribute('data-target') === targetId));
                 mainTabContents.forEach(c => c.classList.toggle('is-active', c.id === targetId));
-
-                // Clear search input on tab change
-                if (searchInput) searchInput.value = '';
-                resetSearchHighlights();
 
                 if (targetId === 'tab-struktur') {
                     const activeSubBtn = document.querySelector('.struktur-filter-btn.is-active');
@@ -2109,52 +2096,6 @@
                     switchStrukturUnit(filter);
                 });
             });
-
-            // Search Filter within Current Active Tab
-            if (searchInput) {
-                searchInput.addEventListener('input', function () {
-                    const query = searchInput.value.toLowerCase().trim();
-                    const activeTab = document.querySelector('.tentang-content-tab.is-active');
-                    if (!activeTab) return;
-
-                    if (activeTab.id === 'tab-profil') {
-                        const items = activeTab.querySelectorAll('.sejarah-section, .visi-misi-section, .kode-etik-section, .kode-flat-item');
-                        items.forEach(el => {
-                            if (!query || el.textContent.toLowerCase().includes(query)) {
-                                el.style.display = '';
-                            } else {
-                                el.style.display = 'none';
-                            }
-                        });
-                    } else if (activeTab.id === 'tab-struktur') {
-                        if (!query) {
-                            const activeSubBtn = document.querySelector('.struktur-filter-btn.is-active');
-                            const currentFilter = activeSubBtn ? activeSubBtn.getAttribute('data-filter') : 'dpph';
-                            switchStrukturUnit(currentFilter);
-                        } else {
-                            orgUnitItems.forEach(unit => {
-                                const text = unit.textContent.toLowerCase();
-                                if (text.includes(query)) {
-                                    unit.style.display = 'block';
-                                } else {
-                                    unit.style.display = 'none';
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-
-            function resetSearchHighlights() {
-                const profilCards = document.querySelectorAll('.sejarah-section, .visi-misi-section, .kode-etik-section, .kode-flat-item');
-                profilCards.forEach(card => {
-                    card.style.display = '';
-                });
-                const innerCards = document.querySelectorAll('.bidang-card, .badan-card');
-                innerCards.forEach(card => {
-                    card.style.display = '';
-                });
-            }
 
             // Ensure initial unit state is strictly configured
             const initialSubBtn = document.querySelector('.struktur-filter-btn.is-active');

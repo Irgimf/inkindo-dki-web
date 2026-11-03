@@ -1,8 +1,3 @@
-/* =========================================================
-   DPP INKINDO DKI Jakarta — Data Karya Anggota (buku)
-   Sumber: https://www.inkindo-dki.org/kanal/karya-anggota
-   Dipakai oleh berita.html (tab Karya Anggota)
-   ========================================================= */
 window.KARYA_DATA = [
     {
         slug: 'business-plan-pksn-jagoi-babang',

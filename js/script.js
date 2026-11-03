@@ -1,6 +1,3 @@
-/* =========================================================
-   DPP INKINDO DKI Jakarta — Interaksi halaman
-   ========================================================= */
 (function () {
     'use strict';
 
@@ -533,10 +530,10 @@
         return modalEl;
     }
 
-    window.openDaftarMitraModal = function(e) {
+    window.openDaftarMitraModal = function (e) {
         if (e && e.preventDefault) e.preventDefault();
         closePanel();
-        
+
         const modalEl = ensureMitraModal();
         modalEl.classList.add('is-active');
         modalEl.setAttribute('aria-hidden', 'false');
@@ -548,7 +545,7 @@
         }, 150);
     };
 
-    window.closeDaftarMitraModal = function() {
+    window.closeDaftarMitraModal = function () {
         const modalEl = document.getElementById('daftar-mitra-modal');
         if (modalEl) {
             modalEl.classList.remove('is-active');
@@ -557,7 +554,7 @@
         document.body.style.overflow = '';
     };
 
-    window.handleTermsLinkClick = function(e) {
+    window.handleTermsLinkClick = function (e) {
         if (window.location.pathname.endsWith('ketentuan-mitra-kerja.html') || window.location.href.includes('ketentuan-mitra-kerja.html')) {
             if (e && e.preventDefault) e.preventDefault();
             window.closeDaftarMitraModal();
@@ -571,7 +568,7 @@
         }
     };
 
-    window.handleDaftarMitraSubmit = function(e) {
+    window.handleDaftarMitraSubmit = function (e) {
         e.preventDefault();
         const namaPerusahaan = document.getElementById('mitra-perusahaan')?.value || 'Perusahaan Anda';
         const bodyEl = document.getElementById('mitra-modal-form-body');
@@ -720,7 +717,7 @@
         return modalEl;
     }
 
-    window.openKlinikKonsultasiModal = function(e, defaultCategory) {
+    window.openKlinikKonsultasiModal = function (e, defaultCategory) {
         if (e && e.preventDefault) e.preventDefault();
         closePanel();
 
@@ -751,7 +748,7 @@
         }, 150);
     };
 
-    window.closeKlinikKonsultasiModal = function() {
+    window.closeKlinikKonsultasiModal = function () {
         const modalEl = document.getElementById('klinik-konsultasi-modal');
         if (modalEl) {
             modalEl.classList.remove('is-active');
@@ -760,7 +757,7 @@
         document.body.style.overflow = '';
     };
 
-    window.handleKlinikKonsultasiSubmit = function(e) {
+    window.handleKlinikKonsultasiSubmit = function (e) {
         e.preventDefault();
         const nama = document.getElementById('konsultasi-name')?.value || 'Bapak/Ibu';
         const kategori = document.getElementById('konsultasi-kategori')?.value || 'Konsultasi';

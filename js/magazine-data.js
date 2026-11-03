@@ -1,8 +1,3 @@
-/* =========================================================
-   DPP INKINDO DKI Jakarta — Data e-Magazine
-   Sumber: https://www.inkindo-dki.org/magazine/e-magazine
-   Dipakai oleh berita.html (daftar) dan read-magazine.html (pembaca)
-   ========================================================= */
 window.MAGAZINE_DATA = [
     {
         slug: 'majalah-inkindo-dki-jakarta-edisi-79',
