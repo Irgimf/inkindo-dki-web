@@ -614,7 +614,7 @@
                 <div class="daftar-mitra-modal-card" style="max-width: 620px;">
                     <div class="daftar-mitra-modal-header">
                         <div class="daftar-mitra-header-left">
-                            <div class="daftar-mitra-header-icon" style="background: rgba(10, 18, 71, 0.08); color: #0A1247;">
+                            <div class="daftar-mitra-header-icon" style="background: rgba(11, 98, 162, 0.08); color: #0B62A2;">
                                 <span class="material-symbols-outlined">support_agent</span>
                             </div>
                             <div>
@@ -767,7 +767,7 @@
         if (bodyEl && footerEl) {
             bodyEl.innerHTML = `
                 <div class="mitra-success-box">
-                    <div class="mitra-success-icon" style="background: rgba(10, 18, 71, 0.08); color: #0A1247;">
+                    <div class="mitra-success-icon" style="background: rgba(11, 98, 162, 0.08); color: #0B62A2;">
                         <span class="material-symbols-outlined">verified</span>
                     </div>
                     <h4 class="mitra-success-title">Permohonan Konsultasi Terkirim!</h4>
