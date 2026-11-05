@@ -20,6 +20,7 @@ Route::delete('/api/members/{member}', [MemberController::class, 'destroy']);
 // Mitra Kerja API endpoints
 Route::get('/api/mitra', [MitraController::class, 'index']);
 Route::get('/api/mitra/{slug}', [MitraController::class, 'show']);
+Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
 // Serve static asset directories directly from workspace root (with fallback to SistemManajemenDataPT/public/mitra_logos)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {

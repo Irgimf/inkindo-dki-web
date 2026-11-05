@@ -656,6 +656,10 @@
                         <h1 class="mitra-company-title" id="mitra-company-name">Memuat Data Mitra Kerja...</h1>
                         <p class="mitra-category-subtitle" id="mitra-category-name">-</p>
                         <div class="mitra-hero-actions" id="mitra-hero-actions">
+                            <button type="button" class="btn-hero-action btn-hero-action--white" onclick="openKontakMitraModal()" style="border: none; cursor: pointer; font-family: inherit;">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">mail</span>
+                                Kontak Kami
+                            </button>
                             <a href="ketentuan-mitra-kerja.html" class="btn-hero-action btn-hero-action--glass">
                                 <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
                                 Halaman Mitra Kerja
@@ -667,7 +671,7 @@
         </section>
 
         <!-- ================= DESKRIPSI & KATALOG PRODUK MITRA KERJA ================= -->
-        <section class="mitra-body-section">
+        <section class="mitra-body-section" id="mitra-active-body">
             <div class="container" style="max-width: 1200px; margin: 0 auto;">
                 <div class="mitra-info-grid">
                     <!-- Deskripsi Perusahaan -->
@@ -723,6 +727,11 @@
                                 </div>
                             </li>
                         </ul>
+
+                        <button type="button" onclick="openKontakMitraModal()" style="margin-top: 20px; width: 100%; background: #0B62A2; color: #ffffff; border: none; border-radius: 12px; padding: 13px 20px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; font-family: inherit; box-shadow: 0 6px 18px rgba(11, 98, 162, 0.25);">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
+                            Kontak Kami (Kirim Pesan ke Mitra)
+                        </button>
                     </div>
                 </div>
 
@@ -759,7 +768,104 @@
                 </div>
             </div>
         </section>
+
+        <!-- Tampilan Otomatis Jika Mitra Kerja Expired / Nonaktif -->
+        <section class="mitra-body-section" id="mitra-inactive-body" style="display: none;">
+            <div class="container" style="max-width: 720px; margin: 0 auto;">
+                <div style="background: #ffffff; border: 1px solid #fecaca; border-radius: 24px; padding: 48px 36px; text-align: center; box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);">
+                    <div style="width: 72px; height: 72px; border-radius: 50%; background: #fef2f2; color: #dc2626; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                        <span class="material-symbols-outlined" style="font-size: 38px;">event_busy</span>
+                    </div>
+                    <h2 style="font-size: 24px; font-weight: 800; color: #0f172a; margin: 0 0 12px;" id="inactive-title">
+                        Halaman Mitra Kerja Tidak Aktif
+                    </h2>
+                    <p style="font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 28px;" id="inactive-desc">
+                        Masa berlaku kerjasama Mitra Kerja ini telah berakhir (Expired) atau sedang menunggu persetujuan Admin.
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                        <a href="ketentuan-mitra-kerja.html" style="background: #0B62A2; color: #ffffff; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+                            Kembali ke Halaman Mitra Kerja
+                        </a>
+                        <a href="http://localhost:8080/mitra/login" target="_blank" style="background: #f1f5f9; color: #0f172a; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">autorenew</span>
+                            Login Mitra (Perpanjang Kemitraan)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- ================= POP-UP MODAL KONTAK KAMI (MITRA KERJA) ================= -->
+    <div class="daftar-mitra-modal-overlay" id="kontak-mitra-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="daftar-mitra-modal-card" style="max-width: 580px;">
+            <div class="daftar-mitra-modal-header">
+                <div class="daftar-mitra-header-left">
+                    <div class="daftar-mitra-header-icon" style="background: rgba(11, 98, 162, 0.1); color: #0B62A2;">
+                        <span class="material-symbols-outlined">mail</span>
+                    </div>
+                    <div>
+                        <h3 class="daftar-mitra-modal-title">Kontak Kami</h3>
+                        <p class="daftar-mitra-modal-subtitle" id="kontak-mitra-subtitle">Kirim pesan langsung kepada Mitra Kerja</p>
+                    </div>
+                </div>
+                <button type="button" class="daftar-mitra-modal-close" onclick="closeKontakMitraModal()" aria-label="Tutup modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="form-kontak-mitra" onsubmit="handleKontakMitraSubmit(event)">
+                <div class="daftar-mitra-modal-body" id="kontak-mitra-form-body">
+                    <div class="mitra-form-group">
+                        <label class="mitra-form-label" for="km-nama-perusahaan">Nama Perusahaan <span class="req">*</span></label>
+                        <div class="mitra-input-wrapper">
+                            <span class="material-symbols-outlined mitra-input-icon">apartment</span>
+                            <input type="text" id="km-nama-perusahaan" class="mitra-form-input" placeholder="Contoh: PT Mega Trustlink" required>
+                        </div>
+                    </div>
+
+                    <div class="mitra-form-row">
+                        <div class="mitra-form-group">
+                            <label class="mitra-form-label" for="km-email-perusahaan">Email Perusahaan <span class="req">*</span></label>
+                            <div class="mitra-input-wrapper">
+                                <span class="material-symbols-outlined mitra-input-icon">mail</span>
+                                <input type="email" id="km-email-perusahaan" class="mitra-form-input" placeholder="email@perusahaan.co.id" required>
+                            </div>
+                        </div>
+                        <div class="mitra-form-group">
+                            <label class="mitra-form-label" for="km-no-telepon">No. Telepon <span class="req">*</span></label>
+                            <div class="mitra-input-wrapper">
+                                <span class="material-symbols-outlined mitra-input-icon">call</span>
+                                <input type="tel" id="km-no-telepon" class="mitra-form-input" placeholder="(021) 1234567 / 0812..." required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mitra-form-group">
+                        <label class="mitra-form-label" for="km-nama-pic">Nama PIC <span class="req">*</span></label>
+                        <div class="mitra-input-wrapper">
+                            <span class="material-symbols-outlined mitra-input-icon">person</span>
+                            <input type="text" id="km-nama-pic" class="mitra-form-input" placeholder="Nama lengkap PIC / Narahubung" required>
+                        </div>
+                    </div>
+
+                    <div class="mitra-form-group">
+                        <label class="mitra-form-label" for="km-pesan">Pesan <span class="req">*</span></label>
+                        <div class="mitra-input-wrapper mitra-input-wrapper--textarea">
+                            <span class="material-symbols-outlined mitra-input-icon">edit_note</span>
+                            <textarea id="km-pesan" class="mitra-form-textarea" rows="4" placeholder="Tuliskan pertanyaan spesifikasi produk, permintaan penawaran harga, atau kerjasama..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daftar-mitra-modal-footer" id="kontak-mitra-footer">
+                    <button type="button" class="btn-mitra-cancel" onclick="closeKontakMitraModal()">Batal</button>
+                    <button type="submit" class="btn-mitra-submit" id="btn-submit-kontak-mitra">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- ================= FOOTER ================= -->
     <footer class="site-footer" id="kontak">
@@ -791,6 +897,9 @@
     <script src="js/script.js?v=cerah8"></script>
     <script>
         (function () {
+            let currentSlug = '';
+            let currentMitraName = 'Mitra Kerja';
+
             function escapeHtml(str) {
                 return String(str ?? '')
                     .replace(/&/g, '&amp;')
@@ -800,31 +909,129 @@
                     .replace(/'/g, '&#039;');
             }
 
+            window.openKontakMitraModal = function () {
+                const modal = document.getElementById('kontak-mitra-modal');
+                if (!modal) return;
+                modal.classList.add('is-active');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeKontakMitraModal = function () {
+                const modal = document.getElementById('kontak-mitra-modal');
+                if (!modal) return;
+                modal.classList.remove('is-active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            document.getElementById('kontak-mitra-modal')?.addEventListener('click', (e) => {
+                if (e.target.id === 'kontak-mitra-modal') window.closeKontakMitraModal();
+            });
+
+            window.handleKontakMitraSubmit = async function (e) {
+                e.preventDefault();
+                if (!currentSlug) return;
+
+                const submitBtn = document.getElementById('btn-submit-kontak-mitra');
+                const origText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Mengirim...';
+
+                const payload = {
+                    nama_perusahaan: document.getElementById('km-nama-perusahaan').value,
+                    email_perusahaan: document.getElementById('km-email-perusahaan').value,
+                    no_telepon: document.getElementById('km-no-telepon').value,
+                    nama_pic: document.getElementById('km-nama-pic').value,
+                    pesan: document.getElementById('km-pesan').value
+                };
+
+                try {
+                    const res = await fetch('/api/mitra/' + encodeURIComponent(currentSlug) + '/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await res.json();
+                    if (res.ok) {
+                        const bodyEl = document.getElementById('kontak-mitra-form-body');
+                        const footerEl = document.getElementById('kontak-mitra-footer');
+                        bodyEl.innerHTML = `
+                            <div class="mitra-success-box">
+                                <div class="mitra-success-icon">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </div>
+                                <h4 class="mitra-success-title">Pesan Berhasil Dikirim!</h4>
+                                <p class="mitra-success-desc">
+                                    Terima kasih <strong>${escapeHtml(payload.nama_pic)} (${escapeHtml(payload.nama_perusahaan)})</strong>. Pesan Anda telah masuk ke kotak <strong>Pesan Masuk</strong> dashboard <strong>${escapeHtml(currentMitraName)}</strong>.
+                                </p>
+                                <button type="button" class="btn-mitra-submit" onclick="window.location.reload()" style="margin: 0 auto;">
+                                    Selesai &amp; Tutup
+                                </button>
+                            </div>
+                        `;
+                        footerEl.style.display = 'none';
+                    } else {
+                        alert(data.message || 'Gagal mengirim pesan. Mohon periksa kembali isian Anda.');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = origText;
+                    }
+                } catch (err) {
+                    alert('Terjadi kesalahan jaringan saat mengirim pesan.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = origText;
+                }
+            };
+
             async function loadMitraDetail() {
                 const pathParts = window.location.pathname.split('/').filter(Boolean);
                 const slugParam = new URLSearchParams(window.location.search).get('slug');
                 const slug = slugParam || (pathParts.length >= 2 ? pathParts[pathParts.length - 1] : '');
 
                 if (!slug) return;
+                currentSlug = slug;
 
                 try {
                     const res = await fetch('/api/mitra/' + encodeURIComponent(slug), {
                         headers: { 'Accept': 'application/json' }
                     });
-                    if (!res.ok) {
-                        document.getElementById('mitra-company-name').textContent = 'Mitra Kerja Tidak Ditemukan';
-                        document.getElementById('mitra-description-text').textContent = 'Data profil mitra kerja yang Anda cari tidak tersedia atau telah dihapus.';
+                    const data = await res.json();
+
+                    if (res.status === 403 && data.inactive) {
+                        document.getElementById('mitra-company-name').textContent = data.nama_perusahaan || 'Mitra Kerja Nonaktif';
+                        document.getElementById('mitra-category-name').textContent = 'Status Kemitraan: ' + String(data.status_kemitraan || 'Expired').toUpperCase();
+                        document.getElementById('mitra-hero-actions').innerHTML = `
+                            <a href="ketentuan-mitra-kerja.html" class="btn-hero-action btn-hero-action--glass">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+                                Halaman Mitra Kerja
+                            </a>
+                        `;
+                        document.getElementById('mitra-active-body').style.display = 'none';
+                        document.getElementById('mitra-inactive-body').style.display = 'block';
+                        document.getElementById('inactive-desc').textContent = data.message;
                         return;
                     }
 
-                    const data = await res.json();
+                    if (!res.ok || !data.mitra) {
+                        document.getElementById('mitra-company-name').textContent = 'Mitra Kerja Tidak Ditemukan';
+                        document.getElementById('mitra-active-body').style.display = 'none';
+                        document.getElementById('mitra-inactive-body').style.display = 'block';
+                        return;
+                    }
+
                     const m = data.mitra;
+                    currentMitraName = m.nama_perusahaan;
                     const others = Array.isArray(data.other_mitra) ? data.other_mitra : [];
 
                     document.title = m.nama_perusahaan + ' – Mitra Kerja INKINDO DKI Jakarta';
                     document.getElementById('breadcrumb-mitra-name').textContent = m.nama_perusahaan;
                     document.getElementById('mitra-company-name').textContent = m.nama_perusahaan;
                     document.getElementById('mitra-category-name').textContent = m.kategori_bisnis || 'Mitra Strategis INKINDO DKI Jakarta';
+                    document.getElementById('kontak-mitra-subtitle').textContent = 'Kirim pesan langsung kepada ' + m.nama_perusahaan;
 
                     const logoEl = document.getElementById('mitra-logo-img');
                     logoEl.src = m.logo || 'assets/logo-inkindo.png';
@@ -843,22 +1050,31 @@
 
                     const webEl = document.getElementById('mitra-contact-website');
                     const actionsEl = document.getElementById('mitra-hero-actions');
+                    let actionsHtml = `
+                        <button type="button" class="btn-hero-action btn-hero-action--white" onclick="openKontakMitraModal()" style="border: none; cursor: pointer; font-family: inherit;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">mail</span>
+                            Kontak Kami
+                        </button>
+                    `;
                     if (m.website && m.website !== '-') {
                         const href = m.website.startsWith('http') ? m.website : 'https://' + m.website;
                         webEl.innerHTML = `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(m.website)}</a>`;
-                        actionsEl.innerHTML = `
-                            <a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="btn-hero-action btn-hero-action--white">
+                        actionsHtml += `
+                            <a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="btn-hero-action btn-hero-action--glass">
                                 <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
                                 Kunjungi Website Resmi
-                            </a>
-                            <a href="ketentuan-mitra-kerja.html" class="btn-hero-action btn-hero-action--glass">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-                                Semua Mitra Kerja
                             </a>
                         `;
                     } else {
                         webEl.textContent = '-';
                     }
+                    actionsHtml += `
+                        <a href="ketentuan-mitra-kerja.html" class="btn-hero-action btn-hero-action--glass">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+                            Semua Mitra Kerja
+                        </a>
+                    `;
+                    actionsEl.innerHTML = actionsHtml;
 
                     const products = Array.isArray(m.products) ? m.products : [];
                     document.getElementById('products-count-badge').textContent = products.length + ' Produk Unggulan';
