@@ -186,7 +186,8 @@ class MemberController extends Controller
             ],
             'members' => $members->map(function (Member $m) {
                 $arr = $m->toFrontendArray();
-                // Always pull latest SBU rows directly from SistemManajemenDataPT `sbu` table if available
+                $arr['projects'] = [];
+                // Always pull latest SBU rows & SBU Projects directly from SistemManajemenDataPT tables if available
                 if (Schema::hasTable('companies') && Schema::hasTable('sbu')) {
                     $comp = DB::table('companies')
                         ->where('member_id', $m->id)
@@ -200,6 +201,32 @@ class MemberController extends Controller
                             'masaBerlaku' => !empty($s->masa_berlaku) ? date('d-m-Y', strtotime($s->masa_berlaku)) : '-',
                             'subbidang' => [],
                         ])->values()->all();
+
+                        if (Schema::hasTable('sbu_projects')) {
+                            $projectRows = DB::table('sbu_projects as p')
+                                ->join('sbu as s', 'p.sbu_id', '=', 's.id')
+                                ->where('s.company_id', $comp->id)
+                                ->select('p.*', 's.kode_kbli', 's.judul_kbli')
+                                ->orderBy('p.id', 'asc')
+                                ->get();
+
+                            $arr['projects'] = $projectRows->map(function ($p) {
+                                $rawNilai = preg_replace('/[^0-9]/', '', (string) ($p->nilai_proyek ?? ''));
+                                $formattedNilai = $rawNilai !== ''
+                                    ? 'Rp ' . number_format((float) $rawNilai, 0, ',', '.')
+                                    : ($p->nilai_proyek ?: '-');
+
+                                return [
+                                    'id'             => $p->id,
+                                    'kode_kbli'      => $p->kode_kbli ?? '-',
+                                    'judul_kbli'     => $p->judul_kbli ?? '-',
+                                    'nama_pekerjaan' => $p->nama_pekerjaan ?? '-',
+                                    'nilai_proyek'   => $formattedNilai,
+                                    'tahun_proyek'   => $p->tahun_proyek ?: '-',
+                                    'lama_proyek'    => $p->lama_proyek ?: '-',
+                                ];
+                            })->values()->all();
+                        }
                     }
                 }
                 return $arr;

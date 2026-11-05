@@ -176,15 +176,9 @@
     const heroBgB = $('#hero-bg-b');
     if (heroBgA && heroBgB) {
         const jakartaImages = [
-            'assets/jakarta.jpg',
-            'assets/jakarta2.jpg',
-            'assets/jakarta3.jpg',
-            'assets/jakarta4.jpg',
-            'assets/jakarta5.jpg',
-            'assets/jakarta6.jpg',
-            'assets/jakarta7.jpg',
-            'assets/jakarta8.jpg',
-            'assets/jakarta9.jpg'
+            'assets/jakartahome1.jpg',
+            'assets/jakartahome2.jpg',
+            'assets/jakartahome3.jpg'
         ];
 
         let currentIndex = typeof window.__currentJakartaBgIndex === 'number'

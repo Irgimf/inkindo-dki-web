@@ -273,6 +273,76 @@
             border-color: var(--royal, #0B62A2);
         }
 
+        /* Project Value Range Filter beside Quick Filter Pills */
+        .filter-pills-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-price-range {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            padding-left: 16px;
+            border-left: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 1100px) {
+            .filter-price-range {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                width: 100%;
+                padding-top: 10px;
+                border-top: 1px dashed #e2e8f0;
+            }
+        }
+
+        .price-input-group {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .price-prefix {
+            position: absolute;
+            left: 11px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--slate-500);
+            pointer-events: none;
+        }
+
+        .price-range-input {
+            width: 165px;
+            padding: 6px 12px 6px 32px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--slate-800);
+            font-family: inherit;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .price-range-input:focus {
+            outline: none;
+            border-color: #0B62A2;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(11, 98, 162, 0.12);
+        }
+
+        .price-separator {
+            color: var(--slate-400);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
         /* Directory Table Card */
         .directory-table-card {
             background: var(--white);
@@ -1221,12 +1291,12 @@
                             <label for="search-input">
                                 <span class="material-symbols-outlined"
                                     style="font-size: 18px; color: var(--royal);">search</span>
-                                Cari Anggota / Nama Perusahaan / No. Anggota
+                                Cari Perusahaan / Subklasifikasi / Proyek / No. Anggota
                             </label>
                             <div class="filter-input-wrap">
                                 <span class="material-symbols-outlined">search</span>
                                 <input type="text" id="search-input" class="filter-input"
-                                    placeholder="Contoh: Mega Trustlink, Virama Karya, 14642...">
+                                    placeholder="Contoh: Mega Trustlink, PR101, Gedung Wisma, 14642...">
                             </div>
                         </div>
 
@@ -1273,14 +1343,32 @@
                         </div>
                     </div>
 
-                    <!-- Quick Filter Pills -->
+                    <!-- Quick Filter Pills & Rentang Nilai Proyek -->
                     <div class="filter-pills">
-                        <span class="filter-pills-label">Filter Cepat:</span>
-                        <button type="button" class="pill-btn is-active" data-pill-kualifikasi="">Semua</button>
-                        <button type="button" class="pill-btn" data-pill-kualifikasi="Besar">Kualifikasi Besar</button>
-                        <button type="button" class="pill-btn" data-pill-kualifikasi="Menengah">Kualifikasi
-                            Menengah</button>
-                        <button type="button" class="pill-btn" data-pill-kualifikasi="Kecil">Kualifikasi Kecil</button>
+                        <div class="filter-pills-group">
+                            <span class="filter-pills-label">Filter Cepat:</span>
+                            <button type="button" class="pill-btn is-active" data-pill-kualifikasi="">Semua</button>
+                            <button type="button" class="pill-btn" data-pill-kualifikasi="Besar">Kualifikasi Besar</button>
+                            <button type="button" class="pill-btn" data-pill-kualifikasi="Menengah">Kualifikasi
+                                Menengah</button>
+                            <button type="button" class="pill-btn" data-pill-kualifikasi="Kecil">Kualifikasi Kecil</button>
+                        </div>
+
+                        <div class="filter-price-range">
+                            <span class="filter-pills-label" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 2px;">
+                                <span class="material-symbols-outlined" style="font-size: 16px; color: var(--royal);">payments</span>
+                                Nilai Proyek:
+                            </span>
+                            <div class="price-input-group">
+                                <span class="price-prefix">Rp</span>
+                                <input type="text" id="project-min-input" class="price-range-input" placeholder="Min (cth: 100.000.000)" inputmode="numeric">
+                            </div>
+                            <span class="price-separator">-</span>
+                            <div class="price-input-group">
+                                <span class="price-prefix">Rp</span>
+                                <input type="text" id="project-max-input" class="price-range-input" placeholder="Max (cth: 5.000.000.000)" inputmode="numeric">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1411,6 +1499,14 @@
                         </ol>
                     </div>
                 </div>
+
+                <!-- Info Proyek / Pekerjaan -->
+                <div style="margin-top: 22px;">
+                    <h4 class="detail-table-title">Info Proyek / Pekerjaan</h4>
+                    <div class="sbu-section" id="modal-projects-container" style="padding: 16px;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
             </div>
             <div class="member-modal__footer" style="gap: 10px; flex-wrap: wrap;">
                 <button type="button" class="btn-kembali" id="modal-close-btn-bottom">Kembali</button>
@@ -1521,6 +1617,8 @@
         const searchInput = document.getElementById('search-input');
         const sbuSelect = document.getElementById('sbu-select');
         const wilayahSelect = document.getElementById('wilayah-select');
+        const projectMinInput = document.getElementById('project-min-input');
+        const projectMaxInput = document.getElementById('project-max-input');
         const btnReset = document.getElementById('btn-reset');
         const tbody = document.getElementById('directory-tbody');
         const recordShowingStart = document.getElementById('record-showing-start');
@@ -1617,23 +1715,63 @@
             renderTable();
         });
 
+        function parseNumericRupiah(val) {
+            const cleaned = String(val ?? '').replace(/[^0-9]/g, '');
+            return cleaned === '' ? null : Number(cleaned);
+        }
+
+        function formatRupiahInput(inputEl) {
+            const digits = inputEl.value.replace(/[^0-9]/g, '');
+            if (!digits) {
+                inputEl.value = '';
+                return;
+            }
+            inputEl.value = Number(digits).toLocaleString('id-ID');
+        }
+
         // Filter Function
         function applyFilter() {
             const query = searchInput.value.toLowerCase().trim();
             const sbuVal = sbuSelect.value;
             const wilayahVal = wilayahSelect.value;
+            const minPrice = projectMinInput ? parseNumericRupiah(projectMinInput.value) : null;
+            const maxPrice = projectMaxInput ? parseNumericRupiah(projectMaxInput.value) : null;
 
             filteredMembers = memberData.filter(item => {
-                const matchQuery = !query ||
+                const matchBasic =
                     (item.name && item.name.toLowerCase().includes(query)) ||
                     (item.npa && item.npa.toLowerCase().includes(query)) ||
                     (item.alamatDomisili && item.alamatDomisili.toLowerCase().includes(query));
+
+                const matchSubklasifikasi = Array.isArray(item.sbuItems) && item.sbuItems.some(sbuItem =>
+                    (sbuItem.code && sbuItem.code.toLowerCase().includes(query)) ||
+                    (Array.isArray(sbuItem.subbidang) && sbuItem.subbidang.some(sub => String(sub).toLowerCase().includes(query)))
+                );
+
+                const matchProjectName = Array.isArray(item.projects) && item.projects.some(proj =>
+                    (proj.nama_pekerjaan && String(proj.nama_pekerjaan).toLowerCase().includes(query)) ||
+                    (proj.kode_kbli && String(proj.kode_kbli).toLowerCase().includes(query)) ||
+                    (proj.judul_kbli && String(proj.judul_kbli).toLowerCase().includes(query))
+                );
+
+                const matchQuery = !query || matchBasic || matchSubklasifikasi || matchProjectName;
 
                 const matchSbu = !sbuVal || item.sbu === sbuVal;
                 const matchWilayah = !wilayahVal || item.wilayah === wilayahVal;
                 const matchKualifikasi = !selectedKualifikasi || item.kualifikasi === selectedKualifikasi;
 
-                return matchQuery && matchSbu && matchWilayah && matchKualifikasi;
+                let matchProjectPrice = true;
+                if (minPrice !== null || maxPrice !== null) {
+                    matchProjectPrice = Array.isArray(item.projects) && item.projects.some(proj => {
+                        const projVal = parseNumericRupiah(proj.nilai_proyek);
+                        if (projVal === null) return false;
+                        if (minPrice !== null && projVal < minPrice) return false;
+                        if (maxPrice !== null && projVal > maxPrice) return false;
+                        return true;
+                    });
+                }
+
+                return matchQuery && matchSbu && matchWilayah && matchKualifikasi && matchProjectPrice;
             });
 
             currentPage = 1;
@@ -1833,6 +1971,44 @@
                 modalSbuList.innerHTML = `<li><em>Tidak ada rincian sub-bidang SBU tercatat.</em></li>`;
             }
 
+            const modalProjectsContainer = document.getElementById('modal-projects-container');
+            if (modalProjectsContainer) {
+                if (Array.isArray(member.projects) && member.projects.length > 0) {
+                    modalProjectsContainer.innerHTML = `
+                        <div style="overflow-x: auto;">
+                            <table class="detail-table" style="width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 8px; overflow: hidden;">
+                                <thead>
+                                    <tr style="background: #0B62A2; color: #ffffff; font-size: 13px; text-align: left;">
+                                        <th style="padding: 10px 12px; width: 45px; text-align: center;">No</th>
+                                        <th style="padding: 10px 12px;">Pekerjaan</th>
+                                        <th style="padding: 10px 12px; text-align: center;">Subklasifikasi</th>
+                                        <th style="padding: 10px 12px; text-align: right;">Nilai Proyek</th>
+                                        <th style="padding: 10px 12px; text-align: center;">Tahun</th>
+                                        <th style="padding: 10px 12px; text-align: center;">Durasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${member.projects.map((p, idx) => `
+                                        <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13.5px;">
+                                            <td style="padding: 10px 12px; text-align: center; width: auto; background: transparent; font-weight: 600; color: #64748b;">${idx + 1}</td>
+                                            <td style="padding: 10px 12px; font-weight: 600; color: #0f172a;">${escapeHtml(p.nama_pekerjaan)}</td>
+                                            <td style="padding: 10px 12px; text-align: center;">
+                                                <span style="background: #1e293b; color: #ffffff; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 700;">${escapeHtml(p.kode_kbli)}</span>
+                                            </td>
+                                            <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: #0f172a; white-space: nowrap;">${escapeHtml(p.nilai_proyek)}</td>
+                                            <td style="padding: 10px 12px; text-align: center; color: #334155;">${escapeHtml(p.tahun_proyek)}</td>
+                                            <td style="padding: 10px 12px; text-align: center; color: #334155;">${escapeHtml(p.lama_proyek)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else {
+                    modalProjectsContainer.innerHTML = `<p style="margin: 0; font-size: 13.5px; color: #64748b;"><em>Tidak ada riwayat proyek / pekerjaan tercatat.</em></p>`;
+                }
+            }
+
             modal.classList.add('is-open');
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
@@ -1849,10 +2025,25 @@
         sbuSelect.addEventListener('change', applyFilter);
         wilayahSelect.addEventListener('change', applyFilter);
 
+        if (projectMinInput) {
+            projectMinInput.addEventListener('input', () => {
+                formatRupiahInput(projectMinInput);
+                applyFilter();
+            });
+        }
+        if (projectMaxInput) {
+            projectMaxInput.addEventListener('input', () => {
+                formatRupiahInput(projectMaxInput);
+                applyFilter();
+            });
+        }
+
         btnReset.addEventListener('click', () => {
             searchInput.value = '';
             sbuSelect.value = '';
             wilayahSelect.value = '';
+            if (projectMinInput) projectMinInput.value = '';
+            if (projectMaxInput) projectMaxInput.value = '';
             selectedKualifikasi = '';
             pillBtns.forEach((btn, index) => {
                 if (index === 0) btn.classList.add('is-active');
