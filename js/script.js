@@ -527,16 +527,7 @@
     window.openDaftarMitraModal = function (e) {
         if (e && e.preventDefault) e.preventDefault();
         closePanel();
-
-        const modalEl = ensureMitraModal();
-        modalEl.classList.add('is-active');
-        modalEl.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-
-        setTimeout(() => {
-            const input = document.getElementById('mitra-perusahaan');
-            if (input) input.focus();
-        }, 150);
+        window.open('http://localhost:8080/mitra/register', '_blank', 'noopener');
     };
 
     window.closeDaftarMitraModal = function () {
@@ -791,4 +782,63 @@
             window.openKlinikKonsultasiModal();
         }, 300);
     }
+
+    /* ---------- Sinkronisasi Otomatis Logo Mitra Kerja di 3 Tempat (Home Marquee, Side Panel Kiri, & Halaman Mitra Kerja) ---------- */
+    async function syncMitraLogosFromDatabase() {
+        try {
+            const res = await fetch('/api/mitra', {
+                headers: { 'Accept': 'application/json' }
+            });
+            if (!res.ok) return;
+            const data = await res.json();
+            const mitraList = Array.isArray(data.mitra) ? data.mitra : [];
+            if (mitraList.length === 0) return;
+
+            const esc = (s) => String(s ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+
+            // 1. Halaman Utama: Marquee Bergerak (.mitra-kerja__marquee)
+            const marqueeEl = document.querySelector('.mitra-kerja__marquee');
+            if (marqueeEl) {
+                const renderTrackItems = (items) => items.map((m) => `
+                    <a href="/mitra-kerja/${encodeURIComponent(m.slug)}" class="mitra-card" title="${esc(m.nama_perusahaan)}" style="text-decoration: none; cursor: pointer;">
+                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}">
+                    </a>
+                `).join('');
+
+                // Gunakan 2 track berisi seluruh mitra kerja agar animasi marquee mulus dan semua logo muncul
+                const trackHtml = `<div class="mitra-kerja__track">${renderTrackItems(mitraList)}</div>`;
+                marqueeEl.innerHTML = trackHtml + trackHtml;
+            }
+
+            // 2. Menu Navbar Samping Kiri: Side Panel Mitra Kerja (.side-panel__content[data-content="mitra"] .partner-grid)
+            const sidePartnerGrids = document.querySelectorAll('.side-panel__content[data-content="mitra"] .partner-grid');
+            sidePartnerGrids.forEach((grid) => {
+                grid.innerHTML = mitraList.map((m) => `
+                    <a href="/mitra-kerja/${encodeURIComponent(m.slug)}" class="partner-card" title="${esc(m.nama_perusahaan)}"
+                        style="padding: 12px; align-items: center; justify-content: center; height: 100%; text-decoration: none; display: flex;">
+                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}"
+                            style="max-height: 35px; width: auto; max-width: 100%; object-fit: contain; mix-blend-mode: multiply;">
+                    </a>
+                `).join('');
+            });
+
+            // 3. Halaman Ketentuan Mitra Kerja Bagian Paling Bawah (.partner-logos-grid)
+            const showcaseGrid = document.querySelector('.partner-logos-grid');
+            if (showcaseGrid) {
+                showcaseGrid.innerHTML = mitraList.map((m) => `
+                    <a href="/mitra-kerja/${encodeURIComponent(m.slug)}" class="partner-logo-item" title="Lihat Profil & Produk ${esc(m.nama_perusahaan)}" style="text-decoration: none; cursor: pointer;">
+                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}">
+                    </a>
+                `).join('');
+            }
+        } catch (err) {
+            console.error('Gagal memuat logo Mitra Kerja:', err);
+        }
+    }
+
+    syncMitraLogosFromDatabase();
 })();

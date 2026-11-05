@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MitraController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
@@ -16,13 +17,27 @@ Route::post('/api/members', [MemberController::class, 'store']);
 Route::put('/api/members/{member}', [MemberController::class, 'update']);
 Route::delete('/api/members/{member}', [MemberController::class, 'destroy']);
 
-// Serve static asset directories directly from workspace root so edits to assets/css/js are reflected immediately
+// Mitra Kerja API endpoints
+Route::get('/api/mitra', [MitraController::class, 'index']);
+Route::get('/api/mitra/{slug}', [MitraController::class, 'show']);
+
+// Serve static asset directories directly from workspace root (with fallback to SistemManajemenDataPT/public/mitra_logos)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
     $fullPath = realpath(base_path("{$folder}/{$path}"));
     $allowedRoot = realpath(base_path($folder));
 
     if (!$fullPath || !$allowedRoot || !str_starts_with($fullPath, $allowedRoot) || !File::isFile($fullPath)) {
-        abort(404);
+        if ($folder === 'mitra_logos') {
+            $altRoot = realpath('d:/magang inkindo/SistemManajemenDataPT/public/mitra_logos');
+            $altFull = $altRoot ? realpath($altRoot . DIRECTORY_SEPARATOR . $path) : false;
+            if ($altFull && $altRoot && str_starts_with($altFull, $altRoot) && File::isFile($altFull)) {
+                $fullPath = $altFull;
+            } else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
     }
 
     $ext = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
@@ -70,6 +85,10 @@ Route::get('/index.html', fn () => $serveHtmlPage('index.html'));
 // Anggota Terdaftar page
 Route::get('/anggota-terdaftar', fn () => $serveHtmlPage('anggota-terdaftar.html'));
 Route::get('/anggota-terdaftar.html', fn () => $serveHtmlPage('anggota-terdaftar.html'));
+
+// Halaman Detail Profil Masing-Masing Mitra Kerja (contoh: /mitra-kerja/pt-granitoguna-building-ceramics)
+Route::get('/mitra-kerja/{slug}', fn () => $serveHtmlPage('mitra-detail.html'));
+Route::get('/mitra-detail.html', fn () => $serveHtmlPage('mitra-detail.html'));
 
 // Other static HTML pages
 $staticPages = [
