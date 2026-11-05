@@ -1,20 +1,17 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
-// Authentication API endpoints
-Route::get('/api/auth/status', [AuthController::class, 'status']);
-Route::post('/api/auth/login', [AuthController::class, 'login']);
-Route::post('/api/auth/logout', [AuthController::class, 'logout']);
+// Redirect Login & Register to SistemManajemenDataPT (http://localhost:8080)
+Route::get('/login', fn () => redirect()->away('http://localhost:8080/auth/login'));
+Route::get('/auth/login', fn () => redirect()->away('http://localhost:8080/auth/login'));
+Route::get('/register', fn () => redirect()->away('http://localhost:8080/auth/register'));
+Route::get('/auth/register', fn () => redirect()->away('http://localhost:8080/auth/register'));
 
-// Member CRUD API endpoints
+// Member Directory API endpoint (read-only for public Web Profile; CRUD managed via SistemManajemenDataPT)
 Route::get('/api/members', [MemberController::class, 'index']);
-Route::post('/api/members', [MemberController::class, 'store']);
-Route::put('/api/members/{member}', [MemberController::class, 'update']);
-Route::delete('/api/members/{member}', [MemberController::class, 'destroy']);
 
 // Helper to serve workspace HTML pages seamlessly
 $serveHtmlPage = function (string $filename) {

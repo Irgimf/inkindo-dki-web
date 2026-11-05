@@ -946,7 +946,7 @@
         <div class="side-panel__content" data-content="login">
             <h3 class="side-panel__title">Login</h3>
             <ul class="panel-links">
-                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="http://localhost:8080/auth/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">groups</span>
                         <span><strong>Anggota INKINDO</strong><small>Login Sistem Informasi Anggota (SIA)</small></span>
@@ -957,11 +957,6 @@
                         <span class="material-symbols-outlined panel-link__icon">handshake</span>
                         <span><strong>Mitra Kerja</strong><small>Login Portal Rekanan &amp; Mitra
                                 Terdaftar</small></span>
-                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
-                    </a></li>
-                <li><a href="#" class="panel-link">
-                        <span class="material-symbols-outlined panel-link__icon">shield_person</span>
-                        <span><strong>Admin Kesekretariatan</strong><small>Login Petugas DPP INKINDO</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
             </ul>
@@ -992,14 +987,14 @@
         <div class="side-panel__content" data-content="anggota">
             <h3 class="side-panel__title">Anggota</h3>
             <ul class="panel-links">
-                <li><a href="https://www.inkindo-dki.org/register" target="_blank" rel="noopener noreferrer"
+                <li><a href="http://localhost:8080/auth/register" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">person_add</span>
                         <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan
                                 INKINDO</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="https://www.inkindo-dki.org/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="http://localhost:8080/auth/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">autorenew</span>
                         <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan
@@ -1303,10 +1298,6 @@
                                     id="record-showing-end">0</strong> dari <strong id="record-total-count">0</strong>
                                 Perusahaan
                             </div>
-                            <button type="button" id="btn-add-member" onclick="openMemberCrudModal()"
-                                style="display: none; align-items: center; gap: 6px; background: #0B62A2; color: #ffffff; border: none; padding: 10px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(11, 98, 162, 0.25); transition: all 0.2s ease;">
-                                + Tambah Anggota
-                            </button>
                         </div>
                     </div>
 
@@ -1423,146 +1414,6 @@
             </div>
             <div class="member-modal__footer" style="gap: 10px; flex-wrap: wrap;">
                 <button type="button" class="btn-kembali" id="modal-close-btn-bottom">Kembali</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= MODAL CRUD TAMBAH / EDIT ANGGOTA (SUPER ADMIN) ================= -->
-    <div class="member-modal" id="member-crud-modal" role="dialog" aria-hidden="true">
-        <div class="member-modal__card" style="max-width: 820px;">
-            <div class="member-modal__header">
-                <h3 class="member-modal__title-bar" id="crud-modal-title">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">add_business</span>
-                    Tambah Anggota Terdaftar
-                </h3>
-                <button type="button" class="member-modal__close" onclick="closeMemberCrudModal()" aria-label="Tutup">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-
-            <form id="form-member-crud" onsubmit="handleMemberCrudSubmit(event)" style="display: flex; flex-direction: column; overflow: hidden; flex: 1;">
-                <div class="member-modal__body" style="padding: 24px 28px; overflow-y: auto;">
-                    <input type="hidden" id="crud-member-id" value="">
-
-                    <div id="crud-error-box" style="display: none; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 500; margin-bottom: 18px;"></div>
-
-                    <h4 class="detail-table-title" style="margin-bottom: 16px;">1. Informasi Utama Badan Usaha</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
-                        <div class="filter-group">
-                            <label for="crud-name">Nama Perusahaan <span style="color:#dc2626">*</span></label>
-                            <input type="text" id="crud-name" class="filter-input" style="padding-left: 14px;" placeholder="Contoh: PT Mega Trustlink" required>
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-npa">No. Anggota (NPA) <span style="color:#dc2626">*</span></label>
-                            <input type="text" id="crud-npa" class="filter-input" style="padding-left: 14px;" placeholder="Contoh: 14642/P/3046.DKI" required>
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-status">Status Keanggotaan <span style="color:#dc2626">*</span></label>
-                            <select id="crud-status" class="filter-select" required>
-                                <option value="Penuh">Penuh</option>
-                                <option value="Biasa">Biasa</option>
-                                <option value="Afiliasi">Afiliasi</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-kualifikasi">Kualifikasi <span style="color:#dc2626">*</span></label>
-                            <select id="crud-kualifikasi" class="filter-select" required>
-                                <option value="Besar">Besar</option>
-                                <option value="Menengah">Menengah</option>
-                                <option value="Kecil">Kecil</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-wilayah">Wilayah DKI Jakarta <span style="color:#dc2626">*</span></label>
-                            <select id="crud-wilayah" class="filter-select" required>
-                                <option value="Jakarta Selatan">Jakarta Selatan</option>
-                                <option value="Jakarta Pusat">Jakarta Pusat</option>
-                                <option value="Jakarta Barat">Jakarta Barat</option>
-                                <option value="Jakarta Timur">Jakarta Timur</option>
-                                <option value="Jakarta Utara">Jakarta Utara</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-sbu">Kategori SBU Utama <span style="color:#dc2626">*</span></label>
-                            <select id="crud-sbu" class="filter-select" required>
-                                <option value="Jasa Konstruksi">Jasa Konstruksi</option>
-                                <option value="Non Jasa Konstruksi">Non Jasa Konstruksi</option>
-                                <option value="Jasa Konstruksi dan Non Jasa Konstruksi">Jasa Konstruksi dan Non Jasa Konstruksi</option>
-                                <option value="Tidak Punya Keduanya">Tidak Punya Keduanya</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <h4 class="detail-table-title" style="margin-bottom: 16px;">2. Kontak &amp; Alamat Perusahaan</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
-                        <div class="filter-group" style="grid-column: 1 / -1;">
-                            <label for="crud-alamat-domisili">Alamat Domisili</label>
-                            <input type="text" id="crud-alamat-domisili" class="filter-input" style="padding-left: 14px;" placeholder="Jl. Contoh Raya No. 10...">
-                        </div>
-                        <div class="filter-group" style="grid-column: 1 / -1;">
-                            <label for="crud-alamat-surat">Alamat Surat-menyurat</label>
-                            <input type="text" id="crud-alamat-surat" class="filter-input" style="padding-left: 14px;" placeholder="Kosongkan jika sama dengan alamat domisili">
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-telepon">No. Telepon</label>
-                            <input type="text" id="crud-telepon" class="filter-input" style="padding-left: 14px;" placeholder="Contoh: 021-7942940">
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-fax">No. Fax</label>
-                            <input type="text" id="crud-fax" class="filter-input" style="padding-left: 14px;" placeholder="Contoh: 021-7942941 / -">
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-email">Email</label>
-                            <input type="email" id="crud-email" class="filter-input" style="padding-left: 14px;" placeholder="email@perusahaan.co.id">
-                        </div>
-                        <div class="filter-group">
-                            <label for="crud-website">Website</label>
-                            <input type="text" id="crud-website" class="filter-input" style="padding-left: 14px;" placeholder="www.perusahaan.co.id">
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
-                        <h4 style="font-size: 15px; font-weight: 700; color: var(--slate-900); margin: 0;">3. Rincian Sertifikat Badan Usaha (SBU)</h4>
-                        <button type="button" onclick="addSbuItemRow()" style="background: rgba(11, 98, 162, 0.1); color: #0B62A2; border: 1px solid rgba(11, 98, 162, 0.25); padding: 6px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
-                            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
-                            Tambah Klasifikasi SBU
-                        </button>
-                    </div>
-                    <div id="crud-sbu-items-container" style="display: flex; flex-direction: column; gap: 14px;">
-                        <!-- Dynamic SBU item rows -->
-                    </div>
-                </div>
-
-                <div class="member-modal__footer" style="justify-content: flex-end; gap: 12px;">
-                    <button type="button" onclick="closeMemberCrudModal()" style="background: #e2e8f0; color: #334155; border: none; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">Batal</button>
-                    <button type="submit" id="btn-save-member" class="btn-kembali" style="border-radius: 8px;">Simpan Data Anggota</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ================= MODAL KONFIRMASI HAPUS (SUPER ADMIN) ================= -->
-    <div class="member-modal" id="member-delete-modal" role="dialog" aria-hidden="true">
-        <div class="member-modal__card" style="max-width: 440px;">
-            <div class="member-modal__header" style="background: #dc2626;">
-                <h3 class="member-modal__title-bar">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">delete_forever</span>
-                    Konfirmasi Hapus Anggota
-                </h3>
-                <button type="button" class="member-modal__close" onclick="closeMemberDeleteModal()" aria-label="Tutup">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            <div class="member-modal__body" style="padding: 24px; text-align: center;">
-                <span class="material-symbols-outlined" style="font-size: 52px; color: #dc2626; margin-bottom: 10px;">warning</span>
-                <h4 style="margin: 0 0 8px; font-size: 18px; color: var(--slate-900);">Hapus Data Perusahaan Ini?</h4>
-                <p style="margin: 0; font-size: 14px; color: var(--slate-600); line-height: 1.6;">
-                    Anda akan menghapus <strong id="delete-member-name" style="color: var(--slate-900);">-</strong> dari database secara permanen. Tindakan ini tidak dapat dibatalkan.
-                </p>
-            </div>
-            <div class="member-modal__footer" style="justify-content: center; gap: 12px;">
-                <button type="button" onclick="closeMemberDeleteModal()" style="background: #e2e8f0; color: #334155; border: none; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">Batal</button>
-                <button type="button" id="btn-confirm-delete-member" onclick="confirmDeleteMember()" style="background: #dc2626; color: #ffffff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">Ya, Hapus</button>
             </div>
         </div>
     </div>
@@ -1736,7 +1587,7 @@
                 if (res.ok) {
                     const data = await res.json();
                     memberData = Array.isArray(data.members) ? data.members : [];
-                    if (typeof data.is_admin === 'boolean') {
+                    if (false) {
                         isAdminMode = data.is_admin;
                     }
                 }
@@ -1749,7 +1600,7 @@
         }
 
         function syncAdminControlsVisibility() {
-            if (window.__INKINDO_AUTH && typeof window.__INKINDO_AUTH.authenticated === 'boolean') {
+            if (false) {
                 isAdminMode = window.__INKINDO_AUTH.authenticated;
             }
             if (btnAddMember) {
@@ -1993,239 +1844,6 @@
             document.body.style.overflow = '';
         }
 
-        /* ================= SUPER ADMIN CRUD FUNCTIONS ================= */
-        const crudModal = document.getElementById('member-crud-modal');
-        const crudForm = document.getElementById('form-member-crud');
-        const crudSbuContainer = document.getElementById('crud-sbu-items-container');
-        const crudErrorBox = document.getElementById('crud-error-box');
-
-        function addSbuItemRow(itemData = null) {
-            const row = document.createElement('div');
-            row.className = 'sbu-crud-item-row';
-            row.style.cssText = 'background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px; position: relative;';
-            const codeVal = itemData?.code || '';
-            const kelasVal = itemData?.kelas || 'Menengah';
-            const masaVal = itemData?.masaBerlaku || '';
-            const subVal = Array.isArray(itemData?.subbidang) ? itemData.subbidang.join('\n') : '';
-
-            row.innerHTML = `
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 10px; align-items: end;">
-                    <div class="filter-group">
-                        <label style="font-size: 12px;">Kode &amp; Nama Klasifikasi SBU</label>
-                        <input type="text" class="filter-input sbu-item-code" style="padding: 8px 12px; background: #fff;" placeholder="Contoh: AR1 - Perencanaan Arsitektur" value="${escapeHtml(codeVal)}">
-                    </div>
-                    <div class="filter-group">
-                        <label style="font-size: 12px;">Kelas</label>
-                        <select class="filter-select sbu-item-kelas" style="padding: 8px 12px; background: #fff;">
-                            <option value="Besar" ${kelasVal === 'Besar' ? 'selected' : ''}>Besar</option>
-                            <option value="Menengah" ${kelasVal === 'Menengah' ? 'selected' : ''}>Menengah</option>
-                            <option value="Kecil" ${kelasVal === 'Kecil' ? 'selected' : ''}>Kecil</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label style="font-size: 12px;">Masa Berlaku s/d</label>
-                        <input type="date" class="filter-input sbu-item-masa" style="padding: 8px 12px; background: #fff;" value="${escapeHtml(masaVal)}">
-                    </div>
-                    <button type="button" onclick="this.closest('.sbu-crud-item-row').remove()" style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; height: 37px; width: 37px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Hapus SBU ini">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
-                    </button>
-                </div>
-                <div class="filter-group">
-                    <label style="font-size: 12px;">Rincian Sub-bidang (Pisahkan per baris / Enter)</label>
-                    <textarea class="filter-input sbu-item-subbidang" rows="2" style="padding: 8px 12px; background: #fff; resize: vertical;" placeholder="Contoh:&#10;AR101 - Jasa Desain Arsitektural&#10;AR102 - Jasa Nasihat Arsitektural">${escapeHtml(subVal)}</textarea>
-                </div>
-            `;
-            crudSbuContainer.appendChild(row);
-        }
-
-        window.openMemberCrudModal = function (memberId = null) {
-            crudErrorBox.style.display = 'none';
-            crudForm.reset();
-            crudSbuContainer.innerHTML = '';
-
-            const titleEl = document.getElementById('crud-modal-title');
-            const idInput = document.getElementById('crud-member-id');
-
-            if (memberId) {
-                const member = memberData.find(m => Number(m.id) === Number(memberId));
-                if (!member) return;
-
-                titleEl.innerHTML = `<span class="material-symbols-outlined" style="font-size: 20px;">edit_square</span> Edit Data Anggota`;
-                idInput.value = member.id;
-                document.getElementById('crud-name').value = member.name || '';
-                document.getElementById('crud-npa').value = member.npa || '';
-                document.getElementById('crud-status').value = member.status || 'Penuh';
-                document.getElementById('crud-kualifikasi').value = member.kualifikasi || 'Menengah';
-                document.getElementById('crud-wilayah').value = member.wilayah || 'Jakarta Selatan';
-                document.getElementById('crud-sbu').value = member.sbu || 'Jasa Konstruksi';
-                document.getElementById('crud-alamat-domisili').value = member.alamatDomisili !== '-' ? (member.alamatDomisili || '') : '';
-                document.getElementById('crud-alamat-surat').value = member.alamatSurat !== '-' ? (member.alamatSurat || '') : '';
-                document.getElementById('crud-telepon').value = member.telepon !== '-' ? (member.telepon || '') : '';
-                document.getElementById('crud-fax').value = member.fax !== '-' ? (member.fax || '') : '';
-                document.getElementById('crud-email').value = member.email !== '-' ? (member.email || '') : '';
-                document.getElementById('crud-website').value = member.website !== '-' ? (member.website || '') : '';
-
-                if (Array.isArray(member.sbuItems) && member.sbuItems.length > 0) {
-                    member.sbuItems.forEach(item => addSbuItemRow(item));
-                } else {
-                    addSbuItemRow();
-                }
-            } else {
-                titleEl.innerHTML = `<span class="material-symbols-outlined" style="font-size: 20px;">add_business</span> Tambah Anggota Terdaftar`;
-                idInput.value = '';
-                addSbuItemRow();
-            }
-
-            crudModal.classList.add('is-open');
-            crudModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        };
-
-        window.closeMemberCrudModal = function () {
-            crudModal.classList.remove('is-open');
-            crudModal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        };
-
-        window.handleMemberCrudSubmit = async function (e) {
-            e.preventDefault();
-            crudErrorBox.style.display = 'none';
-
-            const memberId = document.getElementById('crud-member-id').value;
-            const saveBtn = document.getElementById('btn-save-member');
-
-            // Collect SBU items
-            const sbuRows = crudSbuContainer.querySelectorAll('.sbu-crud-item-row');
-            const sbu_items = [];
-            sbuRows.forEach(row => {
-                const code = row.querySelector('.sbu-item-code')?.value.trim();
-                const kelas = row.querySelector('.sbu-item-kelas')?.value;
-                const masaBerlaku = row.querySelector('.sbu-item-masa')?.value.trim();
-                const subRaw = row.querySelector('.sbu-item-subbidang')?.value || '';
-                const subbidang = subRaw.split('\n').map(s => s.trim()).filter(Boolean);
-
-                if (code) {
-                    sbu_items.push({
-                        code,
-                        kelas: kelas || 'Menengah',
-                        masaBerlaku: masaBerlaku || '-',
-                        subbidang
-                    });
-                }
-            });
-
-            const payload = {
-                name: document.getElementById('crud-name').value.trim(),
-                npa: document.getElementById('crud-npa').value.trim(),
-                status: document.getElementById('crud-status').value,
-                kualifikasi: document.getElementById('crud-kualifikasi').value,
-                wilayah: document.getElementById('crud-wilayah').value,
-                sbu: document.getElementById('crud-sbu').value,
-                alamat_domisili: document.getElementById('crud-alamat-domisili').value.trim(),
-                alamat_surat: document.getElementById('crud-alamat-surat').value.trim(),
-                telepon: document.getElementById('crud-telepon').value.trim(),
-                fax: document.getElementById('crud-fax').value.trim(),
-                email: document.getElementById('crud-email').value.trim(),
-                website: document.getElementById('crud-website').value.trim(),
-                sbu_items
-            };
-
-            saveBtn.disabled = true;
-            saveBtn.textContent = 'Menyimpan...';
-
-            try {
-                const url = memberId ? `/api/members/${memberId}` : '/api/members';
-                const method = memberId ? 'PUT' : 'POST';
-
-                const res = await fetch(url, {
-                    method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': window.__INKINDO_AUTH?.csrf_token || ''
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await res.json();
-
-                if (!res.ok || !data.success) {
-                    let errMsg = data.message || 'Terjadi kesalahan saat menyimpan data.';
-                    if (data.errors) {
-                        errMsg = Object.values(data.errors).flat().join(' ');
-                    }
-                    crudErrorBox.textContent = errMsg;
-                    crudErrorBox.style.display = 'block';
-                } else {
-                    window.closeMemberCrudModal();
-                    await fetchMembersFromDatabase();
-                    if (window.showAdminToast) {
-                        window.showAdminToast(data.message || 'Data anggota berhasil disimpan!');
-                    }
-                }
-            } catch (err) {
-                crudErrorBox.textContent = 'Gagal menghubungi server database.';
-                crudErrorBox.style.display = 'block';
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Simpan Data Anggota';
-            }
-        };
-
-        /* ---------- Delete Member Modal ---------- */
-        const deleteModal = document.getElementById('member-delete-modal');
-
-        window.openMemberDeleteModal = function (memberId) {
-            const member = memberData.find(m => Number(m.id) === Number(memberId));
-            if (!member) return;
-            deletingMemberId = member.id;
-            document.getElementById('delete-member-name').textContent = `${member.name} (${member.npa})`;
-            deleteModal.classList.add('is-open');
-            deleteModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        };
-
-        window.closeMemberDeleteModal = function () {
-            deletingMemberId = null;
-            deleteModal.classList.remove('is-open');
-            deleteModal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        };
-
-        window.confirmDeleteMember = async function () {
-            if (!deletingMemberId) return;
-            const btn = document.getElementById('btn-confirm-delete-member');
-            btn.disabled = true;
-            btn.textContent = 'Menghapus...';
-
-            try {
-                const res = await fetch(`/api/members/${deletingMemberId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': window.__INKINDO_AUTH?.csrf_token || ''
-                    },
-                    credentials: 'same-origin'
-                });
-                const data = await res.json();
-                if (res.ok && data.success) {
-                    window.closeMemberDeleteModal();
-                    await fetchMembersFromDatabase();
-                    if (window.showAdminToast) {
-                        window.showAdminToast(data.message || 'Data anggota berhasil dihapus.');
-                    }
-                } else if (window.showAdminToast) {
-                    window.showAdminToast(data.message || 'Gagal menghapus anggota.', 'error', '#ef4444');
-                }
-            } catch (err) {
-                console.error(err);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Ya, Hapus';
-            }
-        };
-
         // Event Listeners
         searchInput.addEventListener('input', applyFilter);
         sbuSelect.addEventListener('change', applyFilter);
@@ -2259,17 +1877,10 @@
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeMemberModal();
         });
-        crudModal.addEventListener('click', (e) => {
-            if (e.target === crudModal) closeMemberCrudModal();
-        });
-        deleteModal.addEventListener('click', (e) => {
-            if (e.target === deleteModal) closeMemberDeleteModal();
-        });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (modal.classList.contains('is-open')) closeMemberModal();
-                if (crudModal.classList.contains('is-open')) closeMemberCrudModal();
-                if (deleteModal.classList.contains('is-open')) closeMemberDeleteModal();
+                
             }
         });
 

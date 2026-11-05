@@ -37,8 +37,15 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']], $request->boolean('remember'))) {
-            $request->session()->regenerate();
             $user = Auth::user();
+            if (!in_array($user->role, ['super_admin', 'admin'], true)) {
+                Auth::logout();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Akun ini bukan akun Admin Kesekretariatan.',
+                ], 403);
+            }
+            $request->session()->regenerate();
 
             if ($request->expectsJson() || $request->ajax()) {
                 return response()->json([
