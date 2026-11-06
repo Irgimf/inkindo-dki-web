@@ -318,6 +318,7 @@
                         'assets/jakartahome1.jpg',
                         'assets/jakartahome3.jpg'
                     ];
+                    window.__JAKARTA_HERO_IMAGES = jakartaImages;
                     var initIdx = Math.floor(Math.random() * jakartaImages.length);
                     window.__currentJakartaBgIndex = initIdx;
                     var elA = document.getElementById('hero-bg-a');
@@ -465,50 +466,91 @@
                     </a>
                 </div>
 
-                <div class="bento">
-                    <!-- Card 1: Highlight -->
-                    <article class="bento__feature reveal" id="bento-highlight">
+                <div class="bento" id="homepage-bento-grid">
+                    <!-- Card 1: Highlight (Slot 1) -->
+                    <a href="berita.html" class="bento__feature reveal" id="bento-slot-1" style="text-decoration: none; color: inherit; cursor: pointer; display: flex; flex-direction: column;">
                         <div class="bento__media">
-                            <img src="assets/gambar.png"
-                                alt="INKINDO DKI Goes to Campus: Gandeng UTA '45 Bangun Kemitraan Strategis">
+                            <img id="bento-slot-1-img" src="assets/gambar.png"
+                                alt="Berita Utama INKINDO DKI Jakarta">
                         </div>
                         <div class="bento__body">
-                            <div class="bento__meta">
-                                04 Sep 2026 | Kolaborasi Akademik
+                            <div class="bento__meta" id="bento-slot-1-meta">
+                                Memuat...
                             </div>
-                            <h3 class="bento__heading">INKINDO DKI Goes to Campus: Gandeng UTA '45 Bangun Kemitraan
-                                Strategis</h3>
+                            <h3 class="bento__heading" id="bento-slot-1-title">Memuat Berita Utama...</h3>
                         </div>
-                    </article>
+                    </a>
 
                     <div class="bento__side">
-                        <!-- Card 2: Agenda -->
-                        <article class="bento__card bento__card--horizontal reveal">
+                        <!-- Card 2: Kanan Atas (Slot 2) -->
+                        <a href="berita.html" class="bento__card bento__card--horizontal reveal" id="bento-slot-2" style="text-decoration: none; color: inherit; cursor: pointer;">
                             <div class="bento__media-side">
-                                <img src="assets/gambar2.jpg" alt="Agenda">
+                                <img id="bento-slot-2-img" src="assets/gambar2.jpg" alt="Informasi">
                             </div>
                             <div class="bento__body-side">
-                                <div class="bento__meta">
-                                    28 Nov 2025 | Agenda Mendatang
+                                <div class="bento__meta" id="bento-slot-2-meta">
+                                    Memuat...
                                 </div>
-                                <h3 class="bento__heading-side">Pelatihan Audit Internal ISO 37001:2016 (SMAP)</h3>
+                                <h3 class="bento__heading-side" id="bento-slot-2-title">Memuat Informasi...</h3>
                             </div>
-                        </article>
+                        </a>
 
-                        <!-- Card 3: e-Magazine -->
-                        <article class="bento__card bento__card--horizontal reveal">
+                        <!-- Card 3: Kanan Bawah (Slot 3) -->
+                        <a href="berita.html" class="bento__card bento__card--horizontal reveal" id="bento-slot-3" style="text-decoration: none; color: inherit; cursor: pointer;">
                             <div class="bento__media-side">
-                                <img src="assets/gambar1.jpg" alt="e-Magazine">
+                                <img id="bento-slot-3-img" src="assets/gambar1.jpg" alt="Informasi">
                             </div>
                             <div class="bento__body-side">
-                                <div class="bento__meta">
-                                    01 Sep 2026 | e-Magazine Edisi 79
+                                <div class="bento__meta" id="bento-slot-3-meta">
+                                    Memuat...
                                 </div>
-                                <h3 class="bento__heading-side">Majalah INKINDO DKI Jakarta</h3>
+                                <h3 class="bento__heading-side" id="bento-slot-3-title">Memuat Informasi...</h3>
                             </div>
-                        </article>
+                        </a>
                     </div>
                 </div>
+                <script>
+                    (function () {
+                        function applySlot(slotNum, item) {
+                            var card = document.getElementById('bento-slot-' + slotNum);
+                            var img = document.getElementById('bento-slot-' + slotNum + '-img');
+                            var meta = document.getElementById('bento-slot-' + slotNum + '-meta');
+                            var title = document.getElementById('bento-slot-' + slotNum + '-title');
+                            if (!card) return;
+                            if (!item) {
+                                card.style.display = 'none';
+                                return;
+                            }
+                            card.style.display = slotNum === 1 ? 'flex' : '';
+                            card.setAttribute('href', item.target_url || 'berita.html');
+                            if (img) {
+                                img.src = item.gambar || 'assets/gambar.png';
+                                img.alt = item.judul || '';
+                            }
+                            if (meta) {
+                                var parts = [item.tanggal_label, item.kategori_label || item.badge].filter(Boolean);
+                                meta.textContent = parts.join(' | ');
+                            }
+                            if (title) {
+                                title.textContent = item.judul || '';
+                            }
+                        }
+
+                        fetch('/api/cms/berita')
+                            .then(function (r) { return r.json(); })
+                            .then(function (data) {
+                                var hp = (data && data.homepage) ? data.homepage : {};
+                                var items = (data && data.items) ? data.items : [];
+                                var s1 = hp.slot_1 || items[0] || null;
+                                var s2 = hp.slot_2 || items[1] || null;
+                                var s3 = hp.slot_3 || items[2] || null;
+                                applySlot(1, s1);
+                                applySlot(2, s2);
+                                applySlot(3, s3);
+                            })
+                            .catch(function () {});
+                    })();
+                </script>
             </div>
             </div>
         </section>
@@ -600,7 +642,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js?v=cerah7"></script>
+    <script src="js/script.js?v=cerah10"></script>
 </body>
 
 </html>

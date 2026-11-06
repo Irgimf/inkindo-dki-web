@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     'use strict';
 
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -175,11 +175,12 @@
     const heroBgA = $('#hero-bg-a');
     const heroBgB = $('#hero-bg-b');
     if (heroBgA && heroBgB) {
-        const jakartaImages = [
-            'assets/jakartahome1.jpg',
-            'assets/jakartahome2.jpg',
-            'assets/jakartahome3.jpg'
-        ];
+        const jakartaImages = Array.isArray(window.__JAKARTA_HERO_IMAGES) && window.__JAKARTA_HERO_IMAGES.length > 0
+            ? window.__JAKARTA_HERO_IMAGES
+            : [
+                'assets/jakartahome1.jpg',
+                'assets/jakartahome3.jpg'
+            ];
 
         let currentIndex = typeof window.__currentJakartaBgIndex === 'number'
             ? window.__currentJakartaBgIndex

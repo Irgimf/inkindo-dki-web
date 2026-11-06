@@ -274,11 +274,12 @@
         .reg-card {
             display: flex;
             flex-direction: row;
+            align-items: stretch;
             background: #ffffff;
             border-radius: 12px;
             overflow: hidden;
-            height: 160px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            height: 175px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
             transition: 0.3s;
             text-decoration: none;
             border: 1px solid #f1f5f9;
@@ -292,13 +293,22 @@
         }
 
         .reg-card__img {
-            width: 45%;
+            width: 42%;
             background-size: cover;
+            background-repeat: no-repeat;
             background-position: center;
-            background-color: #cbd5e1;
+            background-color: #f1f5f9;
             position: relative;
             flex-shrink: 0;
             overflow: hidden;
+        }
+
+        .reg-card__thumb {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
         }
 
         .reg-card__img::after {
@@ -324,51 +334,57 @@
         }
 
         .reg-card__body {
-            width: 55%;
-            padding: 16px 18px;
+            width: 58%;
+            padding: 14px 16px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
+            min-width: 0;
         }
 
         .reg-card__top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 8px;
+            min-width: 0;
         }
 
         .reg-card__date {
-            font-size: 12px;
+            font-size: 11px;
             color: #64748b;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .reg-card__date span {
-            font-size: 14px;
+            font-size: 13px;
             color: #94a3b8;
         }
 
         .reg-card__cat-pill {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 600;
             color: #0B62A2;
             background: rgba(11, 98, 162, 0.08);
             padding: 2px 7px;
             border-radius: 4px;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px;
         }
 
         .reg-card__title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: #0f172a;
-            line-height: 1.45;
-            margin: 0;
-            flex: 1;
+            line-height: 1.4;
+            margin: 0 0 6px 0;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -382,18 +398,19 @@
 
         .reg-card__desc {
             display: none;
-            font-size: 14px;
+            font-size: 13.5px;
             color: #64748b;
             line-height: 1.5;
-            margin-top: 8px;
+            margin: 0 0 8px 0;
         }
 
         .reg-card__footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 8px;
+            margin-top: auto;
             padding-top: 4px;
+            min-width: 0;
         }
 
         .reg-card__meta-tag {
@@ -402,6 +419,10 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
         }
 
         .reg-card__meta-tag span {
@@ -410,9 +431,10 @@
 
         .reg-card__more {
             color: #94a3b8;
-            font-size: 22px;
+            font-size: 20px;
             line-height: 1;
             transition: color 0.2s;
+            flex-shrink: 0;
         }
 
         .reg-card:hover .reg-card__more {
@@ -494,29 +516,55 @@
         /* List View Adjustments */
         .view-container.is-list .reg-card {
             height: auto;
-            min-height: 130px;
+            min-height: 140px;
         }
 
         .view-container.is-list .reg-card__img {
             width: 250px;
             height: auto;
+            align-self: stretch;
+            background-color: #f8fafc;
+        }
+
+        .view-container.is-list .reg-card__thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
         .view-container.is-list .reg-card__body {
             width: calc(100% - 250px);
             padding: 20px 24px;
+            justify-content: flex-start;
+        }
+
+        .view-container.is-list .reg-card__cat-pill {
+            max-width: none;
+        }
+
+        .view-container.is-list .reg-card__meta-tag {
+            max-width: none;
         }
 
         .view-container.is-list .reg-card__title {
             -webkit-line-clamp: 2;
             font-size: 18px;
+            margin-bottom: 8px;
+            flex: none;
         }
 
         .view-container.is-list .reg-card__desc {
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .view-container.is-list .reg-card__footer {
+            margin-top: auto;
         }
 
         .pagination {
@@ -543,10 +591,17 @@
         .page-item.is-active {
             background: #0B62A2;
             color: white;
+            font-weight: 600;
         }
 
-        .page-item:hover:not(.is-active) {
+        .page-item:hover:not(.is-active):not(.is-disabled) {
             background: #f1f5f9;
+        }
+
+        .page-item.is-disabled {
+            opacity: 0.35;
+            cursor: default;
+            pointer-events: none;
         }
 
         /* Empty State */
@@ -981,8 +1036,11 @@
 
         #karya-grid.is-grid .reg-card__img {
             width: 100%;
+            height: auto;
             aspect-ratio: 3 / 4;
             border-radius: 6px 12px 12px 6px;
+            background-size: cover;
+            background-repeat: no-repeat;
             background-position: top center;
             box-shadow: -6px 6px 18px rgba(15, 23, 42, 0.25), inset 6px 0 8px -4px rgba(0, 0, 0, 0.35);
             transition: box-shadow 0.3s, transform 0.4s;
@@ -1006,7 +1064,18 @@
 
         #karya-grid.is-grid .reg-card__body {
             width: 100%;
+            height: auto;
             padding: 14px 4px 0;
+        }
+
+        #magazine-grid.is-grid .reg-card__cat-pill,
+
+        #karya-grid.is-grid .reg-card__cat-pill,
+
+        #magazine-grid.is-grid .reg-card__meta-tag,
+
+        #karya-grid.is-grid .reg-card__meta-tag {
+            max-width: 160px;
         }
 
         #magazine-grid.is-grid .reg-card__title,
@@ -1026,7 +1095,10 @@
 
         #karya-grid.is-list .reg-card__img {
             width: 130px;
+            height: auto;
             aspect-ratio: 3 / 4;
+            background-size: cover;
+            background-repeat: no-repeat;
             background-position: top center;
         }
 
@@ -1588,659 +1660,25 @@
                 </div>
             </div>
 
+
             <!-- ================= TAB 1: AGENDA KEGIATAN ================= -->
             <div class="regulasi-content is-active" id="tab-agenda">
-                <div class="view-container is-grid">
-                    <!-- Item 1 -->
-                    <a href="#" class="reg-card" data-category="pelatihan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar2.jpg');">
-                            <span class="reg-card__badge">Hybrid Event</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">event</span> 18 Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pelatihan &amp; Bimtek</span>
-                            </div>
-                            <h3 class="reg-card__title">Workshop Penerapan SMAP ISO 37001:2016 Sistem Manajemen Anti
-                                Penyuapan bagi Anggota</h3>
-                            <p class="reg-card__desc">Pendampingan komprehensif bagi pimpinan badan usaha konsultan
-                                dalam membangun instrumen kepatuhan dan integritas bebas penyuapan di lingkungan jasa
-                                konsultansi.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">location_on</span> Hotel Bidakara &amp;
-                                    Zoom</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Item 2 -->
-                    <a href="#" class="reg-card" data-category="pelatihan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar1.jpg');">
-                            <span class="reg-card__badge">Tatap Muka</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">event</span> 24 Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pelatihan &amp; Bimtek</span>
-                            </div>
-                            <h3 class="reg-card__title">Bimbingan Teknis Tata Cara Sertifikasi Standar &amp; Akreditasi
-                                Badan Usaha LPJK 2026</h3>
-                            <p class="reg-card__desc">Panduan teknis pengurusan Sertifikat Badan Usaha (SBU) dan
-                                Sertifikat Kompetensi Kerja (SKK) melalui portal terintegrasi LPJK PUPR terkini.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">location_on</span> Sekretariat DPP INKINDO
-                                    DKI</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Item 3 -->
-                    <a href="#" class="reg-card" data-category="seminar">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar.png');">
-                            <span class="reg-card__badge">Daring</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">event</span> 3 Nov 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Seminar &amp; FGD</span>
-                            </div>
-                            <h3 class="reg-card__title">Focus Group Discussion: Sosialisasi Pedoman Remunerasi Billing
-                                Rate INKINDO DKI 2026</h3>
-                            <p class="reg-card__desc">Diskusi terbuka penyelarasan standar remunerasi minimal tenaga
-                                ahli dan biaya langsung non personil dengan para pengguna jasa pemerintah dan swasta.
-                            </p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">videocam</span>
-                                    Zoom Cloud Meetings</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Item 4 -->
-                    <a href="#" class="reg-card" data-category="pelatihan">
-                        <div class="reg-card__img" style="background-image: url('assets/hero-bg.jpg');">
-                            <span class="reg-card__badge">Tatap Muka</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">event</span> 12 Nov 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pelatihan &amp; Bimtek</span>
-                            </div>
-                            <h3 class="reg-card__title">Pelatihan Manajemen Kontrak Konstruksi Berdasarkan FIDIC &amp;
-                                Regulasi Pengadaan LKPP</h3>
-                            <p class="reg-card__desc">Peningkatan kapabilitas para konsultan pengawas dan perencana
-                                dalam mitigasi risiko klaim serta sengketa klausul kontrak kerja konstruksi.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">location_on</span> Hotel JS Luwansa
-                                    Jakarta</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Item 5 -->
-                    <a href="#" class="reg-card" data-category="organisasi">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta3.jpg');">
-                            <span class="reg-card__badge">Luring Utama</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">event</span> 28 Nov 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Organisasi</span>
-                            </div>
-                            <h3 class="reg-card__title">Rapat Kerja Provinsi (RAKERPROV) DPP INKINDO DKI Jakarta Periode
-                                2026–2027</h3>
-                            <p class="reg-card__desc">Forum musyawarah tahunan penetapan program kerja strategis,
-                                advokasi regulasi daerah, dan penguatan kemitraan ekosistem konsultan Jakarta.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">apartment</span> Ballroom Hotel Mulia
-                                    Senayan</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Item 6 -->
-                    <a href="#" class="reg-card" data-category="seminar">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta.jpg');">
-                            <span class="reg-card__badge">Networking</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">event</span> 10 Des 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Seminar &amp; FGD</span>
-                            </div>
-                            <h3 class="reg-card__title">Temu Anggota &amp; Business Matching: Peluang Pasar Jasa
-                                Konsultansi Jakarta Kota Global</h3>
-                            <p class="reg-card__desc">Ajang kolaborasi bisnis antar anggota dan paparan rencana proyek
-                                strategis daerah pasca penetapan Undang-Undang Daerah Khusus Jakarta.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">groups</span>
-                                    Jakarta Convention Center</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <div class="view-container is-grid" id="agenda-grid"></div>
             </div>
 
             <!-- ================= TAB 2: RILIS BERITA ================= -->
             <div class="regulasi-content" id="tab-rilis">
-                <div class="view-container is-grid">
-                    <!-- News 1 -->
-                    <a href="#" class="reg-card" data-category="siaran-pers">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar2.jpg');">
-                            <span class="reg-card__badge">Rilis Resmi</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">calendar_today</span> 11 Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Siaran Pers</span>
-                            </div>
-                            <h3 class="reg-card__title">DPP INKINDO DKI Jakarta Tegaskan Komitmen Kepatuhan SMAP ISO
-                                37001 Bebas Suap</h3>
-                            <p class="reg-card__desc">Ketua DPP INKINDO DKI Jakarta menyatakan bahwa asosiasi mengawal
-                                seluruh anggota memegang teguh pakta integritas dan standar anti penyuapan di setiap
-                                tender pengadaan jasa konsultansi.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">verified</span>
-                                    Biro Komunikasi DPP</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- News 2 -->
-                    <a href="#" class="reg-card" data-category="kebijakan">
-                        <div class="reg-card__img" style="background-image: url('assets/hero-bg.jpg');">
-                            <span class="reg-card__badge">Audiensi</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">calendar_today</span> 5 Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Kebijakan</span>
-                            </div>
-                            <h3 class="reg-card__title">Kunjungan Kerja Pengurus INKINDO DKI ke Balai Kota Bahas Sinergi
-                                Pembangunan Daerah</h3>
-                            <p class="reg-card__desc">Pertemuan bersama jajaran Pemerintah Provinsi DKI Jakarta berfokus
-                                pada pelibatan konsultan perencana lokal dalam proyek penataan kota terpadu.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">public</span>
-                                    Balai Kota DKI Jakarta</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- News 3 -->
-                    <a href="#" class="reg-card" data-category="kebijakan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar.png');">
-                            <span class="reg-card__badge">Advokasi</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">calendar_today</span> 29 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Kebijakan</span>
-                            </div>
-                            <h3 class="reg-card__title">INKINDO DKI Beri Masukan Kritis Revisi Regulasi Pengadaan Jasa
-                                Konsultansi pada LKPP</h3>
-                            <p class="reg-card__desc">Asosiasi mendorong transparansi bobot teknis dan penyesuaian nilai
-                                HPS agar proporsional terhadap kompleksitas tugas konsultan independen.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">gavel</span>
-                                    Advokasi Regulasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- News 4 -->
-                    <a href="#" class="reg-card" data-category="kemitraan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar1.jpg');">
-                            <span class="reg-card__badge">MoU</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">calendar_today</span> 22 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Kemitraan</span>
-                            </div>
-                            <h3 class="reg-card__title">Penandatanganan Sinergi Strategis Bersama Produsen Material
-                                Ramah Lingkungan 2026</h3>
-                            <p class="reg-card__desc">Kerjasama ini memperluas wawasan konsultan mengenai spesifikasi
-                                material konstruksi berkelanjutan berstandar green building sertifikasi internasional.
-                            </p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">handshake</span> Kemitraan Usaha</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- News 5 -->
-                    <a href="#" class="reg-card" data-category="siaran-pers">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar.png');">
-                            <span class="reg-card__badge">Pendidikan</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">calendar_today</span> 15 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Siaran Pers</span>
-                            </div>
-                            <h3 class="reg-card__title">INKINDO DKI Goes to Campus: Edukasi Standar Profesi Konsultan
-                                Rekayasa Indonesia</h3>
-                            <p class="reg-card__desc">Program kemitraan universitas untuk mencetak lulusan sarjana
-                                teknik yang berintegritas, adaptif teknologi BIM, dan memahami kode etik profesi
-                                konsultan.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">school</span>
-                                    Goes to Campus</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- News 6 -->
-                    <a href="#" class="reg-card" data-category="siaran-pers">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta.jpg');">
-                            <span class="reg-card__badge">Kajian Publik</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">calendar_today</span> 8 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Siaran Pers</span>
-                            </div>
-                            <h3 class="reg-card__title">Rekomendasi INKINDO DKI Terkait Ketahanan Infrastruktur
-                                Pengendalian Banjir Jakarta</h3>
-                            <p class="reg-card__desc">Tim pakar konsultan INKINDO DKI menyerahkan poin rekomendasi
-                                teknis integrasi tanggul rob, sumur resapan dalam, dan digitalisasi pompa air ibukota.
-                            </p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">water_drop</span> Tim Teknis Air</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <div class="view-container is-grid" id="rilis-grid"></div>
             </div>
 
             <!-- ================= TAB 3: PUBLIKASI ================= -->
             <div class="regulasi-content" id="tab-publikasi">
-                <!-- Highlight Card to Digital Library -->
-                <div class="library-callout-card">
-                    <div class="library-callout-card__info">
-                        <div class="library-callout-card__icon">
-                            <span class="material-symbols-outlined">local_library</span>
-                        </div>
-                        <div>
-                            <h3 class="library-callout-card__title">Pusat Referensi Teknis di Digital Library INKINDO
-                                DKI</h3>
-                            <p class="library-callout-card__desc">Akses ribuan katalog pedoman, standar teknis PUPR,
-                                dokumen kajian, SNI, dan buku ilmiah secara terpusat melalui portal perpustakaan digital
-                                resmi.</p>
-                        </div>
-                    </div>
-                    <a href="https://library.inkindo-dki.org/index.php" target="_blank" rel="noopener noreferrer"
-                        class="library-callout-card__btn">
-                        <span>Buka Digital Library</span>
-                        <span class="material-symbols-outlined" style="font-size:18px;">open_in_new</span>
-                    </a>
-                </div>
-
-                <div class="view-container is-grid">
-                    <!-- Pub 1 -->
-                    <a href="#" class="reg-card" data-category="pedoman">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar1.jpg');">
-                            <span class="reg-card__badge">Pedoman 2026</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">picture_as_pdf</span> 1 Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pedoman Teknis</span>
-                            </div>
-                            <h3 class="reg-card__title">Pedoman Standar Minimal Biaya Langsung Personil (Billing Rate)
-                                INKINDO DKI 2026</h3>
-                            <p class="reg-card__desc">Buku acuan penghitungan remunerasi tenaga ahli nasional dan biaya
-                                langsung non-personil untuk pengadaan jasa konsultansi konstruksi dan non-konstruksi.
-                            </p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">download</span>
-                                    Unduh PDF (4.2 MB)</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Pub 2 -->
-                    <a href="#" class="reg-card" data-category="whitepaper">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta3.jpg');">
-                            <span class="reg-card__badge">Whitepaper</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">picture_as_pdf</span> 15 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Whitepaper</span>
-                            </div>
-                            <h3 class="reg-card__title">Whitepaper: Roadmap Industri Konsultansi Menuju Transformasi
-                                Jakarta Global City 2030</h3>
-                            <p class="reg-card__desc">Kajian strategis peran asosiasi profesi dalam mendukung transisi
-                                Jakarta menjadi pusat ekonomi, inovasi, dan jasa terkemuka di kawasan Asia Tenggara.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">download</span>
-                                    Unduh PDF (3.8 MB)</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Pub 3 -->
-                    <a href="#" class="reg-card" data-category="riset">
-                        <div class="reg-card__img" style="background-image: url('assets/hero-bg.jpg');">
-                            <span class="reg-card__badge">Laporan Resmi</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">picture_as_pdf</span> 20 Agu 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Laporan Riset</span>
-                            </div>
-                            <h3 class="reg-card__title">Laporan Tahunan Kinerja Organisasi DPP INKINDO DKI Jakarta
-                                Periode 2025/2026</h3>
-                            <p class="reg-card__desc">Dokumentasi pertanggungjawaban kegiatan keorganisasian, keuangan,
-                                advokasi, kemitraan, dan statistik badan usaha konsultan anggota terdaftar.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">download</span>
-                                    Unduh PDF (8.5 MB)</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Pub 4 -->
-                    <a href="#" class="reg-card" data-category="pedoman">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar2.jpg');">
-                            <span class="reg-card__badge">ISO 37001</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">picture_as_pdf</span> 10 Jul 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pedoman Teknis</span>
-                            </div>
-                            <h3 class="reg-card__title">Panduan Praktis Implementasi SMAP ISO 37001 pada Badan Usaha
-                                Konsultan Independen</h3>
-                            <p class="reg-card__desc">Modul petunjuk penyusunan Standard Operating Procedure (SOP), uji
-                                kelayakan rekanan kerja, dan kanal pelaporan pelanggaran (whistleblowing system).</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">download</span>
-                                    Unduh PDF (2.9 MB)</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Pub 5 -->
-                    <a href="#" class="reg-card" data-category="riset">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar.png');">
-                            <span class="reg-card__badge">Riset Regulasi</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">picture_as_pdf</span> 18 Jun 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Laporan Riset</span>
-                            </div>
-                            <h3 class="reg-card__title">Kajian Pengaruh Standar Kualifikasi Pengadaan Terhadap
-                                Pertumbuhan Konsultan Lokal</h3>
-                            <p class="reg-card__desc">Riset berbasis survei ke 400+ badan usaha konsultan mengenai
-                                tantangan pasar, syarat administrasi e-katalog, dan solvabilitas usaha rekayasa.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">download</span>
-                                    Unduh PDF (5.1 MB)</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Pub 6 -->
-                    <a href="#" class="reg-card" data-category="pedoman">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta2.jpg');">
-                            <span class="reg-card__badge">Hukum &amp; Advokasi</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">picture_as_pdf</span> 5 Mei 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pedoman Teknis</span>
-                            </div>
-                            <h3 class="reg-card__title">Buku Saku Mitigasi Sengketa Kontrak Jasa Konsultansi Konstruksi
-                                &amp; Non Konstruksi</h3>
-                            <p class="reg-card__desc">Petunjuk praktis bagi konsultan dalam menangani penundaan
-                                pembayaran termin, perubahan lingkup kerja (CCO), dan mekanisme arbitrase jasa
-                                konstruksi.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span class="material-symbols-outlined">download</span>
-                                    Unduh PDF (3.4 MB)</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <div class="view-container is-grid" id="publikasi-grid"></div>
             </div>
 
             <!-- ================= TAB 4: GALERI ================= -->
             <div class="regulasi-content" id="tab-galeri">
-                <div class="view-container is-grid">
-                    <!-- Galeri 1 -->
-                    <a href="#" class="reg-card" data-category="pelantikan">
-                        <div class="reg-card__img" style="background-image: url('assets/hero-bg.jpg');">
-                            <span class="reg-card__badge">24 Foto</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">photo_camera</span> 2 Okt 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pelantikan</span>
-                            </div>
-                            <h3 class="reg-card__title">Pelantikan &amp; Pengukuhan Dewan Pengurus Provinsi INKINDO DKI
-                                Jakarta Masa Bakti 2026–2030</h3>
-                            <p class="reg-card__desc">Momen khidmat pengucapan ikrar kepengurusan DPPH, DPPL, Badan
-                                Otonom, dan Komite Kerja yang dihadiri perwakilan DPN dan Pemprov DKI Jakarta.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">collections</span> Album Dokumentasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Galeri 2 -->
-                    <a href="#" class="reg-card" data-category="pelantikan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar.png');">
-                            <span class="reg-card__badge">36 Foto</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">photo_camera</span> 18 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Musprov</span>
-                            </div>
-                            <h3 class="reg-card__title">Dokumentasi Musyawarah Provinsi (MUSPROV) &amp; Diskusi Panel
-                                Kebijakan Jasa Konsultansi</h3>
-                            <p class="reg-card__desc">Rangkaian sidang komisi, pemilihan formatur pengurus, dan paparan
-                                hasil evaluasi kinerja tahunan asosiasi di hadapan perwakilan 500+ anggota.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">collections</span> Album Dokumentasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Galeri 3 -->
-                    <a href="#" class="reg-card" data-category="pelatihan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar2.jpg');">
-                            <span class="reg-card__badge">18 Foto</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">photo_camera</span> 4 Sep 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Pelatihan</span>
-                            </div>
-                            <h3 class="reg-card__title">Suasana Pelatihan Audit Internal ISO 37001 SMAP Anggota INKINDO
-                                DKI Jakarta</h3>
-                            <p class="reg-card__desc">Dokumentasi interaksi para auditor internal perusahaan anggota
-                                saat mengikuti simulasi audit kepatuhan anti penyuapan di ruang pelatihan.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">collections</span> Album Dokumentasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Galeri 4 -->
-                    <a href="#" class="reg-card" data-category="kunjungan">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta.jpg');">
-                            <span class="reg-card__badge">42 Foto</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">photo_camera</span> 20 Agu 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Kunjungan Kerja</span>
-                            </div>
-                            <h3 class="reg-card__title">Site Visit Anggota INKINDO DKI ke Proyek Infrastruktur
-                                Terowongan MRT Jakarta Fase 2</h3>
-                            <p class="reg-card__desc">Kunjungan teknis peninjauan teknologi tunnel boring machine (TBM),
-                                manajemen rekayasa geoteknik, dan proteksi cagar budaya di sepanjang koridor
-                                Thamrin-Kota.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">collections</span> Album Dokumentasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Galeri 5 -->
-                    <a href="#" class="reg-card" data-category="kunjungan">
-                        <div class="reg-card__img" style="background-image: url('assets/gambar1.jpg');">
-                            <span class="reg-card__badge">15 Foto</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">photo_camera</span> 12 Agu 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Kunjungan Kerja</span>
-                            </div>
-                            <h3 class="reg-card__title">Dokumentasi INKINDO DKI Goes to Campus: Sesi Sharing Industri
-                                Bersama Mahasiswa Teknik</h3>
-                            <p class="reg-card__desc">Potret antusiasme generasi muda penerus profesi konsultan saat
-                                menyimak sharing pengalaman para konsultan senior pemegang sertifikasi ASEAN Chartered
-                                Professional Engineer.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">collections</span> Album Dokumentasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Galeri 6 -->
-                    <a href="#" class="reg-card" data-category="kunjungan">
-                        <div class="reg-card__img" style="background-image: url('assets/jakarta3.jpg');">
-                            <span class="reg-card__badge">28 Foto</span>
-                        </div>
-                        <div class="reg-card__body">
-                            <div class="reg-card__top">
-                                <div class="reg-card__date">
-                                    <span class="material-symbols-outlined">photo_camera</span> 25 Jul 2026
-                                </div>
-                                <span class="reg-card__cat-pill">Kunjungan Kerja</span>
-                            </div>
-                            <h3 class="reg-card__title">Pameran Teknologi Bahan Bangunan &amp; Ramah Tamah Bersama Mitra
-                                Strategis INKINDO DKI</h3>
-                            <p class="reg-card__desc">Dokumentasi display teknologi material konstruksi inovatif serta
-                                sesi networking antara pimpinan konsultan perencana dan para produsen mitra resmi.</p>
-                            <div class="reg-card__footer">
-                                <span class="reg-card__meta-tag"><span
-                                        class="material-symbols-outlined">collections</span> Album Dokumentasi</span>
-                                <div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <div class="view-container is-grid" id="galeri-grid"></div>
             </div>
 
             <!-- ================= TAB 5: E-MAGAZINE ================= -->
@@ -2265,8 +1703,7 @@
                     </a>
                 </div>
 
-                <div class="view-container is-grid" id="magazine-grid">
-                </div>
+                <div class="view-container is-grid" id="magazine-grid"></div>
             </div>
 
             <!-- ================= TAB 6: KARYA ANGGOTA (buku) ================= -->
@@ -2277,22 +1714,12 @@
             <!-- Empty Search State -->
             <div class="empty-state" id="empty-state">
                 <span class="material-symbols-outlined">search_off</span>
-                <h3>Tidak ada berita atau informasi yang cocok</h3>
-                <p>Coba gunakan kata kunci lain atau pilih kategori yang berbeda.</p>
+                <h3>Belum ada konten atau tidak ada informasi yang cocok</h3>
+                <p>Silakan tambahkan konten melalui menu Admin CMS atau gunakan kata kunci pencarian lain.</p>
             </div>
 
-            <!-- Pagination (Mockup matching Regulasi) -->
-            <div class="pagination">
-                <a href="#" class="page-item" aria-label="Halaman Sebelumnya"><span class="material-symbols-outlined"
-                        style="font-size:18px">chevron_left</span></a>
-                <a href="#" class="page-item is-active">1</a>
-                <a href="#" class="page-item">2</a>
-                <a href="#" class="page-item">3</a>
-                <span class="page-item" style="cursor:default">...</span>
-                <a href="#" class="page-item">28</a>
-                <a href="#" class="page-item" aria-label="Halaman Berikutnya"><span class="material-symbols-outlined"
-                        style="font-size:18px">chevron_right</span></a>
-            </div>
+            <!-- Pagination -->
+            <div class="pagination" id="news-pagination" style="display: none;"></div>
 
         </div>
     </main>
@@ -2383,214 +1810,274 @@
         </div>
     </footer>
 
-    <script src="js/berita-data.js"></script>
-    <script src="js/magazine-data.js"></script>
-    <script src="js/karya-data.js"></script>
-    <!-- Interactive Script matching Regulasi Page with enhancements -->
+    <!-- Interactive Script terintegrasi Database CMS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.regulasi-content');
             const activeCategoryTitle = document.getElementById('active-category-title');
             const emptyState = document.getElementById('empty-state');
+            const paginationEl = document.getElementById('news-pagination');
             const searchInput = document.getElementById('news-search-input');
 
-            // Render kartu e-Magazine dari data (sumber: inkindo-dki.org/magazine/e-magazine)
-            const magGrid = document.getElementById('magazine-grid');
-            if (magGrid && window.MAGAZINE_DATA) {
-                const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-                magGrid.innerHTML = window.MAGAZINE_DATA.map(m =>
-                    '<a href="read-magazine.html?id=' + encodeURIComponent(m.slug) + '" class="reg-card" data-category="' + esc(m.kind.toLowerCase()) + '">' +
-                    '<div class="reg-card__img" style="background-image: url(\'' + esc(m.cover) + '\');"><span class="reg-card__badge">' + esc(m.edition) + '</span></div>' +
-                    '<div class="reg-card__body"><div class="reg-card__top"><div class="reg-card__date"><span class="material-symbols-outlined">auto_stories</span> ' + esc(m.date) + '</div>' +
-                    '<span class="reg-card__cat-pill">' + esc(m.kind) + '</span></div>' +
-                    '<h3 class="reg-card__title">' + esc(m.title) + '</h3><p class="reg-card__desc">' + esc(m.desc) + '</p>' +
-                    '<div class="reg-card__footer"><span class="reg-card__meta-tag"><span class="material-symbols-outlined">menu_book</span> Baca Online</span>' +
-                    '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div></div></div></a>'
-                ).join('');
-            }
+            const ITEMS_PER_PAGE = 9;
+            const currentPages = {};
 
-            // Karya Anggota: kartu buku + modal deskripsi (sumber: inkindo-dki.org/kanal/karya-anggota)
-            (function initKarya() {
-                const grid = document.getElementById('karya-grid');
-                if (!grid || !window.KARYA_DATA) return;
-                const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-                const books = window.KARYA_DATA;
+            const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-                grid.innerHTML = books.map((b, i) =>
-                    '<a href="#" class="reg-card" data-index="' + i + '" data-category="' + esc(b.kind.toLowerCase()) + '" aria-label="Lihat deskripsi ' + esc(b.title) + '">' +
-                    '<div class="reg-card__img" style="background-image: url(\'' + esc(b.cover) + '\');"><span class="reg-card__badge">' + esc(b.year) + '</span></div>' +
-                    '<div class="reg-card__body"><div class="reg-card__top"><div class="reg-card__date"><span class="material-symbols-outlined">person</span> ' + esc(b.author) + '</div>' +
-                    '<span class="reg-card__cat-pill">' + esc(b.kind) + '</span></div>' +
-                    '<h3 class="reg-card__title">' + esc(b.title) + '</h3><p class="reg-card__desc">' + esc(b.desc) + '</p>' +
-                    '<div class="reg-card__footer"><span class="reg-card__meta-tag"><span class="material-symbols-outlined">menu_book</span> Lihat Deskripsi</span>' +
-                    '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div></div></div></a>'
-                ).join('');
+            let galeriItems = [];
+            let karyaItems = [];
 
-                const modal = document.createElement('div');
-                modal.className = 'bk';
-                modal.setAttribute('role', 'dialog');
-                modal.setAttribute('aria-modal', 'true');
-                modal.setAttribute('aria-labelledby', 'bk-title');
-                modal.id = 'karya-modal';
-                modal.innerHTML =
-                    '<div class="bk__panel"><button type="button" class="bk__close" id="bk-close" aria-label="Tutup"><span class="material-symbols-outlined">close</span></button>' +
-                    '<img class="bk__cover" id="bk-cover" alt="">' +
-                    '<div class="bk__info"><span class="bk__pill" id="bk-kind"></span><h2 class="bk__title" id="bk-title"></h2>' +
-                    '<div class="bk__meta"><span><span class="material-symbols-outlined">person</span><b id="bk-author"></b></span>' +
-                    '<span><span class="material-symbols-outlined">calendar_month</span><b id="bk-year"></b></span></div>' +
-                    '<div class="bk__text" id="bk-text"></div>' +
-                    '</div></div>';
-                document.body.appendChild(modal);
+            // Modal Karya Anggota
+            const karyaModal = document.createElement('div');
+            karyaModal.className = 'bk';
+            karyaModal.setAttribute('role', 'dialog');
+            karyaModal.setAttribute('aria-modal', 'true');
+            karyaModal.setAttribute('aria-labelledby', 'bk-title');
+            karyaModal.id = 'karya-modal';
+            karyaModal.innerHTML =
+                '<div class="bk__panel"><button type="button" class="bk__close" id="bk-close" aria-label="Tutup"><span class="material-symbols-outlined">close</span></button>' +
+                '<img class="bk__cover" id="bk-cover" alt="">' +
+                '<div class="bk__info"><span class="bk__pill" id="bk-kind"></span><h2 class="bk__title" id="bk-title"></h2>' +
+                '<div class="bk__meta"><span><span class="material-symbols-outlined">person</span><b id="bk-author"></b></span>' +
+                '<span><span class="material-symbols-outlined">calendar_month</span><b id="bk-year"></b></span></div>' +
+                '<div class="bk__text" id="bk-text"></div>' +
+                '</div></div>';
+            document.body.appendChild(karyaModal);
 
-                const $ = id => document.getElementById(id);
-                function openBook(i) {
-                    const b = books[i];
-                    $('bk-cover').src = b.cover;
-                    $('bk-cover').alt = 'Sampul buku ' + b.title;
-                    $('bk-kind').textContent = b.kind;
-                    $('bk-title').textContent = b.title;
-                    $('bk-author').textContent = b.author;
-                    $('bk-year').textContent = b.year;
-                    $('bk-text').innerHTML = [b.desc].concat(b.detail || []).map(p => '<p>' + esc(p) + '</p>').join('');
-                    modal.classList.add('is-open');
-                    document.body.style.overflow = 'hidden';
-                }
-                function closeBook() {
-                    modal.classList.remove('is-open');
-                    document.body.style.overflow = '';
-                }
-                grid.addEventListener('click', e => {
-                    const card = e.target.closest('.reg-card');
-                    if (!card) return;
-                    e.preventDefault();
-                    openBook(parseInt(card.dataset.index, 10));
-                });
-                $('bk-close').addEventListener('click', closeBook);
-                modal.addEventListener('click', e => { if (e.target === modal) closeBook(); });
-                document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeBook(); });
-            })();
-
-            // Tautkan kartu Agenda, Rilis Berita &amp; Publikasi ke halaman detail masing-masing
-            if (window.BERITA_DATA) {
-                Object.keys(window.BERITA_DATA).forEach(type => {
-                    const group = window.BERITA_DATA[type];
-                    const tab = document.getElementById(group.tab);
-                    if (!tab) return;
-                    tab.querySelectorAll('.reg-card').forEach((card, i) => {
-                        const item = group.items[i];
-                        if (item) {
-                            card.setAttribute('href', 'berita-detail.html?type=' + type + '&id=' + item.slug);
+            function openBookModal(b) {
+                if (!b) return;
+                document.getElementById('bk-cover').src = b.gambar || 'assets/gambar.png';
+                document.getElementById('bk-cover').alt = 'Sampul buku ' + b.judul;
+                document.getElementById('bk-kind').textContent = b.kategori_label || 'Karya Anggota';
+                document.getElementById('bk-title').textContent = b.judul || '';
+                document.getElementById('bk-author').textContent = b.penulis || 'Anggota INKINDO DKI Jakarta';
+                document.getElementById('bk-year').textContent = b.badge || b.tanggal_label || '-';
+                const paragraphs = [];
+                if (b.ringkasan) paragraphs.push(b.ringkasan);
+                if (b.konten) {
+                    b.konten.split(/\n\s*\n|\r?\n/).forEach(p => {
+                        if (p.trim() && p.trim() !== (b.ringkasan || '').trim()) {
+                            paragraphs.push(p.trim());
                         }
                     });
+                }
+                document.getElementById('bk-text').innerHTML = paragraphs.map(p => '<p>' + esc(p) + '</p>').join('');
+                karyaModal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeBookModal() {
+                karyaModal.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+            document.getElementById('bk-close').addEventListener('click', closeBookModal);
+            karyaModal.addEventListener('click', e => { if (e.target === karyaModal) closeBookModal(); });
+
+            // Lightbox Galeri
+            const lb = document.createElement('div');
+            lb.className = 'lb';
+            lb.setAttribute('role', 'dialog');
+            lb.setAttribute('aria-modal', 'true');
+            lb.innerHTML =
+                '<div class="lb__bar"><div style="min-width:0"><h3 class="lb__title" id="lb-title"></h3>' +
+                '<div class="lb__meta" id="lb-meta"></div></div>' +
+                '<div style="display:flex;align-items:center;gap:12px"><span class="lb__count" id="lb-count"></span>' +
+                '<button type="button" class="lb__btn" id="lb-close" aria-label="Tutup"><span class="material-symbols-outlined">close</span></button></div></div>' +
+                '<div class="lb__stage" id="lb-stage">' +
+                '<button type="button" class="lb__btn lb__nav lb__nav--prev" id="lb-prev" aria-label="Foto sebelumnya"><span class="material-symbols-outlined">chevron_left</span></button>' +
+                '<img class="lb__img" id="lb-img" alt="">' +
+                '<button type="button" class="lb__btn lb__nav lb__nav--next" id="lb-next" aria-label="Foto berikutnya"><span class="material-symbols-outlined">chevron_right</span></button></div>' +
+                '<div class="lb__caption" id="lb-caption"></div><div class="lb__thumbs" id="lb-thumbs"></div>';
+            document.body.appendChild(lb);
+
+            let lbPhotos = [], lbIdx = 0, lbAlbumTitle = '';
+            function showLbPhoto(i) {
+                if (!lbPhotos.length) return;
+                lbIdx = (i + lbPhotos.length) % lbPhotos.length;
+                const img = document.getElementById('lb-img');
+                img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+                img.src = lbPhotos[lbIdx];
+                img.alt = lbAlbumTitle + ' - foto ' + (lbIdx + 1);
+                document.getElementById('lb-count').textContent = (lbIdx + 1) + ' / ' + lbPhotos.length;
+                document.getElementById('lb-caption').textContent = lbAlbumTitle + ' — Foto ' + (lbIdx + 1) + ' dari ' + lbPhotos.length;
+                document.getElementById('lb-thumbs').querySelectorAll('.lb__thumb').forEach((t, n) => {
+                    t.classList.toggle('is-active', n === lbIdx);
+                    if (n === lbIdx) t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
                 });
             }
 
-            // Buka tab sesuai parameter ?tab= (kembali dari halaman detail)
-            const tabParam = new URLSearchParams(location.search).get('tab');
-            if (tabParam) {
-                const target = document.querySelector('.tab-btn[data-target="tab-' + tabParam + '"]');
-                if (target) setTimeout(() => target.click(), 0);
+            function openGalleryLightbox(item) {
+                if (!item) return;
+                lbAlbumTitle = item.judul || 'Album Dokumentasi';
+                lbPhotos = Array.isArray(item.galeri_photos) && item.galeri_photos.length
+                    ? item.galeri_photos
+                    : [item.gambar || 'assets/gambar.png'];
+                document.getElementById('lb-title').textContent = lbAlbumTitle;
+                document.getElementById('lb-meta').textContent = [item.kategori_label, item.tanggal_label].filter(Boolean).join(' • ');
+                document.getElementById('lb-thumbs').innerHTML = lbPhotos.map((p, n) =>
+                    '<div class="lb__thumb" data-i="' + n + '" style="background-image:url(\'' + esc(p) + '\')"></div>'
+                ).join('');
+                lb.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+                showLbPhoto(0);
             }
 
-            // ===== GALERI: lightbox album =====
-            (function initGallery() {
-                const galTab = document.getElementById('tab-galeri');
-                if (!galTab) return;
-                const pool = ['assets/hero-bg.jpg', 'assets/gambar.png', 'assets/gambar2.jpg', 'assets/jakarta.jpg',
-                    'assets/jakarta2.jpg', 'assets/jakarta3.jpg', 'assets/gambar1.jpg'];
+            function closeGalleryLightbox() {
+                lb.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+            document.getElementById('lb-close').addEventListener('click', closeGalleryLightbox);
+            document.getElementById('lb-prev').addEventListener('click', () => showLbPhoto(lbIdx - 1));
+            document.getElementById('lb-next').addEventListener('click', () => showLbPhoto(lbIdx + 1));
+            document.getElementById('lb-thumbs').addEventListener('click', e => {
+                const t = e.target.closest('.lb__thumb');
+                if (t) showLbPhoto(parseInt(t.dataset.i, 10));
+            });
+            document.getElementById('lb-stage').addEventListener('click', e => { if (e.target.id === 'lb-stage') closeGalleryLightbox(); });
+            document.addEventListener('keydown', e => {
+                if (karyaModal.classList.contains('is-open') && e.key === 'Escape') closeBookModal();
+                if (!lb.classList.contains('is-open')) return;
+                if (e.key === 'Escape') closeGalleryLightbox();
+                else if (e.key === 'ArrowLeft') showLbPhoto(lbIdx - 1);
+                else if (e.key === 'ArrowRight') showLbPhoto(lbIdx + 1);
+            });
 
-                const lb = document.createElement('div');
-                lb.className = 'lb';
-                lb.setAttribute('role', 'dialog');
-                lb.setAttribute('aria-modal', 'true');
-                lb.innerHTML =
-                    '<div class="lb__bar"><div style="min-width:0"><h3 class="lb__title" id="lb-title"></h3>' +
-                    '<div class="lb__meta" id="lb-meta"></div></div>' +
-                    '<div style="display:flex;align-items:center;gap:12px"><span class="lb__count" id="lb-count"></span>' +
-                    '<button type="button" class="lb__btn" id="lb-close" aria-label="Tutup"><span class="material-symbols-outlined">close</span></button></div></div>' +
-                    '<div class="lb__stage" id="lb-stage">' +
-                    '<button type="button" class="lb__btn lb__nav lb__nav--prev" id="lb-prev" aria-label="Foto sebelumnya"><span class="material-symbols-outlined">chevron_left</span></button>' +
-                    '<img class="lb__img" id="lb-img" alt="">' +
-                    '<button type="button" class="lb__btn lb__nav lb__nav--next" id="lb-next" aria-label="Foto berikutnya"><span class="material-symbols-outlined">chevron_right</span></button></div>' +
-                    '<div class="lb__caption" id="lb-caption"></div><div class="lb__thumbs" id="lb-thumbs"></div>';
-                document.body.appendChild(lb);
+            function renderStandardCard(item, dateIcon, defaultMetaIcon, defaultMetaText) {
+                const badgeHtml = item.badge ? '<span class="reg-card__badge">' + esc(item.badge) + '</span>' : '';
+                const metaText = item.lokasi_meta || item.penulis || defaultMetaText;
+                return '<a href="' + esc(item.target_url) + '" class="reg-card" data-slug="' + esc(item.slug) + '">' +
+                    '<div class="reg-card__img"><img class="reg-card__thumb" src="' + esc(item.gambar) + '" alt="' + esc(item.judul) + '">' + badgeHtml + '</div>' +
+                    '<div class="reg-card__body">' +
+                    '<div class="reg-card__top">' +
+                    '<div class="reg-card__date"><span class="material-symbols-outlined">' + dateIcon + '</span> ' + esc(item.tanggal_label) + '</div>' +
+                    '<span class="reg-card__cat-pill">' + esc(item.kategori_label) + '</span>' +
+                    '</div>' +
+                    '<h3 class="reg-card__title">' + esc(item.judul) + '</h3>' +
+                    '<p class="reg-card__desc">' + esc(item.ringkasan) + '</p>' +
+                    '<div class="reg-card__footer">' +
+                    '<span class="reg-card__meta-tag"><span class="material-symbols-outlined">' + defaultMetaIcon + '</span> ' + esc(metaText) + '</span>' +
+                    '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div>' +
+                    '</div></div></a>';
+            }
 
-                const $ = id => document.getElementById(id);
-                let photos = [], idx = 0, albumTitle = '';
+            fetch('/api/cms/berita')
+                .then(r => r.json())
+                .then(data => {
+                    const g = (data && data.grouped) ? data.grouped : {};
 
-                function buildAlbum(cover, total) {
-                    const start = Math.max(0, pool.indexOf(cover));
-                    const list = [cover];
-                    for (let i = 1; i < total; i++) list.push(pool[(start + i) % pool.length]);
-                    return list;
-                }
+                    // 1. Agenda Kegiatan
+                    const agendaGrid = document.getElementById('agenda-grid');
+                    if (agendaGrid) {
+                        agendaGrid.innerHTML = (g.agenda || []).map(item =>
+                            renderStandardCard(item, 'event', 'location_on', 'Sekretariat DPP INKINDO DKI')
+                        ).join('');
+                    }
 
-                function show(i) {
-                    idx = (i + photos.length) % photos.length;
-                    const img = $('lb-img');
-                    img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
-                    img.src = photos[idx];
-                    img.alt = albumTitle + ' - foto ' + (idx + 1);
-                    $('lb-count').textContent = (idx + 1) + ' / ' + photos.length;
-                    $('lb-caption').textContent = albumTitle + ' — Foto ' + (idx + 1) + ' dari ' + photos.length;
-                    $('lb-thumbs').querySelectorAll('.lb__thumb').forEach((t, n) => {
-                        t.classList.toggle('is-active', n === idx);
-                        if (n === idx) t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-                    });
-                }
+                    // 2. Rilis Berita
+                    const rilisGrid = document.getElementById('rilis-grid');
+                    if (rilisGrid) {
+                        rilisGrid.innerHTML = (g.rilis || []).map(item =>
+                            renderStandardCard(item, 'calendar_today', 'verified', 'Biro Komunikasi DPP')
+                        ).join('');
+                    }
 
-                function open(card, start) {
-                    const bg = card.querySelector('.reg-card__img').style.backgroundImage;
-                    const m = bg.match(/url\(["']?([^"')]+)["']?\)/);
-                    const cover = m ? m[1] : pool[0];
-                    const total = parseInt((card.querySelector('.reg-card__badge')?.textContent || '').replace(/\D/g, ''), 10) || 12;
-                    albumTitle = (card.querySelector('.reg-card__title')?.textContent || '').replace(/\s+/g, ' ').trim();
-                    const cat = card.querySelector('.reg-card__cat-pill')?.textContent.trim() || '';
-                    const date = (card.querySelector('.reg-card__date')?.textContent || '').replace(/\s+/g, ' ').replace(/^\S+\s/, '').trim();
-                    photos = buildAlbum(cover, total);
-                    $('lb-title').textContent = albumTitle;
-                    $('lb-meta').textContent = [cat, date].filter(Boolean).join(' • ');
-                    $('lb-thumbs').innerHTML = photos.map((p, n) =>
-                        '<div class="lb__thumb" data-i="' + n + '" style="background-image:url(\'' + p + '\')"></div>').join('');
-                    lb.classList.add('is-open');
-                    document.body.style.overflow = 'hidden';
-                    show(start || 0);
-                }
+                    // 3. Publikasi
+                    const pubGrid = document.getElementById('publikasi-grid');
+                    if (pubGrid) {
+                        pubGrid.innerHTML = (g.publikasi || []).map(item =>
+                            renderStandardCard(item, 'calendar_today', 'article', 'Publikasi Resmi')
+                        ).join('');
+                    }
 
-                function close() {
-                    lb.classList.remove('is-open');
-                    document.body.style.overflow = '';
-                }
+                    // 4. Galeri
+                    galeriItems = g.galeri || [];
+                    const galGrid = document.getElementById('galeri-grid');
+                    if (galGrid) {
+                        galGrid.innerHTML = galeriItems.map((item, idx) => {
+                            const countLabel = item.badge || ((item.galeri_photos ? item.galeri_photos.length : 1) + ' Foto');
+                            return '<a href="#" class="reg-card" data-galeri-index="' + idx + '" data-slug="' + esc(item.slug) + '">' +
+                                '<div class="reg-card__img" style="background-image: url(\'' + esc(item.gambar) + '\');">' +
+                                '<span class="reg-card__badge">' + esc(countLabel) + '</span></div>' +
+                                '<div class="reg-card__body"><div class="reg-card__top">' +
+                                '<div class="reg-card__date"><span class="material-symbols-outlined">photo_camera</span> ' + esc(item.tanggal_label) + '</div>' +
+                                '<span class="reg-card__cat-pill">' + esc(item.kategori_label) + '</span></div>' +
+                                '<h3 class="reg-card__title">' + esc(item.judul) + '</h3>' +
+                                '<p class="reg-card__desc">' + esc(item.ringkasan) + '</p>' +
+                                '<div class="reg-card__footer"><span class="reg-card__meta-tag"><span class="material-symbols-outlined">collections</span> ' + esc(item.lokasi_meta || 'Album Dokumentasi') + '</span>' +
+                                '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div></div></div></a>';
+                        }).join('');
 
-                galTab.querySelectorAll('.reg-card').forEach(card => {
-                    card.addEventListener('click', e => { e.preventDefault(); open(card); });
+                        galGrid.addEventListener('click', e => {
+                            const card = e.target.closest('.reg-card');
+                            if (!card) return;
+                            e.preventDefault();
+                            const idx = parseInt(card.getAttribute('data-galeri-index'), 10);
+                            openGalleryLightbox(galeriItems[idx]);
+                        });
+                    }
+
+                    // 5. e-Magazine
+                    const magGrid = document.getElementById('magazine-grid');
+                    if (magGrid) {
+                        magGrid.innerHTML = (g.emagazine || []).map(m =>
+                            '<a href="read-magazine.html?id=' + encodeURIComponent(m.slug) + '" class="reg-card" data-slug="' + esc(m.slug) + '">' +
+                            '<div class="reg-card__img" style="background-image: url(\'' + esc(m.gambar) + '\');"><span class="reg-card__badge">' + esc(m.badge || m.kategori_label) + '</span></div>' +
+                            '<div class="reg-card__body"><div class="reg-card__top"><div class="reg-card__date"><span class="material-symbols-outlined">auto_stories</span> ' + esc(m.tanggal_label) + '</div>' +
+                            '<span class="reg-card__cat-pill">' + esc(m.kategori_label) + '</span></div>' +
+                            '<h3 class="reg-card__title">' + esc(m.judul) + '</h3><p class="reg-card__desc">' + esc(m.ringkasan) + '</p>' +
+                            '<div class="reg-card__footer"><span class="reg-card__meta-tag"><span class="material-symbols-outlined">menu_book</span> ' + esc(m.lokasi_meta || 'Baca Online') + '</span>' +
+                            '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div></div></div></a>'
+                        ).join('');
+                    }
+
+                    // 6. Karya Anggota
+                    karyaItems = g.karya || [];
+                    const karyaGrid = document.getElementById('karya-grid');
+                    if (karyaGrid) {
+                        karyaGrid.innerHTML = karyaItems.map((b, i) =>
+                            '<a href="#" class="reg-card" data-karya-index="' + i + '" data-slug="' + esc(b.slug) + '" aria-label="Lihat deskripsi ' + esc(b.judul) + '">' +
+                            '<div class="reg-card__img" style="background-image: url(\'' + esc(b.gambar) + '\');"><span class="reg-card__badge">' + esc(b.badge || b.tanggal_label) + '</span></div>' +
+                            '<div class="reg-card__body"><div class="reg-card__top"><div class="reg-card__date"><span class="material-symbols-outlined">person</span> ' + esc(b.penulis || 'Anggota INKINDO DKI') + '</div>' +
+                            '<span class="reg-card__cat-pill">' + esc(b.kategori_label) + '</span></div>' +
+                            '<h3 class="reg-card__title">' + esc(b.judul) + '</h3><p class="reg-card__desc">' + esc(b.ringkasan) + '</p>' +
+                            '<div class="reg-card__footer"><span class="reg-card__meta-tag"><span class="material-symbols-outlined">menu_book</span> ' + esc(b.lokasi_meta || 'Lihat Deskripsi') + '</span>' +
+                            '<div class="reg-card__more"><span class="material-symbols-outlined">more_horiz</span></div></div></div></a>'
+                        ).join('');
+
+                        karyaGrid.addEventListener('click', e => {
+                            const card = e.target.closest('.reg-card');
+                            if (!card) return;
+                            e.preventDefault();
+                            openBookModal(karyaItems[parseInt(card.getAttribute('data-karya-index'), 10)]);
+                        });
+                    }
+
+                    // Buka tab sesuai parameter ?tab=
+                    const urlParams = new URLSearchParams(location.search);
+                    const tabParam = urlParams.get('tab');
+                    const openSlug = urlParams.get('open');
+                    if (tabParam) {
+                        const target = document.querySelector('.tab-btn[data-target="tab-' + tabParam + '"]');
+                        if (target) target.click();
+                    } else {
+                        applyFilters();
+                    }
+
+                    if (openSlug) {
+                        if (tabParam === 'galeri') {
+                            const foundGal = galeriItems.find(x => x.slug === openSlug);
+                            if (foundGal) openGalleryLightbox(foundGal);
+                        } else if (tabParam === 'karya') {
+                            const foundKarya = karyaItems.find(x => x.slug === openSlug);
+                            if (foundKarya) openBookModal(foundKarya);
+                        }
+                    }
+                })
+                .catch(() => {
+                    applyFilters();
                 });
-                $('lb-close').addEventListener('click', close);
-                $('lb-prev').addEventListener('click', () => show(idx - 1));
-                $('lb-next').addEventListener('click', () => show(idx + 1));
-                $('lb-thumbs').addEventListener('click', e => {
-                    const t = e.target.closest('.lb__thumb');
-                    if (t) show(parseInt(t.dataset.i, 10));
-                });
-                $('lb-stage').addEventListener('click', e => { if (e.target.id === 'lb-stage') close(); });
-                document.addEventListener('keydown', e => {
-                    if (!lb.classList.contains('is-open')) return;
-                    if (e.key === 'Escape') close();
-                    else if (e.key === 'ArrowLeft') show(idx - 1);
-                    else if (e.key === 'ArrowRight') show(idx + 1);
-                });
-                let sx = null;
-                $('lb-stage').addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-                $('lb-stage').addEventListener('touchend', e => {
-                    if (sx === null) return;
-                    const dx = e.changedTouches[0].clientX - sx;
-                    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
-                    sx = null;
-                }, { passive: true });
-            })();
 
-            // Map sub-filters per tab
             // Switch Tab logic
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -2604,10 +2091,11 @@
                         targetContent.classList.add('is-active');
                     }
 
-                    // Update Title
                     activeCategoryTitle.textContent = btn.getAttribute('data-title');
 
-                    // Reset search input and reapply filter
+                    if (targetId) {
+                        currentPages[targetId] = 1;
+                    }
                     if (searchInput) {
                         searchInput.value = '';
                     }
@@ -2615,7 +2103,7 @@
                 });
             });
 
-            // Grid & List View Toggle (exact match with regulasi.html)
+            // Grid & List View Toggle
             const viewBtns = document.querySelectorAll('.view-btn');
             const viewContainers = document.querySelectorAll('.view-container');
 
@@ -2637,20 +2125,86 @@
                 });
             });
 
-            // Search filter real-time
             if (searchInput) {
                 searchInput.addEventListener('input', () => {
+                    const activeTab = document.querySelector('.regulasi-content.is-active');
+                    if (activeTab) {
+                        currentPages[activeTab.id] = 1;
+                    }
                     applyFilters();
                 });
+            }
+
+            if (paginationEl) {
+                paginationEl.addEventListener('click', e => {
+                    const btn = e.target.closest('.page-item[data-page]');
+                    if (!btn) return;
+                    e.preventDefault();
+                    if (btn.classList.contains('is-disabled') || btn.classList.contains('is-active')) return;
+                    const targetPage = parseInt(btn.getAttribute('data-page'), 10);
+                    const activeTab = document.querySelector('.regulasi-content.is-active');
+                    if (!activeTab || isNaN(targetPage) || targetPage < 1) return;
+                    currentPages[activeTab.id] = targetPage;
+                    applyFilters();
+                    const topRow = document.querySelector('.regulasi-top-row');
+                    if (topRow) {
+                        topRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            }
+
+            function renderPagination(currentPage, totalPages, totalItems) {
+                if (!paginationEl) return;
+                if (totalItems === 0) {
+                    paginationEl.style.display = 'none';
+                    paginationEl.innerHTML = '';
+                    return;
+                }
+
+                paginationEl.style.display = 'flex';
+                let html = '';
+
+                const prevDisabled = currentPage <= 1 ? ' is-disabled' : '';
+                html += '<a href="#" class="page-item' + prevDisabled + '" data-page="' + (currentPage - 1) + '" aria-label="Halaman Sebelumnya">' +
+                    '<span class="material-symbols-outlined" style="font-size:18px">chevron_left</span></a>';
+
+                const pages = [];
+                if (totalPages <= 7) {
+                    for (let i = 1; i <= totalPages; i++) pages.push(i);
+                } else {
+                    pages.push(1);
+                    if (currentPage > 3) pages.push('...');
+                    const start = Math.max(2, currentPage - 1);
+                    const end = Math.min(totalPages - 1, currentPage + 1);
+                    for (let i = start; i <= end; i++) pages.push(i);
+                    if (currentPage < totalPages - 2) pages.push('...');
+                    pages.push(totalPages);
+                }
+
+                pages.forEach(p => {
+                    if (p === '...') {
+                        html += '<span class="page-item" style="cursor:default">...</span>';
+                    } else {
+                        const activeClass = p === currentPage ? ' is-active' : '';
+                        html += '<a href="#" class="page-item' + activeClass + '" data-page="' + p + '">' + p + '</a>';
+                    }
+                });
+
+                const nextDisabled = currentPage >= totalPages ? ' is-disabled' : '';
+                html += '<a href="#" class="page-item' + nextDisabled + '" data-page="' + (currentPage + 1) + '" aria-label="Halaman Berikutnya">' +
+                    '<span class="material-symbols-outlined" style="font-size:18px">chevron_right</span></a>';
+
+                paginationEl.innerHTML = html;
             }
 
             function applyFilters() {
                 const activeTab = document.querySelector('.regulasi-content.is-active');
                 if (!activeTab) return;
 
+                const tabId = activeTab.id;
                 const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-                const cards = activeTab.querySelectorAll('.reg-card');
-                let visibleCount = 0;
+                const cards = Array.from(activeTab.querySelectorAll('.reg-card'));
+                const matchedCards = [];
 
                 cards.forEach(card => {
                     const title = (card.querySelector('.reg-card__title')?.textContent || '').toLowerCase();
@@ -2660,20 +2214,39 @@
                     const matchesQuery = (!query || title.includes(query) || desc.includes(query) || pill.includes(query));
 
                     if (matchesQuery) {
-                        card.style.display = 'flex';
-                        visibleCount++;
+                        matchedCards.push(card);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                const itemsPerPage = (tabId === 'tab-emagazine' || tabId === 'tab-karya') ? 8 : ITEMS_PER_PAGE;
+                const totalItems = matchedCards.length;
+                const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+                if (!currentPages[tabId] || currentPages[tabId] > totalPages) {
+                    currentPages[tabId] = 1;
+                }
+                const currentPage = currentPages[tabId];
+                const startIdx = (currentPage - 1) * itemsPerPage;
+                const endIdx = startIdx + itemsPerPage;
+
+                matchedCards.forEach((card, idx) => {
+                    if (idx >= startIdx && idx < endIdx) {
+                        card.style.display = '';
                     } else {
                         card.style.display = 'none';
                     }
                 });
 
                 if (emptyState) {
-                    if (visibleCount === 0) {
+                    if (totalItems === 0) {
                         emptyState.classList.add('is-visible');
                     } else {
                         emptyState.classList.remove('is-visible');
                     }
                 }
+
+                renderPagination(currentPage, totalPages, totalItems);
             }
         });
     </script>

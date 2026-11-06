@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CmsBeritaController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MitraController;
 use Illuminate\Support\Facades\File;
@@ -22,14 +23,18 @@ Route::get('/api/mitra', [MitraController::class, 'index']);
 Route::get('/api/mitra/{slug}', [MitraController::class, 'show']);
 Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
-// Serve static asset directories directly from workspace root (with fallback to SistemManajemenDataPT/public/mitra_logos)
+// CMS Berita & Informasi API endpoints
+Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);
+Route::get('/api/cms/berita/{slug}', [CmsBeritaController::class, 'show']);
+
+// Serve static asset directories directly from workspace root (with fallback to SistemManajemenDataPT/public)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
     $fullPath = realpath(base_path("{$folder}/{$path}"));
     $allowedRoot = realpath(base_path($folder));
 
     if (!$fullPath || !$allowedRoot || !str_starts_with($fullPath, $allowedRoot) || !File::isFile($fullPath)) {
-        if ($folder === 'mitra_logos') {
-            $altRoot = realpath('d:/magang inkindo/SistemManajemenDataPT/public/mitra_logos');
+        if (in_array($folder, ['mitra_logos', 'cms_uploads'], true)) {
+            $altRoot = realpath('d:/magang inkindo/SistemManajemenDataPT/public/' . $folder);
             $altFull = $altRoot ? realpath($altRoot . DIRECTORY_SEPARATOR . $path) : false;
             if ($altFull && $altRoot && str_starts_with($altFull, $altRoot) && File::isFile($altFull)) {
                 $fullPath = $altFull;
@@ -66,7 +71,7 @@ Route::get('/{folder}/{path}', function (string $folder, string $path) {
     }
 
     return response()->file($fullPath, $headers);
-})->where('folder', 'assets|css|js|mitra_logos')->where('path', '.*');
+})->where('folder', 'assets|css|js|mitra_logos|cms_uploads')->where('path', '.*');
 
 // Helper to serve workspace HTML pages seamlessly
 $serveHtmlPage = function (string $filename) {

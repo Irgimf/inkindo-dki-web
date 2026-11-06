@@ -860,27 +860,12 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-    <script src="js/magazine-data.js"></script>
+
     <script>
         (function () {
             var $ = function (id) { return document.getElementById(id); };
-            var list = window.MAGAZINE_DATA || [];
             var id = new URLSearchParams(location.search).get('id');
-            var mag = list.filter(function (m) { return m.slug === id; })[0] || list[0];
-            var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-
-            /* ---- Info & terkait ---- */
-            document.title = mag.title + ' - e-Magazine DPP INKINDO DKI Jakarta';
-            $('reader-title').textContent = mag.title;
-            $('btn-download').href = mag.pdf;
-            $('btn-download').setAttribute('download', mag.slug + '.pdf');
-            $('error-open').href = mag.remote;
-            $('reader-info').innerHTML =
-                '<div class="reader-info__meta"><span class="pill">' + esc(mag.kind) + '</span><span class="pill">' + esc(mag.edition) +
-                '</span><span class="pill">' + esc(mag.date) + '</span></div><h2>' + esc(mag.title) + '</h2><p>' + esc(mag.desc) + '</p>';
-            $('related-grid').innerHTML = list.filter(function (m) { return m.slug !== mag.slug; }).slice(0, 5).map(function (m) {
-                return '<a class="rel-mag" href="read-magazine.html?id=' + encodeURIComponent(m.slug) + '"><div class="rel-mag__img" style="background-image:url(\'' + esc(m.cover) + '\')"></div><h3>' + esc(m.title) + '</h3></a>';
-            }).join('');
+            var esc = function (s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
             function showError(title, text) {
                 $('reader-loading').hidden = true;
@@ -895,130 +880,153 @@
             }
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-            var pdf, total, ratio = 1.414, pageFlip = null, pageEls = [], rendered = {}, queue = Promise.resolve(), zoom = 1;
-            var stage = $('stage'), book = $('flipbook');
+            fetch('/api/cms/berita')
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    var list = (res && res.grouped && res.grouped.emagazine) ? res.grouped.emagazine : [];
+                    var mag = list.filter(function (m) { return m.slug === id; })[0] || list[0];
+                    if (!mag) {
+                        showError('Majalah tidak ditemukan', 'Data e-Magazine belum tersedia pada database.');
+                        return;
+                    }
 
-            function renderPage(n) { /* n: 1-based */
-                if (rendered[n] || n < 1 || n > total) return;
-                rendered[n] = true;
-                queue = queue.then(function () {
-                    return pdf.getPage(n).then(function (page) {
-                        var vp0 = page.getViewport({ scale: 1 });
-                        var scale = Math.min(1100 / vp0.width, 2);
-                        var vp = page.getViewport({ scale: scale });
-                        var cv = document.createElement('canvas');
-                        cv.width = vp.width; cv.height = vp.height;
-                        return page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise.then(function () {
-                            var el = pageEls[n - 1];
-                            if (el) { el.innerHTML = ''; el.appendChild(cv); el.classList.remove('is-loading'); }
+                    var pdfUrl = mag.file_pdf || mag.external_url || '';
+                    var remoteUrl = mag.external_url || mag.file_pdf || '#';
+
+                    document.title = mag.judul + ' - e-Magazine DPP INKINDO DKI Jakarta';
+                    $('reader-title').textContent = mag.judul;
+                    $('btn-download').href = pdfUrl;
+                    $('btn-download').setAttribute('download', mag.slug + '.pdf');
+                    $('error-open').href = remoteUrl;
+                    $('reader-info').innerHTML =
+                        '<div class="reader-info__meta"><span class="pill">' + esc(mag.kategori_label) + '</span><span class="pill">' + esc(mag.badge) +
+                        '</span><span class="pill">' + esc(mag.tanggal_label) + '</span></div><h2>' + esc(mag.judul) + '</h2><p>' + esc(mag.ringkasan || mag.konten) + '</p>';
+                    $('related-grid').innerHTML = list.filter(function (m) { return m.slug !== mag.slug; }).slice(0, 5).map(function (m) {
+                        return '<a class="rel-mag" href="read-magazine.html?id=' + encodeURIComponent(m.slug) + '"><div class="rel-mag__img" style="background-image:url(\'' + esc(m.gambar) + '\')"></div><h3>' + esc(m.judul) + '</h3></a>';
+                    }).join('');
+
+                    var pdf, total, ratio = 1.414, pageFlip = null, pageEls = [], rendered = {}, queue = Promise.resolve(), zoom = 1;
+                    var stage = $('stage'), book = $('flipbook');
+
+                    function renderPage(n) {
+                        if (rendered[n] || n < 1 || n > total) return;
+                        rendered[n] = true;
+                        queue = queue.then(function () {
+                            return pdf.getPage(n).then(function (page) {
+                                var vp0 = page.getViewport({ scale: 1 });
+                                var scale = Math.min(1100 / vp0.width, 2);
+                                var vp = page.getViewport({ scale: scale });
+                                var cv = document.createElement('canvas');
+                                cv.width = vp.width; cv.height = vp.height;
+                                return page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise.then(function () {
+                                    var el = pageEls[n - 1];
+                                    if (el) { el.innerHTML = ''; el.appendChild(cv); el.classList.remove('is-loading'); }
+                                });
+                            });
+                        }).catch(function () { rendered[n] = false; });
+                    }
+
+                    function renderAround(idx) {
+                        for (var i = idx - 2; i <= idx + 5; i++) renderPage(i + 1);
+                    }
+
+                    function updateUI() {
+                        var idx = pageFlip.getCurrentPageIndex();
+                        var portrait = pageFlip.getOrientation() === 'portrait';
+                        var txt;
+                        if (idx === 0) txt = 'Sampul';
+                        else if (portrait || idx === total - 1 && total % 2 === 0) txt = 'Halaman ' + (idx + 1);
+                        else txt = 'Halaman ' + (idx + 1) + (idx + 2 <= total ? '–' + (idx + 2) : '');
+                        $('reader-count').textContent = txt + ' / ' + total;
+                        var atStart = idx === 0, atEnd = idx >= total - 1;
+                        ['btn-first', 'btn-prev', 'arrow-prev'].forEach(function (b) { $(b).disabled = atStart; });
+                        ['btn-last', 'btn-next', 'arrow-next'].forEach(function (b) { $(b).disabled = atEnd; });
+                        renderAround(idx);
+                    }
+
+                    function build(start) {
+                        if (pageFlip) { try { pageFlip.destroy(); } catch (e) { } }
+                        book.innerHTML = '';
+                        pageEls = []; rendered = {}; queue = Promise.resolve();
+                        for (var i = 0; i < total; i++) {
+                            var d = document.createElement('div');
+                            d.className = 'fb-page is-loading';
+                            d.style.position = 'relative';
+                            if (i === 0 || i === total - 1) d.setAttribute('data-density', 'hard');
+                            book.appendChild(d);
+                            pageEls.push(d);
+                        }
+                        var W = stage.clientWidth - 120, H = stage.clientHeight - 40;
+                        var single = stage.clientWidth < 720;
+                        var pw = single ? Math.min(W + 60, (H) / ratio) : Math.min(W / 2, H / ratio);
+                        pw = Math.max(200, Math.floor(pw)); var ph = Math.floor(pw * ratio);
+                        book.style.width = (single ? pw : pw * 2) + 'px';
+                        book.style.height = ph + 'px';
+                        pageFlip = new St.PageFlip(book, {
+                            width: pw, height: ph, size: 'fixed', showCover: true, maxShadowOpacity: 0.55,
+                            drawShadow: true, flippingTime: 900, usePortrait: true, mobileScrollSupport: false,
+                            startPage: start || 0, autoSize: false
                         });
+                        pageFlip.loadFromHTML(pageEls);
+                        pageFlip.on('flip', updateUI);
+                        pageFlip.on('changeOrientation', updateUI);
+                        updateUI();
+                    }
+
+                    var task = pdfjsLib.getDocument({ url: pdfUrl });
+                    task.onProgress = function (p) {
+                        if (p.total) {
+                            var pct = Math.round(p.loaded / p.total * 100);
+                            $('loading-bar').style.width = pct + '%';
+                            $('loading-text').textContent = 'Mengunduh dokumen... ' + pct + '%';
+                        }
+                    };
+                    task.promise.then(function (doc) {
+                        pdf = doc; total = doc.numPages;
+                        return doc.getPage(1);
+                    }).then(function (p1) {
+                        var vp = p1.getViewport({ scale: 1 });
+                        ratio = vp.height / vp.width;
+                        $('reader-loading').hidden = true;
+                        build(0);
+                        var rt;
+                        window.addEventListener('resize', function () {
+                            clearTimeout(rt);
+                            rt = setTimeout(function () { build(pageFlip.getCurrentPageIndex()); }, 350);
+                        });
+                    }).catch(function () {
+                        showError('Dokumen tidak dapat dimuat', 'Berkas PDF tidak ditemukan atau gagal diunduh. Anda dapat membukanya langsung melalui tautan di bawah.');
                     });
-                }).catch(function () { rendered[n] = false; });
-            }
 
-            function renderAround(idx) {
-                for (var i = idx - 2; i <= idx + 5; i++) renderPage(i + 1);
-            }
-
-            function updateUI() {
-                var idx = pageFlip.getCurrentPageIndex();
-                var portrait = pageFlip.getOrientation() === 'portrait';
-                var txt;
-                if (idx === 0) txt = 'Sampul';
-                else if (portrait || idx === total - 1 && total % 2 === 0) txt = 'Halaman ' + (idx + 1);
-                else txt = 'Halaman ' + (idx + 1) + (idx + 2 <= total ? '–' + (idx + 2) : '');
-                $('reader-count').textContent = txt + ' / ' + total;
-                var atStart = idx === 0, atEnd = idx >= total - 1;
-                ['btn-first', 'btn-prev', 'arrow-prev'].forEach(function (b) { $(b).disabled = atStart; });
-                ['btn-last', 'btn-next', 'arrow-next'].forEach(function (b) { $(b).disabled = atEnd; });
-                renderAround(idx);
-            }
-
-            function build(start) {
-                if (pageFlip) { try { pageFlip.destroy(); } catch (e) { } }
-                book.innerHTML = '';
-                pageEls = []; rendered = {}; queue = Promise.resolve();
-                for (var i = 0; i < total; i++) {
-                    var d = document.createElement('div');
-                    d.className = 'fb-page is-loading';
-                    d.style.position = 'relative';
-                    if (i === 0 || i === total - 1) d.setAttribute('data-density', 'hard');
-                    book.appendChild(d);
-                    pageEls.push(d);
-                }
-                var W = stage.clientWidth - 120, H = stage.clientHeight - 40;
-                var single = stage.clientWidth < 720;
-                var pw = single ? Math.min(W + 60, (H) / ratio) : Math.min(W / 2, H / ratio);
-                pw = Math.max(200, Math.floor(pw)); var ph = Math.floor(pw * ratio);
-                book.style.width = (single ? pw : pw * 2) + 'px';
-                book.style.height = ph + 'px';
-                pageFlip = new St.PageFlip(book, {
-                    width: pw, height: ph, size: 'fixed', showCover: true, maxShadowOpacity: 0.55,
-                    drawShadow: true, flippingTime: 900, usePortrait: true, mobileScrollSupport: false,
-                    startPage: start || 0, autoSize: false
+                    var go = function (fn) { return function () { if (pageFlip) fn(); }; };
+                    $('btn-next').onclick = $('arrow-next').onclick = go(function () { pageFlip.flipNext(); });
+                    $('btn-prev').onclick = $('arrow-prev').onclick = go(function () { pageFlip.flipPrev(); });
+                    $('btn-first').onclick = go(function () { pageFlip.flip(0); });
+                    $('btn-last').onclick = go(function () { pageFlip.flip(total - 1); });
+                    document.addEventListener('keydown', function (e) {
+                        if (!pageFlip) return;
+                        if (e.key === 'ArrowRight') pageFlip.flipNext();
+                        else if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+                    });
+                    function setZoom(z) {
+                        zoom = Math.max(0.6, Math.min(1.8, z));
+                        $('zoom').style.transform = 'scale(' + zoom + ')';
+                    }
+                    $('btn-zoom-in').onclick = function () { setZoom(zoom + 0.2); };
+                    $('btn-zoom-out').onclick = function () { setZoom(zoom - 0.2); };
+                    $('btn-full').onclick = function () {
+                        var r = $('reader');
+                        if (document.fullscreenElement) document.exitFullscreen();
+                        else if (r.requestFullscreen) r.requestFullscreen();
+                    };
+                    document.addEventListener('fullscreenchange', function () {
+                        $('btn-full').querySelector('span').textContent = document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen';
+                        if (pageFlip) setTimeout(function () { build(pageFlip.getCurrentPageIndex()); }, 250);
+                    });
+                })
+                .catch(function () {
+                    showError('Gagal Memuat Data', 'Tidak dapat mengambil data e-Magazine dari server.');
                 });
-                pageFlip.loadFromHTML(pageEls);
-                pageFlip.on('flip', updateUI);
-                pageFlip.on('changeOrientation', updateUI);
-                updateUI();
-            }
-
-            /* ---- Muat PDF ---- */
-            var task = pdfjsLib.getDocument({ url: mag.pdf });
-            task.onProgress = function (p) {
-                if (p.total) {
-                    var pct = Math.round(p.loaded / p.total * 100);
-                    $('loading-bar').style.width = pct + '%';
-                    $('loading-text').textContent = 'Mengunduh dokumen... ' + pct + '%';
-                }
-            };
-            task.promise.then(function (doc) {
-                pdf = doc; total = doc.numPages;
-                return doc.getPage(1);
-            }).then(function (p1) {
-                var vp = p1.getViewport({ scale: 1 });
-                ratio = vp.height / vp.width;
-                $('reader-loading').hidden = true;
-                build(0);
-                var rt;
-                window.addEventListener('resize', function () {
-                    clearTimeout(rt);
-                    rt = setTimeout(function () { build(pageFlip.getCurrentPageIndex()); }, 350);
-                });
-            }).catch(function (err) {
-                var isFile = location.protocol === 'file:';
-                showError('Dokumen tidak dapat dimuat',
-                    isFile ? 'Halaman ini dibuka langsung dari file. Jalankan melalui server lokal (mis. ekstensi Live Server) agar PDF dapat dibaca, atau buka PDF aslinya di tab baru.'
-                        : 'Berkas PDF tidak ditemukan atau gagal diunduh. Anda dapat membukanya langsung dari situs INKINDO DKI.');
-                if (window.console) console.error(err);
-            });
-
-            /* ---- Kontrol ---- */
-            var go = function (fn) { return function () { if (pageFlip) fn(); }; };
-            $('btn-next').onclick = $('arrow-next').onclick = go(function () { pageFlip.flipNext(); });
-            $('btn-prev').onclick = $('arrow-prev').onclick = go(function () { pageFlip.flipPrev(); });
-            $('btn-first').onclick = go(function () { pageFlip.flip(0); });
-            $('btn-last').onclick = go(function () { pageFlip.flip(total - 1); });
-            document.addEventListener('keydown', function (e) {
-                if (!pageFlip) return;
-                if (e.key === 'ArrowRight') pageFlip.flipNext();
-                else if (e.key === 'ArrowLeft') pageFlip.flipPrev();
-            });
-            function setZoom(z) {
-                zoom = Math.max(0.6, Math.min(1.8, z));
-                $('zoom').style.transform = 'scale(' + zoom + ')';
-            }
-            $('btn-zoom-in').onclick = function () { setZoom(zoom + 0.2); };
-            $('btn-zoom-out').onclick = function () { setZoom(zoom - 0.2); };
-            $('btn-full').onclick = function () {
-                var r = $('reader');
-                if (document.fullscreenElement) document.exitFullscreen();
-                else if (r.requestFullscreen) r.requestFullscreen();
-            };
-            document.addEventListener('fullscreenchange', function () {
-                $('btn-full').querySelector('span').textContent = document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen';
-                if (pageFlip) setTimeout(function () { build(pageFlip.getCurrentPageIndex()); }, 250);
-            });
         })();
     </script>
     <script src="js/script.js?v=cerah6"></script>
