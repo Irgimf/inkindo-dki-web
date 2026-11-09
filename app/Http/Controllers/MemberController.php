@@ -29,6 +29,42 @@ class MemberController extends Controller
         return 'Jasa Konstruksi';
     }
 
+    private function ensureJenisSbuColumn(): void
+    {
+        try {
+            if (Schema::hasTable('sbu') && !Schema::hasColumn('sbu', 'jenis_sbu')) {
+                DB::statement("ALTER TABLE `sbu` ADD COLUMN `jenis_sbu` VARCHAR(50) NULL DEFAULT NULL AFTER `company_id`");
+            }
+        } catch (\Throwable $e) {
+            // Ignore if column already exists
+        }
+    }
+
+    private function resolveJenisSbu(?string $jenisSbu, string $kodeKbli = '', string $companyKategori = 'Jasa Konstruksi'): string
+    {
+        $kat = trim($companyKategori);
+        if ($kat === 'Non Jasa Konstruksi') {
+            return 'Non Jasa Konstruksi';
+        }
+        if ($kat === 'Jasa Konstruksi') {
+            return 'Jasa Konstruksi';
+        }
+
+        $jenis = trim((string) $jenisSbu);
+        if ($jenis === 'Non Jasa Konstruksi' || strtoupper($jenis) === 'NJK') {
+            return 'Non Jasa Konstruksi';
+        }
+        if ($jenis === 'Jasa Konstruksi' || strtoupper($jenis) === 'JK') {
+            return 'Jasa Konstruksi';
+        }
+
+        $kode = strtoupper(trim($kodeKbli));
+        if ($kode !== '' && (preg_match('/^[0-9]/', $kode) || str_starts_with($kode, 'NJK') || str_starts_with($kode, 'SC') || str_starts_with($kode, 'MS'))) {
+            return 'Non Jasa Konstruksi';
+        }
+        return 'Jasa Konstruksi';
+    }
+
     /**
      * Sync a Member record from ProjectWeb (Laravel) to `companies` and `sbu` tables in SistemManajemenDataPT (CI4).
      */
@@ -37,6 +73,7 @@ class MemberController extends Controller
         if (!Schema::hasTable('companies')) {
             return;
         }
+        $this->ensureJenisSbuColumn();
 
         $now = now()->format('Y-m-d H:i:s');
         $kategoriSbu = $this->mapSbuToCi4($member->sbu ?? 'Jasa Konstruksi');
@@ -85,6 +122,7 @@ class MemberController extends Controller
         foreach ($sbuItems as $item) {
             $kelas = $item['kelas'] ?? ($member->kualifikasi ?? 'Menengah');
             $masaBerlaku = (!empty($item['masaBerlaku']) && $item['masaBerlaku'] !== '-') ? $item['masaBerlaku'] : null;
+            $itemJenis = $item['jenis'] ?? null;
             $subbidangs = $item['subbidang'] ?? [];
 
             if (!empty($subbidangs) && is_array($subbidangs)) {
@@ -94,6 +132,7 @@ class MemberController extends Controller
                     $judul = trim($parts[1] ?? $sub);
                     if ($kode !== '') {
                         $desiredKblis[$kode] = [
+                            'jenis_sbu'    => $this->resolveJenisSbu($itemJenis, $kode, $kategoriSbu),
                             'kode_kbli'    => $kode,
                             'judul_kbli'   => $judul,
                             'kualifikasi'  => $kelas,
@@ -107,6 +146,7 @@ class MemberController extends Controller
                 $judul = trim($parts[1] ?? $item['code']);
                 if ($kode !== '') {
                     $desiredKblis[$kode] = [
+                        'jenis_sbu'    => $this->resolveJenisSbu($itemJenis, $kode, $kategoriSbu),
                         'kode_kbli'    => $kode,
                         'judul_kbli'   => $judul,
                         'kualifikasi'  => $kelas,
@@ -126,6 +166,7 @@ class MemberController extends Controller
         foreach ($desiredKblis as $kode => $kbliData) {
             if (isset($existingByKode[$kode])) {
                 DB::table('sbu')->where('id', $existingByKode[$kode]->id)->update([
+                    'jenis_sbu'    => $kbliData['jenis_sbu'],
                     'judul_kbli'   => $kbliData['judul_kbli'],
                     'kualifikasi'  => $kbliData['kualifikasi'],
                     'masa_berlaku' => $kbliData['masa_berlaku'],
@@ -135,6 +176,7 @@ class MemberController extends Controller
                 DB::table('sbu')->insert([
                     'user_id'      => $existingCompany->user_id ?? (Auth::id() ?: 1),
                     'company_id'   => $companyId,
+                    'jenis_sbu'    => $kbliData['jenis_sbu'],
                     'kode_kbli'    => $kbliData['kode_kbli'],
                     'judul_kbli'   => $kbliData['judul_kbli'],
                     'kualifikasi'  => $kbliData['kualifikasi'],
@@ -161,6 +203,8 @@ class MemberController extends Controller
      */
     public function index()
     {
+        $this->ensureJenisSbuColumn();
+
         $members = Member::orderBy('id', 'asc')->get();
         $total = $members->count();
 
@@ -187,6 +231,8 @@ class MemberController extends Controller
             'members' => $members->map(function (Member $m) {
                 $arr = $m->toFrontendArray();
                 $arr['projects'] = [];
+                $compKategori = $m->sbu ?? 'Jasa Konstruksi';
+
                 // Always pull latest SBU rows & SBU Projects directly from SistemManajemenDataPT tables if available
                 if (Schema::hasTable('companies') && Schema::hasTable('sbu')) {
                     $comp = DB::table('companies')
@@ -194,9 +240,11 @@ class MemberController extends Controller
                         ->orWhere('no_kta', $m->npa)
                         ->first();
                     if ($comp) {
+                        $compKategori = $comp->kategori_sbu ?: $compKategori;
                         $sbuRows = DB::table('sbu')->where('company_id', $comp->id)->orderBy('id', 'asc')->get();
                         $arr['sbuItems'] = $sbuRows->map(fn ($s) => [
                             'code' => trim(($s->kode_kbli ?? '') . ' - ' . ($s->judul_kbli ?? ''), ' -'),
+                            'jenis' => $this->resolveJenisSbu($s->jenis_sbu ?? null, (string) ($s->kode_kbli ?? ''), (string) $compKategori),
                             'kelas' => $s->kualifikasi ?: ($m->kualifikasi ?: 'Menengah'),
                             'masaBerlaku' => !empty($s->masa_berlaku) ? date('d-m-Y', strtotime($s->masa_berlaku)) : '-',
                             'subbidang' => [],
@@ -206,11 +254,11 @@ class MemberController extends Controller
                             $projectRows = DB::table('sbu_projects as p')
                                 ->join('sbu as s', 'p.sbu_id', '=', 's.id')
                                 ->where('s.company_id', $comp->id)
-                                ->select('p.*', 's.kode_kbli', 's.judul_kbli')
+                                ->select('p.*', 's.kode_kbli', 's.judul_kbli', 's.jenis_sbu')
                                 ->orderBy('p.id', 'asc')
                                 ->get();
 
-                            $arr['projects'] = $projectRows->map(function ($p) {
+                            $arr['projects'] = $projectRows->map(function ($p) use ($compKategori) {
                                 $rawNilai = preg_replace('/[^0-9]/', '', (string) ($p->nilai_proyek ?? ''));
                                 $formattedNilai = $rawNilai !== ''
                                     ? 'Rp ' . number_format((float) $rawNilai, 0, ',', '.')
@@ -220,6 +268,7 @@ class MemberController extends Controller
                                     'id'             => $p->id,
                                     'kode_kbli'      => $p->kode_kbli ?? '-',
                                     'judul_kbli'     => $p->judul_kbli ?? '-',
+                                    'jenis_sbu'      => $this->resolveJenisSbu($p->jenis_sbu ?? null, (string) ($p->kode_kbli ?? ''), (string) $compKategori),
                                     'nama_pekerjaan' => $p->nama_pekerjaan ?? '-',
                                     'nilai_proyek'   => $formattedNilai,
                                     'tahun_proyek'   => $p->tahun_proyek ?: '-',
@@ -229,6 +278,17 @@ class MemberController extends Controller
                         }
                     }
                 }
+
+                if (!empty($arr['sbuItems']) && is_array($arr['sbuItems'])) {
+                    $arr['sbuItems'] = array_map(function ($it) use ($compKategori) {
+                        if (empty($it['jenis'])) {
+                            $parts = explode(' - ', (string) ($it['code'] ?? ''), 2);
+                            $it['jenis'] = $this->resolveJenisSbu(null, trim($parts[0] ?? ''), (string) $compKategori);
+                        }
+                        return $it;
+                    }, $arr['sbuItems']);
+                }
+
                 return $arr;
             })->values(),
         ]);

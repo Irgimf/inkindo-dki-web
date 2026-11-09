@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -1492,11 +1492,13 @@
                 <!-- Info Sertifikat Badan Usaha (SBU) -->
                 <div>
                     <h4 class="detail-table-title">Info Sertifikat Badan Usaha (SBU)</h4>
-                    <div class="sbu-section">
-                        <h4 class="sbu-category-title" id="modal-sbu-category">Jasa Konstruksi</h4>
-                        <ol class="sbu-list" id="modal-sbu-list">
-                            <!-- Populated by JS -->
-                        </ol>
+                    <div id="modal-sbu-wrapper">
+                        <div class="sbu-section">
+                            <h4 class="sbu-category-title" id="modal-sbu-category">Jasa Konstruksi</h4>
+                            <ol class="sbu-list" id="modal-sbu-list">
+                                <!-- Populated by JS -->
+                            </ol>
+                        </div>
                     </div>
                 </div>
 
@@ -1954,21 +1956,68 @@
                 modalWebsite.textContent = '-';
             }
 
-            modalSbuCategory.textContent = member.sbu || 'Jasa Konstruksi';
+            const renderSbuItemHtml = (item) => `
+                <li>
+                    <strong>${escapeHtml(item.code)}</strong> (Kelas: <strong>${escapeHtml(item.kelas || member.kualifikasi)}</strong>, Masa berlaku s/d : <em>${escapeHtml(item.masaBerlaku || '-')}</em>)
+                    ${item.subbidang && item.subbidang.length > 0 ? `
+                        <ul class="sbu-sublist">
+                            ${item.subbidang.map(sub => `<li>${escapeHtml(sub)}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                </li>
+            `;
 
-            if (member.sbuItems && member.sbuItems.length > 0) {
-                modalSbuList.innerHTML = member.sbuItems.map(item => `
-                    <li>
-                        <strong>${escapeHtml(item.code)}</strong> (Kelas: <strong>${escapeHtml(item.kelas || member.kualifikasi)}</strong>, Masa berlaku s/d : <em>${escapeHtml(item.masaBerlaku || '-')}</em>)
-                        ${item.subbidang && item.subbidang.length > 0 ? `
-                            <ul class="sbu-sublist">
-                                ${item.subbidang.map(sub => `<li>${escapeHtml(sub)}</li>`).join('')}
-                            </ul>
-                        ` : ''}
-                    </li>
-                `).join('');
-            } else {
-                modalSbuList.innerHTML = `<li><em>Tidak ada rincian sub-bidang SBU tercatat.</em></li>`;
+            const inferItemJenis = (item) => {
+                if (item && (item.jenis === 'Non Jasa Konstruksi' || item.jenis === 'Jasa Konstruksi')) {
+                    return item.jenis;
+                }
+                const codeStr = String((item && item.code) || '').trim().toUpperCase();
+                if (/^[0-9]/.test(codeStr) || codeStr.startsWith('NJK') || codeStr.startsWith('SC') || codeStr.startsWith('MS')) {
+                    return 'Non Jasa Konstruksi';
+                }
+                return 'Jasa Konstruksi';
+            };
+
+            const sbuCatLabel = (member.sbu || 'Jasa Konstruksi').trim();
+            const isBothJkNjk = (sbuCatLabel === 'Jasa Konstruksi dan Non Jasa Konstruksi' || sbuCatLabel === 'NJK dan JK');
+            const sbuWrapper = document.getElementById('modal-sbu-wrapper');
+            const allSbuItems = Array.isArray(member.sbuItems) ? member.sbuItems : [];
+
+            if (sbuWrapper) {
+                if (isBothJkNjk) {
+                    const jkItems = allSbuItems.filter(it => inferItemJenis(it) === 'Jasa Konstruksi');
+                    const njkItems = allSbuItems.filter(it => inferItemJenis(it) === 'Non Jasa Konstruksi');
+
+                    sbuWrapper.innerHTML = `
+                        <div class="sbu-section" style="margin-bottom: 14px;">
+                            <h4 class="sbu-category-title">Jasa Konstruksi</h4>
+                            <ol class="sbu-list">
+                                ${jkItems.length > 0
+                                    ? jkItems.map(renderSbuItemHtml).join('')
+                                    : '<li><em>Tidak ada rincian subklasifikasi SBU Jasa Konstruksi tercatat.</em></li>'}
+                            </ol>
+                        </div>
+                        <div class="sbu-section">
+                            <h4 class="sbu-category-title">Non Jasa Konstruksi</h4>
+                            <ol class="sbu-list">
+                                ${njkItems.length > 0
+                                    ? njkItems.map(renderSbuItemHtml).join('')
+                                    : '<li><em>Tidak ada rincian subklasifikasi SBU Non Jasa Konstruksi tercatat.</em></li>'}
+                            </ol>
+                        </div>
+                    `;
+                } else {
+                    sbuWrapper.innerHTML = `
+                        <div class="sbu-section">
+                            <h4 class="sbu-category-title" id="modal-sbu-category">${escapeHtml(sbuCatLabel)}</h4>
+                            <ol class="sbu-list" id="modal-sbu-list">
+                                ${allSbuItems.length > 0
+                                    ? allSbuItems.map(renderSbuItemHtml).join('')
+                                    : '<li><em>Tidak ada rincian sub-bidang SBU tercatat.</em></li>'}
+                            </ol>
+                        </div>
+                    `;
+                }
             }
 
             const modalProjectsContainer = document.getElementById('modal-projects-container');
