@@ -59,12 +59,21 @@ class CmsBeritaController extends Controller
             'konten'          => (string) ($row->konten ?? ''),
             'galeri_photos'   => $galeriPhotos,
             'homepage_slot'   => (int) ($row->homepage_slot ?? 0),
+            'publikasi_slot'  => (int) ($row->publikasi_slot ?? 0),
             'target_url'      => $targetUrl,
         ];
     }
 
     public function index(Request $request): JsonResponse
     {
+        try {
+            if (!DB::getSchemaBuilder()->hasColumn('cms_berita', 'publikasi_slot')) {
+                DB::statement("ALTER TABLE `cms_berita` ADD COLUMN `publikasi_slot` INT NOT NULL DEFAULT 0 AFTER `homepage_slot`");
+            }
+        } catch (\Throwable $e) {
+            // Ignore if column already exists
+        }
+
         $rows = DB::table('cms_berita')
             ->orderByDesc('tanggal')
             ->orderByDesc('id')
@@ -84,6 +93,7 @@ class CmsBeritaController extends Controller
             'slot_2' => null,
             'slot_3' => null,
         ];
+        $pubSlots = array_fill(1, 8, null);
 
         foreach ($rows as $row) {
             $item = $this->formatItem($row);
@@ -97,6 +107,31 @@ class CmsBeritaController extends Controller
                 $homepage['slot_2'] = $item;
             } elseif ($item['homepage_slot'] === 3) {
                 $homepage['slot_3'] = $item;
+            }
+            if ($item['publikasi_slot'] >= 1 && $item['publikasi_slot'] <= 8) {
+                $pubSlots[$item['publikasi_slot']] = $item;
+            }
+        }
+
+        $usedPubIds = [];
+        foreach ($pubSlots as $ps) {
+            if ($ps && isset($ps['id'])) {
+                $usedPubIds[$ps['id']] = true;
+            }
+        }
+        $pubFallbackPool = [];
+        foreach ($grouped['publikasi'] as $pubItem) {
+            if (!isset($usedPubIds[$pubItem['id']])) {
+                $pubFallbackPool[] = $pubItem;
+            }
+        }
+        $homepagePublikasi = [];
+        $fbIdx = 0;
+        for ($s = 1; $s <= 8; $s++) {
+            if ($pubSlots[$s] !== null) {
+                $homepagePublikasi[] = $pubSlots[$s];
+            } elseif (isset($pubFallbackPool[$fbIdx])) {
+                $homepagePublikasi[] = $pubFallbackPool[$fbIdx++];
             }
         }
 
@@ -273,12 +308,13 @@ class CmsBeritaController extends Controller
         }
 
         return response()->json([
-            'items'            => $all,
-            'grouped'          => $grouped,
-            'homepage'         => $homepage,
-            'hero_banners'     => $heroBanners,
-            'hero_phrases'     => $heroPhrases,
-            'hero_backgrounds' => $heroBackgrounds,
+            'items'              => $all,
+            'grouped'            => $grouped,
+            'homepage'           => $homepage,
+            'homepage_publikasi' => $homepagePublikasi,
+            'hero_banners'       => $heroBanners,
+            'hero_phrases'       => $heroPhrases,
+            'hero_backgrounds'   => $heroBackgrounds,
         ]);
     }
 

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -13,6 +13,18 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    /* ---------- Klik Logo (Header & Footer) -> Redirect ke Halaman Utama ---------- */
+    $$('.main-header__logo, .site-footer__logo').forEach((logoEl) => {
+        logoEl.style.cursor = 'pointer';
+        if (logoEl.tagName.toLowerCase() === 'a') {
+            logoEl.setAttribute('href', 'index.html');
+        }
+        logoEl.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+    });
 
     /* ---------- Menu mobile ---------- */
     const mobileToggle = $('#mobile-toggle');

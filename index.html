@@ -14,7 +14,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=cerah8">
+    <link rel="stylesheet" href="css/style.css?v=cerah10">
 </head>
 
 <body>
@@ -22,13 +22,13 @@
     <!-- ================= HEADER ================= -->
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
-            <a href="#" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
+            <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
                 <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
                 <ul class="main-nav__menu">
-                    <li><a href="#" class="main-nav__link is-active" id="nav-home">Home</a></li>
+                    <li><a href="index.html" class="main-nav__link is-active" id="nav-home">Home</a></li>
                     <li>
                         <a href="tentang.html" class="main-nav__link" id="nav-tentang">Tentang Kami</a>
                     </li>
@@ -731,10 +731,62 @@
                                 imgLoader.src = nextSrc;
                             }
 
-                            if (backgrounds.length > 1) {
+            if ( backgrounds.length > 1) {
                                 setInterval(rotateBg, 5 * 60 * 1000);
                             }
                             window.changeJakartaHeroBg = rotateBg;
+                        }
+
+                        function applyPublikasiGrid(pubList) {
+                            var grid = document.getElementById('homepage-publikasi-grid');
+                            if (!grid) return;
+                            if (!Array.isArray(pubList) || pubList.length === 0) {
+                                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 24px 0;">Belum ada data publikasi.</p>';
+                                return;
+                            }
+
+                            grid.innerHTML = '';
+                            pubList.slice(0, 8).forEach(function (item) {
+                                var card = document.createElement('a');
+                                card.className = 'pub-home-card reveal is-visible';
+                                card.href = item.target_url || ('berita-detail.html?type=publikasi&id=' + encodeURIComponent(item.slug || ''));
+
+                                var media = document.createElement('div');
+                                media.className = 'pub-home-card__media';
+
+                                var img = document.createElement('img');
+                                img.src = item.gambar || 'assets/gambar.png';
+                                img.alt = item.judul || 'Publikasi INKINDO DKI Jakarta';
+                                img.loading = 'lazy';
+                                media.appendChild(img);
+
+                                var badgeText = item.badge || item.kategori_label || 'Publikasi';
+                                if (badgeText) {
+                                    var badge = document.createElement('span');
+                                    badge.className = 'pub-home-card__badge';
+                                    badge.textContent = badgeText;
+                                    media.appendChild(badge);
+                                }
+
+                                var body = document.createElement('div');
+                                body.className = 'pub-home-card__body';
+
+                                var meta = document.createElement('div');
+                                meta.className = 'pub-home-card__meta';
+                                var metaParts = [item.tanggal_label, item.kategori_label || 'Publikasi'].filter(Boolean);
+                                meta.textContent = metaParts.join(' | ');
+                                body.appendChild(meta);
+
+                                var title = document.createElement('h3');
+                                title.className = 'pub-home-card__title';
+                                title.textContent = item.judul || '';
+                                title.title = item.judul || '';
+                                body.appendChild(title);
+
+                                card.appendChild(media);
+                                card.appendChild(body);
+                                grid.appendChild(card);
+                            });
                         }
 
                         fetch('/api/cms/berita')
@@ -748,6 +800,11 @@
                                 applySlot(1, s1);
                                 applySlot(2, s2);
                                 applySlot(3, s3);
+
+                                var pubItems = (data && Array.isArray(data.homepage_publikasi) && data.homepage_publikasi.length > 0)
+                                    ? data.homepage_publikasi
+                                    : ((data && data.grouped && Array.isArray(data.grouped.publikasi)) ? data.grouped.publikasi.slice(0, 8) : []);
+                                applyPublikasiGrid(pubItems);
 
                                 if (data && Array.isArray(data.hero_banners) && data.hero_banners.length > 0) {
                                     applyHeroBanners(data.hero_banners);
@@ -763,6 +820,23 @@
                     })();
                 </script>
             </div>
+        </section>
+
+        <!-- ================= PUBLIKASI (GRID 4x2) ================= -->
+        <section class="news news--publikasi" id="publikasi-beranda">
+            <div class="news__container">
+                <div class="news__head">
+                    <div class="news__tabs">
+                        <button type="button" class="news__tab is-active">Publikasi</button>
+                    </div>
+                    <a href="berita.html?tab=publikasi" class="news__all" id="publikasi-all">
+                        Lihat Selengkapnya <span class="material-symbols-outlined">chevron_right</span>
+                    </a>
+                </div>
+
+                <div class="pub-grid-4x2" id="homepage-publikasi-grid">
+                    <!-- 8 Kartu Publikasi (4 ke samping x 2 ke bawah) dimuat otomatis dari CMS -->
+                </div>
             </div>
         </section>
     </main>
