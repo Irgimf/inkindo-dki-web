@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     'use strict';
 
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -825,6 +825,7 @@
                 // Gunakan 2 track berisi seluruh mitra kerja agar animasi marquee mulus dan semua logo muncul
                 const trackHtml = `<div class="mitra-kerja__track">${renderTrackItems(mitraList)}</div>`;
                 marqueeEl.innerHTML = trackHtml + trackHtml;
+                marqueeEl.style.animationDuration = Math.max(55, mitraList.length * 7) + 's';
             }
 
             // 2. Menu Navbar Samping Kiri: Side Panel Mitra Kerja (.side-panel__content[data-content="mitra"] .partner-grid)
