@@ -536,6 +536,207 @@
                             }
                         }
 
+                        function applyHeroBanners(banners) {
+                            if (!Array.isArray(banners) || banners.length === 0) return;
+                            var oldCarousel = document.getElementById('hero-carousel');
+                            if (!oldCarousel || !oldCarousel.parentNode) return;
+
+                            var carousel = oldCarousel.cloneNode(true);
+                            oldCarousel.parentNode.replaceChild(carousel, oldCarousel);
+
+                            var track = carousel.querySelector('.carousel__track');
+                            var dotsWrap = carousel.querySelector('#carousel-dots');
+                            var prevBtn = carousel.querySelector('#carousel-prev');
+                            var nextBtn = carousel.querySelector('#carousel-next');
+                            if (!track || !dotsWrap) return;
+
+                            track.innerHTML = '';
+                            dotsWrap.innerHTML = '';
+
+                            banners.forEach(function (b, idx) {
+                                var slide = document.createElement('div');
+                                slide.className = 'carousel__slide' + (idx === 0 ? ' is-active' : '');
+
+                                var img = document.createElement('img');
+                                img.src = b.gambar || 'assets/hero-bg.jpg';
+                                img.alt = b.judul || 'Banner INKINDO DKI Jakarta';
+                                slide.appendChild(img);
+
+                                var caption = document.createElement('div');
+                                caption.className = 'carousel__caption';
+
+                                if (b.subjudul) {
+                                    var intro = document.createElement('span');
+                                    intro.className = 'carousel__intro';
+                                    intro.textContent = b.subjudul;
+                                    caption.appendChild(intro);
+                                }
+
+                                var titleLink = document.createElement('a');
+                                titleLink.href = b.target_url || '#berita';
+                                titleLink.className = 'carousel__title';
+                                titleLink.textContent = b.judul || '';
+                                caption.appendChild(titleLink);
+
+                                slide.appendChild(caption);
+                                track.appendChild(slide);
+
+                                var dot = document.createElement('button');
+                                dot.type = 'button';
+                                dot.className = 'carousel__dot' + (idx === 0 ? ' is-active' : '');
+                                dot.setAttribute('aria-label', 'Slide ' + (idx + 1));
+                                dot.addEventListener('click', function () {
+                                    goToSlide(idx, true);
+                                });
+                                dotsWrap.appendChild(dot);
+                            });
+
+                            var slidesCount = banners.length;
+                            var dots = Array.from(dotsWrap.querySelectorAll('.carousel__dot'));
+                            var slideIndex = 0;
+                            var autoTimer = null;
+
+                            function goToSlide(i, user) {
+                                slideIndex = (i + slidesCount) % slidesCount;
+                                track.style.transform = 'translateX(-' + (slideIndex * 100) + '%)';
+                                dots.forEach(function (d, n) {
+                                    d.classList.toggle('is-active', n === slideIndex);
+                                });
+                                if (user) restartTimer();
+                            }
+
+                            function restartTimer() {
+                                if (autoTimer) clearInterval(autoTimer);
+                                if (slidesCount > 1) {
+                                    autoTimer = setInterval(function () {
+                                        goToSlide(slideIndex + 1, false);
+                                    }, 5000);
+                                }
+                            }
+
+                            if (prevBtn) {
+                                prevBtn.addEventListener('click', function () {
+                                    goToSlide(slideIndex - 1, true);
+                                });
+                            }
+                            if (nextBtn) {
+                                nextBtn.addEventListener('click', function () {
+                                    goToSlide(slideIndex + 1, true);
+                                });
+                            }
+
+                            carousel.addEventListener('mouseenter', function () {
+                                if (autoTimer) clearInterval(autoTimer);
+                            });
+                            carousel.addEventListener('mouseleave', restartTimer);
+
+                            var touchX = null;
+                            carousel.addEventListener('touchstart', function (e) {
+                                touchX = e.touches[0].clientX;
+                            }, { passive: true });
+                            carousel.addEventListener('touchend', function (e) {
+                                if (touchX === null) return;
+                                var dx = e.changedTouches[0].clientX - touchX;
+                                if (Math.abs(dx) > 40) {
+                                    goToSlide(slideIndex + (dx < 0 ? 1 : -1), true);
+                                }
+                                touchX = null;
+                            });
+
+                            restartTimer();
+                        }
+
+                        function applyHeroPhrases(phrases) {
+                            if (!Array.isArray(phrases) || phrases.length === 0) return;
+                            var oldEl = document.getElementById('hero-type-text');
+                            if (!oldEl || !oldEl.parentNode) return;
+
+                            var heroTextEl = oldEl.cloneNode(true);
+                            oldEl.parentNode.replaceChild(heroTextEl, oldEl);
+
+                            var pIndex = 0;
+                            var cIndex = phrases[0].length;
+                            var deleting = false;
+                            heroTextEl.textContent = phrases[0];
+
+                            function typeLoop() {
+                                var word = phrases[pIndex] || '';
+                                heroTextEl.textContent = word.slice(0, cIndex);
+                                var delay = deleting ? 45 : 85;
+
+                                if (!deleting && cIndex === word.length) {
+                                    delay = 2400;
+                                    deleting = true;
+                                } else if (deleting && cIndex === 0) {
+                                    deleting = false;
+                                    pIndex = (pIndex + 1) % phrases.length;
+                                    delay = 450;
+                                } else {
+                                    cIndex += deleting ? -1 : 1;
+                                }
+                                setTimeout(typeLoop, delay);
+                            }
+
+                            if (phrases.length > 1) {
+                                setTimeout(function () {
+                                    deleting = true;
+                                    typeLoop();
+                                }, 2200);
+                            }
+                        }
+
+                        function applyHeroBackgrounds(backgrounds) {
+                            if (!Array.isArray(backgrounds) || backgrounds.length === 0) return;
+                            var oldBgA = document.getElementById('hero-bg-a');
+                            var oldBgB = document.getElementById('hero-bg-b');
+                            if (!oldBgA || !oldBgB || !oldBgA.parentNode) return;
+
+                            var heroBgA = oldBgA.cloneNode(true);
+                            var heroBgB = oldBgB.cloneNode(true);
+                            oldBgA.parentNode.replaceChild(heroBgA, oldBgA);
+                            oldBgB.parentNode.replaceChild(heroBgB, oldBgB);
+
+                            window.__JAKARTA_HERO_IMAGES = backgrounds;
+                            var currentIndex = 0;
+                            if (backgrounds.length > 1 && typeof window.__currentJakartaBgIndex === 'number' && window.__currentJakartaBgIndex < backgrounds.length) {
+                                currentIndex = window.__currentJakartaBgIndex;
+                            }
+
+                            heroBgA.style.backgroundImage = "url('" + backgrounds[currentIndex] + "')";
+                            heroBgA.style.opacity = '1';
+                            heroBgB.style.opacity = '0';
+
+                            var activeLayer = 'a';
+                            function rotateBg() {
+                                if (backgrounds.length <= 1) return;
+                                var nextIndex = Math.floor(Math.random() * (backgrounds.length - 1));
+                                if (nextIndex >= currentIndex) nextIndex++;
+                                currentIndex = nextIndex;
+                                var nextSrc = backgrounds[currentIndex];
+
+                                var imgLoader = new Image();
+                                imgLoader.onload = function () {
+                                    if (activeLayer === 'a') {
+                                        heroBgB.style.backgroundImage = "url('" + nextSrc + "')";
+                                        heroBgB.style.opacity = '1';
+                                        heroBgA.style.opacity = '0';
+                                        activeLayer = 'b';
+                                    } else {
+                                        heroBgA.style.backgroundImage = "url('" + nextSrc + "')";
+                                        heroBgA.style.opacity = '1';
+                                        heroBgB.style.opacity = '0';
+                                        activeLayer = 'a';
+                                    }
+                                };
+                                imgLoader.src = nextSrc;
+                            }
+
+                            if (backgrounds.length > 1) {
+                                setInterval(rotateBg, 5 * 60 * 1000);
+                            }
+                            window.changeJakartaHeroBg = rotateBg;
+                        }
+
                         fetch('/api/cms/berita')
                             .then(function (r) { return r.json(); })
                             .then(function (data) {
@@ -547,6 +748,16 @@
                                 applySlot(1, s1);
                                 applySlot(2, s2);
                                 applySlot(3, s3);
+
+                                if (data && Array.isArray(data.hero_banners) && data.hero_banners.length > 0) {
+                                    applyHeroBanners(data.hero_banners);
+                                }
+                                if (data && Array.isArray(data.hero_phrases) && data.hero_phrases.length > 0) {
+                                    applyHeroPhrases(data.hero_phrases);
+                                }
+                                if (data && Array.isArray(data.hero_backgrounds) && data.hero_backgrounds.length > 0) {
+                                    applyHeroBackgrounds(data.hero_backgrounds);
+                                }
                             })
                             .catch(function () {});
                     })();
