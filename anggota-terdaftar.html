@@ -130,7 +130,7 @@
 
         .filter-row {
             display: grid;
-            grid-template-columns: 2fr 1.2fr 1.2fr auto;
+            grid-template-columns: 1.7fr 1fr 1fr 1fr;
             gap: 16px;
             align-items: flex-end;
         }
@@ -212,17 +212,18 @@
         .btn-reset-filter {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border-radius: 10px;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 20px;
             background: #f1f5f9;
             color: var(--slate-700);
             border: 1px solid #cbd5e1;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            height: 44px;
+            height: 36px;
             white-space: nowrap;
         }
 
@@ -232,11 +233,12 @@
             border-color: #fca5a5;
         }
 
-        /* Pill quick filters */
+        /* Bottom Project Filter & Reset Row */
         .filter-pills {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            gap: 14px;
             margin-top: 18px;
             padding-top: 16px;
             border-top: 1px solid #f1f5f9;
@@ -246,60 +248,53 @@
         .filter-pills-label {
             font-size: 13px;
             font-weight: 600;
-            color: var(--slate-500);
-            margin-right: 4px;
-        }
-
-        .pill-btn {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--slate-700);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .pill-btn:hover {
-            background: #e2e8f0;
-            color: var(--slate-900);
-        }
-
-        .pill-btn.is-active {
-            background: var(--royal, #0B62A2);
-            color: #ffffff;
-            border-color: var(--royal, #0B62A2);
-        }
-
-        /* Project Value Range Filter beside Quick Filter Pills */
-        .filter-pills-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            color: var(--slate-600);
+            white-space: nowrap;
         }
 
         .filter-price-range {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-left: auto;
-            padding-left: 16px;
-            border-left: 1px solid #e2e8f0;
+            gap: 10px;
+            width: 100%;
             flex-wrap: wrap;
         }
 
-        @media (max-width: 1100px) {
-            .filter-price-range {
-                margin-left: 0;
-                padding-left: 0;
-                border-left: none;
-                width: 100%;
-                padding-top: 10px;
-                border-top: 1px dashed #e2e8f0;
-            }
+        .project-search-group {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .project-search-icon {
+            position: absolute;
+            left: 12px;
+            font-size: 16px;
+            color: var(--slate-400);
+            pointer-events: none;
+        }
+
+        .project-search-input {
+            width: 100%;
+            height: 36px;
+            padding: 6px 14px 6px 34px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--slate-800);
+            font-family: inherit;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .project-search-input:focus {
+            outline: none;
+            border-color: #0B62A2;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(11, 98, 162, 0.12);
         }
 
         .price-input-group {
@@ -310,7 +305,7 @@
 
         .price-prefix {
             position: absolute;
-            left: 11px;
+            left: 12px;
             font-size: 12px;
             font-weight: 700;
             color: var(--slate-500);
@@ -318,11 +313,12 @@
         }
 
         .price-range-input {
-            width: 165px;
-            padding: 6px 12px 6px 32px;
+            width: 190px;
+            height: 36px;
+            padding: 6px 12px 6px 34px;
             border: 1px solid #cbd5e1;
             border-radius: 20px;
-            font-size: 12.5px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--slate-800);
             font-family: inherit;
@@ -335,6 +331,25 @@
             border-color: #0B62A2;
             background: #ffffff;
             box-shadow: 0 0 0 3px rgba(11, 98, 162, 0.12);
+        }
+
+        .filter-inline-divider {
+            width: 1px;
+            height: 22px;
+            background: #e2e8f0;
+            margin: 0 6px;
+        }
+
+        @media (max-width: 991px) {
+            .filter-inline-divider {
+                display: none;
+            }
+            .project-search-group,
+            .price-input-group,
+            .price-range-input,
+            .btn-reset-filter {
+                width: 100%;
+            }
         }
 
         .price-separator {
@@ -1291,12 +1306,12 @@
                             <label for="search-input">
                                 <span class="material-symbols-outlined"
                                     style="font-size: 18px; color: var(--royal);">search</span>
-                                Cari Perusahaan / Subklasifikasi / Proyek / No. Anggota
+                                Cari Perusahaan / Subklasifikasi / No. Anggota
                             </label>
                             <div class="filter-input-wrap">
                                 <span class="material-symbols-outlined">search</span>
                                 <input type="text" id="search-input" class="filter-input"
-                                    placeholder="Contoh: Mega Trustlink, PR101, Gedung Wisma, 14642...">
+                                    placeholder="Contoh: Mega Trustlink, PR101, 14642...">
                             </div>
                         </div>
 
@@ -1333,30 +1348,38 @@
                             </select>
                         </div>
 
-                        <!-- Reset button -->
+                        <!-- Kualifikasi Dropdown (menggantikan posisi tombol Reset di atas) -->
                         <div class="filter-group">
-                            <label>&nbsp;</label>
-                            <button type="button" id="btn-reset" class="btn-reset-filter" title="Reset semua filter">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">refresh</span>
-                                Reset
-                            </button>
+                            <label for="kualifikasi-select">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 18px; color: var(--royal);">workspace_premium</span>
+                                Kualifikasi
+                            </label>
+                            <select id="kualifikasi-select" class="filter-select">
+                                <option value="">Semua Kualifikasi</option>
+                                <option value="Besar">Kualifikasi Besar</option>
+                                <option value="Menengah">Kualifikasi Menengah</option>
+                                <option value="Kecil">Kualifikasi Kecil</option>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Quick Filter Pills & Rentang Nilai Proyek -->
+                    <!-- Baris Bawah: Cari Proyek, Rentang Nilai Proyek, dan Tombol Reset di Kanan -->
                     <div class="filter-pills">
-                        <div class="filter-pills-group">
-                            <span class="filter-pills-label">Filter Cepat:</span>
-                            <button type="button" class="pill-btn is-active" data-pill-kualifikasi="">Semua</button>
-                            <button type="button" class="pill-btn" data-pill-kualifikasi="Besar">Kualifikasi Besar</button>
-                            <button type="button" class="pill-btn" data-pill-kualifikasi="Menengah">Kualifikasi
-                                Menengah</button>
-                            <button type="button" class="pill-btn" data-pill-kualifikasi="Kecil">Kualifikasi Kecil</button>
-                        </div>
-
                         <div class="filter-price-range">
-                            <span class="filter-pills-label" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 2px;">
-                                <span class="material-symbols-outlined" style="font-size: 16px; color: var(--royal);">payments</span>
+                            <span class="filter-pills-label" style="display: inline-flex; align-items: center; gap: 5px;">
+                                <span class="material-symbols-outlined" style="font-size: 17px; color: var(--royal);">work_history</span>
+                                Cari Proyek:
+                            </span>
+                            <div class="project-search-group">
+                                <span class="material-symbols-outlined project-search-icon">search</span>
+                                <input type="text" id="project-search-input" class="project-search-input" placeholder="Ketik proyek (cth: Gedung)...">
+                            </div>
+
+                            <span class="filter-inline-divider"></span>
+
+                            <span class="filter-pills-label" style="display: inline-flex; align-items: center; gap: 5px;">
+                                <span class="material-symbols-outlined" style="font-size: 17px; color: var(--royal);">payments</span>
                                 Nilai Proyek:
                             </span>
                             <div class="price-input-group">
@@ -1368,6 +1391,13 @@
                                 <span class="price-prefix">Rp</span>
                                 <input type="text" id="project-max-input" class="price-range-input" placeholder="Max (cth: 5.000.000.000)" inputmode="numeric">
                             </div>
+
+                            <span class="filter-inline-divider"></span>
+
+                            <button type="button" id="btn-reset" class="btn-reset-filter" title="Reset semua filter">
+                                <span class="material-symbols-outlined" style="font-size: 17px;">refresh</span>
+                                Reset
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1617,8 +1647,10 @@
 
         // Elements
         const searchInput = document.getElementById('search-input');
+        const projectSearchInput = document.getElementById('project-search-input');
         const sbuSelect = document.getElementById('sbu-select');
         const wilayahSelect = document.getElementById('wilayah-select');
+        const kualifikasiSelect = document.getElementById('kualifikasi-select');
         const projectMinInput = document.getElementById('project-min-input');
         const projectMaxInput = document.getElementById('project-max-input');
         const btnReset = document.getElementById('btn-reset');
@@ -1628,7 +1660,6 @@
         const recordTotalCount = document.getElementById('record-total-count');
         const paginationInfo = document.getElementById('pagination-info');
         const paginationControls = document.getElementById('pagination-controls');
-        const pillBtns = document.querySelectorAll('.pill-btn');
         const btnAddMember = document.getElementById('btn-add-member');
         const thColAction = document.getElementById('th-col-action');
 
@@ -1734,46 +1765,52 @@
         // Filter Function
         function applyFilter() {
             const query = searchInput.value.toLowerCase().trim();
+            const projectQuery = projectSearchInput ? projectSearchInput.value.toLowerCase().trim() : '';
             const sbuVal = sbuSelect.value;
             const wilayahVal = wilayahSelect.value;
+            const kualifikasiVal = kualifikasiSelect ? kualifikasiSelect.value : '';
             const minPrice = projectMinInput ? parseNumericRupiah(projectMinInput.value) : null;
             const maxPrice = projectMaxInput ? parseNumericRupiah(projectMaxInput.value) : null;
 
             filteredMembers = memberData.filter(item => {
+                // Pencarian utama hanya mencakup 3 hal: Nama Perusahaan, Subklasifikasi, dan No. Anggota (NPA)
                 const matchBasic =
                     (item.name && item.name.toLowerCase().includes(query)) ||
-                    (item.npa && item.npa.toLowerCase().includes(query)) ||
-                    (item.alamatDomisili && item.alamatDomisili.toLowerCase().includes(query));
+                    (item.npa && item.npa.toLowerCase().includes(query));
 
                 const matchSubklasifikasi = Array.isArray(item.sbuItems) && item.sbuItems.some(sbuItem =>
                     (sbuItem.code && sbuItem.code.toLowerCase().includes(query)) ||
                     (Array.isArray(sbuItem.subbidang) && sbuItem.subbidang.some(sub => String(sub).toLowerCase().includes(query)))
                 );
 
-                const matchProjectName = Array.isArray(item.projects) && item.projects.some(proj =>
-                    (proj.nama_pekerjaan && String(proj.nama_pekerjaan).toLowerCase().includes(query)) ||
-                    (proj.kode_kbli && String(proj.kode_kbli).toLowerCase().includes(query)) ||
-                    (proj.judul_kbli && String(proj.judul_kbli).toLowerCase().includes(query))
-                );
-
-                const matchQuery = !query || matchBasic || matchSubklasifikasi || matchProjectName;
+                const matchQuery = !query || matchBasic || matchSubklasifikasi;
 
                 const matchSbu = !sbuVal || item.sbu === sbuVal;
                 const matchWilayah = !wilayahVal || item.wilayah === wilayahVal;
-                const matchKualifikasi = !selectedKualifikasi || item.kualifikasi === selectedKualifikasi;
+                const matchKualifikasi = !kualifikasiVal || item.kualifikasi === kualifikasiVal;
 
-                let matchProjectPrice = true;
-                if (minPrice !== null || maxPrice !== null) {
-                    matchProjectPrice = Array.isArray(item.projects) && item.projects.some(proj => {
-                        const projVal = parseNumericRupiah(proj.nilai_proyek);
-                        if (projVal === null) return false;
-                        if (minPrice !== null && projVal < minPrice) return false;
-                        if (maxPrice !== null && projVal > maxPrice) return false;
+                // Pencarian khusus Proyek (Nama Pekerjaan / KBLI) & Nilai Proyek
+                let matchProject = true;
+                if (projectQuery !== '' || minPrice !== null || maxPrice !== null) {
+                    matchProject = Array.isArray(item.projects) && item.projects.some(proj => {
+                        if (projectQuery !== '') {
+                            const matchName =
+                                (proj.nama_pekerjaan && String(proj.nama_pekerjaan).toLowerCase().includes(projectQuery)) ||
+                                (proj.kode_kbli && String(proj.kode_kbli).toLowerCase().includes(projectQuery)) ||
+                                (proj.judul_kbli && String(proj.judul_kbli).toLowerCase().includes(projectQuery));
+                            if (!matchName) return false;
+                        }
+                        if (minPrice !== null || maxPrice !== null) {
+                            const projVal = parseNumericRupiah(proj.nilai_proyek);
+                            if (projVal === null) return false;
+                            if (minPrice !== null && projVal < minPrice) return false;
+                            if (maxPrice !== null && projVal > maxPrice) return false;
+                        }
                         return true;
                     });
                 }
 
-                return matchQuery && matchSbu && matchWilayah && matchKualifikasi && matchProjectPrice;
+                return matchQuery && matchSbu && matchWilayah && matchKualifikasi && matchProject;
             });
 
             currentPage = 1;
@@ -2071,8 +2108,14 @@
 
         // Event Listeners
         searchInput.addEventListener('input', applyFilter);
+        if (projectSearchInput) {
+            projectSearchInput.addEventListener('input', applyFilter);
+        }
         sbuSelect.addEventListener('change', applyFilter);
         wilayahSelect.addEventListener('change', applyFilter);
+        if (kualifikasiSelect) {
+            kualifikasiSelect.addEventListener('change', applyFilter);
+        }
 
         if (projectMinInput) {
             projectMinInput.addEventListener('input', () => {
@@ -2089,26 +2132,14 @@
 
         btnReset.addEventListener('click', () => {
             searchInput.value = '';
+            if (projectSearchInput) projectSearchInput.value = '';
             sbuSelect.value = '';
             wilayahSelect.value = '';
+            if (kualifikasiSelect) kualifikasiSelect.value = '';
             if (projectMinInput) projectMinInput.value = '';
             if (projectMaxInput) projectMaxInput.value = '';
             selectedKualifikasi = '';
-            pillBtns.forEach((btn, index) => {
-                if (index === 0) btn.classList.add('is-active');
-                else btn.classList.remove('is-active');
-            });
             applyFilter();
-        });
-
-        // Pill button click (Kualifikasi: Besar, Menengah, Kecil)
-        pillBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                pillBtns.forEach(b => b.classList.remove('is-active'));
-                btn.classList.add('is-active');
-                selectedKualifikasi = btn.getAttribute('data-pill-kualifikasi') || '';
-                applyFilter();
-            });
         });
 
         // Modal close events
