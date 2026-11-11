@@ -27,10 +27,10 @@ Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage
 Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);
 Route::get('/api/cms/berita/{slug}', [CmsBeritaController::class, 'show']);
 
-// Serve static asset directories directly from workspace root (with fallback to SistemManajemenDataPT/public)
+// Fallback static asset handler (serves from public/ or falls back to SistemManajemenDataPT/public)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
-    $fullPath = realpath(base_path("{$folder}/{$path}"));
-    $allowedRoot = realpath(base_path($folder));
+    $allowedRoot = realpath(public_path($folder));
+    $fullPath = $allowedRoot ? realpath(public_path("{$folder}/{$path}")) : false;
 
     if (!$fullPath || !$allowedRoot || !str_starts_with($fullPath, $allowedRoot) || !File::isFile($fullPath)) {
         if (in_array($folder, ['mitra_logos', 'cms_uploads'], true)) {
@@ -73,30 +73,19 @@ Route::get('/{folder}/{path}', function (string $folder, string $path) {
     return response()->file($fullPath, $headers);
 })->where('folder', 'assets|css|js|mitra_logos|cms_uploads')->where('path', '.*');
 
-// Helper to serve workspace HTML pages seamlessly
-$serveHtmlPage = function (string $filename) {
-    $path = base_path($filename);
-    if (!File::exists($path)) {
-        abort(404);
-    }
-    return response(File::get($path), 200)
-        ->header('Content-Type', 'text/html; charset=UTF-8')
-        ->header('Cache-Control', 'no-cache, must-revalidate');
-};
-
 // Home page
-Route::get('/', fn () => $serveHtmlPage('index.html'));
-Route::get('/index.html', fn () => $serveHtmlPage('index.html'));
+Route::get('/', fn () => view('index'));
+Route::get('/index.html', fn () => view('index'));
 
 // Anggota Terdaftar page
-Route::get('/anggota-terdaftar', fn () => $serveHtmlPage('anggota-terdaftar.html'));
-Route::get('/anggota-terdaftar.html', fn () => $serveHtmlPage('anggota-terdaftar.html'));
+Route::get('/anggota-terdaftar', fn () => view('anggota-terdaftar'));
+Route::get('/anggota-terdaftar.html', fn () => view('anggota-terdaftar'));
 
 // Halaman Detail Profil Masing-Masing Mitra Kerja (contoh: /mitra-kerja/pt-granitoguna-building-ceramics)
-Route::get('/mitra-kerja/{slug}', fn () => $serveHtmlPage('mitra-detail.html'));
-Route::get('/mitra-detail.html', fn () => $serveHtmlPage('mitra-detail.html'));
+Route::get('/mitra-kerja/{slug}', fn () => view('mitra-detail'));
+Route::get('/mitra-detail.html', fn () => view('mitra-detail'));
 
-// Other static HTML pages
+// Other static pages
 $staticPages = [
     'tentang',
     'regulasi',
@@ -109,6 +98,6 @@ $staticPages = [
 ];
 
 foreach ($staticPages as $page) {
-    Route::get("/{$page}", fn () => $serveHtmlPage("{$page}.html"));
-    Route::get("/{$page}.html", fn () => $serveHtmlPage("{$page}.html"));
+    Route::get("/{$page}", fn () => view($page));
+    Route::get("/{$page}.html", fn () => view($page));
 }
