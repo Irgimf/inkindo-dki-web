@@ -105,6 +105,7 @@ $staticPages = [
     'ketentuan-mitra-kerja',
     'lelang-lainnya',
     'read-magazine',
+    'pencarian',
 ];
 
 foreach ($staticPages as $page) {

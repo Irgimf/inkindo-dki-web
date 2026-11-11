@@ -14,7 +14,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=cerah6">
+    <link rel="stylesheet" href="css/style.css?v=cerah15">
     <style>
         /* Animasi Hero Persis tentang.html */
         @keyframes heroFadeUp {
@@ -1727,7 +1727,26 @@
             }
             syncAdminControlsVisibility();
             updateStatsCards();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlQuery = urlParams.get('q');
+            const urlMemberId = urlParams.get('member');
+            if (urlQuery && searchInput) {
+                searchInput.value = urlQuery;
+            }
+
             applyFilter();
+
+            if (urlMemberId) {
+                const parsedId = parseInt(urlMemberId, 10);
+                if (!Number.isNaN(parsedId)) {
+                    setTimeout(() => {
+                        if (typeof window.openModal === 'function') {
+                            window.openModal(parsedId);
+                        }
+                    }, 150);
+                }
+            }
         }
 
         function syncAdminControlsVisibility() {
@@ -2158,7 +2177,7 @@
         // Initialize Table from Database
         fetchMembersFromDatabase();
     </script>
-    <script src="js/script.js?v=cerah9"></script>
+    <script src="js/script.js?v=cerah15"></script>
 </body>
 
 </html>

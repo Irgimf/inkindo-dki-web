@@ -59,9 +59,22 @@ class MitraController extends Controller
             }
         }
 
+        $bulanIndo = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        ];
+
         $result = [];
         foreach ($mitraRows as $row) {
             $mId = (int) $row->id;
+            $rawDate = $row->approved_at ?? $row->updated_at ?? $row->created_at ?? null;
+            $tanggalIso = $rawDate ? substr((string) $rawDate, 0, 10) : date('Y-m-d');
+            $ts = strtotime($tanggalIso);
+            $tanggalLabel = $ts
+                ? ((int) date('d', $ts) . ' ' . ($bulanIndo[(int) date('n', $ts)] ?? date('M', $ts)) . ' ' . date('Y', $ts))
+                : 'Mitra Resmi';
+
             $result[] = [
                 'id'               => $mId,
                 'nama_perusahaan'  => $row->nama_perusahaan,
@@ -76,6 +89,9 @@ class MitraController extends Controller
                 'durasi_tahun'     => (int) ($row->durasi_tahun ?? 1),
                 'status_kemitraan' => $row->status_kemitraan ?? 'active',
                 'expired_at'       => $row->expired_at ?? null,
+                'tanggal'          => $tanggalIso,
+                'tanggal_label'    => $tanggalLabel,
+                'target_url'       => '/mitra-kerja/' . rawurlencode((string) $row->slug),
                 'products'         => $productsByMitra[$mId] ?? [],
             ];
         }

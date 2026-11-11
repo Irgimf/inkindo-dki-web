@@ -14,7 +14,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=cerah6">
+    <link rel="stylesheet" href="css/style.css?v=cerah15">
 
     <style>
         .regulasi-page {
@@ -1131,22 +1131,43 @@
 
             // Live Search Regulasi
             const searchInput = document.querySelector('.search-box input');
+            const applyRegulasiFilter = (rawVal) => {
+                const query = String(rawVal || '').toLowerCase().trim();
+                const activeContent = document.querySelector('.regulasi-content.is-active');
+                if (!activeContent) return;
+                const cards = activeContent.querySelectorAll('.reg-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('.reg-card__title')?.textContent.toLowerCase() || '';
+                    const desc = card.querySelector('.reg-card__desc')?.textContent.toLowerCase() || '';
+                    if (!query || title.includes(query) || desc.includes(query)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            };
+
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase().trim();
-                    const activeContent = document.querySelector('.regulasi-content.is-active');
-                    if (!activeContent) return;
-                    const cards = activeContent.querySelectorAll('.reg-card');
-                    cards.forEach(card => {
-                        const title = card.querySelector('.reg-card__title')?.textContent.toLowerCase() || '';
-                        const desc = card.querySelector('.reg-card__desc')?.textContent.toLowerCase() || '';
-                        if (!query || title.includes(query) || desc.includes(query)) {
-                            card.style.display = '';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    applyRegulasiFilter(e.target.value);
                 });
+            }
+
+            // Deep-link dari Pencarian Global (?tab=...&q=...)
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetTab = urlParams.get('tab');
+            const targetQuery = urlParams.get('q');
+            if (targetTab) {
+                const matchingBtn = document.querySelector(`.regulasi-tab-btn[data-target="${targetTab}"]`);
+                if (matchingBtn) matchingBtn.click();
+            }
+            if (targetQuery && searchInput) {
+                searchInput.value = targetQuery;
+                applyRegulasiFilter(targetQuery);
+                const navWrapper = document.querySelector('.regulasi-nav-wrapper');
+                if (navWrapper) {
+                    setTimeout(() => navWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+                }
             }
         });
     </script>
@@ -1237,7 +1258,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js?v=cerah6"></script>
+    <script src="js/script.js?v=cerah15"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -7,8 +7,9 @@
     /* ---------- Header: solid saat scroll ---------- */
     const header = $('#main-header');
     const onScroll = () => {
-        const scrolled = window.scrollY > 40;
-        header.classList.toggle('is-scrolled', scrolled);
+        const alwaysSolid = Boolean(header && header.hasAttribute('data-solid-header'));
+        const scrolled = alwaysSolid || window.scrollY > 40;
+        if (header) header.classList.toggle('is-scrolled', scrolled);
         document.body.classList.toggle('is-scrolled', scrolled);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -61,16 +62,531 @@
         }
     });
 
-    /* ---------- Search header ---------- */
+    /* ---------- Search header & Live Search Engine ---------- */
     const headerSearch = $('#header-search');
-    $('#header-search-toggle').addEventListener('click', () => {
-        setMenu(false);
-        headerSearch.classList.toggle('is-open');
-        if (headerSearch.classList.contains('is-open')) {
-            header.classList.add('is-scrolled');
-            setTimeout(() => $('#header-search-input').focus(), 300);
-        } else {
-            onScroll();
+    const headerSearchForm = $('#header-search-form');
+    const headerSearchInput = $('#header-search-input');
+    const headerSearchToggle = $('#header-search-toggle');
+
+    const BULAN_MAP = {
+        januari: 0, jan: 0,
+        februari: 1, feb: 1,
+        maret: 2, mar: 2,
+        april: 3, apr: 3,
+        mei: 4, may: 4,
+        juni: 5, jun: 5,
+        juli: 6, jul: 6,
+        agustus: 7, agu: 7, aug: 7,
+        september: 8, sep: 8, okt: 9,
+        oktober: 9, oct: 9,
+        november: 10, nov: 10,
+        desember: 11, des: 11, dec: 11
+    };
+
+    function parseSearchDateTimestamp(isoDate, labelDate, fallbackOrder = 0) {
+        if (isoDate && /^\d{4}-\d{2}-\d{2}/.test(String(isoDate))) {
+            const t = Date.parse(String(isoDate).slice(0, 10) + 'T12:00:00');
+            if (!Number.isNaN(t)) return t + fallbackOrder;
+        }
+        if (labelDate) {
+            const clean = String(labelDate).toLowerCase().trim();
+            const dmy = clean.match(/(\d{1,2})\s+([a-z]+)\s+(\d{4})/);
+            if (dmy) {
+                const day = parseInt(dmy[1], 10);
+                const mon = BULAN_MAP[dmy[2]] ?? 0;
+                const yr = parseInt(dmy[3], 10);
+                return new Date(yr, mon, day, 12, 0, 0).getTime() + fallbackOrder;
+            }
+            const my = clean.match(/([a-z]+)\s+(\d{4})/);
+            if (my && BULAN_MAP[my[1]] !== undefined) {
+                return new Date(parseInt(my[2], 10), BULAN_MAP[my[1]], 15, 12, 0, 0).getTime() + fallbackOrder;
+            }
+            const yrOnly = clean.match(/\b(20\d{2})\b/);
+            if (yrOnly) {
+                return new Date(parseInt(yrOnly[1], 10), 5, 15, 12, 0, 0).getTime() + fallbackOrder;
+            }
+        }
+        return fallbackOrder;
+    }
+
+    const TIPE_LABELS = {
+        rilis: 'Rilis Berita',
+        agenda: 'Agenda Kegiatan',
+        publikasi: 'Publikasi',
+        emagazine: 'e-Magazine',
+        galeri: 'Galeri Foto',
+        karya: 'Karya Anggota',
+        mitra: 'Mitra Kerja',
+        'reg-inkindo': 'Regulasi INKINDO',
+        'reg-jasa': 'Regulasi Jasa Konsultasi',
+        'reg-terkait': 'Regulasi Terkait',
+        anggota: 'Anggota Terdaftar'
+    };
+
+    const REGULASI_DATA = [
+        {
+            id: 'ad-art-inkindo',
+            tipe: 'reg-inkindo',
+            kategoriLabel: 'Regulasi INKINDO',
+            badge: 'Dokumen Utama',
+            judul: 'Anggaran Dasar / Anggaran Rumah Tangga (AD/ART) INKINDO',
+            ringkasan: 'Landasan konstitusional organisasi yang mengatur tujuan, struktur kepengurusan, hak dan kewajiban anggota, serta mekanisme musyawarah nasional dan provinsi INKINDO.',
+            metaInfo: 'Dokumen Organisasi • PDF',
+            tanggal: '2026-01-15',
+            tanggalLabel: 'Pembaruan 2026',
+            fileUrl: 'assets/files/regulasi/ad-art-inkindo.pdf',
+            tabId: 'reg-inkindo'
+        },
+        {
+            id: 'kode-etik-inkindo',
+            tipe: 'reg-inkindo',
+            kategoriLabel: 'Regulasi INKINDO',
+            badge: 'Etika Profesi',
+            judul: 'Kode Etik Anggota INKINDO',
+            ringkasan: 'Pedoman moral, integritas, dan tata perilaku profesional yang wajib dipatuhi seluruh badan usaha anggota INKINDO dalam menjalankan praktik layanan jasa konsultansi.',
+            metaInfo: 'Pedoman Etika • PDF',
+            tanggal: '2026-01-12',
+            tanggalLabel: 'Pembaruan 2026',
+            fileUrl: 'assets/files/regulasi/kode-etik-inkindo.pdf',
+            tabId: 'reg-inkindo'
+        },
+        {
+            id: 'po-provinsi-dki',
+            tipe: 'reg-inkindo',
+            kategoriLabel: 'Regulasi INKINDO',
+            badge: 'Tata Kelola',
+            judul: 'Pedoman Organisasi Provinsi INKINDO DKI Jakarta',
+            ringkasan: 'Aturan teknis penyelenggaraan tata kelola organisasi, pelayanan keanggotaan, dan koordinasi program kerja di lingkungan DPP INKINDO Provinsi DKI Jakarta.',
+            metaInfo: 'DPP DKI Jakarta • PDF',
+            tanggal: '2026-01-10',
+            tanggalLabel: 'Pembaruan 2026',
+            fileUrl: 'assets/files/regulasi/po-inkindo-dki.pdf',
+            tabId: 'reg-inkindo'
+        },
+        {
+            id: 'uu-no-2-tahun-2017',
+            tipe: 'reg-jasa',
+            kategoriLabel: 'Regulasi Jasa Konsultasi',
+            badge: 'Konstruksi',
+            judul: 'UU No. 2 Tahun 2017 tentang Jasa Konstruksi',
+            ringkasan: 'Payung hukum penyelenggaraan jasa konstruksi nasional, mencakup kualifikasi usaha, sertifikasi badan usaha (SBU), tanggung jawab penyedia jasa, dan pembinaan konstruksi.',
+            metaInfo: 'Undang-Undang RI • Konstruksi',
+            tanggal: '2026-02-05',
+            tanggalLabel: 'Regulasi Nasional',
+            fileUrl: 'assets/files/regulasi/uu-no-2-tahun-2017.pdf',
+            tabId: 'reg-jasa'
+        },
+        {
+            id: 'pedoman-non-konstruksi',
+            tipe: 'reg-jasa',
+            kategoriLabel: 'Regulasi Jasa Konsultasi',
+            badge: 'Non-Konstruksi',
+            judul: 'Pedoman Pengadaan Jasa Konsultansi Non Konstruksi',
+            ringkasan: 'Ketentuan teknis pelaksanaan seleksi, penyusunan KAK/TOR, serta evaluasi teknis dan biaya untuk pekerjaan jasa konsultansi bidang studi, manajemen, dan teknologi informasi.',
+            metaInfo: 'Pedoman Teknis • Non-Konstruksi',
+            tanggal: '2026-02-03',
+            tanggalLabel: 'Pedoman Nasional',
+            fileUrl: 'assets/files/regulasi/pedoman-non-konstruksi.pdf',
+            tabId: 'reg-jasa'
+        },
+        {
+            id: 'billing-rate-2026',
+            tipe: 'reg-jasa',
+            kategoriLabel: 'Regulasi Jasa Konsultasi',
+            badge: 'Standar Biaya',
+            judul: 'Standar Remunerasi (Billing Rate) Jasa Konsultansi 2026',
+            ringkasan: 'Acuan resmi perhitungan biaya langsung personil (tenaga ahli dan pendukung) jasa konsultansi konstruksi dan non-konstruksi berdasarkan indeks provinsi tahun 2026.',
+            metaInfo: 'INKINDO Nasional • Tahun 2026',
+            tanggal: '2026-02-20',
+            tanggalLabel: 'Edisi 2026',
+            fileUrl: 'assets/files/regulasi/billing-rate-2026.pdf',
+            tabId: 'reg-jasa'
+        },
+        {
+            id: 'pp-no-22-tahun-2020',
+            tipe: 'reg-jasa',
+            kategoriLabel: 'Regulasi Jasa Konsultasi',
+            badge: 'Konstruksi',
+            judul: 'PP No. 22 Tahun 2020 tentang Peraturan Pelaksanaan UU Jasa Konstruksi',
+            ringkasan: 'Peraturan pemerintah mengenai struktur usaha, perizinan berusaha berbasis risiko, pengembangan jasa konstruksi berkelanjutan, dan sanksi administratif.',
+            metaInfo: 'Peraturan Pemerintah • Konstruksi',
+            tanggal: '2026-01-25',
+            tanggalLabel: 'Regulasi Nasional',
+            fileUrl: 'assets/files/regulasi/pp-no-22-tahun-2020.pdf',
+            tabId: 'reg-jasa'
+        },
+        {
+            id: 'standar-biaya-2026',
+            tipe: 'reg-jasa',
+            kategoriLabel: 'Regulasi Jasa Konsultasi',
+            badge: 'Standar Biaya',
+            judul: 'Standar Biaya Langsung Personil & Non Personil 2026',
+            ringkasan: 'Pedoman penyusunan Rencana Anggaran Biaya (RAB) dan Harga Perkiraan Sendiri (HPS) pekerjaan konsultansi meliputi komponen remunerasi dan biaya operasional langsung.',
+            metaInfo: 'Pedoman Biaya • Tahun 2026',
+            tanggal: '2026-02-18',
+            tanggalLabel: 'Edisi 2026',
+            fileUrl: 'assets/files/regulasi/standar-biaya-2026.pdf',
+            tabId: 'reg-jasa'
+        },
+        {
+            id: 'perlem-lkpp-12-2021',
+            tipe: 'reg-terkait',
+            kategoriLabel: 'Regulasi Terkait',
+            badge: 'Pengadaan',
+            judul: 'Peraturan LKPP No. 12 Tahun 2021 tentang Pedoman Pengadaan Barang/Jasa Pemerintah',
+            ringkasan: 'Aturan pelaksanaan pengadaan jasa konsultansi melalui penyedia, tahapan persiapan pemilihan, kualifikasi, hingga pelaksanaan kontrak pengadaan pemerintah.',
+            metaInfo: 'Peraturan LKPP • Pengadaan',
+            tanggal: '2026-01-20',
+            tanggalLabel: 'Regulasi Pengadaan',
+            fileUrl: 'assets/files/regulasi/perlem-lkpp-12-2021.pdf',
+            tabId: 'reg-terkait'
+        },
+        {
+            id: 'permen-pupr-10-2021',
+            tipe: 'reg-terkait',
+            kategoriLabel: 'Regulasi Terkait',
+            badge: 'K3 Konstruksi',
+            judul: 'Peraturan Menteri PUPR No. 10 Tahun 2021 tentang Pedoman SMKK',
+            ringkasan: 'Pedoman Sistem Manajemen Keselamatan Konstruksi (SMKK) yang wajib diterapkan dalam setiap tahapan konsultansi perencanaan, perancangan, dan pengawasan konstruksi.',
+            metaInfo: 'Permen PUPR • SMKK',
+            tanggal: '2026-01-18',
+            tanggalLabel: 'Regulasi PUPR',
+            fileUrl: 'assets/files/regulasi/permen-pupr-10-2021.pdf',
+            tabId: 'reg-terkait'
+        }
+    ];
+
+    let cachedSearchItems = null;
+    let searchLoadPromise = null;
+
+    async function loadAllSearchableItems() {
+        if (cachedSearchItems) return cachedSearchItems;
+        if (searchLoadPromise) return searchLoadPromise;
+
+        searchLoadPromise = (async () => {
+            const items = [];
+            const [beritaRes, mitraRes] = await Promise.allSettled([
+                fetch('/api/cms/berita', { headers: { 'Accept': 'application/json' } }),
+                fetch('/api/mitra', { headers: { 'Accept': 'application/json' } })
+            ]);
+
+            // 1. Berita & Informasi
+            if (beritaRes.status === 'fulfilled' && beritaRes.value.ok) {
+                try {
+                    const bData = await beritaRes.value.json();
+                    let allBerita = [];
+                    if (Array.isArray(bData.items)) {
+                        allBerita = bData.items;
+                    } else if (Array.isArray(bData.all)) {
+                        allBerita = bData.all;
+                    } else if (bData.grouped && typeof bData.grouped === 'object') {
+                        Object.values(bData.grouped).forEach((arr) => {
+                            if (Array.isArray(arr)) allBerita.push(...arr);
+                        });
+                    }
+
+                    allBerita.forEach((b, idx) => {
+                        const tipe = String(b.tipe || 'rilis').toLowerCase();
+                        const tipeName = TIPE_LABELS[tipe] || 'Berita & Informasi';
+                        const ts = parseSearchDateTimestamp(b.tanggal, b.tanggal_label || b.badge, (2000 - idx));
+                        items.push({
+                            uid: 'berita-' + (b.id || idx),
+                            source: 'berita',
+                            tipe: tipe,
+                            tipeLabel: tipeName,
+                            kategoriLabel: b.kategori_label || tipeName,
+                            badge: b.badge || '',
+                            judul: String(b.judul || ''),
+                            ringkasan: String(b.ringkasan || ''),
+                            metaInfo: String(b.lokasi_meta || b.penulis || tipeName),
+                            tanggal: String(b.tanggal || ''),
+                            tanggalLabel: String(b.tanggal_label || b.badge || 'Terbaru'),
+                            timestamp: ts,
+                            gambar: String(b.gambar || 'assets/gambar.png'),
+                            targetUrl: String(b.target_url || 'berita.html'),
+                            searchText: [
+                                'berita informasi',
+                                b.judul,
+                                b.kategori_label,
+                                tipeName,
+                                b.badge,
+                                b.ringkasan,
+                                b.konten,
+                                b.penulis,
+                                b.lokasi_meta,
+                                b.tanggal_label
+                            ].filter(Boolean).join(' ').toLowerCase()
+                        });
+                    });
+                } catch (err) {
+                    console.error('Gagal memproses data pencarian berita:', err);
+                }
+            }
+
+            // 2. Mitra Kerja
+            if (mitraRes.status === 'fulfilled' && mitraRes.value.ok) {
+                try {
+                    const mData = await mitraRes.value.json();
+                    const allMitra = Array.isArray(mData.mitra) ? mData.mitra : [];
+                    allMitra.forEach((m, idx) => {
+                        const prodNames = Array.isArray(m.products)
+                            ? m.products.map(p => [p.nama_produk, p.kategori_produk, p.deskripsi_produk].filter(Boolean).join(' ')).join(' ')
+                            : '';
+                        const prodPreview = Array.isArray(m.products) && m.products.length > 0
+                            ? 'Produk: ' + m.products.map(p => p.nama_produk).filter(Boolean).slice(0, 3).join(', ')
+                            : '';
+                        const desc = (m.deskripsi && m.deskripsi !== '-')
+                            ? m.deskripsi
+                            : (prodPreview || m.kategori_bisnis || 'Mitra Kerja Resmi DPP INKINDO DKI Jakarta');
+                        const ts = parseSearchDateTimestamp(m.tanggal, m.tanggal_label, (1200 - idx));
+
+                        items.push({
+                            uid: 'mitra-' + (m.id || idx),
+                            source: 'mitra',
+                            tipe: 'mitra',
+                            tipeLabel: 'Mitra Kerja',
+                            kategoriLabel: m.kategori_bisnis || 'Mitra Kerja',
+                            badge: 'Mitra Kerja',
+                            judul: String(m.nama_perusahaan || ''),
+                            ringkasan: String(desc),
+                            metaInfo: String(m.kategori_bisnis || 'Mitra Strategis INKINDO'),
+                            tanggal: String(m.tanggal || ''),
+                            tanggalLabel: String(m.tanggal_label || 'Mitra Resmi'),
+                            timestamp: ts,
+                            gambar: String(m.logo || 'assets/logo-inkindo.png'),
+                            targetUrl: String(m.target_url || ('/mitra-kerja/' + encodeURIComponent(m.slug || m.id))),
+                            products: Array.isArray(m.products) ? m.products : [],
+                            searchText: [
+                                'mitra kerja',
+                                m.nama_perusahaan,
+                                m.kategori_bisnis,
+                                m.deskripsi,
+                                m.alamat,
+                                prodNames
+                            ].filter(Boolean).join(' ').toLowerCase()
+                        });
+                    });
+                } catch (err) {
+                    console.error('Gagal memproses data pencarian mitra:', err);
+                }
+            }
+
+            // 3. Regulasi (INKINDO, Jasa Konsultasi, Regulasi Terkait)
+            REGULASI_DATA.forEach((reg, idx) => {
+                const ts = parseSearchDateTimestamp(reg.tanggal, reg.tanggalLabel, (900 - idx));
+                items.push({
+                    uid: 'regulasi-' + reg.id,
+                    source: 'regulasi',
+                    tipe: reg.tipe,
+                    tipeLabel: reg.kategoriLabel,
+                    kategoriLabel: reg.kategoriLabel,
+                    badge: reg.badge,
+                    judul: reg.judul,
+                    ringkasan: reg.ringkasan,
+                    metaInfo: reg.metaInfo,
+                    tanggal: reg.tanggal,
+                    tanggalLabel: reg.tanggalLabel,
+                    timestamp: ts,
+                    gambar: '',
+                    fileUrl: reg.fileUrl,
+                    targetUrl: 'regulasi.html?tab=' + encodeURIComponent(reg.tabId) + '&q=' + encodeURIComponent(reg.judul),
+                    searchText: [
+                        'regulasi peraturan hukum pedoman standar',
+                        reg.judul,
+                        reg.kategoriLabel,
+                        reg.badge,
+                        reg.ringkasan,
+                        reg.metaInfo
+                    ].filter(Boolean).join(' ').toLowerCase()
+                });
+            });
+
+            // Urutkan berdasarkan tanggal terbaru berurutan (descending)
+            items.sort((a, b) => b.timestamp - a.timestamp);
+            cachedSearchItems = items;
+            return items;
+        })();
+
+        return searchLoadPromise;
+    }
+
+    function escapeHtmlStr(str) {
+        return String(str ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function highlightSearchTerm(text, query) {
+        const safeText = escapeHtmlStr(text);
+        const cleanQ = String(query ?? '').trim();
+        if (!cleanQ) return safeText;
+        const escapedRegex = cleanQ.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        try {
+            const re = new RegExp(`(${escapedRegex})`, 'gi');
+            return safeText.replace(re, '<mark class="header-search__highlight">$1</mark>');
+        } catch (_) {
+            return safeText;
+        }
+    }
+
+    function filterAndSortSearchItems(items, rawQuery, sourceFilter = 'all', tipeFilter = 'all') {
+        const q = String(rawQuery ?? '').toLowerCase().trim();
+        const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+
+        const matched = items.filter((item) => {
+            if (sourceFilter !== 'all' && item.source !== sourceFilter) return false;
+            if (tipeFilter !== 'all' && item.tipe !== tipeFilter) return false;
+            if (tokens.length === 0) return true;
+            return tokens.every((tok) => item.searchText.includes(tok));
+        });
+
+        // Pastikan berurutan sesuai tanggal terbaru (descending)
+        matched.sort((a, b) => b.timestamp - a.timestamp);
+        return matched;
+    }
+
+    window.InkindoSearchEngine = {
+        loadAllItems: loadAllSearchableItems,
+        filterAndSort: filterAndSortSearchItems,
+        highlight: highlightSearchTerm,
+        escapeHtml: escapeHtmlStr
+    };
+
+    // Inisialisasi UI Search Bar (Desain Original Underline Pendek) & Dropdown Max 6 Hasil
+    let searchDropdownEl = null;
+
+    if (headerSearchForm && headerSearchInput) {
+        searchDropdownEl = document.createElement('div');
+        searchDropdownEl.className = 'header-search__dropdown';
+        searchDropdownEl.id = 'header-search-dropdown';
+        headerSearchForm.appendChild(searchDropdownEl);
+
+        const renderHeaderDropdown = async () => {
+            const rawVal = headerSearchInput.value;
+            const q = rawVal.trim();
+
+            if (!q) {
+                searchDropdownEl.classList.remove('is-visible');
+                searchDropdownEl.innerHTML = '';
+                return;
+            }
+
+            const allItems = await loadAllSearchableItems();
+            const matched = filterAndSortSearchItems(allItems, q);
+            const totalMatched = matched.length;
+            const topSix = matched.slice(0, 6);
+            const shownCount = topSix.length;
+            const searchPageUrl = 'pencarian.html?q=' + encodeURIComponent(q);
+
+            if (totalMatched === 0) {
+                searchDropdownEl.innerHTML = `
+                    <div class="header-search__meta">
+                        <span>Menampilkan <strong>0</strong> dari <strong>0</strong> pencarian yang sesuai</span>
+                    </div>
+                    <div class="header-search__empty">
+                        <span class="material-symbols-outlined">search_off</span>
+                        Tidak ditemukan hasil untuk kata kunci <strong>"${escapeHtmlStr(q)}"</strong>
+                    </div>
+                    <div class="header-search__footer">
+                        <a href="${searchPageUrl}" class="header-search__all-btn">
+                            Buka Halaman Pencarian Lengkap
+                            <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                        </a>
+                    </div>
+                `;
+                searchDropdownEl.classList.add('is-visible');
+                return;
+            }
+
+            const listHtml = topSix.map((item) => {
+                let badgeClass = 'header-search__badge';
+                let badgeText = item.tipeLabel || 'Berita & Informasi';
+                let mediaHtml = '';
+
+                if (item.source === 'mitra') {
+                    badgeClass = 'header-search__badge header-search__badge--mitra';
+                    badgeText = 'Mitra Kerja';
+                    mediaHtml = `<img src="${escapeHtmlStr(item.gambar)}" alt="${escapeHtmlStr(item.judul)}" class="header-search__thumb header-search__thumb--mitra">`;
+                } else if (item.source === 'regulasi') {
+                    badgeClass = 'header-search__badge header-search__badge--regulasi';
+                    badgeText = item.kategoriLabel || 'Regulasi';
+                    mediaHtml = `<div class="header-search__icon-box header-search__icon-box--regulasi"><span class="material-symbols-outlined">gavel</span></div>`;
+                } else {
+                    mediaHtml = `<img src="${escapeHtmlStr(item.gambar)}" alt="${escapeHtmlStr(item.judul)}" class="header-search__thumb">`;
+                }
+
+                return `
+                    <a href="${escapeHtmlStr(item.targetUrl)}" class="header-search__item">
+                        ${mediaHtml}
+                        <div class="header-search__info">
+                            <div class="header-search__top-row">
+                                <span class="${badgeClass}">${escapeHtmlStr(badgeText)}</span>
+                                <span class="header-search__date">
+                                    <span class="material-symbols-outlined" style="font-size: 12px;">schedule</span>
+                                    ${escapeHtmlStr(item.tanggalLabel)}
+                                </span>
+                            </div>
+                            <h4 class="header-search__title">${highlightSearchTerm(item.judul, q)}</h4>
+                            <p class="header-search__desc">${highlightSearchTerm(item.ringkasan, q)}</p>
+                        </div>
+                        <span class="material-symbols-outlined header-search__arrow">chevron_right</span>
+                    </a>
+                `;
+            }).join('');
+
+            searchDropdownEl.innerHTML = `
+                <div class="header-search__meta">
+                    <span>Menampilkan <strong>${shownCount}</strong> dari <strong>${totalMatched}</strong> pencarian yang sesuai</span>
+                </div>
+                <div class="header-search__list">
+                    ${listHtml}
+                </div>
+                <div class="header-search__footer">
+                    <a href="${searchPageUrl}" class="header-search__all-btn">
+                        Lihat Semua Hasil Pencarian (${totalMatched})
+                        <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                    </a>
+                </div>
+            `;
+            searchDropdownEl.classList.add('is-visible');
+        };
+
+        headerSearchInput.addEventListener('input', renderHeaderDropdown);
+        headerSearchInput.addEventListener('focus', () => {
+            loadAllSearchableItems();
+            if (headerSearchInput.value.trim()) {
+                renderHeaderDropdown();
+            }
+        });
+    }
+
+    if (headerSearchToggle && headerSearch) {
+        headerSearchToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setMenu(false);
+            headerSearch.classList.toggle('is-open');
+            if (headerSearch.classList.contains('is-open')) {
+                header.classList.add('is-scrolled');
+                loadAllSearchableItems();
+                setTimeout(() => {
+                    if (headerSearchInput) headerSearchInput.focus();
+                }, 220);
+            } else {
+                if (searchDropdownEl) searchDropdownEl.classList.remove('is-visible');
+                onScroll();
+            }
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (headerSearch && headerSearch.classList.contains('is-open')) {
+            if (!e.target.closest('#header-search') && !e.target.closest('#header-search-toggle') && !e.target.closest('#hero-search-btn')) {
+                headerSearch.classList.remove('is-open');
+                if (searchDropdownEl) searchDropdownEl.classList.remove('is-visible');
+                onScroll();
+            }
         }
     });
 
@@ -246,33 +762,14 @@
         }, 2000);
     }
 
-    /* Pencarian sederhana: arahkan ke panel / bagian terkait */
-    const keywordMap = [
-        { keys: ['lelang', 'tender', 'lpse', 'spse'], panel: 'lelang' },
-        { keys: ['anggota', 'kta', 'registrasi', 'daftar', 'billing'], panel: 'anggota' },
-        { keys: ['mitra', 'partner', 'pupr', 'lpjk', 'lkpp'], panel: 'mitra' },
-        { keys: ['klinik', 'konsultasi', 'sbu'], panel: 'klinik' },
-        { keys: ['kontak', 'hubungi', 'telepon', 'email', 'alamat'], panel: 'kontak' },
-        { keys: ['login', 'sia', 'masuk'], panel: 'login' },
-        { keys: ['chat', 'tanya', 'bantuan'], panel: 'chat' }
-    ];
-
-    const handleSearch = (query) => {
-        const q = query.trim().toLowerCase();
-        if (!q) return;
-        const hit = keywordMap.find((k) => k.keys.some((key) => q.includes(key)));
-        if (hit) {
-            openPanel(hit.panel);
-        } else {
-            const beritaEl = $('#berita');
-            if (beritaEl) beritaEl.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-    $('#header-search-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        handleSearch($('#header-search-input').value);
-        headerSearch.classList.remove('is-open');
-    });
+    /* Submit form pencarian header (Enter / Klik tombol cari) -> Pindah ke halaman khusus pencarian.html */
+    if (headerSearchForm) {
+        headerSearchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const q = headerSearchInput ? headerSearchInput.value.trim() : '';
+            window.location.href = q ? ('pencarian.html?q=' + encodeURIComponent(q)) : 'pencarian.html';
+        });
+    }
 
     /* ---------- Hero carousel ---------- */
     const carousel = $('#hero-carousel');
