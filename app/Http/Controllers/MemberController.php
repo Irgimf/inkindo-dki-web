@@ -66,7 +66,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Sync a Member record from ProjectWeb (Laravel) to `companies` and `sbu` tables in SistemManajemenDataPT (CI4).
+     * Sync a Member record from inkindo-dki-web (Laravel) to `companies` and `sbu` tables in sim-inkindo-dki (CI4).
      */
     private function syncMemberToCi4Tables(Member $member, ?string $oldNpa = null): void
     {
@@ -233,7 +233,7 @@ class MemberController extends Controller
                 $arr['projects'] = [];
                 $compKategori = $m->sbu ?? 'Jasa Konstruksi';
 
-                // Always pull latest SBU rows & SBU Projects directly from SistemManajemenDataPT tables if available
+                // Always pull latest SBU rows & SBU Projects directly from sim-inkindo-dki tables if available
                 if (Schema::hasTable('companies') && Schema::hasTable('sbu')) {
                     $comp = DB::table('companies')
                         ->where('member_id', $m->id)

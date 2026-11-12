@@ -27,14 +27,14 @@ Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage
 Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);
 Route::get('/api/cms/berita/{slug}', [CmsBeritaController::class, 'show']);
 
-// Fallback static asset handler (serves from public/ or falls back to SistemManajemenDataPT/public)
+// Fallback static asset handler (serves from public/ or falls back to sim-inkindo-dki/public)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
     $allowedRoot = realpath(public_path($folder));
     $fullPath = $allowedRoot ? realpath(public_path("{$folder}/{$path}")) : false;
 
     if (!$fullPath || !$allowedRoot || !str_starts_with($fullPath, $allowedRoot) || !File::isFile($fullPath)) {
         if (in_array($folder, ['mitra_logos', 'cms_uploads'], true)) {
-            $altRoot = realpath('d:/magang inkindo/SistemManajemenDataPT/public/' . $folder);
+            $altRoot = realpath(base_path('../sim-inkindo-dki/public/' . $folder));
             $altFull = $altRoot ? realpath($altRoot . DIRECTORY_SEPARATOR . $path) : false;
             if ($altFull && $altRoot && str_starts_with($altFull, $altRoot) && File::isFile($altFull)) {
                 $fullPath = $altFull;
