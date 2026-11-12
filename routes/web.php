@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsBeritaController;
+use App\Http\Controllers\CmsTentangController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MitraController;
 use Illuminate\Support\Facades\File;
@@ -26,6 +27,9 @@ Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage
 // CMS Berita & Informasi API endpoints
 Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);
 Route::get('/api/cms/berita/{slug}', [CmsBeritaController::class, 'show']);
+
+// CMS Tentang Kami API endpoint
+Route::get('/api/cms/tentang', [CmsTentangController::class, 'index']);
 
 // Fallback static asset handler (serves from public/ or falls back to sim-inkindo-dki/public)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
@@ -85,9 +89,12 @@ Route::get('/anggota-terdaftar.html', fn () => view('anggota-terdaftar'));
 Route::get('/mitra-kerja/{slug}', fn () => view('mitra-detail'));
 Route::get('/mitra-detail.html', fn () => view('mitra-detail'));
 
+// Dynamic Tentang Kami page (driven by Admin CMS)
+Route::get('/tentang', [CmsTentangController::class, 'page']);
+Route::get('/tentang.html', [CmsTentangController::class, 'page']);
+
 // Other static pages
 $staticPages = [
-    'tentang',
     'regulasi',
     'berita',
     'berita-detail',

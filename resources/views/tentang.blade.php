@@ -569,6 +569,11 @@
             gap: 16px;
         }
 
+        .leader-card.leader-card--plain {
+            background: #f8fafc;
+            border-left: 1px solid #e2e8f0;
+        }
+
         .leader-card__role {
             font-size: 12px;
             font-weight: 700;
@@ -640,6 +645,18 @@
             gap: 12px;
         }
 
+        .officer-item.is-highlighted {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            border-left: 4px solid #0B62A2;
+            box-shadow: 0 2px 8px rgba(11, 98, 162, 0.08);
+        }
+
+        .officer-item.is-highlighted .officer-item__role {
+            color: #0B62A2;
+            font-weight: 700;
+        }
+
         .officer-item__role {
             font-size: 13px;
             color: #64748b;
@@ -705,6 +722,19 @@
             font-size: 12px;
         }
 
+        .bidang-person.is-highlighted {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 3px solid #0B62A2;
+            border-radius: 6px;
+            padding: 6px 8px;
+        }
+
+        .bidang-person.is-highlighted .bidang-person__role {
+            color: #0B62A2;
+            font-weight: 700;
+        }
+
         .bidang-person__role {
             color: #64748b;
             font-weight: 500;
@@ -768,6 +798,20 @@
             padding-bottom: 8px;
             border-bottom: 1px dashed #f1f5f9;
             font-size: 13px;
+        }
+
+        .badan-row.is-highlighted {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 3px solid #0B62A2;
+            border-radius: 6px;
+            padding: 7px 10px;
+            border-bottom-style: solid;
+        }
+
+        .badan-row.is-highlighted .badan-row__role {
+            color: #0B62A2;
+            font-weight: 700;
         }
 
         .badan-row:last-child {
@@ -1168,14 +1212,23 @@
 
     <!-- ================= MAIN CONTENT ================= -->
     <main>
+        @php
+            $resolveTentangImg = function (?string $path, string $fallback): string {
+                $val = trim((string) ($path ?: $fallback));
+                if (preg_match('#^(https?:)?//#i', $val)) {
+                    return $val;
+                }
+                return '/' . ltrim($val, '/');
+            };
+        @endphp
+
         <!-- Hero Section -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('assets/jakarta3.jpg');"></div>
+            <div class="page-hero__bg" style="background-image: url('{{ $resolveTentangImg($profile['hero_image'] ?? null, 'assets/jakarta3.jpg') }}');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
-                <h1 class="page-hero__title">Tentang Kami</h1>
-                <p class="page-hero__subtitle">Mengenal lebih dekat profil organisasi, sejarah panjang, visi &amp; misi,
-                    kode etik kehormatan profesi, serta struktur kepengurusan DPP INKINDO DKI Jakarta.</p>
+                <h1 class="page-hero__title">{{ $profile['hero_title'] ?? 'Tentang Kami' }}</h1>
+                <p class="page-hero__subtitle">{{ $profile['hero_subtitle'] ?? '' }}</p>
             </div>
         </section>
 
@@ -1204,54 +1257,37 @@
                     <div class="sejarah-grid">
                         <!-- Teks Sejarah -->
                         <div>
-                            <h2 class="sejarah-heading">Sejarah INKINDO DKI Jakarta</h2>
+                            <h2 class="sejarah-heading">{{ $profile['sejarah_heading'] ?? 'Sejarah INKINDO DKI Jakarta' }}</h2>
                             <div class="sejarah-desc">
-                                <p>
-                                    INKINDO (Ikatan Nasional Konsultan Indonesia) merupakan asosiasi perusahaan
-                                    konsultan independen yang didirikan pada tanggal 29 Juni 1979, sebagai hasil fusi
-                                    antara IKINDO (Ikatan Konsultan Indonesia) dan PKTPI (Persatuan Konsultan Teknik
-                                    Pembangunan Indonesia). Anggota INKINDO tersebar di 33 provinsi di seluruh Indonesia
-                                    dan total memiliki anggota 7000 perusahaan konsultan.
-                                </p>
-                                <p>
-                                    INKINDO DKI Jakarta terletak di Provinsi Daerah Khusus Ibukota Jakarta, sekarang
-                                    memiliki anggota aktif 900 perusahaan, merupakan INKINDO provinsi terbesar diantara
-                                    33 provinsi di Indonesia. Anggota INKINDO DKI Jakarta dikelompokan dalam 3 (tiga)
-                                    kualifikasi : Besar (20%), Menengah (45%), dan Kecil (35%). Beberapa anggota INKINDO
-                                    DKI Jakarta telah menangani banyak proyek-proyek terkemuka, di Indonesia dan di
-                                    manca negara.
-                                </p>
+                                @foreach (($profile['sejarah_paragraphs'] ?? []) as $paragraf)
+                                    <p>{{ $paragraf }}</p>
+                                @endforeach
                             </div>
                         </div>
                         <!-- Gambar -->
                         <div>
-                            <img src="assets/hero-bg.jpg" alt="Sejarah INKINDO DKI Jakarta" class="sejarah-img">
+                            <img src="{{ $resolveTentangImg($profile['sejarah_image'] ?? null, 'assets/hero-bg.jpg') }}" alt="{{ $profile['sejarah_heading'] ?? 'Sejarah INKINDO DKI Jakarta' }}" class="sejarah-img">
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- 1.2 Visi & Misi (Full Width Background dengan Overlay Biru & Parallax Scroll) -->
-            <section class="visi-misi-section profil-item" id="sec-visimisi" data-category="visimisi">
+            <section class="visi-misi-section profil-item" id="sec-visimisi" data-category="visimisi" style="background-image: url('{{ $resolveTentangImg($profile['visimisi_bg_image'] ?? null, 'assets/jakarta3.jpg') }}');">
                 <div class="visi-misi-overlay"></div>
                 <div class="container visi-misi-container">
-                    <h2 class="visi-misi-heading">Visi &amp; Misi</h2>
+                    <h2 class="visi-misi-heading">{{ $profile['visimisi_heading'] ?? 'Visi & Misi' }}</h2>
                     <div class="visi-misi-grid">
                         <div>
-                            <h3 class="visi-title">Visi</h3>
-                            <p class="visi-text">Gerak Cepat Memajukan Anggota yang Berkelanjutan.</p>
+                            <h3 class="visi-title">{{ $profile['visi_title'] ?? 'Visi' }}</h3>
+                            <p class="visi-text">{{ $profile['visi_text'] ?? '' }}</p>
                         </div>
                         <div>
-                            <h3 class="misi-title">Misi</h3>
+                            <h3 class="misi-title">{{ $profile['misi_title'] ?? 'Misi' }}</h3>
                             <ol class="misi-ol">
-                                <li>Meningkatkan pelayanan yang proaktif, cepat, mudah, dan terjangkau.</li>
-                                <li>Memperkuat kapasitas dan kolaborasi antara Anggota (pelatihan, akses informasi dan
-                                    permodalan, SDM).</li>
-                                <li>Memperkuat peran sebagai mitra strategis pemerintah, swasta dan sinergi dengan DPN
-                                    INKINDO, DPP provinsi lain, mitra kerja, serta asosiasi.</li>
-                                <li>Membina Anggota dalam menghadapi dinamika regulasi.</li>
-                                <li>Menjadikan INKINDO DKI sebagai organisasi yang inovatif, adaptif, transparan dan
-                                    akuntabel.</li>
+                                @foreach (($profile['misi_items'] ?? []) as $mItem)
+                                    <li>{{ $mItem }}</li>
+                                @endforeach
                             </ol>
                         </div>
                     </div>
@@ -1261,697 +1297,199 @@
             <!-- 1.3 Kode Etik -->
             <section class="kode-etik-section profil-item" id="sec-kodeetik" data-category="kodeetik">
                 <div class="container kode-etik-container">
-                    <h2 class="kode-etik-heading">Kode Etik</h2>
+                    <h2 class="kode-etik-heading">{{ $profile['kode_etik_heading'] ?? 'Kode Etik' }}</h2>
                     <p class="kode-etik-subtitle">
-                        Dengan menjunjung tinggi Etika Ikatan Nasional Konsultan Indonesia sebagai dasar yang dinamis
-                        untuk melayani sesama manusia, maka tiap Anggota Ikatan Nasional Konsultan Indonesia wajib
-                        untuk:
+                        {{ $profile['kode_etik_subtitle'] ?? '' }}
                     </p>
                     <div class="kode-etik-flat-grid">
-                        <!-- Poin 1 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">01</div>
-                            <p class="kode-flat-item__text">Menjunjung tinggi kehormatan, kemuliaan, dan nama baik
-                                profesi konsultan dalam hubungan kerja dengan pemberi tugas sesama rekan konsultan dan
-                                masyarakat.</p>
-                        </div>
-                        <!-- Poin 2 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">02</div>
-                            <p class="kode-flat-item__text">Bertindak jujur, tidak memihak, serta penuh dedikasi
-                                melayani pemberi tugas dan masyarakat.</p>
-                        </div>
-                        <!-- Poin 3 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">03</div>
-                            <p class="kode-flat-item__text">Tukar menukar pengetahuan bidang keahlian secara wajar
-                                dengan rekan konsultan dan kelompok profesi serta meningkatkan pengetahuan masyarakat
-                                terhadap profesi konsultan sehingga dapat lebih menghayati karya konsultan.</p>
-                        </div>
-                        <!-- Poin 4 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">04</div>
-                            <p class="kode-flat-item__text">Menghormati prinsip pemberian imbalan jasa yang layak dan
-                                memadai bagi konsultan, sehingga dapat dipertanggungjawabkan secara profesional dan
-                                moral yang menjamin dapat dilaksanakannya tugas yang dipercayakan memenuhi semua
-                                persyaratan yang terkait dengan keahlian, kompetensi, dan integritas tinggi.</p>
-                        </div>
-                        <!-- Poin 5 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">05</div>
-                            <p class="kode-flat-item__text">Menghargai dan menghormati reputasi profesional rekan
-                                konsultan dan setiap perjanjian kerja yang berhubungan dengan profesinya.</p>
-                        </div>
-                        <!-- Poin 6 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">06</div>
-                            <p class="kode-flat-item__text">Mendapatkan tugas terutama berdasarkan standar keahlian
-                                profesional tanpa melalui cara-cara persaingan yang tidak sehat.</p>
-                        </div>
-                        <!-- Poin 7 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">07</div>
-                            <p class="kode-flat-item__text">Bekerjasama sebagai konsultan hanya dengan rekan konsultan
-                                atau tenaga ahli lain yang memiliki integritas tinggi.</p>
-                        </div>
-                        <!-- Poin 8 -->
-                        <div class="kode-flat-item">
-                            <div class="kode-flat-item__num">08</div>
-                            <p class="kode-flat-item__text">Menjalankan asas pembangunan berkelanjutan dalam semua aspek
-                                pelayanan jasa konsultan sebagai bagian integral dari tanggungjawabnya terhadap sesama,
-                                lingkungan kehidupan yang luas, dan generasi yang akan datang.</p>
-                        </div>
+                        @foreach (($profile['kode_etik_items'] ?? []) as $keIdx => $keItem)
+                            <!-- Poin {{ $keIdx + 1 }} -->
+                            <div class="kode-flat-item">
+                                <div class="kode-flat-item__num">{{ str_pad((string) ($keIdx + 1), 2, '0', STR_PAD_LEFT) }}</div>
+                                <p class="kode-flat-item__text">{{ $keItem }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </section>
         </div>
 
 
-        <!-- ================= SUBMENU 2: STRUKTUR ORGANISASI (7 Subjudul, Langsung DPPH) ================= -->
+        <!-- ================= SUBMENU 2: STRUKTUR ORGANISASI (Dinamis dari Admin CMS) ================= -->
         <div class="tentang-content-tab" id="tab-struktur">
             <div class="container struktur-container">
 
-                <!-- 7 Subjudul Filter Pills (Opsi "Semua Sub Unit" dihilangkan, default langsung DPPH) -->
+                <!-- Subjudul Filter Pills -->
                 <div class="sub-category-bar">
                     <span class="sub-category-bar__label">
                         <span class="material-symbols-outlined" style="font-size: 18px;">account_tree</span>
                         Sub Unit:
                     </span>
-                    <button type="button" class="sub-tab-btn is-active struktur-filter-btn"
-                        data-filter="dpph">DPPH</button>
-                    <button type="button" class="sub-tab-btn struktur-filter-btn" data-filter="dppl">DPPL</button>
-                    <button type="button" class="sub-tab-btn struktur-filter-btn"
-                        data-filter="badan">Badan-Badan</button>
-                    <button type="button" class="sub-tab-btn struktur-filter-btn" data-filter="komite">Komite</button>
-                    <button type="button" class="sub-tab-btn struktur-filter-btn" data-filter="dkp">DKP</button>
-                    <button type="button" class="sub-tab-btn struktur-filter-btn" data-filter="dpop">DPOP</button>
-                    <button type="button" class="sub-tab-btn struktur-filter-btn" data-filter="setprov">Setprov</button>
+                    @foreach (($units ?? []) as $unitIdx => $unit)
+                        <button type="button"
+                            class="sub-tab-btn {{ $unitIdx === 0 ? 'is-active ' : '' }}struktur-filter-btn"
+                            data-filter="{{ $unit['slug'] }}">{{ $unit['nama'] }}</button>
+                    @endforeach
                 </div>
 
-                <!-- 2.1 DPPH (Dewan Pengurus Provinsi Harian) -->
-                <section class="org-unit-card org-unit-item" id="unit-dpph" data-category="dpph">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">account_balance</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">DPPH</h2>
-                                <p class="org-unit-desc">Dewan Pengurus Provinsi Harian DPP INKINDO DKI Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ketua Card -->
-                    <div class="leader-card">
-                        <div>
-                            <div class="leader-card__role">
-                                <span class="material-symbols-outlined" style="font-size: 16px;">star</span>
-                                Ketua DPP INKINDO DKI Jakarta
-                            </div>
-                            <h3 class="leader-card__name">Afsdyah Eky Vitalina, SP., M.Si.</h3>
-                        </div>
-                        <span class="leader-card__tag">Pimpinan Harian</span>
-                    </div>
-
-                    <!-- Kesekretariatan & Kebendaharaan -->
-                    <h4 class="org-sub-title">
-                        <span class="num-badge">1</span>
-                        Kesekretariatan &amp; Kebendaharaan
-                    </h4>
-                    <div class="officers-grid">
-                        <div class="officer-item">
-                            <span class="officer-item__role">Sekretaris</span>
-                            <span class="officer-item__name">Aditya Prakarsa Yasin, BSc, M.M</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Wakil Sekretaris</span>
-                            <span class="officer-item__name">Jufriady Tanjung, S.T., M.T</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Bendahara</span>
-                            <span class="officer-item__name">Tri Murdiatmoko, S.E.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Wakil Bendahara</span>
-                            <span class="officer-item__name">Andina Larasati, S.Hum., M.M.</span>
-                        </div>
-                    </div>
-
-                    <!-- 12 Bidang-Bidang DPPH -->
-                    <h4 class="org-sub-title">
-                        <span class="num-badge">2</span>
-                        12 Bidang Kerja DPPH
-                    </h4>
-                    <div class="bidang-grid">
-                        <!-- Bidang 1 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">1) Pranata Usaha</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Ir. M. Saifullah, S.T., M.M., IPM.</span>
+                @foreach (($units ?? []) as $unitIdx => $unit)
+                    @php
+                        $unitGroups = array_values(array_filter($unit['groups'] ?? [], fn($g) => !empty($g['members'])));
+                        $gCount = count($unitGroups);
+                    @endphp
+                    <section class="org-unit-card org-unit-item" id="unit-{{ $unit['slug'] }}"
+                        data-category="{{ $unit['slug'] }}" @if($unitIdx > 0) style="display: none;" @endif>
+                        <div class="org-unit-header">
+                            <div class="org-unit-title-group">
+                                <div class="org-unit-icon">
+                                    <span class="material-symbols-outlined">{{ $unit['icon'] ?: 'account_tree' }}</span>
                                 </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">M. Aufa Ibadur Rahman, S.E., PMP</span>
+                                <div>
+                                    <h2 class="org-unit-title">{{ $unit['nama'] }}</h2>
+                                    @if (!empty($unit['deskripsi']))
+                                        <p class="org-unit-desc">{{ $unit['deskripsi'] }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bidang 2 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">2) Pelayanan &amp; Pemberdayaan Anggota</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Pensong Benny, S.E., M.Si</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Toni Haryanto, S.T.</span>
-                                </div>
+                        @if (!empty($unit['intro_text']))
+                            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0B62A2; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
+                                <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #334155;">{!! nl2br(e($unit['intro_text'])) !!}</p>
                             </div>
-                        </div>
+                        @endif
 
-                        <!-- Bidang 3 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">3) Penguatan Organisasi</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Fakhrudin, M.Si, Psikolog</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Hendri Prasetyo, S.IP</span>
-                                </div>
+                        @if ($gCount === 0)
+                            <div class="org-empty-state">
+                                <span class="material-symbols-outlined org-empty-icon">hourglass_empty</span>
+                                <h3 class="org-empty-title">Data Belum Tersedia</h3>
                             </div>
-                        </div>
+                        @else
+                            @php $gIdx = 0; @endphp
+                            @while ($gIdx < $gCount)
+                                @php
+                                    $grp = $unitGroups[$gIdx];
+                                    $tipe = $grp['tipe_tampilan'] ?? 'officers';
+                                @endphp
 
-                        <!-- Bidang 4 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">4) Pengembangan Jasa Konstruksi</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Ir. Mangiring Purba</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Yanwar Anang Prabowo</span>
-                                </div>
-                            </div>
-                        </div>
+                                @if ($tipe === 'leader')
+                                    @foreach ($grp['members'] as $m)
+                                        <div class="leader-card{{ empty($m['is_highlight']) ? ' leader-card--plain' : '' }}">
+                                            <div>
+                                                <div class="leader-card__role">
+                                                    <span class="material-symbols-outlined" style="font-size: 16px;">star</span>
+                                                    {{ $m['jabatan'] }}
+                                                </div>
+                                                <h3 class="leader-card__name">{{ $m['nama'] }}</h3>
+                                            </div>
+                                            @php $leaderTag = $m['keterangan_badge'] ?: ($grp['nama_kelompok'] ?? ''); @endphp
+                                            @if (!empty($leaderTag))
+                                                <span class="leader-card__tag">{{ $leaderTag }}</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                    @php $gIdx++; @endphp
 
-                        <!-- Bidang 5 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">5) Pengembangan Non Jasa Konstruksi</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Ir. Chandra Rambey, M.Sc</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Diana Harmaini Syafei, S.T</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 6 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">6) Perencanaan Strategis &amp; Monitoring</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Ir. Rachmadi</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Taufan Setia Nusantara, S.E.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 7 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">7) Kerjasama Antar Lembaga</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Ir. Agus Sudjatmiko</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Ir. Irza Ratnasari</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 8 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">8) Hukum &amp; Perlindungan Anggota</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Dewisari, M.M</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Dr. Ery Sunandar, S.Si., M.Si., SH</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 9 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">9) Peluang Pasar Internasional</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Mohamad Imam Machfudin, S.T.</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Herdiansa Putra, S.P.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 10 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">10) Digitalisasi &amp; Humas</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Munif Sofian, S.Kom</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Aditya Tubagus Maulana, S.T.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 11 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">11) ESG &amp; Keberlanjutan</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Dr. Zefri, M.Si</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Achmad Chairul Wafa, S.I.Kom</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bidang 12 -->
-                        <div class="bidang-card">
-                            <div class="bidang-card__head">12) Pasar Swasta &amp; BUMN</div>
-                            <div class="bidang-card__body">
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Ketua:</span>
-                                    <span class="bidang-person__name">Ir. Setyo Triyono, IPM., ACPE.</span>
-                                </div>
-                                <div class="bidang-person">
-                                    <span class="bidang-person__role">Wakil Sekretaris:</span>
-                                    <span class="bidang-person__name">Ar. Doti Windajani, M.T., IAI.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 2.2 DPPL (Dewan Pengurus Provinsi Lengkap) -->
-                <section class="org-unit-card org-unit-item" id="unit-dppl" data-category="dppl" style="display: none;">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">account_tree</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">DPPL</h2>
-                                <p class="org-unit-desc">Dewan Pengurus Provinsi Lengkap DPP INKINDO DKI Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kosongkan terlebih dahulu karena belum ada datanya -->
-                    <div class="org-empty-state">
-                        <span class="material-symbols-outlined org-empty-icon">hourglass_empty</span>
-                        <h3 class="org-empty-title">Data Belum Tersedia</h3>
-                    </div>
-                </section>
-
-                <!-- 2.3 Badan Badan -->
-                <section class="org-unit-card org-unit-item" id="unit-badan" data-category="badan"
-                    style="display: none;">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">corporate_fare</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">Badan - Badan</h2>
-                                <p class="org-unit-desc">Struktur Badan-Badan Kerja DPP INKINDO DKI Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="badan-grid">
-                        <!-- Badan I -->
-                        <div class="badan-card">
-                            <div class="badan-card__head">
-                                <span class="badan-card__badge">I</span>
-                                Badan Sertifikasi Anggota Provinsi (BSAP)
-                            </div>
-                            <div class="badan-card__body">
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Ketua</span>
-                                    <span class="badan-row__name">Ir. Mangiring Purba</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Sekretaris</span>
-                                    <span class="badan-row__name">Munif Sofian, S.Kom</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Bendahara</span>
-                                    <span class="badan-row__name">Andina Larasati, S.Hum., M.M.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Baharun Nazir, S.E.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Rizky Agung, S.E</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Badan II -->
-                        <div class="badan-card">
-                            <div class="badan-card__head">
-                                <span class="badan-card__badge">II</span>
-                                Badan Advokasi dan Mediasi Anggota (BAMA)
-                            </div>
-                            <div class="badan-card__body">
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Ketua</span>
-                                    <span class="badan-row__name">Dr. Ery Sunandar, S.Si., M.Si., S.H., M.H.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Wakil Ketua</span>
-                                    <span class="badan-row__name">Denok Wahyuni, S.H.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Sekretaris</span>
-                                    <span class="badan-row__name">Ismail Yusuf, S.E., M.M.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Warwo, S.T | Abel Kautsar</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Achmad Fahrur Rozi, S.Sos | Ir. Reinhart T.P.S</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Badan III -->
-                        <div class="badan-card">
-                            <div class="badan-card__head">
-                                <span class="badan-card__badge">III</span>
-                                Badan Riset dan Bakti Profesi (BRBP)
-                            </div>
-                            <div class="badan-card__body">
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Ketua</span>
-                                    <span class="badan-row__name">Ir. Halomoan Tambun</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Wakil Ketua</span>
-                                    <span class="badan-row__name">Achmad Henrawan, S.T.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Bayu Sulistianto, S.I. | Fahriza, S.P., M.P.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Ir. Budhianto | Ishari Thaib, S.E.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">DR. Ing. Ir. I Gede Oka Sindhu Pribadi, M.Sc</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Badan IV -->
-                        <div class="badan-card">
-                            <div class="badan-card__head">
-                                <span class="badan-card__badge">IV</span>
-                                Badan Pengembangan Kapasitas Anggota (BPKA)
-                            </div>
-                            <div class="badan-card__body">
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Ketua</span>
-                                    <span class="badan-row__name">Derry P Sitorus, AT., S.E.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Wakil Ketua</span>
-                                    <span class="badan-row__name">Siti Aisyah TW, S.E., M.M</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Sekretaris</span>
-                                    <span class="badan-row__name">Ir. Zaenal Mustofa Djawahir</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Ir. Syaripin | Harsyaf Nurman D., S.T.</span>
-                                </div>
-                                <div class="badan-row">
-                                    <span class="badan-row__role">Anggota</span>
-                                    <span class="badan-row__name">Steven Valerian B. | Gerrits S.B.C. Udjung</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Badan V -->
-                        <div class="badan-card" style="grid-column: 1 / -1;">
-                            <div class="badan-card__head">
-                                <span class="badan-card__badge">V</span>
-                                Badan Pengkajian Kebijakan &amp; Regulasi
-                            </div>
-                            <div class="badan-card__body">
-                                <div class="officers-grid" style="margin-bottom: 0;">
-                                    <div class="officer-item">
-                                        <span class="officer-item__role">Ketua:</span>
-                                        <span class="officer-item__name">Islana Jati Waluya, S.E., M.I.Kom</span>
+                                @elseif ($tipe === 'officers')
+                                    @if (!empty($grp['kode_badge']))
+                                        <h4 class="org-sub-title">
+                                            <span class="num-badge">{{ $grp['kode_badge'] }}</span>
+                                            {{ $grp['nama_kelompok'] }}
+                                        </h4>
+                                    @elseif ($gCount > 1 && !empty($grp['nama_kelompok']))
+                                        <h4 class="org-sub-title">
+                                            {{ $grp['nama_kelompok'] }}
+                                        </h4>
+                                    @endif
+                                    <div class="officers-grid">
+                                        @foreach ($grp['members'] as $m)
+                                            <div class="officer-item{{ !empty($m['is_highlight']) ? ' is-highlighted' : '' }}">
+                                                <span class="officer-item__role">{{ $m['jabatan'] }}</span>
+                                                <span class="officer-item__name">{{ $m['nama'] }}</span>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="officer-item">
-                                        <span class="officer-item__role">Wakil Ketua:</span>
-                                        <span class="officer-item__name">Ir. Ratna Ningrum, M.B.A</span>
+                                    @php $gIdx++; @endphp
+
+                                @elseif ($tipe === 'bidang')
+                                    @php
+                                        $bidangRun = [];
+                                        while ($gIdx < $gCount && (($unitGroups[$gIdx]['tipe_tampilan'] ?? '') === 'bidang')) {
+                                            $bidangRun[] = $unitGroups[$gIdx];
+                                            $gIdx++;
+                                        }
+                                        $firstBidang = $bidangRun[0];
+                                        $bidangLabel = trim((string) ($firstBidang['section_label'] ?? 'Bidang Kerja'));
+                                    @endphp
+                                    <h4 class="org-sub-title">
+                                        @if (!empty($firstBidang['kode_badge']))
+                                            <span class="num-badge">{{ $firstBidang['kode_badge'] }}</span>
+                                        @endif
+                                        {{ count($bidangRun) }} {{ $bidangLabel }}
+                                    </h4>
+                                    <div class="bidang-grid">
+                                        @foreach ($bidangRun as $bGrp)
+                                            <div class="bidang-card">
+                                                <div class="bidang-card__head">{{ $bGrp['nama_kelompok'] }}</div>
+                                                <div class="bidang-card__body">
+                                                    @foreach ($bGrp['members'] as $bm)
+                                                        <div class="bidang-person{{ !empty($bm['is_highlight']) ? ' is-highlighted' : '' }}">
+                                                            <span class="bidang-person__role">{{ rtrim($bm['jabatan'], ':') }}:</span>
+                                                            <span class="bidang-person__name">{{ $bm['nama'] }}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="officer-item">
-                                        <span class="officer-item__role">Sekretaris:</span>
-                                        <span class="officer-item__name">Fahmi Anshari</span>
+
+                                @elseif ($tipe === 'badan')
+                                    @php
+                                        $badanRun = [];
+                                        while ($gIdx < $gCount && (($unitGroups[$gIdx]['tipe_tampilan'] ?? '') === 'badan')) {
+                                            $badanRun[] = $unitGroups[$gIdx];
+                                            $gIdx++;
+                                        }
+                                    @endphp
+                                    <div class="badan-grid">
+                                        @foreach ($badanRun as $bdGrp)
+                                            <div class="badan-card"@if (!empty($bdGrp['is_full_width'])) style="grid-column: 1 / -1;"@endif>
+                                                <div class="badan-card__head">
+                                                    @if (!empty($bdGrp['kode_badge']))
+                                                        <span class="badan-card__badge">{{ $bdGrp['kode_badge'] }}</span>
+                                                    @endif
+                                                    {{ $bdGrp['nama_kelompok'] }}
+                                                </div>
+                                                <div class="badan-card__body">
+                                                    @if (!empty($bdGrp['is_full_width']))
+                                                        <div class="officers-grid" style="margin-bottom: 0;">
+                                                            @foreach ($bdGrp['members'] as $bm)
+                                                                <div class="officer-item{{ !empty($bm['is_highlight']) ? ' is-highlighted' : '' }}">
+                                                                    <span class="officer-item__role">{{ rtrim($bm['jabatan'], ':') }}:</span>
+                                                                    <span class="officer-item__name">{{ $bm['nama'] }}</span>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @else
+                                                        @foreach ($bdGrp['members'] as $bm)
+                                                            <div class="badan-row{{ !empty($bm['is_highlight']) ? ' is-highlighted' : '' }}">
+                                                                <span class="badan-row__role">{{ $bm['jabatan'] }}</span>
+                                                                <span class="badan-row__name">{{ $bm['nama'] }}</span>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="officer-item">
-                                        <span class="officer-item__role">Anggota:</span>
-                                        <span class="officer-item__name">Rahyono, S.Kom | Satrio Rama W., M.Sc.</span>
-                                    </div>
-                                    <div class="officer-item">
-                                        <span class="officer-item__role">Anggota:</span>
-                                        <span class="officer-item__name">Rimong Rukmiarta, MT. | Ir. Lila Andari</span>
-                                    </div>
-                                    <div class="officer-item">
-                                        <span class="officer-item__role">Anggota:</span>
-                                        <span class="officer-item__name">Ir. Tati Lanniari Pulungan | Adung
-                                            Kurnaen</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
-                <!-- 2.4 Komite -->
-                <section class="org-unit-card org-unit-item" id="unit-komite" data-category="komite"
-                    style="display: none;">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">groups_3</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">Komite</h2>
-                                <p class="org-unit-desc">Komite-Komite Kerja Strategis DPP INKINDO DKI Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kosongkan terlebih dahulu karena belum ada datanya -->
-                    <div class="org-empty-state">
-                        <span class="material-symbols-outlined org-empty-icon">hourglass_empty</span>
-                        <h3 class="org-empty-title">Data Belum Tersedia</h3>
-                    </div>
-                </section>
-
-                <!-- 2.5 DKP (Dewan Kehormatan Provinsi) -->
-                <section class="org-unit-card org-unit-item" id="unit-dkp" data-category="dkp" style="display: none;">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">gavel</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">DKP</h2>
-                                <p class="org-unit-desc">Dewan Kehormatan Provinsi DPP INKINDO DKI Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0B62A2; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
-                        <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #334155;">
-                            <strong>Dewan Kehormatan Provinsi (DKP)</strong> bertugas menjaga keluhuran martabat,
-                            mengawasi penerapan Kode Etik dan Anggaran Dasar/Anggaran Rumah Tangga (AD/ART), serta
-                            memberikan putusan mediasi terhadap persoalan etika profesi antar-anggota.
-                        </p>
-                    </div>
-
-                    <div class="officers-grid">
-                        <div class="officer-item" style="border-left: 4px solid #0B62A2;">
-                            <span class="officer-item__role">Ketua merangkap Anggota:</span>
-                            <span class="officer-item__name">Ir. Bambang Soendaroe, M.T.</span>
-                        </div>
-                        <div class="officer-item" style="border-left: 4px solid #0B62A2;">
-                            <span class="officer-item__role">Wakil Ketua merangkap Anggota:</span>
-                            <span class="officer-item__name">Ir. Mukhsin Moechtar, IPU., ACPE.</span>
-                        </div>
-                        <div class="officer-item" style="border-left: 4px solid #0B62A2;">
-                            <span class="officer-item__role">Sekretaris merangkap Anggota:</span>
-                            <span class="officer-item__name">Ir. Novia Damayanti, M.B.A.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Istanto Oerip, IPU.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Jumadi S. Witopawiro, M.S.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Stefanus Hindarko</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Dr. Ir. John P. Pantouw, M.S.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Jasman, S.T., M.T.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Yulianto</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Siti Rochamayanti, M.M.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Yudi Setiabudi</span>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 2.6 DPOP (Dewan Pertimbangan Organisasi Provinsi) -->
-                <section class="org-unit-card org-unit-item" id="unit-dpop" data-category="dpop" style="display: none;">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">manage_accounts</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">DPOP</h2>
-                                <p class="org-unit-desc">Dewan Pertimbangan Organisasi Provinsi DPP INKINDO DKI Jakarta
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0B62A2; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
-                        <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #334155;">
-                            <strong>Dewan Pertimbangan Organisasi Provinsi (DPOP)</strong> beranggotakan para tokoh
-                            senior dan pimpinan purnatugas yang bertugas memberikan saran, nasihat, dan pertimbangan
-                            strategis kepada Dewan Pengurus Provinsi demi kesinambungan visi asosiasi.
-                        </p>
-                    </div>
-
-                    <div class="officers-grid">
-                        <div class="officer-item" style="border-left: 4px solid #0B62A2;">
-                            <span class="officer-item__role">Ketua:</span>
-                            <span class="officer-item__name">Imam Hartawan, S.T., M.T.</span>
-                        </div>
-                        <div class="officer-item" style="border-left: 4px solid #0B62A2;">
-                            <span class="officer-item__role">Sekretaris:</span>
-                            <span class="officer-item__name">Ir. Anton Gerbono</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Drs. Arry Budiyanto, M.Dev.Plg</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Suwendi, M.Sc.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Ir. Endang Nurzaman</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Jusarwanto, S.E., Ak.</span>
-                        </div>
-                        <div class="officer-item">
-                            <span class="officer-item__role">Anggota:</span>
-                            <span class="officer-item__name">Dr. Ir. Lamidi, MTP, M.M.</span>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 2.7 Setprov (Sekretariat Provinsi) -->
-                <section class="org-unit-card org-unit-item" id="unit-setprov" data-category="setprov"
-                    style="display: none;">
-                    <div class="org-unit-header">
-                        <div class="org-unit-title-group">
-                            <div class="org-unit-icon">
-                                <span class="material-symbols-outlined">admin_panel_settings</span>
-                            </div>
-                            <div>
-                                <h2 class="org-unit-title">Setprov</h2>
-                                <p class="org-unit-desc">Sekretariat Pelayanan Eksekutif DPP INKINDO DKI Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kosongkan terlebih dahulu karena belum ada datanya -->
-                    <div class="org-empty-state">
-                        <span class="material-symbols-outlined org-empty-icon">hourglass_empty</span>
-                        <h3 class="org-empty-title">Data Belum Tersedia</h3>
-                    </div>
-                </section>
+                                @else
+                                    @php $gIdx++; @endphp
+                                @endif
+                            @endwhile
+                        @endif
+                    </section>
+                @endforeach
             </div>
         </div>
     </main>
@@ -2091,9 +1629,11 @@
             });
 
             // Ensure initial unit state is strictly configured
+            const strukturSlugs = @json(array_column($units ?? [], 'slug'));
+            const defaultStrukturSlug = strukturSlugs[0] || 'dpph';
             const initialSubBtn = document.querySelector('.struktur-filter-btn.is-active');
-            const initialFilter = initialSubBtn ? initialSubBtn.getAttribute('data-filter') : 'dpph';
-            switchStrukturUnit(initialFilter || 'dpph');
+            const initialFilter = initialSubBtn ? initialSubBtn.getAttribute('data-filter') : defaultStrukturSlug;
+            switchStrukturUnit(initialFilter || defaultStrukturSlug);
 
             // URL Hash & Param Handling (e.g. ?tab=struktur&sub=dpph or #dpph)
             const urlParams = new URLSearchParams(window.location.search);
@@ -2101,9 +1641,9 @@
             const subParam = urlParams.get('sub');
             const hash = window.location.hash.replace('#', '').toLowerCase();
 
-            if (tabParam === 'struktur' || ['dpph', 'dppl', 'badan', 'komite', 'dkp', 'dpop', 'setprov'].includes(hash)) {
+            if (tabParam === 'struktur' || strukturSlugs.includes(hash)) {
                 switchMainTab('tab-struktur');
-                const targetSub = subParam || (['dpph', 'dppl', 'badan', 'komite', 'dkp', 'dpop', 'setprov'].includes(hash) ? hash : 'dpph');
+                const targetSub = subParam || (strukturSlugs.includes(hash) ? hash : defaultStrukturSlug);
                 switchStrukturUnit(targetSub);
                 const el = document.getElementById('unit-' + targetSub);
                 if (el) {
