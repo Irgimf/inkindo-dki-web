@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'sim_url' => env('SIM_INKINDO_URL', 'http://localhost:8080'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -113,13 +113,13 @@
         <div class="side-panel__content" data-content="login">
             <h3 class="side-panel__title">Login</h3>
             <ul class="panel-links">
-                <li><a href="http://localhost:8080/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">groups</span>
                         <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="http://localhost:8080/mitra/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/mitra/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">handshake</span>
                         <span><strong>Mitra Kerja</strong><small>Portal kolaborasi dan kemitraan</small></span>
@@ -154,14 +154,14 @@
         <div class="side-panel__content" data-content="anggota">
             <h3 class="side-panel__title">Anggota</h3>
             <ul class="panel-links">
-                <li><a href="http://localhost:8080/auth/register" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/register" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">person_add</span>
                         <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan
                                 INKINDO</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="http://localhost:8080/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">autorenew</span>
                         <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan

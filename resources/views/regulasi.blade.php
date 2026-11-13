@@ -630,13 +630,13 @@
         <div class="side-panel__content" data-content="login">
             <h3 class="side-panel__title">Login</h3>
             <ul class="panel-links">
-                <li><a href="http://localhost:8080/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">groups</span>
                         <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="http://localhost:8080/mitra/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/mitra/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">handshake</span>
                         <span><strong>Mitra Kerja</strong><small>Portal kolaborasi dan kemitraan</small></span>
@@ -671,14 +671,14 @@
         <div class="side-panel__content" data-content="anggota">
             <h3 class="side-panel__title">Anggota</h3>
             <ul class="panel-links">
-                <li><a href="http://localhost:8080/auth/register" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/register" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">person_add</span>
                         <span><strong>Pendaftaran Anggota</strong><small>Registrasi baru keanggotaan
                                 INKINDO</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="http://localhost:8080/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/login" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">autorenew</span>
                         <span><strong>Perpanjangan Anggota</strong><small>Herregistrasi keanggotaan
@@ -874,200 +874,223 @@
                 </div>
             </div>
 
+            @php
+                $regInkindo = $regulasiByKategori['inkindo'] ?? [];
+                $regJasa    = $regulasiByKategori['jasa'] ?? [];
+                $regTerkait = $regulasiByKategori['terkait'] ?? [];
+            @endphp
+
             <!-- Regulasi INKINDO -->
             <div class="regulasi-content is-active" id="reg-inkindo">
                 <div class="view-container is-grid">
-                    <div class="reg-card">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Anggaran Dasar / Anggaran Rumah Tangga (AD/ART) INKINDO</h3>
-                            <p class="reg-card__desc">Pedoman pokok keorganisasian yang memuat ketentuan kelembagaan,
-                                hak dan kewajiban anggota, tata kelola asosiasi, serta mekanisme pengambilan keputusan
-                                di lingkungan INKINDO.</p>
+                    @foreach ($regInkindo as $item)
+                        <div class="reg-card">
+                            <div class="reg-card__body">
+                                <h3 class="reg-card__title">{{ $item->judul }}</h3>
+                                <p class="reg-card__desc">{{ $item->deskripsi }}</p>
+                            </div>
+                            <div class="reg-card__actions">
+                                @if (!empty($item->file_pdf))
+                                    <a href="{{ '/' . ltrim((string) $item->file_pdf, '/') }}" target="_blank"
+                                        rel="noopener noreferrer" class="btn-download-pdf" aria-label="Unduh PDF">
+                                        <span class="material-symbols-outlined">download</span>
+                                        <span>Unduh PDF</span>
+                                    </a>
+                                @else
+                                    <button type="button" class="btn-download-pdf" disabled
+                                        style="opacity: 0.55; cursor: not-allowed;" title="File PDF belum tersedia">
+                                        <span class="material-symbols-outlined">description</span>
+                                        <span>PDF Belum Tersedia</span>
+                                    </button>
+                                @endif
+                            </div>
                         </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Kode Etik Anggota INKINDO</h3>
-                            <p class="reg-card__desc">Standar norma etika dan perilaku profesional yang wajib dipatuhi
-                                oleh seluruh anggota dalam menjalankan kegiatan dan praktik jasa konsultansi secara
-                                berintegritas.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Pedoman Organisasi Provinsi INKINDO DKI Jakarta</h3>
-                            <p class="reg-card__desc">Aturan operasional dan tata kerja organisasi tingkat provinsi
-                                dalam penyelenggaraan pelayanan anggota, koordinasi kepengurusan, serta program
-                                strategis DKI Jakarta.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
             <!-- Regulasi Jasa Konsultasi -->
             <div class="regulasi-content" id="reg-jasa">
                 <div class="view-container is-grid" id="container-jasa">
-                    <div class="reg-card" data-category="kontruksi">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">UU No. 2 Tahun 2017 tentang Jasa Konstruksi</h3>
-                            <p class="reg-card__desc">Landasan hukum utama penyelenggaraan jasa konstruksi nasional yang
-                                mengatur ketentuan perizinan usaha, standar mutu dan keamanan, serta tata kelola
-                                industri konstruksi.</p>
+                    @foreach ($regJasa as $item)
+                        <div class="reg-card" data-category="{{ $item->sub_kategori ?: 'umum' }}">
+                            <div class="reg-card__body">
+                                <h3 class="reg-card__title">{{ $item->judul }}</h3>
+                                <p class="reg-card__desc">{{ $item->deskripsi }}</p>
+                            </div>
+                            <div class="reg-card__actions">
+                                @if (!empty($item->file_pdf))
+                                    <a href="{{ '/' . ltrim((string) $item->file_pdf, '/') }}" target="_blank"
+                                        rel="noopener noreferrer" class="btn-download-pdf" aria-label="Unduh PDF">
+                                        <span class="material-symbols-outlined">download</span>
+                                        <span>Unduh PDF</span>
+                                    </a>
+                                @else
+                                    <button type="button" class="btn-download-pdf" disabled
+                                        style="opacity: 0.55; cursor: not-allowed;" title="File PDF belum tersedia">
+                                        <span class="material-symbols-outlined">description</span>
+                                        <span>PDF Belum Tersedia</span>
+                                    </button>
+                                @endif
+                            </div>
                         </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card" data-category="non-kontruksi">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Pedoman Pengadaan Jasa Konsultansi Non Konstruksi</h3>
-                            <p class="reg-card__desc">Petunjuk teknis tata cara pemilihan penyedia, penyusunan
-                                kualifikasi teknis, dan evaluasi penawaran untuk pengadaan jasa konsultansi bidang
-                                non-konstruksi.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card" data-category="umum">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Standar Remunerasi (Billing Rate) Jasa Konsultansi 2026</h3>
-                            <p class="reg-card__desc">Pedoman acuan perhitungan remunerasi minimal tenaga ahli dan biaya
-                                langsung non-personil berbasis keahlian dalam perencanaan anggaran dan proposal lelang
-                                konsultansi.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card" data-category="kontruksi">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">PP No. 22 Tahun 2020 tentang Peraturan Pelaksanaan UU Jasa
-                                Konstruksi</h3>
-                            <p class="reg-card__desc">Peraturan pelaksanaan undang-undang jasa konstruksi yang mengatur
-                                perizinan berusaha, sertifikasi kompetensi kerja, tata kelola rantai pasok, dan
-                                pengawasan proyek.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card" data-category="umum">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Standar Biaya Langsung Personil & Non Personil 2026</h3>
-                            <p class="reg-card__desc">Rincian komponen batas biaya langsung personil menurut jenjang
-                                pendidikan dan pengalaman kerja, serta rincian biaya penunjang operasional kegiatan
-                                konsultansi.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
             <!-- Regulasi Terkait -->
             <div class="regulasi-content" id="reg-terkait">
                 <div class="view-container is-grid">
-                    <div class="reg-card">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Peraturan LKPP No. 12 Tahun 2021 tentang Pedoman Pengadaan
-                                Barang/Jasa Pemerintah</h3>
-                            <p class="reg-card__desc">Pedoman pelaksanaan pengadaan barang dan jasa melalui penyedia,
-                                tata kelola tender jasa konsultansi, negosiasi teknis, serta penyusunan kontrak kerja
-                                pemerintah.</p>
+                    @foreach ($regTerkait as $item)
+                        <div class="reg-card">
+                            <div class="reg-card__body">
+                                <h3 class="reg-card__title">{{ $item->judul }}</h3>
+                                <p class="reg-card__desc">{{ $item->deskripsi }}</p>
+                            </div>
+                            <div class="reg-card__actions">
+                                @if (!empty($item->file_pdf))
+                                    <a href="{{ '/' . ltrim((string) $item->file_pdf, '/') }}" target="_blank"
+                                        rel="noopener noreferrer" class="btn-download-pdf" aria-label="Unduh PDF">
+                                        <span class="material-symbols-outlined">download</span>
+                                        <span>Unduh PDF</span>
+                                    </a>
+                                @else
+                                    <button type="button" class="btn-download-pdf" disabled
+                                        style="opacity: 0.55; cursor: not-allowed;" title="File PDF belum tersedia">
+                                        <span class="material-symbols-outlined">description</span>
+                                        <span>PDF Belum Tersedia</span>
+                                    </button>
+                                @endif
+                            </div>
                         </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="reg-card">
-                        <div class="reg-card__body">
-                            <h3 class="reg-card__title">Peraturan Menteri PUPR No. 10 Tahun 2021 tentang Pedoman SMKK
-                            </h3>
-                            <p class="reg-card__desc">Pedoman penerapan Sistem Manajemen Keselamatan Konstruksi (SMKK)
-                                untuk menjamin pemenuhan standar keselamatan keteknikan, kesehatan kerja, dan
-                                keberlanjutan lingkungan.</p>
-                        </div>
-                        <div class="reg-card__actions">
-                            <button type="button" class="btn-download-pdf" aria-label="Unduh PDF"
-                                onclick="event.preventDefault()">
-                                <span class="material-symbols-outlined">download</span>
-                                <span>Unduh PDF</span>
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Pagination (Mockup) -->
-            <div class="pagination">
-                <a href="#" class="page-item"><span class="material-symbols-outlined"
-                        style="font-size:18px">chevron_left</span></a>
-                <a href="#" class="page-item is-active">1</a>
-                <a href="#" class="page-item">2</a>
-                <a href="#" class="page-item">3</a>
-                <span class="page-item" style="cursor:default">...</span>
-                <a href="#" class="page-item">72</a>
-                <a href="#" class="page-item"><span class="material-symbols-outlined"
-                        style="font-size:18px">chevron_right</span></a>
+            <div id="reg-empty-state"
+                style="display: none; text-align: center; padding: 40px 16px; color: #64748b; font-size: 0.95rem;">
+                Belum ada dokumen regulasi pada kategori ini.
             </div>
+
+            <!-- Pagination (Dynamic max 6 items/page) -->
+            <div class="pagination" id="regulasi-pagination"></div>
 
         </div>
     </main>
 
-    <!-- Script update to handle dynamic title -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const PER_PAGE = 6;
+            let currentPage = 1;
+            let currentSubFilter = 'all';
+
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.regulasi-content');
             const subMenuInline = document.getElementById('sub-menu-jasa-inline');
             const activeCategoryTitle = document.getElementById('active-category-title');
+            const viewBtns = document.querySelectorAll('.view-btn');
+            const viewContainers = document.querySelectorAll('.view-container');
+            const subTabBtns = document.querySelectorAll('.sub-tab-btn');
+            const searchInput = document.querySelector('.search-box input');
+            const paginationEl = document.getElementById('regulasi-pagination');
+            const emptyStateEl = document.getElementById('reg-empty-state');
+
+            function renderPagination(totalPages) {
+                if (!paginationEl) return;
+                if (totalPages <= 1) {
+                    paginationEl.innerHTML = '';
+                    paginationEl.style.display = 'none';
+                    return;
+                }
+
+                paginationEl.style.display = '';
+                let html = '';
+
+                html += `<a href="#" class="page-item ${currentPage === 1 ? 'is-disabled' : ''}" data-page="${currentPage - 1}" aria-label="Halaman sebelumnya"><span class="material-symbols-outlined" style="font-size:18px">chevron_left</span></a>`;
+
+                const pages = [];
+                if (totalPages <= 7) {
+                    for (let i = 1; i <= totalPages; i++) pages.push(i);
+                } else {
+                    pages.push(1);
+                    if (currentPage > 3) pages.push('...');
+                    const start = Math.max(2, currentPage - 1);
+                    const end = Math.min(totalPages - 1, currentPage + 1);
+                    for (let i = start; i <= end; i++) pages.push(i);
+                    if (currentPage < totalPages - 2) pages.push('...');
+                    pages.push(totalPages);
+                }
+
+                pages.forEach(p => {
+                    if (p === '...') {
+                        html += '<span class="page-item" style="cursor:default">...</span>';
+                    } else {
+                        html += `<a href="#" class="page-item ${p === currentPage ? 'is-active' : ''}" data-page="${p}">${p}</a>`;
+                    }
+                });
+
+                html += `<a href="#" class="page-item ${currentPage === totalPages ? 'is-disabled' : ''}" data-page="${currentPage + 1}" aria-label="Halaman berikutnya"><span class="material-symbols-outlined" style="font-size:18px">chevron_right</span></a>`;
+
+                paginationEl.innerHTML = html;
+
+                paginationEl.querySelectorAll('a.page-item[data-page]').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetPage = parseInt(link.getAttribute('data-page'), 10);
+                        if (Number.isNaN(targetPage) || targetPage < 1 || targetPage > totalPages || targetPage === currentPage) {
+                            return;
+                        }
+                        currentPage = targetPage;
+                        renderRegulasi();
+                        const navWrapper = document.querySelector('.regulasi-nav-wrapper');
+                        if (navWrapper) {
+                            navWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+            }
+
+            function renderRegulasi() {
+                const activeContent = document.querySelector('.regulasi-content.is-active');
+                if (!activeContent) return;
+
+                const isJasaTab = activeContent.id === 'reg-jasa';
+                const query = String(searchInput ? searchInput.value : '').toLowerCase().trim();
+                const allCards = Array.from(activeContent.querySelectorAll('.reg-card'));
+
+                const matchedCards = allCards.filter(card => {
+                    const cardCat = card.getAttribute('data-category') || '';
+                    if (isJasaTab && currentSubFilter !== 'all' && cardCat !== currentSubFilter) {
+                        return false;
+                    }
+                    if (query) {
+                        const title = card.querySelector('.reg-card__title')?.textContent.toLowerCase() || '';
+                        const desc = card.querySelector('.reg-card__desc')?.textContent.toLowerCase() || '';
+                        if (!title.includes(query) && !desc.includes(query)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+
+                const totalPages = Math.max(1, Math.ceil(matchedCards.length / PER_PAGE));
+                if (currentPage > totalPages) currentPage = totalPages;
+                if (currentPage < 1) currentPage = 1;
+
+                const startIdx = (currentPage - 1) * PER_PAGE;
+                const endIdx = startIdx + PER_PAGE;
+                const visibleSet = new Set(matchedCards.slice(startIdx, endIdx));
+
+                allCards.forEach(card => {
+                    card.style.display = visibleSet.has(card) ? '' : 'none';
+                });
+
+                if (emptyStateEl) {
+                    emptyStateEl.style.display = matchedCards.length === 0 ? 'block' : 'none';
+                }
+
+                renderPagination(matchedCards.length === 0 ? 0 : totalPages);
+            }
 
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -1076,21 +1099,21 @@
 
                     btn.classList.add('is-active');
                     const targetId = btn.getAttribute('data-target');
-                    document.getElementById(targetId).classList.add('is-active');
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) targetContent.classList.add('is-active');
 
-                    // Update Title
-                    activeCategoryTitle.textContent = btn.getAttribute('data-title');
-
-                    if (targetId === 'reg-jasa') {
-                        subMenuInline.style.display = 'flex';
-                    } else {
-                        subMenuInline.style.display = 'none';
+                    if (activeCategoryTitle) {
+                        activeCategoryTitle.textContent = btn.getAttribute('data-title') || '';
                     }
+
+                    if (subMenuInline) {
+                        subMenuInline.style.display = targetId === 'reg-jasa' ? 'flex' : 'none';
+                    }
+
+                    currentPage = 1;
+                    renderRegulasi();
                 });
             });
-
-            const viewBtns = document.querySelectorAll('.view-btn');
-            const viewContainers = document.querySelectorAll('.view-container');
 
             viewBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -1110,46 +1133,20 @@
                 });
             });
 
-            const subTabBtns = document.querySelectorAll('.sub-tab-btn');
-            const jasaCards = document.querySelectorAll('#container-jasa .reg-card');
-
             subTabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     subTabBtns.forEach(b => b.classList.remove('is-active'));
                     btn.classList.add('is-active');
-
-                    const category = btn.getAttribute('data-filter');
-                    jasaCards.forEach(card => {
-                        if (category === 'all' || card.getAttribute('data-category') === category) {
-                            card.style.display = '';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    currentSubFilter = btn.getAttribute('data-filter') || 'all';
+                    currentPage = 1;
+                    renderRegulasi();
                 });
             });
 
-            // Live Search Regulasi
-            const searchInput = document.querySelector('.search-box input');
-            const applyRegulasiFilter = (rawVal) => {
-                const query = String(rawVal || '').toLowerCase().trim();
-                const activeContent = document.querySelector('.regulasi-content.is-active');
-                if (!activeContent) return;
-                const cards = activeContent.querySelectorAll('.reg-card');
-                cards.forEach(card => {
-                    const title = card.querySelector('.reg-card__title')?.textContent.toLowerCase() || '';
-                    const desc = card.querySelector('.reg-card__desc')?.textContent.toLowerCase() || '';
-                    if (!query || title.includes(query) || desc.includes(query)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            };
-
             if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    applyRegulasiFilter(e.target.value);
+                searchInput.addEventListener('input', () => {
+                    currentPage = 1;
+                    renderRegulasi();
                 });
             }
 
@@ -1158,17 +1155,19 @@
             const targetTab = urlParams.get('tab');
             const targetQuery = urlParams.get('q');
             if (targetTab) {
-                const matchingBtn = document.querySelector(`.regulasi-tab-btn[data-target="${targetTab}"]`);
+                const matchingBtn = document.querySelector(`.tab-btn[data-target="${targetTab}"]`);
                 if (matchingBtn) matchingBtn.click();
             }
             if (targetQuery && searchInput) {
                 searchInput.value = targetQuery;
-                applyRegulasiFilter(targetQuery);
+                currentPage = 1;
                 const navWrapper = document.querySelector('.regulasi-nav-wrapper');
                 if (navWrapper) {
                     setTimeout(() => navWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
                 }
             }
+
+            renderRegulasi();
         });
     </script>
 

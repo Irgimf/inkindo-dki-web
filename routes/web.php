@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsBeritaController;
+use App\Http\Controllers\CmsRegulasiController;
 use App\Http\Controllers\CmsTentangController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MitraController;
@@ -30,6 +31,8 @@ Route::get('/api/cms/berita/{slug}', [CmsBeritaController::class, 'show']);
 
 // CMS Tentang Kami API endpoint
 Route::get('/api/cms/tentang', [CmsTentangController::class, 'index']);
+// CMS Regulasi API endpoint
+Route::get('/api/cms/regulasi', [CmsRegulasiController::class, 'index']);
 
 // Fallback static asset handler (serves from public/ or falls back to sim-inkindo-dki/public)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
@@ -93,9 +96,12 @@ Route::get('/mitra-detail.html', fn () => view('mitra-detail'));
 Route::get('/tentang', [CmsTentangController::class, 'page']);
 Route::get('/tentang.html', [CmsTentangController::class, 'page']);
 
+// Dynamic Regulasi page (driven by Admin CMS)
+Route::get('/regulasi', [CmsRegulasiController::class, 'page']);
+Route::get('/regulasi.html', [CmsRegulasiController::class, 'page']);
+
 // Other static pages
 $staticPages = [
-    'regulasi',
     'berita',
     'berita-detail',
     'ketentuan-mitra-kerja',
