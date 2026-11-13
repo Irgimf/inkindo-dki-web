@@ -523,17 +523,13 @@
             <div class="container" style="position: relative; z-index: 2; text-align: left; width: 100%;">
                 <h1 class="hero-anim-title"
                     style="font-size: clamp(40px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: #ffffff; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);">
-                    Lelang Lainnya &amp; Peluang Usaha</h1>
+                    {{ $peluang->hero_judul ?? 'Lelang Lainnya & Peluang Usaha' }}</h1>
                 <div class="hero-anim-line"
                     style="width: 70px; height: 5px; background: #ffffff; margin: 0 0 24px; border-radius: 4px;">
                 </div>
                 <p class="hero-anim-desc"
                     style="font-size: clamp(16px, 1.8vw, 20px); max-width: 720px; line-height: 1.7; color: rgba(255, 255, 255, 0.92); font-weight: 400; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);">
-                    Kanal informasi paket pengadaan jasa konsultansi alternatif dari <strong
-                        style="color: #ffffff;">BUMN terkemuka</strong>,
-                    lembaga pembiayaan <strong style="color: #ffffff;">multilateral internasional</strong>, serta
-                    peluang kerjasama proyek
-                    khusus bagi seluruh anggota DPP INKINDO DKI Jakarta.
+                    {{ $peluang->hero_deskripsi ?? '' }}
                 </p>
             </div>
         </section>
@@ -557,127 +553,27 @@
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
-
-                    <!-- 1. Angkasa Pura -->
-                    <div class="portal-card">
-                        <div>
-                            <div class="portal-card__icon-box">
-                                <span class="material-symbols-outlined">flight_takeoff</span>
+                    @forelse ($portals as $portal)
+                        <div class="portal-card">
+                            <div>
+                                <div class="portal-card__icon-box">
+                                    <span class="material-symbols-outlined">{{ $portal->ikon ?: 'public' }}</span>
+                                </div>
+                                <div class="portal-card__category">{{ $portal->kategori }}</div>
+                                <h3 class="portal-card__title">{{ $portal->judul }}</h3>
+                                <p class="portal-card__desc">{{ $portal->deskripsi }}</p>
                             </div>
-                            <div class="portal-card__category">BUMN Kebandarudaraan</div>
-                            <h3 class="portal-card__title">Angkasa Pura</h3>
-                            <p class="portal-card__desc">
-                                Portal Procurement resmi untuk pengadaan jasa konsultansi fasilitas bandara, terminal,
-                                runway, arsitektur, dan rekayasa kebandarudaraan.
-                            </p>
+                            <a href="{{ $portal->url }}" target="_blank" rel="noopener noreferrer"
+                                class="portal-card__btn">
+                                <span>{{ $portal->teks_tombol ?: 'Buka Portal Pengadaan' }}</span>
+                                <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
+                            </a>
                         </div>
-                        <a href="https://procurement.angkasapura2.co.id/" target="_blank" rel="noopener noreferrer"
-                            class="portal-card__btn">
-                            <span>Buka Portal Pengadaan</span>
-                            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-                        </a>
-                    </div>
-
-                    <!-- 2. PLN -->
-                    <div class="portal-card">
-                        <div>
-                            <div class="portal-card__icon-box">
-                                <span class="material-symbols-outlined">bolt</span>
-                            </div>
-                            <div class="portal-card__category">BUMN Ketenagalistrikan</div>
-                            <h3 class="portal-card__title">PT Perusahaan Listrik Negara (Persero)</h3>
-                            <p class="portal-card__desc">
-                                Sistem e-Procurement PT PLN (Persero) untuk paket studi kelayakan, jaringan transmisi,
-                                pembangkitan, dan transisi energi terbarukan.
-                            </p>
+                    @empty
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 36px 16px; color: #64748b;">
+                            Belum ada portal e-Procurement yang tersedia saat ini.
                         </div>
-                        <a href="https://eproc.pln.co.id/" target="_blank" rel="noopener noreferrer"
-                            class="portal-card__btn">
-                            <span>Buka e-Procurement PLN</span>
-                            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-                        </a>
-                    </div>
-
-                    <!-- 3. KAI -->
-                    <div class="portal-card">
-                        <div>
-                            <div class="portal-card__icon-box">
-                                <span class="material-symbols-outlined">train</span>
-                            </div>
-                            <div class="portal-card__category">BUMN Transportasi Rel</div>
-                            <h3 class="portal-card__title">PT Kereta Api Indonesia (Persero)</h3>
-                            <p class="portal-card__desc">
-                                Pengadaan barang dan jasa konsultansi prasarana perkeretaapian, modernisasi stasiun,
-                                persinyalan, dan integrasi logistik nasional.
-                            </p>
-                        </div>
-                        <a href="https://eproc.kai.id/" target="_blank" rel="noopener noreferrer"
-                            class="portal-card__btn">
-                            <span>Buka e-Procurement KAI</span>
-                            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-                        </a>
-                    </div>
-
-                    <!-- 4. ADB -->
-                    <div class="portal-card">
-                        <div>
-                            <div class="portal-card__icon-box">
-                                <span class="material-symbols-outlined">account_balance</span>
-                            </div>
-                            <div class="portal-card__category">Lembaga Multilateral</div>
-                            <h3 class="portal-card__title">Asian Development Bank (ADB)</h3>
-                            <p class="portal-card__desc">
-                                Akses peluang tender dan paket jasa konsultansi internasional pada proyek pembiayaan
-                                infrastruktur berkelanjutan kawasan Asia-Pasifik.
-                            </p>
-                        </div>
-                        <a href="https://www.adb.org/projects/tenders" target="_blank" rel="noopener noreferrer"
-                            class="portal-card__btn">
-                            <span>Buka Tender ADB</span>
-                            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-                        </a>
-                    </div>
-
-                    <!-- 5. World Bank -->
-                    <div class="portal-card">
-                        <div>
-                            <div class="portal-card__icon-box">
-                                <span class="material-symbols-outlined">public</span>
-                            </div>
-                            <div class="portal-card__category">Lembaga Finansial Global</div>
-                            <h3 class="portal-card__title">World Bank (Bank Dunia)</h3>
-                            <p class="portal-card__desc">
-                                Direktori proyek dan operasional pembangunan Bank Dunia di Indonesia dan global,
-                                mencakup paket konsultansi teknis serta kebijakan publik.
-                            </p>
-                        </div>
-                        <a href="https://projects.worldbank.org/en/projects-operations/projects-list" target="_blank"
-                            rel="noopener noreferrer" class="portal-card__btn">
-                            <span>Buka Proyek World Bank</span>
-                            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-                        </a>
-                    </div>
-
-                    <!-- 6. LKPP (Portal Nasional) -->
-                    <div class="portal-card">
-                        <div>
-                            <div class="portal-card__icon-box">
-                                <span class="material-symbols-outlined">shopping_cart_checkout</span>
-                            </div>
-                            <div class="portal-card__category">Pemerintah RI (SPSE)</div>
-                            <h3 class="portal-card__title">LKPP - LPSE Nasional</h3>
-                            <p class="portal-card__desc">
-                                Layanan Pengadaan Secara Elektronik Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah
-                                untuk seluruh K/L/D/I di Indonesia.
-                            </p>
-                        </div>
-                        <a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer"
-                            class="portal-card__btn">
-                            <span>Buka Portal LPSE LKPP</span>
-                            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-                        </a>
-                    </div>
-
+                    @endforelse
                 </div>
             </div>
         </section>
@@ -692,17 +588,18 @@
                     <div class="notice-board__badge"
                         style="background: rgba(255,255,255,0.2); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); margin-bottom: 12px;">
                         <span class="material-symbols-outlined">campaign</span>
-                        Pemberitahuan Resmi Sekretariat DPP
+                        {{ $peluang->section_badge ?? 'Pemberitahuan Resmi Sekretariat DPP' }}
                     </div>
                     <h2
                         style="font-size: clamp(30px, 3.5vw, 40px); font-weight: 800; margin: 0 0 12px; color: #ffffff;">
-                        Peluang Usaha Lainnya
+                        {{ $peluang->section_judul ?? 'Peluang Usaha Lainnya' }}
                     </h2>
-                    <p
-                        style="font-size: 16px; color: rgba(255,255,255,0.9); margin: 0; max-width: 650px; margin-left: auto; margin-right: auto;">
-                        Informasi permohonan keahlian konsultan perencana struktur untuk mitigasi &amp; pencegahan
-                        banjir bagi seluruh anggota.
-                    </p>
+                    @if (!empty($peluang->section_deskripsi))
+                        <p
+                            style="font-size: 16px; color: rgba(255,255,255,0.9); margin: 0; max-width: 650px; margin-left: auto; margin-right: auto;">
+                            {{ $peluang->section_deskripsi }}
+                        </p>
+                    @endif
                 </div>
 
                 <!-- Kartu Dokumen Resmi -->
@@ -710,76 +607,46 @@
                     <div class="notice-board__head">
                         <div>
                             <span
-                                style="font-size: 13px; font-weight: 700; color: #0B62A2; text-transform: uppercase; letter-spacing: 0.5px;">Surat
-                                Pemberitahuan Terbuka</span>
+                                style="font-size: 13px; font-weight: 700; color: #0B62A2; text-transform: uppercase; letter-spacing: 0.5px;">{{ $peluang->surat_label ?? 'Surat Pemberitahuan Terbuka' }}</span>
                             <h3 style="font-size: 22px; font-weight: 700; color: var(--slate-900); margin: 4px 0 0;">
-                                Permintaan Konsultan Perencana Struktur untuk Pencegahan Banjir
+                                {{ $peluang->surat_judul ?? '' }}
                             </h3>
                         </div>
                         <div
                             style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748b; background: #f1f5f9; padding: 6px 14px; border-radius: 20px;">
                             <span class="material-symbols-outlined"
                                 style="font-size: 18px; color: #0B62A2;">event_available</span>
-                            Status: Terbuka
+                            Status: {{ $peluang->surat_status ?? 'Terbuka' }}
                         </div>
                     </div>
 
-                    <!-- Isi Surat Sesuai Permintaan User -->
+                    <!-- Isi Surat -->
                     <div style="font-size: 16px; line-height: 1.8; color: var(--slate-700); margin-bottom: 28px;">
                         <p style="margin: 0 0 8px; font-weight: 700; color: var(--slate-900);">Kepada Yth.</p>
-                        <p style="margin: 0 0 16px; font-weight: 600; color: var(--royal);">Seluruh Anggota INKINDO DKI
-                            Jakarta</p>
+                        <p style="margin: 0 0 16px; font-weight: 600; color: var(--royal);">{{ $peluang->surat_kepada ?? 'Seluruh Anggota INKINDO DKI Jakarta' }}</p>
                         <p style="margin: 0 0 16px;">Dengan hormat,</p>
                         <p style="margin: 0 0 20px;">
-                            Dapat kami sampaikan bahwa saat ini ada permintaan untuk konsultan <strong>Perencana
-                                Struktur untuk Pencegahan Banjir</strong> dengan kualifikasi sebagai berikut:
+                            {{ $peluang->surat_pengantar ?? '' }}
                         </p>
                     </div>
 
-                    <!-- 4 Kualifikasi dalam Card Grid -->
-                    <div style="display: grid; gap: 14px; margin-bottom: 28px;">
-
-                        <div class="kualifikasi-card">
-                            <span class="kualifikasi-num">1</span>
-                            <p class="kualifikasi-text">
-                                <strong>Mampu menganalisa data curah hujan</strong> secara mendalam, akurat, dan
-                                berbasis data hidrologi terkini.
-                            </p>
+                    <!-- Kualifikasi dalam Card Grid -->
+                    @if (!empty($peluang->kualifikasi))
+                        <div style="display: grid; gap: 14px; margin-bottom: 28px;">
+                            @foreach ($peluang->kualifikasi as $idx => $kualifikasiItem)
+                                <div class="kualifikasi-card">
+                                    <span class="kualifikasi-num">{{ $idx + 1 }}</span>
+                                    <p class="kualifikasi-text">{{ $kualifikasiItem }}</p>
+                                </div>
+                            @endforeach
                         </div>
-
-                        <div class="kualifikasi-card">
-                            <span class="kualifikasi-num">2</span>
-                            <p class="kualifikasi-text">
-                                <strong>Mampu melakukan studi kelaikan pencegahan banjir terhadap struktur bangunan yang
-                                    telah ada</strong> (existing structures).
-                            </p>
-                        </div>
-
-                        <div class="kualifikasi-card">
-                            <span class="kualifikasi-num">3</span>
-                            <p class="kualifikasi-text">
-                                <strong>Melakukan perancangan pencegahan banjir di public area</strong>, sesuai dengan
-                                kaidah-kaidah yang berlaku: <em>structural, arsitektural, estetika, dan lain-lain</em>.
-                            </p>
-                        </div>
-
-                        <div class="kualifikasi-card">
-                            <span class="kualifikasi-num">4</span>
-                            <p class="kualifikasi-text">
-                                <strong>Mampu berkoordinasi dengan kementrian teknis terkait (Kementrian PUPR, dan
-                                    lain-lain)</strong>, untuk mendapatkan izin terkait perancangan struktur bangunan
-                                pencegahan banjir.
-                            </p>
-                        </div>
-
-                    </div>
+                    @endif
 
                     <!-- Penutup Surat -->
                     <div
                         style="font-size: 15px; line-height: 1.8; color: var(--slate-700); margin-bottom: 32px; background: #f8fafc; padding: 20px 24px; border-radius: 10px; border: 1px dashed #cbd5e1;">
                         <p style="margin: 0 0 10px; font-weight: 500;">
-                            Apabila Bidang Usaha Bapak/Ibu sesuai kualifikasi tersebut diatas dapat menghubungi /
-                            menyampaikan ke <strong>Sekretariat INKINDO DKI Jakarta</strong>.
+                            {{ $peluang->surat_penutup ?? '' }}
                         </p>
                         <p style="margin: 0 0 8px;">
                             Demikian yang dapat kami sampaikan, atas perhatian dan kerjasamanya diucapkan terima kasih.
@@ -791,7 +658,7 @@
 
                     <!-- Action Box / Kontak Sekretariat -->
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 10px;">
+                        style="display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 10px;">
                         <div style="display: flex; align-items: center; gap: 14px;">
                             <div
                                 style="width: 46px; height: 46px; border-radius: 50%; background: rgba(11, 98, 162, 0.08); color: #0B62A2; display: grid; place-items: center;">
@@ -800,23 +667,8 @@
                             <div>
                                 <span style="font-size: 13px; color: var(--slate-500); display: block;">Layanan
                                     Anggota</span>
-                                <strong style="font-size: 15px; color: var(--slate-900);">+62217942940(H) /
-                                    +6282112079750</strong>
+                                <strong style="font-size: 15px; color: var(--slate-900);">{{ $peluang->kontak_telp ?? '+62217942940(H) / +6282112079750' }}</strong>
                             </div>
-                        </div>
-
-                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <a href="mailto:sekretariat@inkindo-dki.org?subject=Pengajuan%20Kualifikasi%20Konsultan%20Pencegahan%20Banjir"
-                                class="btn btn--primary"
-                                style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 24px; font-weight: 600;">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">mail</span>
-                                Hubungi Sekretariat
-                            </a>
-                            <a href="tel:+62217942940" class="btn btn--outline"
-                                style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 24px; font-weight: 600;">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">call</span>
-                                Telepon Langsung
-                            </a>
                         </div>
                     </div>
 
