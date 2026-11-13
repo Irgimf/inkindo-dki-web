@@ -1600,7 +1600,7 @@
     <main class="regulasi-page">
         <!-- Hero Section matching Regulasi Page -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('assets/jakarta2.jpg');"></div>
+            <div class="page-hero__bg" style="background-image: url('{{ \App\Support\PageBackgroundHelper::get('berita_hero', 'assets/jakarta2.jpg') }}');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
                 <h1 class="page-hero__title">Berita &amp; Informasi</h1>

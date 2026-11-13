@@ -827,7 +827,7 @@
     <main class="regulasi-page">
         <!-- New Hero Section -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('assets/jakarta.jpg');"></div>
+            <div class="page-hero__bg" style="background-image: url('{{ \App\Support\PageBackgroundHelper::get('regulasi_hero', 'assets/jakarta.jpg') }}');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
                 <h1 class="page-hero__title">Regulasi & Kebijakan</h1>

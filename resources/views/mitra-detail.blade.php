@@ -25,7 +25,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('assets/jakarta7.jpg') center/cover no-repeat;
+            background: url('{{ \App\Support\PageBackgroundHelper::get('mitra_detail_hero', 'assets/jakarta7.jpg') }}') center/cover no-repeat;
             opacity: 0.16;
             pointer-events: none;
         }

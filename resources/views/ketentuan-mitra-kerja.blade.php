@@ -264,7 +264,7 @@
             align-items: center;
             justify-content: center;
             color: #0F172A;
-            background: url('assets/jakarta7.jpg') center/cover no-repeat;
+            background: url('{{ \App\Support\PageBackgroundHelper::get('ketentuan_mitra_hero', 'assets/jakarta7.jpg') }}') center/cover no-repeat;
         }
 
         @media (max-width: 900px) {
@@ -766,7 +766,7 @@
 
         <!-- 4. Ketentuan Mitra Kerja (Image Background Identik Visi Misi tentang.html) -->
         <section id="ketentuan"
-            style="position: relative; padding: 96px 0; color: var(--white); background: url('assets/jakarta3.jpg') center/cover no-repeat fixed;">
+            style="position: relative; padding: 96px 0; color: var(--white); background: url('{{ \App\Support\PageBackgroundHelper::get('ketentuan_mitra_section', 'assets/jakarta3.jpg') }}') center/cover no-repeat fixed;">
             <div style="position: absolute; inset: 0; background: rgba(8, 14, 40, 0.72);"></div>
             <div class="container"
                 style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: left;">

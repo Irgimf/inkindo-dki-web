@@ -36,7 +36,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('assets/jakarta2.jpg') center/cover;
+            background: url('{{ \App\Support\PageBackgroundHelper::get('berita_detail_hero', 'assets/jakarta2.jpg') }}') center/cover;
             z-index: 1;
         }
 

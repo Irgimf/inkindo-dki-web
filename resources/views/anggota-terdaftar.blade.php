@@ -1233,7 +1233,7 @@
 
         <!-- 1. Hero Section (Desain Identik tentang.html: Full Screen 100vh & Background Foto Jakarta) -->
         <section
-            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('assets/jakarta8.jpg') center/cover no-repeat;">
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('{{ \App\Support\PageBackgroundHelper::get('anggota_hero', 'assets/jakarta8.jpg') }}') center/cover no-repeat;">
             <div
                 style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%), linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);">
             </div>

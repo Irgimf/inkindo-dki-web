@@ -516,7 +516,7 @@
 
         <!-- 1. Hero Section (Sama persis tentang.html: Full Screen 100vh & Warna Biru Identik) -->
         <section
-            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('assets/jakarta4.jpg') center/cover no-repeat;">
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('{{ \App\Support\PageBackgroundHelper::get('lelang_hero', 'assets/jakarta4.jpg') }}') center/cover no-repeat;">
             <div
                 style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%), linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);">
             </div>
@@ -580,7 +580,7 @@
 
         <!-- 3. Peluang Usaha Lainnya (Section Berlatar Belakang Biru / Gaya Visi & Misi tentang.html) -->
         <section
-            style="position: relative; padding: 90px 0; color: var(--white); background: url('assets/jakarta4.jpg') center/cover no-repeat fixed;">
+            style="position: relative; padding: 90px 0; color: var(--white); background: url('{{ \App\Support\PageBackgroundHelper::get('lelang_peluang_section', 'assets/jakarta4.jpg') }}') center/cover no-repeat fixed;">
             <div style="position: absolute; inset: 0; background: rgba(8, 14, 40, 0.72);"></div>
             <div class="container" style="position: relative; z-index: 2; max-width: 1000px; margin: 0 auto;">
 
