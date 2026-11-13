@@ -621,40 +621,8 @@
 
                         function applyHeroPhrases(phrases) {
                             if (!Array.isArray(phrases) || phrases.length === 0) return;
-                            var oldEl = document.getElementById('hero-type-text');
-                            if (!oldEl || !oldEl.parentNode) return;
-
-                            var heroTextEl = oldEl.cloneNode(true);
-                            oldEl.parentNode.replaceChild(heroTextEl, oldEl);
-
-                            var pIndex = 0;
-                            var cIndex = phrases[0].length;
-                            var deleting = false;
-                            heroTextEl.textContent = phrases[0];
-
-                            function typeLoop() {
-                                var word = phrases[pIndex] || '';
-                                heroTextEl.textContent = word.slice(0, cIndex);
-                                var delay = deleting ? 45 : 85;
-
-                                if (!deleting && cIndex === word.length) {
-                                    delay = 2400;
-                                    deleting = true;
-                                } else if (deleting && cIndex === 0) {
-                                    deleting = false;
-                                    pIndex = (pIndex + 1) % phrases.length;
-                                    delay = 450;
-                                } else {
-                                    cIndex += deleting ? -1 : 1;
-                                }
-                                setTimeout(typeLoop, delay);
-                            }
-
-                            if (phrases.length > 1) {
-                                setTimeout(function () {
-                                    deleting = true;
-                                    typeLoop();
-                                }, 2200);
+                            if (typeof window.__setHeroPhrases === 'function') {
+                                window.__setHeroPhrases(phrases);
                             }
                         }
 

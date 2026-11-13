@@ -644,46 +644,78 @@
         }
     });
 
-    /* ---------- Hero: Efek Mengetik Teks Animasi (Sesuai referensi gambar) ---------- */
-    const heroTextEl = $('#hero-type-text');
-    if (heroTextEl) {
-        const phrases = [
+    /* ---------- Hero: Efek Mengetik Teks Animasi (Single-timer, anti-glitch & multi-bahasa) ---------- */
+    (function setupHeroTypewriter() {
+        const defaultPhrases = [
             'Selamat Datang',
             'DPP INKINDO DKI Jakarta',
             'Ekosistem Konsultansi Digital',
             'Solusi Jasa Konsultansi Terpercaya',
             'Integritas, Inovasi & Profesionalisme'
         ];
-        let pIndex = 0;
-        let cIndex = phrases[0].length; // Mulai langsung dari 'Selamat Datang' penuh
-        let deleting = false;
 
-        const typeLoop = () => {
-            const word = phrases[pIndex];
-            heroTextEl.textContent = word.slice(0, cIndex);
+        window.__INKINDO_HERO_PHRASES_ID = defaultPhrases.slice();
+        window.__INKINDO_HERO_TYPE_TIMER = window.__INKINDO_HERO_TYPE_TIMER || null;
 
-            let delay = deleting ? 45 : 85;
+        window.__startHeroTypewriter = function (phrases) {
+            const heroTextEl = document.getElementById('hero-type-text');
+            if (!heroTextEl || !Array.isArray(phrases) || phrases.length === 0) return;
 
-            if (!deleting && cIndex === word.length) {
-                delay = 2400; // Tahan lama saat teks lengkap
-                deleting = true;
-            } else if (deleting && cIndex === 0) {
-                deleting = false;
-                pIndex = (pIndex + 1) % phrases.length;
-                delay = 450;
-            } else {
-                cIndex += deleting ? -1 : 1;
+            if (window.__INKINDO_HERO_TYPE_TIMER) {
+                clearTimeout(window.__INKINDO_HERO_TYPE_TIMER);
+                window.__INKINDO_HERO_TYPE_TIMER = null;
             }
 
-            setTimeout(typeLoop, delay);
+            const list = phrases.slice();
+            let pIndex = 0;
+            let cIndex = list[0].length;
+            let deleting = false;
+            heroTextEl.textContent = list[0];
+
+            if (list.length <= 1) return;
+
+            const typeLoop = () => {
+                const el = document.getElementById('hero-type-text');
+                if (!el) return;
+
+                const word = list[pIndex] || '';
+                el.textContent = word.slice(0, cIndex);
+
+                let delay = deleting ? 45 : 85;
+                if (!deleting && cIndex === word.length) {
+                    delay = 2400;
+                    deleting = true;
+                } else if (deleting && cIndex === 0) {
+                    deleting = false;
+                    pIndex = (pIndex + 1) % list.length;
+                    delay = 450;
+                } else {
+                    cIndex += deleting ? -1 : 1;
+                }
+
+                window.__INKINDO_HERO_TYPE_TIMER = setTimeout(typeLoop, delay);
+            };
+
+            window.__INKINDO_HERO_TYPE_TIMER = setTimeout(() => {
+                deleting = true;
+                typeLoop();
+            }, 2200);
         };
 
-        // Mulai animasi menghapus dan mengetik frase berikutnya setelah jeda pembuka
-        setTimeout(() => {
-            deleting = true;
-            typeLoop();
-        }, 2200);
-    }
+        window.__setHeroPhrases = function (phrases) {
+            if (!Array.isArray(phrases) || phrases.length === 0) return;
+            window.__INKINDO_HERO_PHRASES_ID = phrases.slice();
+            if (window.InkindoI18n && typeof window.InkindoI18n.refreshHeroPhrases === 'function') {
+                window.InkindoI18n.refreshHeroPhrases();
+            } else {
+                window.__startHeroTypewriter(window.__INKINDO_HERO_PHRASES_ID);
+            }
+        };
+
+        if (document.getElementById('hero-type-text')) {
+            window.__startHeroTypewriter(window.__INKINDO_HERO_PHRASES_ID);
+        }
+    })();
 
     /* Tombol pencarian hero: memicu pencarian header (jika tombol ada) */
     const heroSearchBtn = $('#hero-search-btn');

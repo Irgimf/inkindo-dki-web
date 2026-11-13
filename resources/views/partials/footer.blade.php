@@ -99,3 +99,4 @@
             </div>
         </div>
     </footer>
+    <script src="/js/i18n.js?v=4" defer></script>
