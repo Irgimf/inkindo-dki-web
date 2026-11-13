@@ -1197,7 +1197,7 @@
 
         <!-- Hero Section -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('{{ \App\Support\PageBackgroundHelper::get('tentang_hero', $profile['hero_image'] ?? 'assets/jakarta3.jpg') }}');"></div>
+            <div class="page-hero__bg" style="background-image: url('{{ $resolveTentangImg($profile['hero_image'] ?? null, 'assets/jakarta3.jpg') }}');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
                 <h1 class="page-hero__title">{{ $profile['hero_title'] ?? 'Tentang Kami' }}</h1>
