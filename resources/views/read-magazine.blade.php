@@ -679,33 +679,7 @@
                 onclick="openKlinikKonsultasiModal(event)">Ajukan Konsultasi</button>
         </div>
 
-        <div class="side-panel__content" data-content="kontak">
-            <h3 class="side-panel__title">Hubungi Kami</h3>
-            <ul class="panel-links">
-                <li><a href="tel:+62217942940" class="panel-link">
-                        <span class="material-symbols-outlined panel-link__icon">call</span>
-                        <span><strong>Telp: +62217942940(H) / +6282112079750</strong><small>Fax:
-                                +62217942941</small></span>
-                    </a></li>
-                <li><a href="mailto:sekretariat@inkindo-dki.org" class="panel-link">
-                        <span class="material-symbols-outlined panel-link__icon">mail</span>
-                        <span><strong>sekretariat@inkindo-dki.org</strong><small>inkindo_dki@yahoo.com</small></span>
-                    </a></li>
-                <li>
-                    <div class="panel-link">
-                        <span class="material-symbols-outlined panel-link__icon">location_on</span>
-                        <span><strong>Sekretariat DPP</strong><small>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta
-                                Selatan 12760</small></span>
-                    </div>
-                </li>
-                <li>
-                    <div class="panel-link">
-                        <span class="material-symbols-outlined panel-link__icon">schedule</span>
-                        <span><strong>Jam Operasional</strong><small>Senin - Jumat: 08.00 - 16.30 WIB</small></span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        @include('partials.side_contact')
 
         <div class="side-panel__content side-panel__content--chat" data-content="chat">
             <div class="chat-head">
@@ -814,49 +788,7 @@
         </section>
     </main>
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="site-footer" id="kontak">
-        <div class="site-footer__container">
-            <div class="site-footer__grid">
-                <div class="site-footer__brand">
-                    <div class="site-footer__logo">
-                        <img alt="Logo INKINDO DKI Jakarta" src="assets/logo-inkindo.png">
-                    </div>
-                    <p class="site-footer__bio">
-                        Ikatan Nasional Konsultan Indonesia (INKINDO) Provinsi DKI Jakarta merupakan wadah asosiasi
-                        perusahaan jasa konsultansi independen yang profesional dan berintegritas.
-                    </p>
-                </div>
-                <div class="site-footer__col site-footer__col--contact">
-                    <h4>Sekretariat DPP</h4>
-                    <p class="site-footer__address">
-                        <span class="material-symbols-outlined site-footer__icon">location_on</span>
-                        <span>Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760, DKI Jakarta</span>
-                    </p>
-                    <div class="site-footer__contact">
-                        <div class="site-footer__contact-item">
-                            <span class="material-symbols-outlined site-footer__icon">call</span>
-                            <span>Telp: <a href="tel:+62217942940" class="site-footer__link">+62217942940</a>(H), <a
-                                    href="tel:+6282112079750" class="site-footer__link">+6282112079750</a>, Fax:
-                                +62217942941</span>
-                        </div>
-                        <div class="site-footer__contact-item">
-                            <span class="material-symbols-outlined site-footer__icon">mail</span>
-                            <span><a href="mailto:sekretariat@inkindo-dki.org"
-                                    class="site-footer__link">sekretariat@inkindo-dki.org</a></span>
-                        </div>
-                        <div class="site-footer__contact-item site-footer__hours">
-                            <span class="material-symbols-outlined site-footer__icon">schedule</span>
-                            <span>Senin - Jumat: 08.00 - 16.30 WIB</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="site-footer__bottom">
-                <p>© 2026 DPP INKINDO DKI Jakarta. Hak Cipta Dilindungi.</p>
-            </div>
-        </div>
-    </footer>
+    @include('partials.footer')
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
