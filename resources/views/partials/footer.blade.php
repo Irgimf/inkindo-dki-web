@@ -9,7 +9,7 @@
                 <!-- Col 1: Identity & Bio & Social Media -->
                 <div class="site-footer__brand">
                     <div class="site-footer__logo">
-                        <img alt="Logo INKINDO DKI Jakarta" src="/assets/logo-inkindo.png">
+                        <img alt="Logo INKINDO DKI Jakarta" src="/assets/logo-inkindo.webp">
                     </div>
                     <p class="site-footer__bio">
                         {{ $siteContact->bio ?? '' }}

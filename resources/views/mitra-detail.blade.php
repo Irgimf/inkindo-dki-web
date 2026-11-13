@@ -25,7 +25,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('{{ \App\Support\PageBackgroundHelper::get('mitra_detail_hero', 'assets/jakarta7.jpg') }}') center/cover no-repeat;
+            background: url('{{ \App\Support\PageBackgroundHelper::get('mitra_detail_hero', 'assets/jakarta7.webp') }}') center/cover no-repeat;
             opacity: 0.16;
             pointer-events: none;
         }
@@ -417,7 +417,7 @@
     <header class="main-header is-scrolled" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav">
@@ -633,7 +633,7 @@
 
                 <div class="mitra-hero-card">
                     <div class="mitra-logo-box">
-                        <img id="mitra-logo-img" src="assets/logo-inkindo.png" alt="Logo Mitra Kerja">
+                        <img id="mitra-logo-img" src="assets/logo-inkindo.webp" alt="Logo Mitra Kerja">
                     </div>
                     <div>
                         <div class="mitra-verified-pill">
@@ -996,7 +996,7 @@
                     document.getElementById('kontak-mitra-subtitle').textContent = 'Kirim pesan langsung kepada ' + m.nama_perusahaan;
 
                     const logoEl = document.getElementById('mitra-logo-img');
-                    logoEl.src = m.logo || 'assets/logo-inkindo.png';
+                    logoEl.src = m.logo || 'assets/logo-inkindo.webp';
                     logoEl.alt = m.nama_perusahaan;
 
                     document.getElementById('mitra-description-text').textContent = m.deskripsi || '-';
@@ -1047,7 +1047,7 @@
                             <article class="product-card">
                                 <div class="product-card__img-wrap">
                                     <span class="product-card__badge">${escapeHtml(p.kategori_produk || 'Produk Unggulan')}</span>
-                                    <img src="${escapeHtml(p.gambar_produk || m.logo)}" alt="${escapeHtml(p.nama_produk)}">
+                                    <img src="${escapeHtml(p.gambar_produk || m.logo)}" alt="${escapeHtml(p.nama_produk)}" loading="lazy" decoding="async">
                                 </div>
                                 <div class="product-card__body">
                                     <h3 class="product-card__title">${escapeHtml(p.nama_produk)}</h3>
@@ -1074,7 +1074,7 @@
                     if (otherGrid && others.length > 0) {
                         otherGrid.innerHTML = others.map(o => `
                             <a href="/mitra-kerja/${encodeURIComponent(o.slug)}" class="other-partner-item" title="${escapeHtml(o.nama_perusahaan)}">
-                                <img src="${escapeHtml(o.logo)}" alt="${escapeHtml(o.nama_perusahaan)}">
+                                <img src="${escapeHtml(o.logo)}" alt="${escapeHtml(o.nama_perusahaan)}" loading="lazy" decoding="async">
                             </a>
                         `).join('');
                     }

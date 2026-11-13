@@ -13,15 +13,15 @@ class CmsTentangController extends Controller
         return [
             'hero_title'       => 'Tentang Kami',
             'hero_subtitle'    => 'Mengenal lebih dekat profil organisasi, sejarah panjang, visi & misi, kode etik kehormatan profesi, serta struktur kepengurusan DPP INKINDO DKI Jakarta.',
-            'hero_image'       => 'assets/jakarta3.jpg',
+            'hero_image'       => 'assets/jakarta3.webp',
             'sejarah_heading'  => 'Sejarah INKINDO DKI Jakarta',
             'sejarah_content'  => implode("\n\n", [
                 'INKINDO (Ikatan Nasional Konsultan Indonesia) merupakan asosiasi perusahaan konsultan independen yang didirikan pada tanggal 29 Juni 1979, sebagai hasil fusi antara IKINDO (Ikatan Konsultan Indonesia) dan PKTPI (Persatuan Konsultan Teknik Pembangunan Indonesia). Anggota INKINDO tersebar di 33 provinsi di seluruh Indonesia dan total memiliki anggota 7000 perusahaan konsultan.',
                 'INKINDO DKI Jakarta terletak di Provinsi Daerah Khusus Ibukota Jakarta, sekarang memiliki anggota aktif 900 perusahaan, merupakan INKINDO provinsi terbesar diantara 33 provinsi di Indonesia. Anggota INKINDO DKI Jakarta dikelompokan dalam 3 (tiga) kualifikasi : Besar (20%), Menengah (45%), dan Kecil (35%). Beberapa anggota INKINDO DKI Jakarta telah menangani banyak proyek-proyek terkemuka, di Indonesia dan di manca negara.',
             ]),
-            'sejarah_image'    => 'assets/hero-bg.jpg',
+            'sejarah_image'    => 'assets/hero-bg.webp',
             'visimisi_heading' => 'Visi & Misi',
-            'visimisi_bg_image'=> 'assets/jakarta3.jpg',
+            'visimisi_bg_image'=> 'assets/jakarta3.webp',
             'visi_title'       => 'Visi',
             'visi_text'        => 'Gerak Cepat Memajukan Anggota yang Berkelanjutan.',
             'misi_title'       => 'Misi',

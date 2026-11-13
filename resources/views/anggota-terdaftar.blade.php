@@ -945,7 +945,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav">
@@ -1122,32 +1122,32 @@
             <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                    <img src="mitra_logos/avian.webp" alt="Avian"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                    <img src="mitra_logos/lesso.webp" alt="Lesso"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                    <img src="mitra_logos/seven.webp" alt="Seven"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                    <img src="mitra_logos/dekkson.webp" alt="Dekkson"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                    <img src="mitra_logos/alila.webp" alt="Alila"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                    <img src="mitra_logos/propan.webp" alt="Propan"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
             </div>
@@ -1206,7 +1206,7 @@
 
         <!-- 1. Hero Section (Desain Identik tentang.html: Full Screen 100vh & Background Foto Jakarta) -->
         <section
-            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('{{ \App\Support\PageBackgroundHelper::get('anggota_hero', 'assets/jakarta8.jpg') }}') center/cover no-repeat;">
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('{{ \App\Support\PageBackgroundHelper::get('anggota_hero', 'assets/jakarta8.webp') }}') center/cover no-repeat;">
             <div
                 style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%), linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);">
             </div>

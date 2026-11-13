@@ -4,7 +4,7 @@ window.MAGAZINE_DATA = [
         title: 'Majalah INKINDO DKI Jakarta Edisi 79',
         kind: 'Majalah', edition: 'Edisi 79', date: 'Okt 2025',
         desc: 'Edisi terbaru majalah resmi DPP INKINDO DKI Jakarta berisi liputan kegiatan organisasi, informasi regulasi, dan dinamika jasa konsultansi.',
-        cover: 'assets/magazine/edisi-79.jpg', pdf: 'assets/magazine/edisi-79.pdf', remote: 'https://www.inkindo-dki.org/files/document/doc_buletin-79-buat_web.pdf'
+        cover: 'assets/magazine/edisi-79.webp', pdf: 'assets/magazine/edisi-79.pdf', remote: 'https://www.inkindo-dki.org/files/document/doc_buletin-79-buat_web.pdf'
     },
     {
         slug: 'pedoman-standar-minimal-tahun-2025',
@@ -25,7 +25,7 @@ window.MAGAZINE_DATA = [
         title: 'Majalah INKINDO DKI Jakarta Edisi 77',
         kind: 'Majalah', edition: 'Edisi 77', date: 'Jul 2024',
         desc: 'Majalah INKINDO DKI Jakarta Edisi 77.',
-        cover: 'assets/magazine/edisi-77.jpg', pdf: 'assets/magazine/edisi-77.pdf', remote: 'https://www.inkindo-dki.org/files/document/doc_buletin-77emagazine.pdf'
+        cover: 'assets/magazine/edisi-77.webp', pdf: 'assets/magazine/edisi-77.pdf', remote: 'https://www.inkindo-dki.org/files/document/doc_buletin-77emagazine.pdf'
     },
     {
         slug: 'pedoman-standar-minimal-tahun-2024',
@@ -53,7 +53,7 @@ window.MAGAZINE_DATA = [
         title: 'Pedoman Standar Minimal Tahun 2023',
         kind: 'Pedoman', edition: 'Tahun 2023', date: 'Des 2022',
         desc: 'Remunerasi/Biaya Personil (Billing Rate) dan Biaya Langsung (Direct Cost) Tahun 2023.',
-        cover: 'assets/magazine/pedoman-2023.jpg', pdf: 'assets/magazine/pedoman-2023.pdf', remote: 'https://www.inkindo-dki.org/files/document/doc_new-billing-rate-2023_compressed.pdf'
+        cover: 'assets/magazine/pedoman-2023.webp', pdf: 'assets/magazine/pedoman-2023.pdf', remote: 'https://www.inkindo-dki.org/files/document/doc_new-billing-rate-2023_compressed.pdf'
     },
     {
         slug: 'buku-konstruksi-pupr-bagian-3',

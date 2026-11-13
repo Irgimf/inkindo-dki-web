@@ -1309,7 +1309,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
@@ -1490,32 +1490,32 @@
             <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                    <img src="mitra_logos/avian.webp" alt="Avian"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                    <img src="mitra_logos/lesso.webp" alt="Lesso"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                    <img src="mitra_logos/seven.webp" alt="Seven"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                    <img src="mitra_logos/dekkson.webp" alt="Dekkson"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                    <img src="mitra_logos/alila.webp" alt="Alila"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                    <img src="mitra_logos/propan.webp" alt="Propan"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
             </div>
@@ -1573,7 +1573,7 @@
     <main class="regulasi-page">
         <!-- Hero Section matching Regulasi Page -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('{{ \App\Support\PageBackgroundHelper::get('berita_hero', 'assets/jakarta2.jpg') }}');"></div>
+            <div class="page-hero__bg" style="background-image: url('{{ \App\Support\PageBackgroundHelper::get('berita_hero', 'assets/jakarta2.webp') }}');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
                 <h1 class="page-hero__title">Berita &amp; Informasi</h1>
@@ -1717,7 +1717,7 @@
 
             function openBookModal(b) {
                 if (!b) return;
-                document.getElementById('bk-cover').src = b.gambar || 'assets/gambar.png';
+                document.getElementById('bk-cover').src = b.gambar || 'assets/gambar.webp';
                 document.getElementById('bk-cover').alt = 'Sampul buku ' + b.judul;
                 document.getElementById('bk-kind').textContent = b.kategori_label || 'Karya Anggota';
                 document.getElementById('bk-title').textContent = b.judul || '';
@@ -1782,7 +1782,7 @@
                 lbAlbumTitle = item.judul || 'Album Dokumentasi';
                 lbPhotos = Array.isArray(item.galeri_photos) && item.galeri_photos.length
                     ? item.galeri_photos
-                    : [item.gambar || 'assets/gambar.png'];
+                    : [item.gambar || 'assets/gambar.webp'];
                 document.getElementById('lb-title').textContent = lbAlbumTitle;
                 document.getElementById('lb-meta').textContent = [item.kategori_label, item.tanggal_label].filter(Boolean).join(' • ');
                 document.getElementById('lb-thumbs').innerHTML = lbPhotos.map((p, n) =>

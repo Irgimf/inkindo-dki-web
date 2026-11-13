@@ -301,7 +301,7 @@
             width: 100%;
             padding: 85px 0;
             color: #ffffff;
-            background-image: url('assets/jakarta3.jpg');
+            background-image: url('assets/jakarta3.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -930,7 +930,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav">
@@ -1104,32 +1104,32 @@
             <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                    <img src="mitra_logos/avian.webp" alt="Avian"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                    <img src="mitra_logos/lesso.webp" alt="Lesso"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                    <img src="mitra_logos/seven.webp" alt="Seven"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                    <img src="mitra_logos/dekkson.webp" alt="Dekkson"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                    <img src="mitra_logos/alila.webp" alt="Alila"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                    <img src="mitra_logos/propan.webp" alt="Propan"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
             </div>
@@ -1197,7 +1197,7 @@
 
         <!-- Hero Section -->
         <section class="page-hero">
-            <div class="page-hero__bg" style="background-image: url('{{ $resolveTentangImg($profile['hero_image'] ?? null, 'assets/jakarta3.jpg') }}');"></div>
+            <div class="page-hero__bg" style="background-image: url('{{ $resolveTentangImg($profile['hero_image'] ?? null, 'assets/jakarta3.webp') }}');"></div>
             <div class="page-hero__shade"></div>
             <div class="container page-hero__container">
                 <h1 class="page-hero__title">{{ $profile['hero_title'] ?? 'Tentang Kami' }}</h1>
@@ -1239,14 +1239,14 @@
                         </div>
                         <!-- Gambar -->
                         <div>
-                            <img src="{{ $resolveTentangImg($profile['sejarah_image'] ?? null, 'assets/hero-bg.jpg') }}" alt="{{ $profile['sejarah_heading'] ?? 'Sejarah INKINDO DKI Jakarta' }}" class="sejarah-img">
+                            <img src="{{ $resolveTentangImg($profile['sejarah_image'] ?? null, 'assets/hero-bg.webp') }}" alt="{{ $profile['sejarah_heading'] ?? 'Sejarah INKINDO DKI Jakarta' }}" class="sejarah-img">
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- 1.2 Visi & Misi (Full Width Background dengan Overlay Biru & Parallax Scroll) -->
-            <section class="visi-misi-section profil-item" id="sec-visimisi" data-category="visimisi" style="background-image: url('{{ $resolveTentangImg($profile['visimisi_bg_image'] ?? null, 'assets/jakarta3.jpg') }}');">
+            <section class="visi-misi-section profil-item" id="sec-visimisi" data-category="visimisi" style="background-image: url('{{ $resolveTentangImg($profile['visimisi_bg_image'] ?? null, 'assets/jakarta3.webp') }}');">
                 <div class="visi-misi-overlay"></div>
                 <div class="container visi-misi-container">
                     <h2 class="visi-misi-heading">{{ $profile['visimisi_heading'] ?? 'Visi & Misi' }}</h2>

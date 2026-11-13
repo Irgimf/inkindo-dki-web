@@ -264,7 +264,7 @@
             align-items: center;
             justify-content: center;
             color: #0F172A;
-            background: url('{{ \App\Support\PageBackgroundHelper::get('ketentuan_mitra_hero', 'assets/jakarta7.jpg') }}') center/cover no-repeat;
+            background: url('{{ \App\Support\PageBackgroundHelper::get('ketentuan_mitra_hero', 'assets/jakarta7.webp') }}') center/cover no-repeat;
         }
 
         @media (max-width: 900px) {
@@ -313,7 +313,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav">
@@ -486,32 +486,32 @@
             <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                    <img src="mitra_logos/avian.webp" alt="Avian"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                    <img src="mitra_logos/lesso.webp" alt="Lesso"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                    <img src="mitra_logos/seven.webp" alt="Seven"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                    <img src="mitra_logos/dekkson.webp" alt="Dekkson"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                    <img src="mitra_logos/alila.webp" alt="Alila"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                    <img src="mitra_logos/propan.webp" alt="Propan"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
             </div>
@@ -739,7 +739,7 @@
 
         <!-- 4. Ketentuan Mitra Kerja (Image Background Identik Visi Misi tentang.html) -->
         <section id="ketentuan"
-            style="position: relative; padding: 96px 0; color: var(--white); background: url('{{ \App\Support\PageBackgroundHelper::get('ketentuan_mitra_section', 'assets/jakarta3.jpg') }}') center/cover no-repeat fixed;">
+            style="position: relative; padding: 96px 0; color: var(--white); background: url('{{ \App\Support\PageBackgroundHelper::get('ketentuan_mitra_section', 'assets/jakarta3.webp') }}') center/cover no-repeat fixed;">
             <div style="position: absolute; inset: 0; background: rgba(8, 14, 40, 0.72);"></div>
             <div class="container"
                 style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: left;">
@@ -798,19 +798,19 @@
                 </div>
 
                 <div class="partner-logos-grid">
-                    <div class="partner-logo-item"><img src="mitra_logos/avian.jpg" alt="Avian Brands"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/lesso.jpg" alt="Lesso Group"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/seven.jpg" alt="Seven ACP"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/dekkson.jpg"
+                    <div class="partner-logo-item"><img src="mitra_logos/avian.webp" alt="Avian Brands"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/lesso.webp" alt="Lesso Group"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/seven.webp" alt="Seven ACP"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/dekkson.webp"
                             alt="Dekkson Architectural Hardware"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/alila.jpg" alt="Alila"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/propan.jpg" alt="Propan Raya"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/kulitbatu.jpg" alt="Kulit Batu"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/kjpp.jpg" alt="KJPP"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/amtyas.jpg" alt="Amtyas"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/dc.jpg" alt="DC"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/cbm.jpg" alt="CBM"></div>
-                    <div class="partner-logo-item"><img src="mitra_logos/cec.jpg" alt="CEC"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/alila.webp" alt="Alila"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/propan.webp" alt="Propan Raya"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/kulitbatu.webp" alt="Kulit Batu"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/kjpp.webp" alt="KJPP"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/amtyas.webp" alt="Amtyas"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/dc.webp" alt="DC"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/cbm.webp" alt="CBM"></div>
+                    <div class="partner-logo-item"><img src="mitra_logos/cec.webp" alt="CEC"></div>
                 </div>
             </div>
         </section>

@@ -23,7 +23,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
@@ -201,32 +201,32 @@
             <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                    <img src="mitra_logos/avian.webp" alt="Avian"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                    <img src="mitra_logos/lesso.webp" alt="Lesso"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                    <img src="mitra_logos/seven.webp" alt="Seven"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                    <img src="mitra_logos/dekkson.webp" alt="Dekkson"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                    <img src="mitra_logos/alila.webp" alt="Alila"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                    <img src="mitra_logos/propan.webp" alt="Propan"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
             </div>
@@ -288,8 +288,8 @@
             <script>
                 (function () {
                     var jakartaImages = [
-                        'assets/jakartahome1.jpg',
-                        'assets/jakartahome3.jpg'
+                        'assets/jakartahome1.webp',
+                        'assets/jakartahome3.webp'
                     ];
                     window.__JAKARTA_HERO_IMAGES = jakartaImages;
                     var initIdx = Math.floor(Math.random() * jakartaImages.length);
@@ -319,7 +319,7 @@
                     <div class="carousel" id="hero-carousel">
                         <div class="carousel__track">
                             <div class="carousel__slide is-active">
-                                <img src="assets/hero-bg.jpg" alt="Dewan Pengurus Provinsi INKINDO DKI Jakarta">
+                                <img src="assets/hero-bg.webp" alt="Dewan Pengurus Provinsi INKINDO DKI Jakarta">
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">DPP Masa Bakti 2026–2030</span>
                                     <a href="#tentang" class="carousel__title">Dewan Pengurus Provinsi INKINDO DKI
@@ -327,14 +327,14 @@
                                 </div>
                             </div>
                             <div class="carousel__slide">
-                                <img src="assets/gambar.png" alt="INKINDO DKI Goes to Campus">
+                                <img src="assets/gambar.webp" alt="INKINDO DKI Goes to Campus">
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">Kemitraan Kampus</span>
                                     <a href="#berita" class="carousel__title">INKINDO DKI Goes to Campus</a>
                                 </div>
                             </div>
                             <div class="carousel__slide carousel__slide--graphic">
-                                <img src="assets/gambar2.jpg" alt="Agenda Mendatang">
+                                <img src="assets/gambar2.webp" alt="Agenda Mendatang">
                                 <span class="material-symbols-outlined carousel__graphic">verified_user</span>
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">Agenda Mendatang</span>
@@ -342,7 +342,7 @@
                                 </div>
                             </div>
                             <div class="carousel__slide carousel__slide--graphic carousel__slide--dark">
-                                <img src="assets/gambar1.jpg" alt="Majalah INKINDO DKI Jakarta">
+                                <img src="assets/gambar1.webp" alt="Majalah INKINDO DKI Jakarta">
                                 <span class="material-symbols-outlined carousel__graphic">auto_stories</span>
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">e-Magazine Edisi 79</span>
@@ -375,19 +375,19 @@
                                 <div class="mitra-kerja__marquee">
                                     <!-- Track 1 -->
                                     <div class="mitra-kerja__track">
-                                        <div class="mitra-card"><img src="mitra_logos/avian.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/lesso.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/seven.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/dekkson.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/alila.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/avian.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/lesso.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/seven.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/dekkson.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/alila.webp" alt=""></div>
                                     </div>
                                     <!-- Track 2 (Duplicate for infinite loop) -->
                                     <div class="mitra-kerja__track">
-                                        <div class="mitra-card"><img src="mitra_logos/kulitbatu.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/lesso.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/kjpp.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/amtyas.jpg" alt=""></div>
-                                        <div class="mitra-card"><img src="mitra_logos/dc.jpg" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/kulitbatu.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/lesso.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/kjpp.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/amtyas.webp" alt=""></div>
+                                        <div class="mitra-card"><img src="mitra_logos/dc.webp" alt=""></div>
                                     </div>
                                 </div>
                             </div>
@@ -443,8 +443,8 @@
                     <!-- Card 1: Highlight (Slot 1) -->
                     <a href="berita.html" class="bento__feature reveal" id="bento-slot-1" style="text-decoration: none; color: inherit; cursor: pointer; display: flex; flex-direction: column;">
                         <div class="bento__media">
-                            <img id="bento-slot-1-img" src="assets/gambar.png"
-                                alt="Berita Utama INKINDO DKI Jakarta">
+                            <img id="bento-slot-1-img" src="assets/gambar.webp"
+                                alt="Berita Utama INKINDO DKI Jakarta" loading="lazy" decoding="async">
                         </div>
                         <div class="bento__body">
                             <div class="bento__meta" id="bento-slot-1-meta">
@@ -458,7 +458,7 @@
                         <!-- Card 2: Kanan Atas (Slot 2) -->
                         <a href="berita.html" class="bento__card bento__card--horizontal reveal" id="bento-slot-2" style="text-decoration: none; color: inherit; cursor: pointer;">
                             <div class="bento__media-side">
-                                <img id="bento-slot-2-img" src="assets/gambar2.jpg" alt="Informasi">
+                                <img id="bento-slot-2-img" src="assets/gambar2.webp" alt="Informasi" loading="lazy" decoding="async">
                             </div>
                             <div class="bento__body-side">
                                 <div class="bento__meta" id="bento-slot-2-meta">
@@ -471,7 +471,7 @@
                         <!-- Card 3: Kanan Bawah (Slot 3) -->
                         <a href="berita.html" class="bento__card bento__card--horizontal reveal" id="bento-slot-3" style="text-decoration: none; color: inherit; cursor: pointer;">
                             <div class="bento__media-side">
-                                <img id="bento-slot-3-img" src="assets/gambar1.jpg" alt="Informasi">
+                                <img id="bento-slot-3-img" src="assets/gambar1.webp" alt="Informasi" loading="lazy" decoding="async">
                             </div>
                             <div class="bento__body-side">
                                 <div class="bento__meta" id="bento-slot-3-meta">
@@ -497,7 +497,7 @@
                             card.style.display = slotNum === 1 ? 'flex' : '';
                             card.setAttribute('href', item.target_url || 'berita.html');
                             if (img) {
-                                img.src = item.gambar || 'assets/gambar.png';
+                                img.src = item.gambar || 'assets/gambar.webp';
                                 img.alt = item.judul || '';
                             }
                             if (meta) {
@@ -531,7 +531,7 @@
                                 slide.className = 'carousel__slide' + (idx === 0 ? ' is-active' : '');
 
                                 var img = document.createElement('img');
-                                img.src = b.gambar || 'assets/hero-bg.jpg';
+                                img.src = b.gambar || 'assets/hero-bg.webp';
                                 img.alt = b.judul || 'Banner INKINDO DKI Jakarta';
                                 slide.appendChild(img);
 
@@ -696,7 +696,7 @@
                                 media.className = 'pub-home-card__media';
 
                                 var img = document.createElement('img');
-                                img.src = item.gambar || 'assets/gambar.png';
+                                img.src = item.gambar || 'assets/gambar.webp';
                                 img.alt = item.judul || 'Publikasi INKINDO DKI Jakarta';
                                 img.loading = 'lazy';
                                 media.appendChild(img);

@@ -762,7 +762,7 @@ body.menu-open .mobile-toggle {
     }
 
     .side-nav .side-nav__label {
-        max-width: 165px;
+        max-width: 140px;
         opacity: 1;
         margin-right: 14px;
         margin-left: 0;
@@ -789,7 +789,7 @@ body.menu-open .mobile-toggle {
     }
 
     body.is-scrolled:not(.panel-open) .side-nav:hover .side-nav__label {
-        max-width: 165px;
+        max-width: 140px;
         opacity: 1;
         margin-right: 14px;
         margin-left: 0;
@@ -868,7 +868,8 @@ body.menu-open .mobile-toggle {
     font-size: 16px;
     font-weight: 500;
     color: var(--slate-700);
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.25;
     overflow: hidden;
     max-width: 0;
     opacity: 0;
@@ -1782,13 +1783,15 @@ a.panel-link:hover {
 .ticker {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex: 0 1 380px;
+    gap: 10px;
+    flex: 0 1 420px;
+    min-width: 0;
 }
 
 .ticker__nav {
     color: #ffffff;
     display: flex;
+    flex-shrink: 0;
     transition: opacity .2s;
 }
 
@@ -1803,7 +1806,8 @@ a.panel-link:hover {
 .ticker__viewport {
     position: relative;
     flex: 1;
-    height: 22px;
+    min-width: 0;
+    height: 24px;
     overflow: hidden;
 }
 

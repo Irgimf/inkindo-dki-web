@@ -52,7 +52,7 @@ class CmsBeritaController extends Controller
             'kuota_kegiatan'  => (string) ($row->kuota_kegiatan ?? ''),
             'ukuran_file'     => (string) ($row->ukuran_file ?? ''),
             'jumlah_halaman'  => (string) ($row->jumlah_halaman ?? ''),
-            'gambar'          => (string) ($row->gambar ?: 'assets/gambar.png'),
+            'gambar'          => (string) ($row->gambar ?: 'assets/gambar.webp'),
             'file_pdf'        => ($tipe === 'emagazine') ? (string) ($row->file_pdf ?? '') : '',
             'external_url'    => (string) ($row->external_url ?? ''),
             'ringkasan'       => (string) ($row->ringkasan ?? ''),
@@ -164,7 +164,7 @@ class CmsBeritaController extends Controller
                         'berita_id'   => null,
                         'subjudul'    => 'DPP Masa Bakti 2026–2030',
                         'judul'       => 'Dewan Pengurus Provinsi INKINDO DKI Jakarta',
-                        'gambar'      => 'assets/hero-bg.jpg',
+                        'gambar'      => 'assets/hero-bg.webp',
                         'target_url'  => '#tentang',
                         'urutan'      => 1,
                         'is_active'   => 1,
@@ -176,7 +176,7 @@ class CmsBeritaController extends Controller
                         'berita_id'   => null,
                         'subjudul'    => 'Kemitraan Kampus',
                         'judul'       => 'INKINDO DKI Goes to Campus',
-                        'gambar'      => 'assets/gambar.png',
+                        'gambar'      => 'assets/gambar.webp',
                         'target_url'  => '#berita',
                         'urutan'      => 2,
                         'is_active'   => 1,
@@ -188,7 +188,7 @@ class CmsBeritaController extends Controller
                         'berita_id'   => null,
                         'subjudul'    => 'Agenda Mendatang',
                         'judul'       => 'Pelatihan Audit Internal ISO 37001',
-                        'gambar'      => 'assets/gambar2.jpg',
+                        'gambar'      => 'assets/gambar2.webp',
                         'target_url'  => '#berita',
                         'urutan'      => 3,
                         'is_active'   => 1,
@@ -200,7 +200,7 @@ class CmsBeritaController extends Controller
                         'berita_id'   => null,
                         'subjudul'    => 'e-Magazine Edisi 79',
                         'judul'       => 'Majalah INKINDO DKI Jakarta',
-                        'gambar'      => 'assets/gambar1.jpg',
+                        'gambar'      => 'assets/gambar1.webp',
                         'target_url'  => '#berita',
                         'urutan'      => 4,
                         'is_active'   => 1,
@@ -222,7 +222,7 @@ class CmsBeritaController extends Controller
                     'berita_id'   => $b->berita_id ? (int) $b->berita_id : null,
                     'subjudul'    => (string) ($b->subjudul ?? ''),
                     'judul'       => (string) ($b->judul ?? ''),
-                    'gambar'      => (string) ($b->gambar ?: 'assets/hero-bg.jpg'),
+                    'gambar'      => (string) ($b->gambar ?: 'assets/hero-bg.webp'),
                     'target_url'  => (string) ($b->target_url ?: '#berita'),
                     'urutan'      => (int) ($b->urutan ?? 1),
                 ];
@@ -289,8 +289,8 @@ class CmsBeritaController extends Controller
             if (DB::table('cms_hero_backgrounds')->count() === 0) {
                 $now = date('Y-m-d H:i:s');
                 DB::table('cms_hero_backgrounds')->insert([
-                    ['judul' => 'Panorama Kota DKI Jakarta', 'gambar' => 'assets/jakartahome1.jpg', 'urutan' => 1, 'is_active' => 1, 'created_at' => $now, 'updated_at' => $now],
-                    ['judul' => 'Jakarta International Stadium (JIS)', 'gambar' => 'assets/jakartahome3.jpg', 'urutan' => 2, 'is_active' => 1, 'created_at' => $now, 'updated_at' => $now],
+                    ['judul' => 'Panorama Kota DKI Jakarta', 'gambar' => 'assets/jakartahome1.webp', 'urutan' => 1, 'is_active' => 1, 'created_at' => $now, 'updated_at' => $now],
+                    ['judul' => 'Jakarta International Stadium (JIS)', 'gambar' => 'assets/jakartahome3.webp', 'urutan' => 2, 'is_active' => 1, 'created_at' => $now, 'updated_at' => $now],
                 ]);
             }
             $bgRows = DB::table('cms_hero_backgrounds')

@@ -80,7 +80,7 @@ class MitraController extends Controller
                 'nama_perusahaan'  => $row->nama_perusahaan,
                 'slug'             => $row->slug,
                 'kategori_bisnis'  => $row->kategori_bisnis ?: 'Mitra Strategis Konstruksi & Konsultansi',
-                'logo'             => ltrim((string) ($row->logo ?: 'assets/logo-inkindo.png'), '/'),
+                'logo'             => ltrim((string) ($row->logo ?: 'assets/logo-inkindo.webp'), '/'),
                 'deskripsi'        => $row->deskripsi ?: '-',
                 'alamat'           => $row->alamat ?: '-',
                 'telepon'          => $row->telepon ?: '-',
@@ -169,7 +169,7 @@ class MitraController extends Controller
                 'nama_perusahaan' => $o->nama_perusahaan,
                 'slug'            => $o->slug,
                 'kategori_bisnis' => $o->kategori_bisnis ?: 'Mitra Kerja',
-                'logo'            => ltrim((string) ($o->logo ?: 'assets/logo-inkindo.png'), '/'),
+                'logo'            => ltrim((string) ($o->logo ?: 'assets/logo-inkindo.webp'), '/'),
             ];
         }
 
@@ -180,7 +180,7 @@ class MitraController extends Controller
                 'nama_perusahaan'  => $row->nama_perusahaan,
                 'slug'             => $row->slug,
                 'kategori_bisnis'  => $row->kategori_bisnis ?: 'Mitra Strategis Konstruksi & Konsultansi',
-                'logo'             => ltrim((string) ($row->logo ?: 'assets/logo-inkindo.png'), '/'),
+                'logo'             => ltrim((string) ($row->logo ?: 'assets/logo-inkindo.webp'), '/'),
                 'deskripsi'        => $row->deskripsi ?: '-',
                 'alamat'           => $row->alamat ?: '-',
                 'telepon'          => $row->telepon ?: '-',

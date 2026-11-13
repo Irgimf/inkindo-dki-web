@@ -33,7 +33,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('{{ \App\Support\PageBackgroundHelper::get('magazine_hero', 'assets/jakarta2.jpg') }}') center/cover;
+            background: url('{{ \App\Support\PageBackgroundHelper::get('magazine_hero', 'assets/jakarta2.webp') }}') center/cover;
             z-index: 1;
         }
 
@@ -496,7 +496,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">

@@ -302,7 +302,7 @@
                             tanggal: String(b.tanggal || ''),
                             tanggalLabel: String(b.tanggal_label || b.badge || 'Terbaru'),
                             timestamp: ts,
-                            gambar: String(b.gambar || 'assets/gambar.png'),
+                            gambar: String(b.gambar || 'assets/gambar.webp'),
                             targetUrl: String(b.target_url || 'berita.html'),
                             searchText: [
                                 'berita informasi',
@@ -353,7 +353,7 @@
                             tanggal: String(m.tanggal || ''),
                             tanggalLabel: String(m.tanggal_label || 'Mitra Resmi'),
                             timestamp: ts,
-                            gambar: String(m.logo || 'assets/logo-inkindo.png'),
+                            gambar: String(m.logo || 'assets/logo-inkindo.webp'),
                             targetUrl: String(m.target_url || ('/mitra-kerja/' + encodeURIComponent(m.slug || m.id))),
                             products: Array.isArray(m.products) ? m.products : [],
                             searchText: [
@@ -738,8 +738,8 @@
         const jakartaImages = Array.isArray(window.__JAKARTA_HERO_IMAGES) && window.__JAKARTA_HERO_IMAGES.length > 0
             ? window.__JAKARTA_HERO_IMAGES
             : [
-                'assets/jakartahome1.jpg',
-                'assets/jakartahome3.jpg'
+                'assets/jakartahome1.webp',
+                'assets/jakartahome3.webp'
             ];
 
         let currentIndex = typeof window.__currentJakartaBgIndex === 'number'
@@ -1415,7 +1415,7 @@
                 grid.innerHTML = mitraList.map((m) => `
                     <a href="/mitra-kerja/${encodeURIComponent(m.slug)}" class="partner-card" title="${esc(m.nama_perusahaan)}"
                         style="padding: 12px; align-items: center; justify-content: center; height: 100%; text-decoration: none; display: flex;">
-                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}"
+                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}" loading="lazy" decoding="async"
                             style="max-height: 35px; width: auto; max-width: 100%; object-fit: contain; mix-blend-mode: multiply;">
                     </a>
                 `).join('');
@@ -1426,7 +1426,7 @@
             if (showcaseGrid) {
                 showcaseGrid.innerHTML = mitraList.map((m) => `
                     <a href="/mitra-kerja/${encodeURIComponent(m.slug)}" class="partner-logo-item" title="Lihat Profil & Produk ${esc(m.nama_perusahaan)}" style="text-decoration: none; cursor: pointer;">
-                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}">
+                        <img src="${esc(m.logo)}" alt="${esc(m.nama_perusahaan)}" loading="lazy" decoding="async">
                     </a>
                 `).join('');
             }

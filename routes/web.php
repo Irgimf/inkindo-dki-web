@@ -81,7 +81,9 @@ Route::get('/{folder}/{path}', function (string $folder, string $path) {
     ];
 
     $headers = [
-        'Cache-Control' => 'no-cache, must-revalidate',
+        'Cache-Control' => in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico', 'woff', 'woff2', 'ttf'], true)
+            ? 'public, max-age=604800'
+            : 'no-cache, must-revalidate',
     ];
     if (isset($mimeMap[$ext])) {
         $headers['Content-Type'] = $mimeMap[$ext];

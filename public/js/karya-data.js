@@ -5,7 +5,7 @@ window.KARYA_DATA = [
         kind: 'Business Plan',
         author: 'Anggota INKINDO DKI Jakarta',
         year: '2019',
-        cover: 'assets/karya/business-plan-pksn-jagoi-babang.jpg',
+        cover: 'assets/karya/business-plan-pksn-jagoi-babang.webp',
         desc: 'Buku Business Plan ini disusun berdasarkan hasil analisis data lapangan dan beberapa hal merupakan profesional judgement dari para ahli yang kompeten di bidangnya masing-masing.',
         detail: [
             'Pemilihan komoditas unggulan telah sejalan dengan kebijakan yang mendorong PKSN Jagoi Babang sebagai Pusat Pertumbuhan Baru dan secara teknis didasarkan pada potensi areal yang masih tersedia untuk pengembangan masing-masing komoditas unggulan.',
@@ -19,7 +19,7 @@ window.KARYA_DATA = [
         kind: 'Teknik Pantai',
         author: 'Ir. MM. Nani Irawati',
         year: '2019',
-        cover: 'assets/karya/teknik-pelabuhan-nani-irawati.jpg',
+        cover: 'assets/karya/teknik-pelabuhan-nani-irawati.webp',
         desc: 'Buku ini membahas Teknik Pelabuhan yang dikombinasikan dengan Teknik Pantai, memberi wawasan tentang permasalahan dan solusi teknik pantai.',
         detail: [
             'Pengkombinasian dilakukan karena proyek reklamasi dan pengembangan kawasan pantai sedang berkembang cukup pesat saat ini, sehingga buku ini dapat memberikan wawasan tentang permasalahan dan solusi teknik pantai seperti erosi, sedimentasi, dan bangunan perlindungan pantai.'

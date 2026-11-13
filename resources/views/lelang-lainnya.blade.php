@@ -227,7 +227,7 @@
     <header class="main-header" id="main-header">
         <div class="container main-header__inner">
             <a href="index.html" class="main-header__logo" id="logo-link" aria-label="Beranda DPP INKINDO DKI Jakarta">
-                <img src="assets/logo-inkindo.png" alt="Logo DPP INKINDO DKI Jakarta">
+                <img src="assets/logo-inkindo.webp" alt="Logo DPP INKINDO DKI Jakarta">
             </a>
 
             <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
@@ -405,32 +405,32 @@
             <div class="partner-grid" style="margin-top: 12px; grid-template-columns: repeat(3, 1fr);">
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/avian.jpg" alt="Avian"
+                    <img src="mitra_logos/avian.webp" alt="Avian"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/lesso.jpg" alt="Lesso"
+                    <img src="mitra_logos/lesso.webp" alt="Lesso"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/seven.jpg" alt="Seven"
+                    <img src="mitra_logos/seven.webp" alt="Seven"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/dekkson.jpg" alt="Dekkson"
+                    <img src="mitra_logos/dekkson.webp" alt="Dekkson"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/alila.jpg" alt="Alila"
+                    <img src="mitra_logos/alila.webp" alt="Alila"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
                 <div class="partner-card"
                     style="padding: 12px; align-items: center; justify-content: center; height: 100%;">
-                    <img src="mitra_logos/propan.jpg" alt="Propan"
+                    <img src="mitra_logos/propan.webp" alt="Propan"
                         style="max-height: 35px; width: auto; mix-blend-mode: multiply;">
                 </div>
             </div>
@@ -489,7 +489,7 @@
 
         <!-- 1. Hero Section (Sama persis tentang.html: Full Screen 100vh & Warna Biru Identik) -->
         <section
-            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('{{ \App\Support\PageBackgroundHelper::get('lelang_hero', 'assets/jakarta4.jpg') }}') center/cover no-repeat;">
+            style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #0F172A; background: url('{{ \App\Support\PageBackgroundHelper::get('lelang_hero', 'assets/jakarta4.webp') }}') center/cover no-repeat;">
             <div
                 style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 40, 0.45) 0%, rgba(8, 14, 40, 0.18) 35%, rgba(8, 14, 40, 0.65) 100%), linear-gradient(90deg, rgba(8, 14, 40, 0.35) 0%, transparent 60%);">
             </div>
@@ -553,7 +553,7 @@
 
         <!-- 3. Peluang Usaha Lainnya (Section Berlatar Belakang Biru / Gaya Visi & Misi tentang.html) -->
         <section
-            style="position: relative; padding: 90px 0; color: var(--white); background: url('{{ \App\Support\PageBackgroundHelper::get('lelang_peluang_section', 'assets/jakarta4.jpg') }}') center/cover no-repeat fixed;">
+            style="position: relative; padding: 90px 0; color: var(--white); background: url('{{ \App\Support\PageBackgroundHelper::get('lelang_peluang_section', 'assets/jakarta4.webp') }}') center/cover no-repeat fixed;">
             <div style="position: absolute; inset: 0; background: rgba(8, 14, 40, 0.72);"></div>
             <div class="container" style="position: relative; z-index: 2; max-width: 1000px; margin: 0 auto;">
 
