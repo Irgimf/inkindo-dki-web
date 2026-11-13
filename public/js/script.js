@@ -1252,29 +1252,81 @@
         document.body.style.overflow = '';
     };
 
-    window.handleKlinikKonsultasiSubmit = function (e) {
+    window.handleKlinikKonsultasiSubmit = async function (e) {
         e.preventDefault();
-        const nama = document.getElementById('konsultasi-name')?.value || 'Bapak/Ibu';
-        const kategori = document.getElementById('konsultasi-kategori')?.value || 'Konsultasi';
-        const bodyEl = document.getElementById('klinik-modal-form-body');
-        const footerEl = document.getElementById('klinik-modal-footer');
+        const kategori = document.getElementById('konsultasi-kategori')?.value || '';
+        const nama = document.getElementById('konsultasi-name')?.value || '';
+        const namaPerusahaan = document.getElementById('konsultasi-company')?.value || '';
+        const noTelepon = document.getElementById('konsultasi-phone')?.value || '';
+        const email = document.getElementById('konsultasi-email')?.value || '';
+        const subject = document.getElementById('konsultasi-subject')?.value || '';
+        const pesan = document.getElementById('konsultasi-message')?.value || '';
 
-        if (bodyEl && footerEl) {
-            bodyEl.innerHTML = `
-                <div class="mitra-success-box">
-                    <div class="mitra-success-icon" style="background: rgba(11, 98, 162, 0.08); color: #0B62A2;">
-                        <span class="material-symbols-outlined">verified</span>
-                    </div>
-                    <h4 class="mitra-success-title">Permohonan Konsultasi Terkirim!</h4>
-                    <p class="mitra-success-desc">
-                        Terima kasih <strong>${nama}</strong>. Permohonan Anda untuk topik <strong>${kategori}</strong> telah berhasil dikirimkan. Tim Konsultan Ahli DPP INKINDO DKI Jakarta akan segera menghubungi Anda untuk penjadwalan sesi konsultasi (tatap muka atau daring).
-                    </p>
-                    <button type="button" class="btn-mitra-submit" onclick="closeKlinikKonsultasiModal()" style="margin: 0 auto;">
-                        Selesai &amp; Tutup
-                    </button>
-                </div>
-            `;
-            footerEl.style.display = 'none';
+        const submitBtn = document.getElementById('btn-submit-klinik');
+        const origText = submitBtn ? submitBtn.textContent : 'Kirim';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Mengirim...';
+        }
+
+        const escHtml = (s) => String(s ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+
+        try {
+            const res = await fetch('/api/konsultasi/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    kategori: kategori,
+                    nama: nama,
+                    nama_perusahaan: namaPerusahaan,
+                    no_telepon: noTelepon,
+                    email: email,
+                    subject: subject,
+                    pesan: pesan
+                })
+            });
+
+            const data = await res.json().catch(() => ({}));
+            if (res.ok) {
+                const bodyEl = document.getElementById('klinik-modal-form-body');
+                const footerEl = document.getElementById('klinik-modal-footer');
+                if (bodyEl && footerEl) {
+                    bodyEl.innerHTML = `
+                        <div class="mitra-success-box">
+                            <div class="mitra-success-icon" style="background: rgba(11, 98, 162, 0.08); color: #0B62A2;">
+                                <span class="material-symbols-outlined">verified</span>
+                            </div>
+                            <h4 class="mitra-success-title">Permohonan Konsultasi Terkirim!</h4>
+                            <p class="mitra-success-desc">
+                                Terima kasih <strong>${escHtml(nama || 'Bapak/Ibu')}</strong>. Permohonan Anda untuk topik <strong>${escHtml(kategori || 'Konsultasi')}</strong> telah berhasil dikirimkan ke Admin DPP INKINDO DKI Jakarta. Tim Konsultan Ahli kami akan segera menghubungi Anda untuk penjadwalan sesi konsultasi.
+                            </p>
+                            <button type="button" class="btn-mitra-submit" onclick="closeKlinikKonsultasiModal()" style="margin: 0 auto;">
+                                Selesai &amp; Tutup
+                            </button>
+                        </div>
+                    `;
+                    footerEl.style.display = 'none';
+                }
+            } else {
+                alert(data.message || 'Gagal mengirim permohonan konsultasi. Mohon periksa kembali isian Anda.');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = origText;
+                }
+            }
+        } catch (err) {
+            alert('Terjadi kesalahan jaringan saat mengirim permohonan konsultasi.');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = origText;
+            }
         }
     };
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\CmsKetentuanMitraController;
 use App\Http\Controllers\CmsLelangController;
 use App\Http\Controllers\CmsRegulasiController;
 use App\Http\Controllers\CmsTentangController;
+use App\Http\Controllers\KonsultasiController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MitraController;
 use Illuminate\Support\Facades\File;
@@ -26,6 +27,9 @@ Route::delete('/api/members/{member}', [MemberController::class, 'destroy']);
 Route::get('/api/mitra', [MitraController::class, 'index']);
 Route::get('/api/mitra/{slug}', [MitraController::class, 'show']);
 Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
+
+// Klinik Konsultasi API endpoint
+Route::post('/api/konsultasi/messages', [KonsultasiController::class, 'storeMessage'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
 // CMS Berita & Informasi API endpoints
 Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);
