@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsBeritaController;
+use App\Http\Controllers\CmsKetentuanMitraController;
 use App\Http\Controllers\CmsLelangController;
 use App\Http\Controllers\CmsRegulasiController;
 use App\Http\Controllers\CmsTentangController;
@@ -36,6 +37,8 @@ Route::get('/api/cms/tentang', [CmsTentangController::class, 'index']);
 Route::get('/api/cms/regulasi', [CmsRegulasiController::class, 'index']);
 // CMS Lelang Lainnya API endpoint
 Route::get('/api/cms/lelang', [CmsLelangController::class, 'index']);
+// CMS Ketentuan Mitra Kerja API endpoint
+Route::get('/api/cms/ketentuan-mitra', [CmsKetentuanMitraController::class, 'index']);
 
 // Fallback static asset handler (serves from public/ or falls back to sim-inkindo-dki/public)
 Route::get('/{folder}/{path}', function (string $folder, string $path) {
@@ -107,11 +110,14 @@ Route::get('/regulasi.html', [CmsRegulasiController::class, 'page']);
 Route::get('/lelang-lainnya', [CmsLelangController::class, 'page']);
 Route::get('/lelang-lainnya.html', [CmsLelangController::class, 'page']);
 
+// Dynamic Ketentuan Mitra Kerja page (driven by Admin CMS)
+Route::get('/ketentuan-mitra-kerja', [CmsKetentuanMitraController::class, 'page']);
+Route::get('/ketentuan-mitra-kerja.html', [CmsKetentuanMitraController::class, 'page']);
+
 // Other static pages
 $staticPages = [
     'berita',
     'berita-detail',
-    'ketentuan-mitra-kerja',
     'read-magazine',
     'pencarian',
 ];

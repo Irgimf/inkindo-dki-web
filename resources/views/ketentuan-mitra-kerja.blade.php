@@ -603,23 +603,21 @@
             <div class="container" style="position: relative; z-index: 2; text-align: left; width: 100%;">
                 <h1 class="hero-anim-title"
                     style="font-size: clamp(38px, 5vw, 56px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: #ffffff; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);">
-                    Tentang Mitra Kerja</h1>
+                    {{ $page->hero_judul ?? 'Tentang Mitra Kerja' }}</h1>
                 <div class="hero-anim-line"
                     style="width: 70px; height: 5px; background: #ffffff; margin: 0 0 24px; border-radius: 4px;">
                 </div>
                 <div class="hero-anim-desc"
                     style="font-size: clamp(16px, 1.8vw, 19px); max-width: 780px; line-height: 1.8; color: rgba(255, 255, 255, 0.92); font-weight: 400; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 16px;">
                     <p style="margin: 0;">
-                        Halaman ini didedikasikan bagi para pihak yang bekerjasama dengan <strong
-                            style="color: #ffffff;">INKINDO DKI
-                            Jakarta</strong> baik untuk <strong>Kontraktor</strong>, <strong>Produsen</strong>,
-                        <strong>Suplier</strong> dan lain-lain.
+                        {{ $page->hero_paragraf_1 ?? '' }}
                     </p>
-                    <p
-                        style="margin: 0; padding-left: 16px; border-left: 3px solid #60a5fa; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);">
-                        Apabila Bapak/Ibu berminat menjadi Mitra Kerja INKINDO DKI Jakarta dapat menghubungi Sekretariat
-                        INKINDO DKI Jakarta.
-                    </p>
+                    @if (!empty($page->hero_paragraf_2))
+                        <p
+                            style="margin: 0; padding-left: 16px; border-left: 3px solid #60a5fa; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);">
+                            {{ $page->hero_paragraf_2 }}
+                        </p>
+                    @endif
                 </div>
                 <div class="hero-anim-btns" style="margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap;">
                     <button type="button" class="btn btn--primary" onclick="openDaftarMitraModal()"
@@ -652,120 +650,55 @@
                 <div style="text-align: center; max-width: 860px; margin: 0 auto 56px;">
                     <span
                         style="color: var(--royal); font-weight: 700; font-size: 13.5px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
-                        Kolaborasi &amp; Sinergi Strategis
+                        {{ $page->tujuan_label ?? 'Kolaborasi & Sinergi Strategis' }}
                     </span>
                     <h2
                         style="font-size: clamp(28px, 3.5vw, 38px); color: var(--slate-900); font-weight: 800; margin-bottom: 20px; line-height: 1.3;">
-                        Maksud &amp; Tujuan Mitra Kerja
+                        {{ $page->tujuan_judul ?? 'Maksud & Tujuan Mitra Kerja' }}
                     </h2>
                     <div
                         style="width: 50px; height: 4px; background: var(--royal); margin: 0 auto 24px; border-radius: 2px;">
                     </div>
                     <p style="font-size: 17px; line-height: 1.8; color: var(--slate-700); margin: 0;">
-                        Dengan halaman mitra kerja ini diharapkan dapat memberikan manfaat khususnya bagi
-                        <strong>Anggota</strong>, para <strong>Mitra Kerja</strong> dan <strong>Masyarakat</strong> pada
-                        umumnya, baik dalam mencari barang/jasa maupun informasi yang dibutuhkan untuk kegiatan usaha
-                        terkait usaha jasa konsultansi.
+                        {{ $page->tujuan_deskripsi ?? '' }}
                     </p>
                 </div>
 
                 <!-- 3 Pillars Benefit Grid (iOS Glassmorphism) -->
+                @php
+                    $cardStyles = [
+                        ['wrap' => 'benefit-icon-wrap--blue',  'icon' => 'group',     'check' => '#0B62A2'],
+                        ['wrap' => 'benefit-icon-wrap--amber', 'icon' => 'handshake', 'check' => '#d97706'],
+                        ['wrap' => 'benefit-icon-wrap--green', 'icon' => 'public',    'check' => '#16a34a'],
+                    ];
+                @endphp
                 <div class="benefits-grid">
-                    <!-- Card 1: Anggota -->
-                    <div class="benefit-card">
-                        <div class="benefit-icon-wrap benefit-icon-wrap--blue">
-                            <span class="material-symbols-outlined" style="font-size: 30px;">group</span>
+                    @foreach (($page->tujuan_cards ?? []) as $cIdx => $card)
+                        @php $st = $cardStyles[$cIdx % 3]; @endphp
+                        <div class="benefit-card">
+                            <div class="benefit-icon-wrap {{ $st['wrap'] }}">
+                                <span class="material-symbols-outlined" style="font-size: 30px;">{{ $st['icon'] }}</span>
+                            </div>
+                            <h3
+                                style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
+                                {{ $card->judul ?? '' }}
+                            </h3>
+                            <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
+                                {{ $card->deskripsi ?? '' }}
+                            </p>
+                            @if (!empty($card->poin))
+                                <ul class="benefit-list">
+                                    @foreach ($card->poin as $poinText)
+                                        <li>
+                                            <span class="material-symbols-outlined benefit-list-icon"
+                                                style="color: {{ $st['check'] }};">check_circle</span>
+                                            <span>{{ $poinText }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
-                        <h3
-                            style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
-                            Bagi Anggota INKINDO
-                        </h3>
-                        <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
-                            Mempermudah 900+ badan usaha konsultan dalam mengakses referensi material bersertifikasi,
-                            teknologi terkini, penawaran harga korporat terbaik, serta vendor pelaksana yang terpercaya.
-                        </p>
-                        <ul class="benefit-list">
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #0B62A2;">check_circle</span>
-                                <span>Akses langsung ke katalog produk &amp; spesifikasi teknis</span>
-                            </li>
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #0B62A2;">check_circle</span>
-                                <span>Dukungan transfer keahlian &amp; workshop material</span>
-                            </li>
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #0B62A2;">check_circle</span>
-                                <span>Jaminan mutu pengadaan dalam rancang bangun</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Card 2: Mitra Kerja -->
-                    <div class="benefit-card">
-                        <div class="benefit-icon-wrap benefit-icon-wrap--amber">
-                            <span class="material-symbols-outlined" style="font-size: 30px;">handshake</span>
-                        </div>
-                        <h3
-                            style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
-                            Bagi Para Mitra Kerja
-                        </h3>
-                        <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
-                            Membuka jembatan interaksi promosi langsung dengan para perencana, perancang, pengawas, dan
-                            konsultan manajemen proyek di seluruh DKI Jakarta dan proyek nasional.
-                        </p>
-                        <ul class="benefit-list">
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #d97706;">check_circle</span>
-                                <span>Publikasi resmi di portal direktori INKINDO DKI</span>
-                            </li>
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #d97706;">check_circle</span>
-                                <span>Peluang business matching &amp; sponsorship event</span>
-                            </li>
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #d97706;">check_circle</span>
-                                <span>Sinergi penawaran pada proyek pemerintah &amp; swasta</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Card 3: Masyarakat -->
-                    <div class="benefit-card">
-                        <div class="benefit-icon-wrap benefit-icon-wrap--green">
-                            <span class="material-symbols-outlined" style="font-size: 30px;">public</span>
-                        </div>
-                        <h3
-                            style="font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.015em;">
-                            Bagi Masyarakat Luas
-                        </h3>
-                        <p style="font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0 0 22px;">
-                            Mendorong terwujudnya hasil karya pembangunan infrastruktur dan gedung yang lebih kokoh,
-                            aman, ramah lingkungan, serta memenuhi standar kepatuhan nasional.
-                        </p>
-                        <ul class="benefit-list">
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #16a34a;">check_circle</span>
-                                <span>Standar konstruksi yang transparan dan akuntabel</span>
-                            </li>
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #16a34a;">check_circle</span>
-                                <span>Penerapan material ramah lingkungan (Green Building)</span>
-                            </li>
-                            <li>
-                                <span class="material-symbols-outlined benefit-list-icon"
-                                    style="color: #16a34a;">check_circle</span>
-                                <span>Hasil investasi proyek yang berdaya tahan lama</span>
-                            </li>
-                        </ul>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -778,30 +711,27 @@
                     <div>
                         <span
                             style="color: var(--royal); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
-                            Kriteria &amp; Legalitas
+                            {{ $page->syarat_label ?? 'Kriteria & Legalitas' }}
                         </span>
                         <h2
                             style="font-size: clamp(28px, 3.5vw, 36px); color: var(--slate-900); font-weight: 800; margin-bottom: 20px; line-height: 1.3;">
-                            Syarat Mitra Kerja
+                            {{ $page->syarat_judul ?? 'Syarat Mitra Kerja' }}
                         </h2>
                         <div
                             style="width: 50px; height: 4px; background: var(--royal); margin: 0 0 24px; border-radius: 2px;">
                         </div>
                         <p style="font-size: 16px; line-height: 1.8; color: var(--slate-600); margin-bottom: 24px;">
-                            Program kemitraan ini terbuka bagi seluruh pelaku usaha yang berkomitmen menjalin kerjasama
-                            secara profesional, transparan, dan berintegritas tinggi bersama DPP INKINDO DKI Jakarta.
+                            {{ $page->syarat_deskripsi ?? '' }}
                         </p>
                         <div
                             style="background: #eff6ff; border-left: 4px solid var(--royal); padding: 18px; border-radius: 8px;">
                             <h4
                                 style="margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--royal); display: flex; align-items: center; gap: 6px;">
                                 <span class="material-symbols-outlined" style="font-size: 18px;">verified_user</span>
-                                Siapa yang Dapat Bermitra?
+                                {{ $page->syarat_info_judul ?? 'Siapa yang Dapat Bermitra?' }}
                             </h4>
                             <p style="margin: 0; font-size: 13.5px; color: var(--slate-700); line-height: 1.6;">
-                                Kontraktor Pelaksana, Produsen Material Bahan Bangunan, Suplier Peralatan &amp; Mesin,
-                                Penyedia Solusi Software/IT Desain (BIM, CAD), Perbankan, Penjaminan/Asuransi Proyek,
-                                dan Laboratorium Pengujian Teknis.
+                                {{ $page->syarat_info_isi ?? '' }}
                             </p>
                         </div>
                         <div style="margin-top: 32px;">
@@ -815,89 +745,20 @@
 
                     <!-- Daftar Persyaratan -->
                     <div class="syarat-grid">
-                        <div class="syarat-item">
-                            <div class="syarat-badge">1</div>
-                            <div>
-                                <h4
-                                    style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
-                                    Badan Usaha Resmi
-                                </h4>
-                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
-                                    Perusahaan berbadan hukum sah di Indonesia (PT, CV, Koperasi, Distributor Resmi /
-                                    Agen Tunggal) dengan domisili usaha yang jelas.
-                                </p>
+                        @foreach ($syaratItems as $idx => $sItem)
+                            <div class="syarat-item">
+                                <div class="syarat-badge">{{ $idx + 1 }}</div>
+                                <div>
+                                    <h4
+                                        style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
+                                        {{ $sItem->judul }}
+                                    </h4>
+                                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
+                                        {{ $sItem->deskripsi }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="syarat-item">
-                            <div class="syarat-badge">2</div>
-                            <div>
-                                <h4
-                                    style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
-                                    Legalitas &amp; Izin Usaha
-                                </h4>
-                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
-                                    Memiliki Nomor Induk Berusaha (NIB) berbasis risiko aktif, Nomor Pokok Wajib Pajak
-                                    (NPWP) Badan, serta izin operasional sektor terkait.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="syarat-item">
-                            <div class="syarat-badge">3</div>
-                            <div>
-                                <h4
-                                    style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
-                                    Bidang Usaha yang Relevan
-                                </h4>
-                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
-                                    Bergerak di bidang yang menunjang aktivitas jasa konstruksi, jasa konsultansi
-                                    keteknikan, dan layanan penunjang profesional lainnya.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="syarat-item">
-                            <div class="syarat-badge">4</div>
-                            <div>
-                                <h4
-                                    style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
-                                    Penunjukan PIC Resmi
-                                </h4>
-                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
-                                    Menunjuk Person in Charge (PIC) tetap sebagai narahubung resmi dan berwenang
-                                    melakukan koordinasi teknis dengan INKINDO DKI Jakarta.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="syarat-item">
-                            <div class="syarat-badge">5</div>
-                            <div>
-                                <h4
-                                    style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
-                                    Komitmen Mutu &amp; SMAP
-                                </h4>
-                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
-                                    Menyediakan produk/jasa berstandar SNI/internasional dan berkomitmen mematuhi Sistem
-                                    Manajemen Anti Penyuapan (ISO 37001).
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="syarat-item">
-                            <div class="syarat-badge">6</div>
-                            <div>
-                                <h4
-                                    style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: var(--slate-900);">
-                                    Registrasi Administratif
-                                </h4>
-                                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--slate-600);">
-                                    Mengisi formulir pendaftaran kemitraan secara daring dan menandatangani kesepahaman
-                                    kemitraan bersama sekretariat.
-                                </p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -912,110 +773,32 @@
                 <div style="text-align: center; max-width: 800px; margin: 0 auto 56px;">
                     <span
                         style="color: var(--accent, #f59e0b); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 8px;">
-                        Tata Tertib &amp; Regulasi Kerjasama
+                        {{ $page->ketentuan_label ?? 'Tata Tertib & Regulasi Kerjasama' }}
                     </span>
                     <h2 style="font-size: clamp(28px, 3.5vw, 38px); margin-bottom: 16px; font-weight: 800;">
-                        Ketentuan Mitra Kerja
+                        {{ $page->ketentuan_judul ?? 'Ketentuan Mitra Kerja' }}
                     </h2>
                     <div
                         style="width: 50px; height: 4px; background: var(--accent, #f59e0b); margin: 0 auto 20px; border-radius: 2px;">
                     </div>
                     <p style="font-size: 16px; line-height: 1.7; color: rgba(255, 255, 255, 0.9);">
-                        Seluruh hubungan kemitraan diatur secara profesional untuk melindungi reputasi asosiasi serta
-                        menjamin keterbukaan hak dan kewajiban kedua belah pihak.
+                        {{ $page->ketentuan_deskripsi ?? '' }}
                     </p>
                 </div>
 
                 <div class="ketentuan-grid">
-                    <!-- Ketentuan 1 -->
-                    <div class="ketentuan-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 28px; color: var(--accent, #f59e0b);">balance</span>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">1. Prinsip
-                                &amp; Asas Kemitraan</h3>
+                    @foreach ($ketentuanItems as $kItem)
+                        <div class="ketentuan-card">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 28px; color: var(--accent, #f59e0b);">{{ $kItem->ikon ?: 'gavel' }}</span>
+                                <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">{{ $kItem->judul }}</h3>
+                            </div>
+                            <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
+                                {{ $kItem->deskripsi }}
+                            </p>
                         </div>
-                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
-                            Hubungan kemitraan bersifat <em>non-eksklusif</em> dan berorientasi pada sinergi saling
-                            menguntungkan (<em>mutual benefit</em>). Kemitraan tidak membatasi independensi para
-                            konsultan anggota INKINDO dalam menentukan keputusan teknis.
-                        </p>
-                    </div>
-
-                    <!-- Ketentuan 2 -->
-                    <div class="ketentuan-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 28px; color: var(--accent, #f59e0b);">campaign</span>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">2. Hak &amp;
-                                Fasilitas Mitra</h3>
-                        </div>
-                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
-                            Mitra resmi berhak mencantumkan logo di direktori website INKINDO DKI, mengikuti agenda
-                            <em>knowledge sharing</em> / seminar teknis, serta berpeluang mempresentasikan inovasi
-                            produk dalam temu anggota asosiasi.
-                        </p>
-                    </div>
-
-                    <!-- Ketentuan 3 -->
-                    <div class="ketentuan-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 28px; color: var(--accent, #f59e0b);">assignment_turned_in</span>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">3. Kewajiban
-                                &amp; Akuntabilitas</h3>
-                        </div>
-                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
-                            Mitra berkewajiban memberikan informasi spesifikasi material/jasa yang akurat, menjamin
-                            ketersediaan barang/layanan purnajual, serta menjaga harga yang kompetitif bagi para
-                            konsultan anggota.
-                        </p>
-                    </div>
-
-                    <!-- Ketentuan 4 -->
-                    <div class="ketentuan-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 28px; color: var(--accent, #f59e0b);">calendar_clock</span>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">4. Masa
-                                Berlaku &amp; Evaluasi</h3>
-                        </div>
-                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
-                            Status kemitraan berlaku selama 1 (satu) tahun kalender sejak tanggal pengesahan registrasi.
-                            DPP INKINDO DKI Jakarta melaksanakan evaluasi berkala untuk perpanjangan masa kemitraan
-                            berikutnya.
-                        </p>
-                    </div>
-
-                    <!-- Ketentuan 5 -->
-                    <div class="ketentuan-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 28px; color: var(--accent, #f59e0b);">security</span>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">5. Integritas
-                                &amp; Etika Bisnis</h3>
-                        </div>
-                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
-                            Mitra wajib menjunjung tinggi etika bisnis yang sehat, tidak melakukan praktik monopoli,
-                            gratifikasi ilegal, atau penyuapan yang bertentangan dengan standar SMAP ISO 37001 dan hukum
-                            Republik Indonesia.
-                        </p>
-                    </div>
-
-                    <!-- Ketentuan 6 -->
-                    <div class="ketentuan-card">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                            <span class="material-symbols-outlined"
-                                style="font-size: 28px; color: var(--accent, #f59e0b);">cancel</span>
-                            <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--white);">6.
-                                Pengakhiran Kemitraan</h3>
-                        </div>
-                        <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.88);">
-                            DPP INKINDO DKI Jakarta berhak menghentikan kemitraan secara sepihak apabila mitra terbukti
-                            melakukan pelanggaran hukum, wanprestasi kontrak, atau merugikan harkat dan martabat
-                            asosiasi.
-                        </p>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
