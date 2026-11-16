@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CmsBeritaController;
 use App\Http\Controllers\CmsKetentuanMitraController;
 use App\Http\Controllers\CmsLelangController;
@@ -33,6 +34,9 @@ Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage
 
 // Klinik Konsultasi API endpoint
 Route::post('/api/konsultasi/messages', [KonsultasiController::class, 'storeMessage'])->middleware('throttle:5,1');
+
+// AI Chat Assistant API endpoint
+Route::post('/api/chat', [ChatController::class, 'reply'])->middleware('throttle:20,1');
 
 // CMS Berita & Informasi API endpoints
 Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);

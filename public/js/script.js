@@ -900,49 +900,100 @@
         reveals.forEach((el) => el.classList.add('is-visible'));
     }
 
-    /* ---------- Chat sederhana ---------- */
+    /* ---------- AI Chat Assistant (Veronika-style RAG via Gemini) ---------- */
     const chatBody = $('#chat-body');
     const chatForm = $('#chat-form');
     const chatInput = $('#chat-input');
+    const chatQuick = $('#chat-quick');
     let chatStarted = false;
+    let chatBusy = false;
+    const chatHistory = [];
 
-    const replies = [
-        {
-            keys: ['daftar', 'anggota', 'registrasi', 'kta'],
-            text: 'Untuk menjadi anggota, siapkan akta pendirian, NIB, dan NPWP badan usaha, lalu lakukan registrasi melalui Portal KTA. Tim sekretariat akan memverifikasi berkas Anda.'
-        },
-        {
-            keys: ['sbu', 'sertifikat', 'lpjk'],
-            text: 'Untuk informasi dan pendampingan pengurusan Sertifikat Badan Usaha (SBU) serta regulasi LPJK, anggota dapat mengajukan jadwal melalui menu Klinik Konsultasi atau menghubungi sekretariat di +62217942940.'
-        },
-        {
-            keys: ['jam', 'operasional', 'buka'],
-            text: 'Sekretariat DPP INKINDO DKI Jakarta buka Senin - Jumat pukul 08.00 - 16.30 WIB.'
-        },
-        {
-            keys: ['alamat', 'lokasi', 'kantor'],
-            text: 'Sekretariat kami berada di Jl. Pertani No. 7, Duren Tiga - Pancoran, Jakarta Selatan 12760.'
-        },
-        {
-            keys: ['lelang', 'tender'],
-            text: 'Informasi lelang dapat dipantau melalui menu Info Lelang di sisi kanan, termasuk LPSE DKI Jakarta dan SPSE LKPP.'
-        },
-        {
-            keys: ['konsultasi', 'klinik'],
-            text: 'Klinik Konsultasi tersedia gratis untuk anggota. Silakan buka menu Klinik Konsultasi untuk mengajukan jadwal.'
-        }
-    ];
+    const escChat = (s) => String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+
+    const cleanBotText = (raw) => String(raw ?? '')
+        .replace(/^\s*\*\s+/gm, '• ')
+        .replace(/\*+/g, '')
+        .trim();
 
     const addMsg = (text, who) => {
+        if (!chatBody) return null;
         const el = document.createElement('div');
         el.className = 'chat-msg chat-msg--' + who;
-        el.textContent = text;
+        if (who === 'bot') {
+            el.innerHTML = escChat(cleanBotText(text)).replace(/\n/g, '<br>');
+        } else {
+            el.textContent = text;
+        }
         chatBody.appendChild(el);
         chatBody.scrollTop = chatBody.scrollHeight;
         return el;
     };
 
-    const botReply = (text) => {
+    if (chatQuick) {
+        chatQuick.innerHTML = '';
+        chatQuick.style.display = 'none';
+    }
+
+    const sendUser = async (text) => {
+        const cleanText = String(text ?? '').trim();
+        if (!cleanText || chatBusy || !chatBody) return;
+        chatBusy = true;
+
+        addMsg(cleanText, 'user');
+
+        const typing = document.createElement('div');
+        typing.className = 'chat-msg chat-msg--bot chat-msg--typing';
+        typing.innerHTML = '<i></i><i></i><i></i>';
+        chatBody.appendChild(typing);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        try {
+            const auth = typeof window.__ensureInkindoAuth === 'function'
+                ? await window.__ensureInkindoAuth()
+                : { csrf_token: '' };
+
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': auth.csrf_token || ''
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    message: cleanText,
+                    history: chatHistory.slice(-6)
+                })
+            });
+
+            const data = await res.json().catch(() => ({}));
+            typing.remove();
+
+            if (res.ok && data.reply) {
+                addMsg(data.reply, 'bot');
+                chatHistory.push({ role: 'user', text: cleanText.slice(0, 1000) });
+                chatHistory.push({ role: 'model', text: String(data.reply).slice(0, 1500) });
+            } else if (res.status === 429) {
+                addMsg('Mohon tunggu sebentar sebelum mengirim pertanyaan berikutnya ya.', 'bot');
+            } else {
+                addMsg('Maaf, asisten sedang mengalami kendala. Silakan hubungi Kesekretariatan DPP INKINDO DKI Jakarta di +62217942940 atau email sekretariat@inkindo-dki.org.', 'bot');
+            }
+        } catch (err) {
+            typing.remove();
+            addMsg('Koneksi terganggu. Untuk bantuan cepat, hubungi Kesekretariatan di +62217942940 atau sekretariat@inkindo-dki.org.', 'bot');
+        } finally {
+            chatBusy = false;
+        }
+    };
+
+    function initChat() {
+        if (chatStarted || !chatBody) return;
+        chatStarted = true;
         const typing = document.createElement('div');
         typing.className = 'chat-msg chat-msg--bot chat-msg--typing';
         typing.innerHTML = '<i></i><i></i><i></i>';
@@ -950,29 +1001,9 @@
         chatBody.scrollTop = chatBody.scrollHeight;
         setTimeout(() => {
             typing.remove();
-            addMsg(text, 'bot');
-        }, 800);
-    };
-
-    const answer = (q) => {
-        const lower = q.toLowerCase();
-        const hit = replies.find((r) => r.keys.some((k) => lower.includes(k)));
-        return hit
-            ? hit.text
-            : 'Terima kasih atas pertanyaannya. Untuk informasi lebih lanjut, hubungi sekretariat di +62217942940 atau email sekretariat@inkindo-dki.org.';
-    };
-
-    const sendUser = (text) => {
-        if (!text.trim()) return;
-        addMsg(text, 'user');
-        botReply(answer(text));
-    };
-
-    function initChat() {
-        if (chatStarted) return;
-        chatStarted = true;
-        botReply('Halo! Saya Asisten INKINDO DKI Jakarta. Ada yang bisa saya bantu hari ini?');
-        setTimeout(() => chatInput.focus(), 450);
+            addMsg('Halo! Saya Asisten Virtual INKINDO DKI Jakarta. Ada yang bisa saya bantu hari ini? Anda bisa menanyakan seputar mitra kerja, agenda kegiatan, anggota & proyek, atau informasi sekretariat.', 'bot');
+            if (chatInput) chatInput.focus();
+        }, 700);
     }
 
     if (chatForm && chatInput) {
@@ -982,8 +1013,6 @@
             chatInput.value = '';
         });
     }
-    $$('.chat-quick__btn').forEach((btn) =>
-        btn.addEventListener('click', () => sendUser(btn.textContent)));
 
     /* ---------- Modal Daftar Mitra Kerja ---------- */
     function ensureMitraModal() {
