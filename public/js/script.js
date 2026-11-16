@@ -805,13 +805,15 @@
 
     /* ---------- Hero carousel ---------- */
     const carousel = $('#hero-carousel');
-    if (carousel) {
+    if (carousel && carousel.dataset.cmsCarouselInit !== '1' && carousel.dataset.carouselInit !== '1') {
+        carousel.dataset.carouselInit = '1';
         const track = $('.carousel__track', carousel);
         const slides = $$('.carousel__slide', carousel);
         const dotsWrap = $('#carousel-dots');
         let slideIndex = 0;
         let autoTimer;
 
+        if (dotsWrap) dotsWrap.innerHTML = '';
         slides.forEach((_, i) => {
             const dot = document.createElement('button');
             dot.type = 'button';
@@ -830,12 +832,17 @@
         };
         const restartAuto = () => {
             clearInterval(autoTimer);
+            if (window.__heroCarouselTimer) clearInterval(window.__heroCarouselTimer);
             autoTimer = setInterval(() => goTo(slideIndex + 1), 5000);
+            window.__heroCarouselTimer = autoTimer;
         };
 
         $('#carousel-prev').addEventListener('click', () => goTo(slideIndex - 1, true));
         $('#carousel-next').addEventListener('click', () => goTo(slideIndex + 1, true));
-        carousel.addEventListener('mouseenter', () => clearInterval(autoTimer));
+        carousel.addEventListener('mouseenter', () => {
+            clearInterval(autoTimer);
+            if (window.__heroCarouselTimer) clearInterval(window.__heroCarouselTimer);
+        });
         carousel.addEventListener('mouseleave', restartAuto);
 
         // Swipe untuk layar sentuh
@@ -1066,10 +1073,17 @@
         return modalEl;
     }
 
-    window.openDaftarMitraModal = function (e) {
+    window.openDaftarMitraModal = async function (e) {
         if (e && e.preventDefault) e.preventDefault();
         closePanel();
-        window.open('http://localhost:8080/mitra/register', '_blank', 'noopener');
+        const auth = typeof window.__ensureInkindoAuth === 'function'
+            ? await window.__ensureInkindoAuth()
+            : { authenticated: false, sim_url: 'http://localhost:8080' };
+        if (auth.authenticated) {
+            window.location.href = '/sso/switch-to-sim';
+            return;
+        }
+        window.location.href = (auth.sim_url || 'http://localhost:8080') + '/mitra/register';
     };
 
     window.closeDaftarMitraModal = function () {
@@ -1244,9 +1258,135 @@
         return modalEl;
     }
 
-    window.openKlinikKonsultasiModal = function (e, defaultCategory) {
+    /* ---------- Auth Status, SSO Redirect & Floating Left Popup ---------- */
+    window.__INKINDO_AUTH__ = {
+        loaded: false,
+        authenticated: false,
+        user: null,
+        sim_url: 'http://localhost:8080',
+        csrf_token: ''
+    };
+
+    window.__ensureInkindoAuth = function (forceRefresh = false) {
+        if (!forceRefresh && window.__INKINDO_AUTH_PROMISE__) {
+            return window.__INKINDO_AUTH_PROMISE__;
+        }
+        window.__INKINDO_AUTH_PROMISE__ = fetch('/api/auth/status', {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin'
+        })
+            .then((r) => r.json())
+            .then((data) => {
+                window.__INKINDO_AUTH__ = {
+                    loaded: true,
+                    authenticated: Boolean(data && data.authenticated),
+                    user: (data && data.user) ? data.user : null,
+                    sim_url: (data && data.sim_url) ? String(data.sim_url).replace(/\/+$/, '') : 'http://localhost:8080',
+                    csrf_token: (data && data.csrf_token) ? String(data.csrf_token) : ''
+                };
+                renderAuthFloatingPopup(window.__INKINDO_AUTH__);
+                return window.__INKINDO_AUTH__;
+            })
+            .catch(() => {
+                window.__INKINDO_AUTH__.loaded = true;
+                return window.__INKINDO_AUTH__;
+            });
+        return window.__INKINDO_AUTH_PROMISE__;
+    };
+
+    window.__redirectToInkindoLogin = function (nextHash = '') {
+        const auth = window.__INKINDO_AUTH__ || {};
+        const simUrl = auth.sim_url || 'http://localhost:8080';
+        const nextPath = window.location.pathname + window.location.search + (nextHash || '');
+        window.location.href = simUrl + '/auth/login?next=' + encodeURIComponent(nextPath);
+    };
+
+    // Pastikan semua link Login/Register SIM-INKINDO di side-panel selalu terbuka di tab yang sama,
+    // dan jika user sudah login, langsung redirect SSO ke dashboard SIM-INKINDO tanpa login ulang
+    $$('.side-panel__content[data-content="login"] a.panel-link, .side-panel__content a[href*="/auth/"], .side-panel__content a[href*="/mitra/register"], .side-panel__content a[href*="/mitra/login"]').forEach((link) => {
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+        link.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const auth = await window.__ensureInkindoAuth();
+            if (auth.authenticated) {
+                window.location.href = '/sso/switch-to-sim';
+                return;
+            }
+            const rawHref = link.getAttribute('href') || '';
+            try {
+                const parsed = new URL(rawHref, window.location.origin);
+                window.location.href = (auth.sim_url || 'http://localhost:8080') + parsed.pathname + parsed.search;
+            } catch (_) {
+                window.location.href = rawHref;
+            }
+        });
+    });
+
+    function renderAuthFloatingPopup(auth) {
+        const existing = document.getElementById('inkindo-auth-float');
+        if (!auth || !auth.authenticated || !auth.user) {
+            if (existing) existing.remove();
+            return;
+        }
+        if (existing) return;
+
+        const displayName = auth.user.username || auth.user.name || 'User';
+
+        const box = document.createElement('div');
+        box.id = 'inkindo-auth-float';
+        box.style.cssText = 'position:fixed;left:28px;bottom:28px;z-index:9990;background:rgba(255,255,255,0.78);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid rgba(255,255,255,0.75);border-radius:999px;box-shadow:0 12px 34px rgba(15,23,42,0.16),0 0 0 1px rgba(15,23,42,0.06),inset 0 1px 0 rgba(255,255,255,0.92);padding:7px 9px 7px 16px;font-family:inherit;font-size:13.5px;color:#0f172a;display:inline-flex;align-items:center;gap:10px;max-width:calc(100vw - 56px);transition:all 0.25s ease;';
+        box.innerHTML = `
+            <button type="button" id="inkindo-auth-float-toggle" title="Klik untuk opsi akun" style="border:none;background:transparent;padding:0;margin:0;display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-family:inherit;color:inherit;min-width:0;">
+                <span style="width:11px;height:11px;border-radius:50%;background:#34c759;flex-shrink:0;box-shadow:0 0 0 4px rgba(52,199,89,0.24);"></span>
+                <span id="inkindo-auth-float-name" style="font-weight:700;font-size:14px;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px;color:#0f172a;"></span>
+                <span id="inkindo-auth-float-chevron" class="material-symbols-outlined" style="font-size:19px;color:#64748b;transition:transform 0.2s ease;">chevron_right</span>
+            </button>
+            <div id="inkindo-auth-float-body" style="display:none;align-items:center;gap:8px;padding-left:10px;border-left:1px solid rgba(15,23,42,0.1);flex-shrink:0;">
+                <a href="/sso/switch-to-sim" title="Pindah ke SIM-INKINDO" style="display:inline-flex;align-items:center;gap:6px;background:rgba(11,98,162,0.94);color:#ffffff;text-decoration:none;padding:8px 14px;border-radius:999px;font-weight:600;font-size:12.5px;white-space:nowrap;box-shadow:0 4px 12px rgba(11,98,162,0.24);">
+                    <span class="material-symbols-outlined" style="font-size:16px;">swap_horiz</span>
+                    SIM-INKINDO
+                </a>
+                <button type="button" id="inkindo-auth-float-logout" title="Logout" aria-label="Logout" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(254,226,226,0.88);color:#dc2626;border:1px solid rgba(239,68,68,0.24);border-radius:50%;cursor:pointer;flex-shrink:0;">
+                    <span class="material-symbols-outlined" style="font-size:18px;">logout</span>
+                </button>
+            </div>
+        `;
+        document.body.appendChild(box);
+        const nameEl = document.getElementById('inkindo-auth-float-name');
+        if (nameEl) nameEl.textContent = displayName;
+
+        const toggleBtn = document.getElementById('inkindo-auth-float-toggle');
+        const bodyEl = document.getElementById('inkindo-auth-float-body');
+        const chevronEl = document.getElementById('inkindo-auth-float-chevron');
+        if (toggleBtn && bodyEl) {
+            toggleBtn.addEventListener('click', () => {
+                const isClosed = bodyEl.style.display === 'none';
+                bodyEl.style.display = isClosed ? 'inline-flex' : 'none';
+                if (chevronEl) chevronEl.style.transform = isClosed ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        }
+
+        const logoutBtn = document.getElementById('inkindo-auth-float-logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                logoutBtn.disabled = true;
+                window.location.href = '/sso/logout';
+            });
+        }
+    }
+
+    window.__ensureInkindoAuth();
+
+    window.openKlinikKonsultasiModal = async function (e, defaultCategory) {
         if (e && e.preventDefault) e.preventDefault();
         closePanel();
+
+        const auth = await window.__ensureInkindoAuth();
+        if (!auth.authenticated) {
+            window.__redirectToInkindoLogin('#klinik-konsultasi');
+            return;
+        }
 
         const modalEl = ensureKlinikModal();
         modalEl.classList.add('is-active');
@@ -1308,12 +1448,19 @@
             .replace(/"/g, '&quot;');
 
         try {
+            const auth = await window.__ensureInkindoAuth();
+            if (!auth.authenticated) {
+                window.__redirectToInkindoLogin('#klinik-konsultasi');
+                return;
+            }
             const res = await fetch('/api/konsultasi/messages', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': auth.csrf_token || ''
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify({
                     kategori: kategori,
                     nama: nama,
@@ -1324,6 +1471,11 @@
                     pesan: pesan
                 })
             });
+
+            if (res.status === 401) {
+                window.__redirectToInkindoLogin('#klinik-konsultasi');
+                return;
+            }
 
             const data = await res.json().catch(() => ({}));
             if (res.ok) {
@@ -1370,10 +1522,13 @@
         });
     });
 
-    // Also support hash #klinik-konsultasi
+    // Also support hash #klinik-konsultasi (only auto-open when already authenticated)
     if (window.location.hash === '#klinik-konsultasi' || window.location.search.includes('action=konsultasi')) {
-        setTimeout(() => {
-            window.openKlinikKonsultasiModal();
+        setTimeout(async () => {
+            const auth = await window.__ensureInkindoAuth();
+            if (auth.authenticated) {
+                window.openKlinikKonsultasiModal();
+            }
         }, 300);
     }
 

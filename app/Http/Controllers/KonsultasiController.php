@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -34,6 +35,12 @@ class KonsultasiController extends Controller
 
     public function storeMessage(Request $request): JsonResponse
     {
+        if (!Auth::check()) {
+            return response()->json([
+                'message' => 'Silakan login terlebih dahulu untuk mengajukan konsultasi.',
+            ], 401);
+        }
+
         $this->ensureTable();
 
         $validated = $request->validate([

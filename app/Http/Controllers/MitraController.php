@@ -197,6 +197,12 @@ class MitraController extends Controller
 
     public function storeMessage(Request $request, string $slug): JsonResponse
     {
+        if (!\Illuminate\Support\Facades\Auth::check()) {
+            return response()->json([
+                'message' => 'Silakan login terlebih dahulu untuk mengirim pesan ke Mitra Kerja.',
+            ], 401);
+        }
+
         if (!Schema::hasTable('mitra_kerja') || !Schema::hasTable('mitra_messages')) {
             return response()->json(['message' => 'Layanan pesan belum tersedia.'], 500);
         }

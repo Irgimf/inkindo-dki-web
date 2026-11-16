@@ -113,13 +113,13 @@
         <div class="side-panel__content" data-content="login">
             <h3 class="side-panel__title">Login</h3>
             <ul class="panel-links">
-                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/auth/login"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">groups</span>
                         <span><strong>Anggota INKINDO</strong><small>Akses portal untuk anggota terdaftar</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/mitra/login" target="_blank" rel="noopener noreferrer"
+                <li><a href="{{ rtrim(config('app.sim_url', 'http://localhost:8080'), '/') }}/mitra/login"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">handshake</span>
                         <span><strong>Mitra Kerja</strong><small>Portal kolaborasi dan kemitraan</small></span>
@@ -514,7 +514,13 @@
                             var oldCarousel = document.getElementById('hero-carousel');
                             if (!oldCarousel || !oldCarousel.parentNode) return;
 
+                            if (window.__heroCarouselTimer) {
+                                clearInterval(window.__heroCarouselTimer);
+                                window.__heroCarouselTimer = null;
+                            }
+
                             var carousel = oldCarousel.cloneNode(true);
+                            carousel.dataset.cmsCarouselInit = '1';
                             oldCarousel.parentNode.replaceChild(carousel, oldCarousel);
 
                             var track = carousel.querySelector('.carousel__track');
@@ -580,10 +586,12 @@
 
                             function restartTimer() {
                                 if (autoTimer) clearInterval(autoTimer);
+                                if (window.__heroCarouselTimer) clearInterval(window.__heroCarouselTimer);
                                 if (slidesCount > 1) {
                                     autoTimer = setInterval(function () {
                                         goToSlide(slideIndex + 1, false);
                                     }, 5000);
+                                    window.__heroCarouselTimer = autoTimer;
                                 }
                             }
 
@@ -600,6 +608,7 @@
 
                             carousel.addEventListener('mouseenter', function () {
                                 if (autoTimer) clearInterval(autoTimer);
+                                if (window.__heroCarouselTimer) clearInterval(window.__heroCarouselTimer);
                             });
                             carousel.addEventListener('mouseleave', restartTimer);
 

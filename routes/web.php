@@ -12,10 +12,13 @@ use App\Http\Controllers\MitraController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
-// Authentication API endpoints
+// Authentication & SSO API endpoints
 Route::get('/api/auth/status', [AuthController::class, 'status']);
-Route::post('/api/auth/login', [AuthController::class, 'login']);
+Route::post('/api/auth/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::post('/api/auth/logout', [AuthController::class, 'logout']);
+Route::get('/sso/callback', [AuthController::class, 'ssoCallback']);
+Route::get('/sso/switch-to-sim', [AuthController::class, 'switchToSim']);
+Route::get('/sso/logout', [AuthController::class, 'ssoLogout']);
 
 // Member CRUD API endpoints
 Route::get('/api/members', [MemberController::class, 'index']);
@@ -26,10 +29,10 @@ Route::delete('/api/members/{member}', [MemberController::class, 'destroy']);
 // Mitra Kerja API endpoints
 Route::get('/api/mitra', [MitraController::class, 'index']);
 Route::get('/api/mitra/{slug}', [MitraController::class, 'show']);
-Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
+Route::post('/api/mitra/{slug}/messages', [MitraController::class, 'storeMessage'])->middleware('throttle:5,1');
 
 // Klinik Konsultasi API endpoint
-Route::post('/api/konsultasi/messages', [KonsultasiController::class, 'storeMessage'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
+Route::post('/api/konsultasi/messages', [KonsultasiController::class, 'storeMessage'])->middleware('throttle:5,1');
 
 // CMS Berita & Informasi API endpoints
 Route::get('/api/cms/berita', [CmsBeritaController::class, 'index']);
