@@ -901,6 +901,17 @@
             'main .search-header-card',
             'main .search-status-row',
             'main .section-head',
+            'main .sejarah-grid > *',
+            'main .visi-misi-heading',
+            'main .visi-misi-grid > *',
+            'main .kode-etik-heading',
+            'main .kode-etik-subtitle',
+            'main .kode-flat-item',
+            'main .org-unit-card',
+            'main .badan-card',
+            'main .officer-card',
+            'main .bidang-card',
+            'main .org-empty-state',
             'main .card',
             'main .about-card',
             'main .org-card',
@@ -983,7 +994,12 @@
                     registerTargets();
                 }, 60);
             });
-            mo.observe(mainEl, { childList: true, subtree: true });
+            mo.observe(mainEl, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['class']
+            });
         }
     })();
 
