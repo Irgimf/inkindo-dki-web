@@ -1234,10 +1234,12 @@
                             <div class="reg-card__body">
                                 <div>
                                     <div class="reg-card__top">
+                                        ${item.source === 'berita' && item.tanggalLabel ? `
                                         <div class="reg-card__date">
                                             <span class="material-symbols-outlined">${dateIcon}</span>
                                             ${esc(item.tanggalLabel)}
                                         </div>
+                                        ` : '<span></span>'}
                                         <span class="${pillClass}">${esc(pillText)}</span>
                                     </div>
                                     <h3 class="reg-card__title">${hi(item.judul, q)}</h3>

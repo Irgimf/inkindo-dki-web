@@ -698,7 +698,7 @@
                             grid.innerHTML = '';
                             pubList.slice(0, 8).forEach(function (item) {
                                 var card = document.createElement('a');
-                                card.className = 'pub-home-card reveal is-visible';
+                                card.className = 'pub-home-card reveal';
                                 card.href = item.target_url || ('berita-detail.html?type=publikasi&id=' + encodeURIComponent(item.slug || ''));
 
                                 var media = document.createElement('div');

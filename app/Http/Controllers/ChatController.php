@@ -6,6 +6,7 @@ use App\Support\SiteContactHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -142,7 +143,7 @@ class ChatController extends Controller
             }
         }
 
-        $fallbackReply = $this->buildSmartDatabaseReply($message, $keywords, $contextData);
+        $fallbackReply = $this->buildSmartDatabaseReply($message, $keywords, $contextData, $history);
         return response()->json([
             'reply'  => $fallbackReply,
             'source' => 'database',
@@ -162,7 +163,8 @@ class ChatController extends Controller
             'bisa', 'tidak', 'nggak', 'gak', 'ya', 'halo', 'hai', 'selamat', 'pagi', 'siang', 'sore', 'malam',
             'pernah', 'menangani', 'proyek', 'kegiatan', 'acara', 'bulan', 'tahun', 'mitra', 'kerja',
             'anggota', 'daftar', 'mendaftar', 'terdaftar', 'cara', 'pt', 'cv', 'perusahaan', 'badan', 'usaha',
-            'sbu', 'jasa', 'mempunyai', 'punya', 'memiliki', 'saat', 'saja', 'daerah', 'wilayah', 'lokasi',
+            'sbu', 'jasa', 'kualifikasi', 'kelas', 'kecil', 'menengah', 'besar',
+            'mempunyai', 'punya', 'memiliki', 'saat', 'saja', 'daerah', 'wilayah', 'lokasi',
             'jakarta', 'dki', 'inkindo', 'dpp', 'jumlah', 'total',
             'what', 'how', 'many', 'is', 'are', 'the', 'in', 'of', 'for', 'and',
         ];
@@ -234,6 +236,22 @@ class ChatController extends Controller
         $beritaItems = [];
         $monthMatchedBerita = [];
         $detectedMonthName = null;
+        $lowerMsg = mb_strtolower($message);
+
+        // Deteksi filter kualifikasi spesifik (Kecil / Menengah / Besar)
+        $askedKualifikasi = null;
+        if (preg_match('/\bkecil\b/u', $lowerMsg)) {
+            $askedKualifikasi = 'Kecil';
+        } elseif (preg_match('/\bmenengah\b/u', $lowerMsg)) {
+            $askedKualifikasi = 'Menengah';
+        } elseif (preg_match('/\bbesar\b/u', $lowerMsg)) {
+            $askedKualifikasi = 'Besar';
+        }
+
+        // Jika pengguna menanyakan "kegiatan" / "agenda" / "acara", jangan masukkan e-Magazine atau Publikasi buku/pedoman
+        $isAskingKegiatanOnly = (bool) preg_match('/\b(kegiatan|agenda|acara)\b/u', $lowerMsg)
+            && !preg_match('/\b(majalah|emagazine|magazine|publikasi|buku|pedoman)\b/u', $lowerMsg);
+
         if (Schema::hasTable('cms_berita')) {
             try {
                 $monthMap = [
@@ -250,7 +268,6 @@ class ChatController extends Controller
                     'november'  => ['num' => '11', 'short' => 'nov'],
                     'desember'  => ['num' => '12', 'short' => 'des'],
                 ];
-                $lowerMsg = mb_strtolower($message);
                 $detectedMonthNum = null;
                 $detectedMonthShort = null;
                 foreach ($monthMap as $mName => $mMeta) {
@@ -262,9 +279,15 @@ class ChatController extends Controller
                     }
                 }
 
-                $allBerita = DB::table('cms_berita')
+                $beritaQuery = DB::table('cms_berita')
                     ->orderByDesc('tanggal')
-                    ->orderByDesc('id')
+                    ->orderByDesc('id');
+
+                if ($isAskingKegiatanOnly) {
+                    $beritaQuery->whereIn('tipe', ['agenda', 'rilis', 'galeri']);
+                }
+
+                $allBerita = $beritaQuery
                     ->limit(60)
                     ->get(['tipe', 'judul', 'tanggal', 'tanggal_label', 'kategori_label', 'ringkasan']);
 
@@ -362,7 +385,16 @@ class ChatController extends Controller
             try {
                 $sq = DB::table('sbu as s')
                     ->join('companies as c', 's.company_id', '=', 'c.id')
-                    ->select('c.nama_pt', 'c.no_kta', 'c.wilayah', 'c.alamat_pt', 's.jenis_sbu', 's.kode_kbli', 's.judul_kbli', 's.kualifikasi', 's.masa_berlaku');
+                    ->select('c.nama_pt', 'c.no_kta', 'c.wilayah', 'c.alamat_pt', 'c.kualifikasi as company_kualifikasi', 's.jenis_sbu', 's.kode_kbli', 's.judul_kbli', 's.kualifikasi', 's.masa_berlaku');
+
+                if ($askedKualifikasi !== null) {
+                    $sq->where(function ($q) use ($askedKualifikasi) {
+                        $q->where('s.kualifikasi', $askedKualifikasi)
+                          ->orWhere(function ($sub) use ($askedKualifikasi) {
+                              $sub->whereNull('s.kualifikasi')->where('c.kualifikasi', $askedKualifikasi);
+                          });
+                    });
+                }
 
                 if (!empty($keywords)) {
                     $sq->where(function ($q) use ($keywords) {
@@ -393,8 +425,7 @@ class ChatController extends Controller
                         }
                         $scored[] = ['score' => $score, 'row' => $row];
                     }
-                    // Hanya ambil SBU dengan skor kecocokan tertinggi (atau minimal separuh dari skor tertinggi)
-                    $threshold = max(1, (int) ceil($maxScore * 0.6));
+                    $threshold = max(1, (int) ceil($maxScore * 0.75));
                     $filtered = array_filter($scored, fn ($item) => $item['score'] >= $threshold);
                     usort($filtered, fn ($a, $b) => $b['score'] <=> $a['score']);
                     $matchedSbus = array_map(fn ($item) => $item['row'], array_slice($filtered, 0, 10));
@@ -478,8 +509,9 @@ class ChatController extends Controller
             'bulan_ditanyakan'  => $detectedMonthName,
             'berita_relevan'    => $monthMatchedBerita,
             'berita_terbaru'    => $beritaItems,
-            'anggota_statistik' => $memberStats,
-            'perusahaan_list'   => $companyList,
+            'anggota_statistik'    => $memberStats,
+            'kualifikasi_ditanya'  => $askedKualifikasi,
+            'perusahaan_list'      => $companyList,
             'perusahaan_cocok'  => $matchedCompanies,
             'sbu_cocok'         => $matchedSbus,
             'proyek_cocok'      => $matchedProjects,
@@ -537,18 +569,40 @@ class ChatController extends Controller
             ],
         ];
 
-        $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' . rawurlencode($model) . ':generateContent?key=' . urlencode($apiKey);
-        $response = $this->postGeminiRequest($endpoint, $basePayload);
+        $modelsToTry = array_values(array_unique([
+            $model,
+            'gemini-2.5-flash-lite',
+            'gemini-flash-lite-latest',
+        ]));
 
-        if ($response && $response->successful()) {
-            $rawText = trim((string) data_get($response->json(), 'candidates.0.content.parts.0.text', ''));
-            if ($rawText !== '') {
-                return $this->cleanPlainText($rawText);
+        foreach ($modelsToTry as $tryModel) {
+            $cacheKey = 'gemini_skip_' . md5($tryModel);
+            if (Cache::has($cacheKey)) {
+                continue;
             }
-        }
 
-        if ($response) {
-            Log::warning('Gemini API HTTP ' . $response->status() . ' (' . $model . '): ' . $response->body());
+            $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' . rawurlencode($tryModel) . ':generateContent?key=' . urlencode($apiKey);
+            $response = $this->postGeminiRequest($endpoint, $basePayload);
+
+            if ($response && $response->successful()) {
+                $rawText = trim((string) data_get($response->json(), 'candidates.0.content.parts.0.text', ''));
+                if ($rawText !== '') {
+                    return $this->cleanPlainText($rawText);
+                }
+            }
+
+            if ($response) {
+                $status = $response->status();
+                Log::warning('Gemini API HTTP ' . $status . ' (' . $tryModel . '): ' . $response->body());
+                if (in_array($status, [404, 429], true)) {
+                    // Simpan status limit/404 selama 15 menit agar chat berikutnya langsung cepat tanpa menunggu request gagal
+                    Cache::put($cacheKey, true, now()->addMinutes(15));
+                    continue;
+                }
+                if (in_array($status, [401, 403], true)) {
+                    break;
+                }
+            }
         }
 
         return null;
@@ -566,10 +620,10 @@ class ChatController extends Controller
     }
 
     /**
-     * Mesin penjawab berbasis database yang memahami intent secara natural
-     * ketika API AI sedang sibuk (HTTP 503) atau kuota habis.
+     * Mesin penjawab berbasis database yang memahami intent & konteks percakapan sebelumnya
+     * ketika API AI sedang sibuk (HTTP 503) atau kuota harian habis (HTTP 429).
      */
-    private function buildSmartDatabaseReply(string $message, array $keywords, array $contextData): string
+    private function buildSmartDatabaseReply(string $message, array $keywords, array $contextData, array $history = []): string
     {
         $lower = mb_strtolower($message);
         $sek   = $contextData['sekretariat'];
@@ -591,6 +645,47 @@ class ChatController extends Controller
             }
         }
 
+        // 0b. Deteksi pertanyaan lanjutan ("apakah ada lagi selain itu?", "apa saja selain itu?", "sisanya?", "ada lagi?")
+        $isFollowUpMore = (bool) preg_match('/\b(selain\s+itu|ada\s+lagi|sisanya|lainnya|yang\s+lain|semuanya|lebih\s+lengkap)\b/u', $lower);
+        if ($isFollowUpMore && !empty($history)) {
+            $lastBotText = '';
+            for ($i = count($history) - 1; $i >= 0; $i--) {
+                if (($history[$i]['role'] ?? '') === 'model' && !empty($history[$i]['text'])) {
+                    $lastBotText = (string) $history[$i]['text'];
+                    break;
+                }
+            }
+
+            if ($lastBotText !== '') {
+                $lastBotLower = mb_strtolower($lastBotText);
+                if (str_contains($lastBotLower, 'mitra kerja')) {
+                    $remainingMitra = [];
+                    foreach ($contextData['mitra_list'] as $m) {
+                        if (!str_contains($lastBotLower, mb_strtolower($m['nama']))) {
+                            $remainingMitra[] = '• ' . $m['nama'];
+                        }
+                    }
+                    if (!empty($remainingMitra)) {
+                        return "Berikut Mitra Kerja aktif lainnya yang belum disebutkan di atas:\n" . implode("\n", $remainingMitra);
+                    }
+                    return "Tidak ada lagi, seluruh {$contextData['mitra_total']} Mitra Kerja aktif yang tercatat di database sudah disebutkan semuanya.";
+                }
+
+                if (str_contains($lastBotLower, 'perusahaan anggota') || str_contains($lastBotLower, 'memiliki sbu')) {
+                    $remainingPt = [];
+                    foreach ($contextData['perusahaan_list'] as $c) {
+                        if (!str_contains($lastBotLower, mb_strtolower($c->nama_pt))) {
+                            $remainingPt[] = "• {$c->nama_pt} (Kualifikasi: {$c->kualifikasi}, Wilayah: {$c->wilayah})";
+                        }
+                    }
+                    if (!empty($remainingPt)) {
+                        return "Berikut perusahaan anggota lainnya yang tercatat di database:\n" . implode("\n", $remainingPt);
+                    }
+                    return "Tidak ada lagi, seluruh perusahaan anggota yang sesuai di database sudah disebutkan di atas.";
+                }
+            }
+        }
+
         // 1. Intent: Cara Pendaftaran / Menjadi Anggota atau Mitra Kerja (termasuk typo 'dafta' dan frasa 'cara menjadi' / 'syarat')
         $isAskingHowToRegister = (bool) preg_match('/\b(cara\s+dafta\w*|cara\s+mendaftar|mendaftar|pendaftaran|registrasi|gabung|bergabung|cara\s+menjadi|cara\s+jadi|menjadi\s+anggota|jadi\s+anggota|menjadi\s+mitra|jadi\s+mitra|syarat\s+menjadi|syarat\s+anggota|syarat\s+mitra|dafta\w*\s+menjadi|dafta\w*\s+anggota|dafta\w*\s+mitra)\b/u', $lower);
         if ($isAskingHowToRegister) {
@@ -604,8 +699,8 @@ class ChatController extends Controller
         $isAskingCount = (bool) preg_match('/\b(berapa|jumlah|total)\b/u', $lower);
         if ($isAskingCount) {
             if (str_contains($lower, 'mitra')) {
-                $names = array_slice(array_column($contextData['mitra_list'], 'nama'), 0, 8);
-                $listText = !empty($names) ? "\n\nBeberapa mitra kerja aktif kami antara lain:\n• " . implode("\n• ", $names) : '';
+                $names = array_column($contextData['mitra_list'], 'nama');
+                $listText = !empty($names) ? "\n\nDaftar Mitra Kerja aktif kami:\n• " . implode("\n• ", $names) : '';
                 return "Saat ini terdapat {$contextData['mitra_total']} Mitra Kerja aktif yang bekerja sama dengan DPP INKINDO DKI Jakarta.{$listText}";
             }
 
@@ -616,7 +711,7 @@ class ChatController extends Controller
                     return "Saat ini belum ada data perusahaan anggota yang tercatat di database. Untuk informasi keanggotaan lebih lanjut, silakan hubungi Sekretariat di {$sek['telepon_1']}.";
                 }
                 $names = [];
-                foreach (array_slice($companies, 0, 8) as $c) {
+                foreach (array_slice($companies, 0, 15) as $c) {
                     $wil = !empty($c->wilayah) ? " ({$c->wilayah})" : '';
                     $names[] = "• {$c->nama_pt}{$wil} — Kualifikasi {$c->kualifikasi}";
                 }
@@ -651,15 +746,21 @@ class ChatController extends Controller
             }
 
             // Cek SBU spesifik jika ditanyakan SBU / subklasifikasi
-            if (!empty($contextData['sbu_cocok']) && (str_contains($lower, 'sbu') || str_contains($lower, 'subklasifikasi') || str_contains($lower, 'kbli') || !empty($keywords))) {
+            $askedKual = $contextData['kualifikasi_ditanya'] ?? null;
+            if (str_contains($lower, 'sbu') || str_contains($lower, 'subklasifikasi') || str_contains($lower, 'kbli')) {
+                if (empty($contextData['sbu_cocok'])) {
+                    $kualInfo = $askedKual ? " dengan kualifikasi {$askedKual}" : '';
+                    return "Saat ini belum ada perusahaan anggota di database yang tercatat memiliki SBU tersebut{$kualInfo}.";
+                }
+
                 $uniquePtNames = array_values(array_unique(array_map(fn ($s) => $s->nama_pt, $contextData['sbu_cocok'])));
-                // Jika user menanyakan "Perusahaan apa / PT apa yang mempunyai SBU...", sebutkan nama perusahaannya saja dengan ringkas
+                $kualLabel = $askedKual ? " (Kualifikasi {$askedKual})" : '';
                 if (preg_match('/\b(perusahaan\s+apa|pt\s+apa|siapa\s+saja|pt\s+mana)\b/u', $lower)) {
                     if (count($uniquePtNames) === 1) {
-                        return "Perusahaan anggota yang tercatat memiliki SBU tersebut adalah {$uniquePtNames[0]}.";
+                        return "Perusahaan anggota yang tercatat memiliki SBU tersebut{$kualLabel} adalah {$uniquePtNames[0]}.";
                     }
                     $ptLines = array_map(fn ($name) => "• {$name}", $uniquePtNames);
-                    return "Perusahaan anggota yang tercatat memiliki SBU tersebut adalah:\n" . implode("\n", $ptLines);
+                    return "Perusahaan anggota yang tercatat memiliki SBU tersebut{$kualLabel} adalah:\n" . implode("\n", $ptLines);
                 }
 
                 $lines = [];
@@ -735,7 +836,7 @@ class ChatController extends Controller
         }
 
         if (str_contains($lower, 'mitra')) {
-            $names = array_slice(array_column($contextData['mitra_list'], 'nama'), 0, 8);
+            $names = array_column($contextData['mitra_list'], 'nama');
             $listText = !empty($names) ? "\n• " . implode("\n• ", $names) : '';
             return "Saat ini DPP INKINDO DKI Jakarta bermitra dengan {$contextData['mitra_total']} Mitra Kerja aktif:{$listText}";
         }

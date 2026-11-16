@@ -2230,13 +2230,22 @@ a.panel-link:hover {
 /* Reveal on scroll */
 .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .7s var(--ease), transform .7s var(--ease), box-shadow .3s var(--ease);
+    transform: translateY(28px);
+    transition: opacity .65s cubic-bezier(0.22, 1, 0.36, 1), transform .65s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .3s var(--ease);
+    will-change: opacity, transform;
 }
 
 .reveal.is-visible {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
 }
 
 /* =========================================================

@@ -523,10 +523,12 @@
                         <div class="header-search__info">
                             <div class="header-search__top-row">
                                 <span class="${badgeClass}">${escapeHtmlStr(badgeText)}</span>
+                                ${item.source === 'berita' && item.tanggalLabel ? `
                                 <span class="header-search__date">
                                     <span class="material-symbols-outlined" style="font-size: 12px;">schedule</span>
                                     ${escapeHtmlStr(item.tanggalLabel)}
                                 </span>
+                                ` : ''}
                             </div>
                             <h4 class="header-search__title">${highlightSearchTerm(item.judul, q)}</h4>
                             <p class="header-search__desc">${highlightSearchTerm(item.ringkasan, q)}</p>
@@ -881,24 +883,109 @@
         restartTicker();
     }
 
-    /* ---------- Reveal saat scroll ---------- */
-    const reveals = $$('.reveal');
-    if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    io.unobserve(entry.target);
+    /* ---------- Reveal Fade-Up saat Pertama Kali Scroll (Seluruh Halaman) ---------- */
+    (function setupScrollReveal() {
+        const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const observed = new WeakSet();
+
+        const targetSelectors = [
+            '.reveal',
+            'main > section:not(.hero) .news__head',
+            'main > section:not(.hero) .bento__feature',
+            'main > section:not(.hero) .bento__card',
+            'main > section:not(.hero) .pub-home-card',
+            'main .mitra-panel-card',
+            'main .product-card',
+            'main .other-partners-box',
+            'main .reg-card',
+            'main .search-header-card',
+            'main .search-status-row',
+            'main .section-head',
+            'main .card',
+            'main .about-card',
+            'main .org-card',
+            'main .ketentuan-card',
+            'main .lelang-card',
+            'main .portal-card',
+            'main .berita-card',
+            'main .news-card',
+            'main .member-card',
+            'main .stat-card',
+            'main .stats-grid > *',
+            '.site-footer__grid',
+            '.site-footer__bottom'
+        ].join(', ');
+
+        const collectTargets = () => {
+            const list = new Set($$(targetSelectors));
+            // Fallback untuk section konten di halaman lain yang belum punya class khusus
+            $$('main > section:not(.hero):not(:first-child)').forEach((sec) => {
+                if (sec.querySelector('.reveal')) return;
+                const container = sec.querySelector('.container');
+                if (container && container.children.length > 0) {
+                    Array.from(container.children).forEach((child) => {
+                        if (!child.classList.contains('modal') && !child.classList.contains('daftar-mitra-modal-overlay')) {
+                            list.add(child);
+                        }
+                    });
+                } else {
+                    list.add(sec);
                 }
             });
-        }, { threshold: 0.15 });
-        reveals.forEach((el, i) => {
-            el.style.transitionDelay = (i * 0.1) + 's';
-            io.observe(el);
-        });
-    } else {
-        reveals.forEach((el) => el.classList.add('is-visible'));
-    }
+            return Array.from(list);
+        };
+
+        if (reducedMotion || !('IntersectionObserver' in window)) {
+            collectTargets().forEach((el) => {
+                el.classList.add('reveal', 'is-visible');
+            });
+            return;
+        }
+
+        const io = new IntersectionObserver((entries) => {
+            let batchIndex = 0;
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const delayMs = Math.min(batchIndex * 75, 360);
+                batchIndex++;
+                el.style.transitionDelay = delayMs + 'ms';
+                el.classList.add('is-visible');
+                io.unobserve(el);
+                setTimeout(() => {
+                    el.style.transitionDelay = '';
+                }, delayMs + 700);
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+
+        const registerTargets = () => {
+            collectTargets().forEach((el) => {
+                if (observed.has(el)) return;
+                observed.add(el);
+                el.classList.add('reveal');
+                if (el.classList.contains('is-visible')) {
+                    io.unobserve(el);
+                    return;
+                }
+                io.observe(el);
+            });
+        };
+
+        registerTargets();
+
+        const mainEl = $('main');
+        if (mainEl && 'MutationObserver' in window) {
+            let timer = null;
+            const mo = new MutationObserver(() => {
+                if (timer) return;
+                timer = setTimeout(() => {
+                    timer = null;
+                    registerTargets();
+                }, 60);
+            });
+            mo.observe(mainEl, { childList: true, subtree: true });
+        }
+    })();
 
     /* ---------- AI Chat Assistant (Veronika-style RAG via Gemini) ---------- */
     const chatBody = $('#chat-body');
