@@ -87,10 +87,12 @@ Route::get('/{folder}/{path}', function (string $folder, string $path) {
         'ttf' => 'font/ttf',
     ];
 
+    $isMediaOrFont = in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico', 'woff', 'woff2', 'ttf'], true);
+    $isStaticAsset = in_array($ext, ['css', 'js'], true);
     $headers = [
-        'Cache-Control' => in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico', 'woff', 'woff2', 'ttf'], true)
-            ? 'public, max-age=604800'
-            : 'no-cache, must-revalidate',
+        'Cache-Control' => $isMediaOrFont
+            ? 'public, max-age=2592000'
+            : ($isStaticAsset ? 'public, max-age=604800' : 'no-cache, must-revalidate'),
     ];
     if (isset($mimeMap[$ext])) {
         $headers['Content-Type'] = $mimeMap[$ext];

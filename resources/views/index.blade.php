@@ -11,10 +11,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    </noscript>
     <link rel="stylesheet" href="css/style.css?v=cerah15">
+    <link rel="preload" as="image" href="assets/hero-bg.webp" fetchpriority="high">
 </head>
 
 <body>
@@ -319,7 +324,7 @@
                     <div class="carousel" id="hero-carousel">
                         <div class="carousel__track">
                             <div class="carousel__slide is-active">
-                                <img src="assets/hero-bg.webp" alt="Dewan Pengurus Provinsi INKINDO DKI Jakarta">
+                                <img src="assets/hero-bg.webp" alt="Dewan Pengurus Provinsi INKINDO DKI Jakarta" fetchpriority="high" decoding="sync">
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">DPP Masa Bakti 2026–2030</span>
                                     <a href="#tentang" class="carousel__title">Dewan Pengurus Provinsi INKINDO DKI
@@ -327,14 +332,14 @@
                                 </div>
                             </div>
                             <div class="carousel__slide">
-                                <img src="assets/gambar.webp" alt="INKINDO DKI Goes to Campus">
+                                <img src="assets/gambar.webp" alt="INKINDO DKI Goes to Campus" loading="lazy" decoding="async">
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">Kemitraan Kampus</span>
                                     <a href="#berita" class="carousel__title">INKINDO DKI Goes to Campus</a>
                                 </div>
                             </div>
                             <div class="carousel__slide carousel__slide--graphic">
-                                <img src="assets/gambar2.webp" alt="Agenda Mendatang">
+                                <img src="assets/gambar2.webp" alt="Agenda Mendatang" loading="lazy" decoding="async">
                                 <span class="material-symbols-outlined carousel__graphic">verified_user</span>
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">Agenda Mendatang</span>
@@ -342,7 +347,7 @@
                                 </div>
                             </div>
                             <div class="carousel__slide carousel__slide--graphic carousel__slide--dark">
-                                <img src="assets/gambar1.webp" alt="Majalah INKINDO DKI Jakarta">
+                                <img src="assets/gambar1.webp" alt="Majalah INKINDO DKI Jakarta" loading="lazy" decoding="async">
                                 <span class="material-symbols-outlined carousel__graphic">auto_stories</span>
                                 <div class="carousel__caption">
                                     <span class="carousel__intro">e-Magazine Edisi 79</span>
@@ -444,7 +449,7 @@
                     <a href="berita.html" class="bento__feature reveal" id="bento-slot-1" style="text-decoration: none; color: inherit; cursor: pointer; display: flex; flex-direction: column;">
                         <div class="bento__media">
                             <img id="bento-slot-1-img" src="assets/gambar.webp"
-                                alt="Berita Utama INKINDO DKI Jakarta" loading="lazy" decoding="async">
+                                alt="Berita Utama INKINDO DKI Jakarta" fetchpriority="high" decoding="async">
                         </div>
                         <div class="bento__body">
                             <div class="bento__meta" id="bento-slot-1-meta">
@@ -497,6 +502,10 @@
                             card.style.display = slotNum === 1 ? 'flex' : '';
                             card.setAttribute('href', item.target_url || 'berita.html');
                             if (img) {
+                                if (slotNum === 1) {
+                                    img.removeAttribute('loading');
+                                    img.setAttribute('fetchpriority', 'high');
+                                }
                                 img.src = item.gambar || 'assets/gambar.webp';
                                 img.alt = item.judul || '';
                             }
@@ -539,6 +548,13 @@
                                 var img = document.createElement('img');
                                 img.src = b.gambar || 'assets/hero-bg.webp';
                                 img.alt = b.judul || 'Banner INKINDO DKI Jakarta';
+                                if (idx === 0) {
+                                    img.setAttribute('fetchpriority', 'high');
+                                    img.decoding = 'sync';
+                                } else {
+                                    img.loading = 'lazy';
+                                    img.decoding = 'async';
+                                }
                                 slide.appendChild(img);
 
                                 var caption = document.createElement('div');
@@ -794,7 +810,7 @@
     <!-- ================= FOOTER ================= -->
 @include('partials.footer')
 
-    <script src="js/script.js?v=cerah15"></script>
+    <script src="js/script.js?v=cerah15" defer></script>
 </body>
 
 </html>
