@@ -1010,7 +1010,8 @@ body.menu-open .mobile-toggle {
     transition: background .2s, padding .2s;
 }
 
-a.panel-link:hover {
+a.panel-link:hover,
+.panel-link--hover:hover {
     background: var(--slate-50);
     padding-left: 10px;
 }

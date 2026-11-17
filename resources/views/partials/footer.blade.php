@@ -1,7 +1,5 @@
 @php
     $siteContact = \App\Support\SiteContactHelper::get();
-    $tel1Clean = preg_replace('/[^0-9+]/', '', (string) ($siteContact->telepon_1 ?? '+62217942940'));
-    $tel2Clean = preg_replace('/[^0-9+]/', '', (string) ($siteContact->telepon_2 ?? ''));
 @endphp
     <footer class="site-footer" id="kontak">
         <div class="site-footer__container">
@@ -68,10 +66,8 @@
                         <div class="site-footer__contact-item">
                             <span class="material-symbols-outlined site-footer__icon">call</span>
                             <span>
-                                Telp: <a href="tel:{{ $tel1Clean }}" class="site-footer__link">{{ $siteContact->telepon_1 ?? '' }}</a>(H)@if (!empty($siteContact->telepon_2)), <a href="tel:{{ $tel2Clean }}" class="site-footer__link">{{ $siteContact->telepon_2 }}</a>
-                                @endif
-                                @if (!empty($siteContact->fax)), Fax: {{ $siteContact->fax }}
-                                @endif
+                                Telp: {{ $siteContact->telepon_1 ?? '' }}(H)@if (!empty($siteContact->telepon_2)), {{ $siteContact->telepon_2 }}@endif
+                                @if (!empty($siteContact->fax)), Fax: {{ $siteContact->fax }}@endif
                             </span>
                         </div>
                         <div class="site-footer__contact-item">
