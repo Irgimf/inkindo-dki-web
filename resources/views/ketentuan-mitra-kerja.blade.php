@@ -276,8 +276,8 @@
 
         @media (max-width: 768px) {
             .mitra-hero {
-                min-height: 70vh !important;
-                padding: 100px 0 50px !important;
+                min-height: auto !important;
+                padding: 112px 0 64px !important;
             }
 
             .mitra-hero h1 {
@@ -292,8 +292,8 @@
                 padding: 20px 16px !important;
             }
 
-            .mitra-content section {
-                padding: 60px 0 !important;
+            .mitra-content section:not(.mitra-hero) {
+                padding: 56px 0 !important;
             }
 
             .syarat-grid {
@@ -598,11 +598,6 @@
                         <span class="material-symbols-outlined" style="font-size: 22px;">how_to_reg</span>
                         Daftar Mitra Kerja
                     </button>
-                    <a href="#maksud-tujuan" class="btn btn--outline"
-                        style="padding: 14px 28px; font-size: 15px; font-weight: 600; border-radius: 10px; color: #0B62A2; border: 1.5px solid #0B62A2; display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.8);">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">info</span>
-                        Pelajari Selengkapnya
-                    </a>
                 </div>
             </div>
         </section>

@@ -879,9 +879,19 @@
                 border-radius: 12px;
             }
 
+            .tab-menu {
+                width: 100%;
+                gap: 16px;
+            }
+
             .tab-btn {
-                font-size: 16px;
+                font-size: 13.5px;
                 padding: 12px 0;
+                gap: 5px;
+            }
+
+            .tab-btn .material-symbols-outlined {
+                font-size: 18px;
             }
 
             .kode-etik-flat-grid {
