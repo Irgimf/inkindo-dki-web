@@ -580,11 +580,25 @@
                 onScroll();
             }
         });
+
+        if (mobileToggle && !$('#mobile-search-toggle')) {
+            const mobileSearchBtn = document.createElement('button');
+            mobileSearchBtn.type = 'button';
+            mobileSearchBtn.className = 'mobile-search-toggle';
+            mobileSearchBtn.id = 'mobile-search-toggle';
+            mobileSearchBtn.setAttribute('aria-label', 'Cari');
+            mobileSearchBtn.innerHTML = '<span class="material-symbols-outlined">search</span>';
+            mobileToggle.parentNode.insertBefore(mobileSearchBtn, mobileToggle);
+            mobileSearchBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                headerSearchToggle.click();
+            });
+        }
     }
 
     document.addEventListener('click', (e) => {
         if (headerSearch && headerSearch.classList.contains('is-open')) {
-            if (!e.target.closest('#header-search') && !e.target.closest('#header-search-toggle') && !e.target.closest('#hero-search-btn')) {
+            if (!e.target.closest('#header-search') && !e.target.closest('#header-search-toggle') && !e.target.closest('#mobile-search-toggle') && !e.target.closest('#hero-search-btn')) {
                 headerSearch.classList.remove('is-open');
                 if (searchDropdownEl) searchDropdownEl.classList.remove('is-visible');
                 onScroll();
@@ -1455,7 +1469,61 @@
         });
     });
 
+    function updateSideLoginState(auth) {
+        const sideLoginBtn = document.getElementById('side-login');
+        const loginPanel = document.querySelector('.side-panel__content[data-content="login"]');
+        const isLoggedIn = Boolean(auth && auth.authenticated && auth.user);
+
+        if (sideLoginBtn) {
+            sideLoginBtn.classList.toggle('is-logged-in', isLoggedIn);
+            const iconEl = sideLoginBtn.querySelector('.side-nav__icon');
+            const labelEl = sideLoginBtn.querySelector('.side-nav__label');
+            if (iconEl) iconEl.textContent = isLoggedIn ? 'account_circle' : 'login';
+            if (labelEl) labelEl.textContent = isLoggedIn ? 'Akun' : 'Login';
+        }
+
+        if (loginPanel) {
+            if (!loginPanel.dataset.guestHtml) {
+                loginPanel.dataset.guestHtml = loginPanel.innerHTML;
+            }
+            if (isLoggedIn) {
+                const displayName = auth.user.username || auth.user.name || 'User';
+                const esc = (s) => String(s ?? '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+                loginPanel.innerHTML = `
+                    <h3 class="side-panel__title">Akun Saya</h3>
+                    <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-bottom:14px;">
+                        <span style="width:10px;height:10px;border-radius:50%;background:#34c759;flex-shrink:0;box-shadow:0 0 0 3px rgba(52,199,89,0.2);"></span>
+                        <span style="font-weight:700;font-size:14px;color:#0f172a;word-break:break-word;line-height:1.35;">${esc(displayName)}</span>
+                    </div>
+                    <ul class="panel-links">
+                        <li>
+                            <a href="/sso/switch-to-sim" class="panel-link">
+                                <span class="material-symbols-outlined panel-link__icon">swap_horiz</span>
+                                <span><strong>Buka SIM-INKINDO</strong><small>Pindah ke dashboard portal manajemen</small></span>
+                                <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/sso/logout" class="panel-link">
+                                <span class="material-symbols-outlined panel-link__icon" style="color:#dc2626;">logout</span>
+                                <span><strong style="color:#dc2626;">Logout</strong><small>Keluar dari sesi akun saat ini</small></span>
+                                <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
+                            </a>
+                        </li>
+                    </ul>
+                `;
+            } else if (loginPanel.dataset.guestHtml) {
+                loginPanel.innerHTML = loginPanel.dataset.guestHtml;
+            }
+        }
+    }
+
     function renderAuthFloatingPopup(auth) {
+        updateSideLoginState(auth);
         const existing = document.getElementById('inkindo-auth-float');
         if (!auth || !auth.authenticated || !auth.user) {
             if (existing) existing.remove();

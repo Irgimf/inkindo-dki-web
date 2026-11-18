@@ -401,6 +401,32 @@ body.menu-open .main-header .main-header__logo img {
     z-index: 60;
 }
 
+.mobile-search-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    color: #ffffff;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7));
+    position: relative;
+    z-index: 60;
+    transition: color .25s var(--ease);
+}
+
+.mobile-search-toggle .material-symbols-outlined {
+    font-size: 25px;
+}
+
+.main-header.is-scrolled .mobile-search-toggle {
+    color: #0B62A2;
+    filter: none;
+}
+
+body.menu-open .mobile-search-toggle {
+    color: var(--white);
+    filter: none;
+}
+
 .main-header.is-scrolled .mobile-toggle {
     color: #0B62A2;
     filter: none;
@@ -2524,6 +2550,27 @@ a.panel-link:hover,
         display: flex;
     }
 
+    .mobile-search-toggle {
+        display: flex;
+        margin-left: auto;
+    }
+
+    .main-header__inner {
+        gap: 8px;
+    }
+
+    .main-nav__icon-item {
+        display: none;
+    }
+
+    .header-search.is-open {
+        padding: 4px 16px 14px;
+    }
+
+    .header-search__input {
+        font-size: 15px;
+    }
+
     .main-header__logo {
         position: relative;
         z-index: 60;
@@ -2604,7 +2651,7 @@ a.panel-link:hover,
         right: 0 !important;
     }
 
-    /* Side nav menjadi bottom bar */
+    /* Side nav menjadi bottom bar (5 menu utama tanpa scroll) */
     .side-nav {
         top: auto;
         bottom: 0;
@@ -2613,29 +2660,99 @@ a.panel-link:hover,
         width: 100% !important;
         height: 66px;
         background: #FFFFFF;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
         border-top: 1px solid var(--slate-200);
         border-right: none;
+        border-left: none;
         box-shadow: 0 -2px 16px rgba(15, 23, 42, .08);
     }
 
     .side-nav__list {
         flex-direction: row;
         height: 100%;
-        overflow-x: auto;
-        scrollbar-width: none;
-    }
-
-    .side-nav__list::-webkit-scrollbar {
-        display: none;
+        overflow: visible;
+        justify-content: space-between;
     }
 
     .side-nav__link {
-        flex: 1 0 auto;
-        min-width: 74px;
+        flex: 1 1 0;
+        min-width: 0;
         flex-direction: column;
         justify-content: center;
-        padding: 8px 4px;
-        gap: 4px;
+        padding: 6px 2px;
+        gap: 3px;
+    }
+
+    #inkindo-auth-float {
+        display: none !important;
+    }
+
+    #side-login .side-nav__icon {
+        position: relative;
+    }
+
+    #side-login.is-logged-in .side-nav__icon::after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        right: -4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #34c759;
+        border: 1.5px solid #ffffff;
+    }
+
+    #side-kontak,
+    .side-nav__link[data-panel="kontak"] {
+        display: none;
+    }
+
+    #side-chat,
+    .side-nav__link[data-panel="chat"] {
+        position: fixed;
+        right: 16px;
+        bottom: 80px;
+        z-index: 60;
+        flex: none;
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        padding: 0;
+        border-radius: 50%;
+        background: #ffffff;
+        color: var(--royal);
+        border: 1.5px solid rgba(11, 98, 162, 0.2);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+
+    #side-chat::before,
+    .side-nav__link[data-panel="chat"]::before {
+        display: none;
+    }
+
+    #side-chat .side-nav__icon,
+    .side-nav__link[data-panel="chat"] .side-nav__icon {
+        font-size: 24px;
+        color: var(--royal);
+        margin: 0;
+    }
+
+    #side-chat .side-nav__label,
+    .side-nav__link[data-panel="chat"] .side-nav__label {
+        display: none;
+    }
+
+    #side-chat.is-active,
+    .side-nav__link[data-panel="chat"].is-active {
+        background: #eff6ff;
+        border-color: var(--royal);
+        transform: scale(1.05);
     }
 
     .side-nav__link::after {
@@ -2656,15 +2773,16 @@ a.panel-link:hover,
     }
 
     .side-nav__icon {
-        font-size: 22px;
+        font-size: 21px;
     }
 
     .side-nav__label {
         flex: 0 0 auto;
         text-align: center;
-        font-size: 10px;
-        white-space: nowrap;
-        max-width: none;
+        font-size: 9.5px;
+        line-height: 1.15;
+        white-space: normal;
+        max-width: 100%;
         opacity: 1;
         margin-left: 0;
         margin-right: 0;
@@ -2816,13 +2934,23 @@ a.panel-link:hover,
     }
 
     .news {
-        padding: 56px 0 72px;
+        padding: 40px 0 36px;
+    }
+
+    #berita {
+        padding-bottom: 32px;
+    }
+
+    .news--publikasi {
+        padding-top: 8px;
+        padding-bottom: 56px;
     }
 
     .news__head {
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        gap: 12px;
+        margin-bottom: 20px;
     }
 
     .news__tabs {
@@ -2834,18 +2962,69 @@ a.panel-link:hover,
         font-size: 20px;
     }
 
-    .bento__body,
-    .bento__card {
-        padding: 20px;
+    .bento {
+        gap: 16px;
+    }
+
+    .bento__side {
+        gap: 16px;
+    }
+
+    .bento__media {
+        aspect-ratio: 16 / 9;
+    }
+
+    .bento__body {
+        padding: 16px;
+    }
+
+    .bento__meta {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .bento__heading {
+        font-size: 17px;
+        line-height: 1.38;
     }
 
     .bento__card--horizontal {
         flex-direction: column;
+        padding: 0;
     }
 
     .bento__media-side {
         width: 100%;
-        aspect-ratio: 16 / 10;
+        aspect-ratio: 16 / 9;
+    }
+
+    .bento__body-side {
+        padding: 16px;
+    }
+
+    .bento__heading-side {
+        font-size: 15.5px;
+        line-height: 1.38;
+    }
+
+    .pub-grid-4x2 .pub-home-card:nth-child(n+4) {
+        display: none;
+    }
+
+    .pub-home-card__media {
+        aspect-ratio: 16 / 9;
+    }
+
+    .pub-home-card__body {
+        padding: 14px 16px 16px;
+    }
+
+    .pub-home-card__title {
+        font-size: 15px;
+    }
+
+    .site-footer {
+        padding: 44px 0 84px;
     }
 
     .site-footer__bottom {
