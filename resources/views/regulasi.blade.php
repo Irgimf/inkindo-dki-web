@@ -222,6 +222,14 @@
             border-color: #0B62A2;
         }
 
+        .regulasi-total-count {
+            margin-left: auto;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
         .view-toggle {
             display: flex;
             gap: 16px;
@@ -295,26 +303,22 @@
         }
 
         .reg-card__title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: #0f172a;
             line-height: 1.45;
-            margin: 0 0 12px 0;
+            margin: 0 0 8px 0;
             letter-spacing: -0.01em;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            word-break: break-word;
         }
 
-        /* Description is hidden in grid mode for a clean, minimalist look */
         .reg-card__desc {
-            display: none;
+            display: block;
             font-size: 13.5px;
             color: #64748b;
             line-height: 1.6;
-            margin: 0 0 16px 0;
-            flex-grow: 1;
+            margin: 0;
+            word-break: break-word;
         }
 
         .reg-card__actions {
@@ -377,21 +381,18 @@
         .view-container.is-list .reg-card__body {
             margin-bottom: 0;
             flex: 1;
+            min-width: 0;
         }
 
         .view-container.is-list .reg-card__title {
             font-size: 16px;
             margin-bottom: 6px;
-            -webkit-line-clamp: 1;
         }
 
         .view-container.is-list .reg-card__desc {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            display: block;
             margin: 0;
-            line-height: 1.55;
+            line-height: 1.6;
         }
 
         .view-container.is-list .reg-card__actions {
@@ -475,6 +476,22 @@
             .view-container.is-grid .btn-download-pdf {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .regulasi-subheader {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .sub-category-menu {
+                margin-left: 0;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .regulasi-total-count {
+                margin-left: 0;
             }
 
             .regulasi-top-row {
@@ -651,7 +668,7 @@
             <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah melalui kanal resmi
                 berikut.</p>
             <ul class="panel-links">
-                <li><a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer"
+                <li><a href="https://spse.inaproc.id/lkpp" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">shopping_cart_checkout</span>
                         <span><strong>LKPP</strong><small>Lembaga Kebijakan Pengadaan Barang/Jasa
@@ -837,14 +854,7 @@
                     <button type="button" class="sub-tab-btn" data-filter="non-kontruksi">Non Konstruksi</button>
                     <button type="button" class="sub-tab-btn" data-filter="umum">Umum</button>
                 </div>
-                <div class="view-toggle">
-                    <button type="button" class="view-btn is-active" data-view="grid" aria-label="Grid View">
-                        Grid <span class="material-symbols-outlined">grid_view</span>
-                    </button>
-                    <button type="button" class="view-btn" data-view="list" aria-label="List View">
-                        List <span class="material-symbols-outlined">format_list_bulleted</span>
-                    </button>
-                </div>
+                <span class="regulasi-total-count" id="regulasi-total-count">Total: 0 regulasi</span>
             </div>
 
             @php
@@ -855,7 +865,7 @@
 
             <!-- Regulasi INKINDO -->
             <div class="regulasi-content is-active" id="reg-inkindo">
-                <div class="view-container is-grid">
+                <div class="view-container is-list">
                     @foreach ($regInkindo as $item)
                         <div class="reg-card">
                             <div class="reg-card__body">
@@ -884,7 +894,7 @@
 
             <!-- Regulasi Jasa Konsultasi -->
             <div class="regulasi-content" id="reg-jasa">
-                <div class="view-container is-grid" id="container-jasa">
+                <div class="view-container is-list" id="container-jasa">
                     @foreach ($regJasa as $item)
                         <div class="reg-card" data-category="{{ $item->sub_kategori ?: 'umum' }}">
                             <div class="reg-card__body">
@@ -913,7 +923,7 @@
 
             <!-- Regulasi Terkait -->
             <div class="regulasi-content" id="reg-terkait">
-                <div class="view-container is-grid">
+                <div class="view-container is-list">
                     @foreach ($regTerkait as $item)
                         <div class="reg-card">
                             <div class="reg-card__body">
@@ -945,7 +955,7 @@
                 Belum ada dokumen regulasi pada kategori ini.
             </div>
 
-            <!-- Pagination (Dynamic max 6 items/page) -->
+            <!-- Pagination (Dynamic max 10 items/page) -->
             <div class="pagination" id="regulasi-pagination"></div>
 
         </div>
@@ -953,7 +963,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const PER_PAGE = 6;
+            const PER_PAGE = 10;
             let currentPage = 1;
             let currentSubFilter = 'all';
 
@@ -961,12 +971,11 @@
             const tabContents = document.querySelectorAll('.regulasi-content');
             const subMenuInline = document.getElementById('sub-menu-jasa-inline');
             const activeCategoryTitle = document.getElementById('active-category-title');
-            const viewBtns = document.querySelectorAll('.view-btn');
-            const viewContainers = document.querySelectorAll('.view-container');
             const subTabBtns = document.querySelectorAll('.sub-tab-btn');
             const searchInput = document.querySelector('.search-box input');
             const paginationEl = document.getElementById('regulasi-pagination');
             const emptyStateEl = document.getElementById('reg-empty-state');
+            const totalCountEl = document.getElementById('regulasi-total-count');
 
             function renderPagination(totalPages) {
                 if (!paginationEl) return;
@@ -1015,9 +1024,9 @@
                         }
                         currentPage = targetPage;
                         renderRegulasi();
-                        const navWrapper = document.querySelector('.regulasi-nav-wrapper');
-                        if (navWrapper) {
-                            navWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const pageContent = document.querySelector('.regulasi-page-content');
+                        if (pageContent) {
+                            pageContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                     });
                 });
@@ -1058,6 +1067,10 @@
                     card.style.display = visibleSet.has(card) ? '' : 'none';
                 });
 
+                if (totalCountEl) {
+                    totalCountEl.textContent = `Total: ${matchedCards.length} regulasi`;
+                }
+
                 if (emptyStateEl) {
                     emptyStateEl.style.display = matchedCards.length === 0 ? 'block' : 'none';
                 }
@@ -1085,24 +1098,6 @@
 
                     currentPage = 1;
                     renderRegulasi();
-                });
-            });
-
-            viewBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    viewBtns.forEach(b => b.classList.remove('is-active'));
-                    btn.classList.add('is-active');
-
-                    const viewType = btn.getAttribute('data-view');
-                    viewContainers.forEach(container => {
-                        if (viewType === 'list') {
-                            container.classList.remove('is-grid');
-                            container.classList.add('is-list');
-                        } else {
-                            container.classList.remove('is-list');
-                            container.classList.add('is-grid');
-                        }
-                    });
                 });
             });
 

@@ -889,7 +889,7 @@
             <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah melalui kanal resmi
                 berikut.</p>
             <ul class="panel-links">
-                <li><a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer"
+                <li><a href="https://spse.inaproc.id/lkpp" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">shopping_cart_checkout</span>
                         <span><strong>LKPP</strong><small>Lembaga Kebijakan Pengadaan Barang/Jasa

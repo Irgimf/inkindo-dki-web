@@ -1053,7 +1053,7 @@
             <p class="side-panel__desc">Pantau paket pengadaan jasa konsultansi pemerintah dan BUMN melalui kanal resmi
                 berikut.</p>
             <ul class="panel-links">
-                <li><a href="https://lpse.lkpp.go.id/eproc4/lelang" target="_blank" rel="noopener noreferrer"
+                <li><a href="https://spse.inaproc.id/lkpp" target="_blank" rel="noopener noreferrer"
                         class="panel-link">
                         <span class="material-symbols-outlined panel-link__icon">public</span>
                         <span><strong>LKPP (SPSE)</strong><small>Portal Pengadaan Nasional LKPP</small></span>
@@ -1086,14 +1086,11 @@
                                 tahunan</small></span>
                         <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
-                <li><a href="anggota-terdaftar.html" class="panel-link is-current"
-                        style="background: rgba(11, 98, 162, 0.08); border-left: 3px solid var(--royal, #0B62A2);">
-                        <span class="material-symbols-outlined panel-link__icon"
-                            style="color: var(--royal, #0B62A2);">fact_check</span>
-                        <span><strong style="color: var(--royal, #0B62A2);">Anggota Terdaftar</strong><small>Direktori
-                                badan usaha terverifikasi</small></span>
-                        <span class="material-symbols-outlined panel-link__arrow"
-                            style="color: var(--royal, #0B62A2);">chevron_right</span>
+                <li><a href="anggota-terdaftar.html" class="panel-link">
+                        <span class="material-symbols-outlined panel-link__icon">fact_check</span>
+                        <span><strong>Anggota Terdaftar</strong><small>Direktori badan usaha
+                                terverifikasi</small></span>
+                        <span class="material-symbols-outlined panel-link__arrow">chevron_right</span>
                     </a></li>
             </ul>
         </div>
