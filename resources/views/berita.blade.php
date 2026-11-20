@@ -1761,12 +1761,18 @@
                 '<div class="lb__caption" id="lb-caption"></div><div class="lb__thumbs" id="lb-thumbs"></div>';
             document.body.appendChild(lb);
 
-            let lbPhotos = [], lbIdx = 0, lbAlbumTitle = '';
+            let lbPhotos = [], lbIdx = 0, lbAlbumTitle = '', lbFallbackCover = 'assets/gambar.webp';
             function showLbPhoto(i) {
                 if (!lbPhotos.length) return;
                 lbIdx = (i + lbPhotos.length) % lbPhotos.length;
                 const img = document.getElementById('lb-img');
                 img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+                img.onerror = function () {
+                    if (this.dataset.fallbackApplied === '1') return;
+                    this.dataset.fallbackApplied = '1';
+                    this.src = lbFallbackCover || 'assets/gambar.webp';
+                };
+                img.dataset.fallbackApplied = '0';
                 img.src = lbPhotos[lbIdx];
                 img.alt = lbAlbumTitle + ' - foto ' + (lbIdx + 1);
                 document.getElementById('lb-count').textContent = (lbIdx + 1) + ' / ' + lbPhotos.length;
@@ -1780,9 +1786,10 @@
             function openGalleryLightbox(item) {
                 if (!item) return;
                 lbAlbumTitle = item.judul || 'Album Dokumentasi';
+                lbFallbackCover = item.gambar || 'assets/gambar.webp';
                 lbPhotos = Array.isArray(item.galeri_photos) && item.galeri_photos.length
                     ? item.galeri_photos
-                    : [item.gambar || 'assets/gambar.webp'];
+                    : [lbFallbackCover];
                 document.getElementById('lb-title').textContent = lbAlbumTitle;
                 document.getElementById('lb-meta').textContent = [item.kategori_label, item.tanggal_label].filter(Boolean).join(' • ');
                 document.getElementById('lb-thumbs').innerHTML = lbPhotos.map((p, n) =>

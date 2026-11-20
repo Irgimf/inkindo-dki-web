@@ -25,15 +25,41 @@ class CmsBeritaController extends Controller
             $targetUrl = 'berita-detail.html?type=' . rawurlencode($tipe) . '&id=' . rawurlencode($slug);
         }
 
+        $resolveExistingAsset = static function (string $path): ?string {
+            $clean = ltrim(str_replace('\\', '/', trim($path)), '/');
+            if ($clean === '') {
+                return null;
+            }
+            if (preg_match('#^https?://#i', $clean)) {
+                return $clean;
+            }
+            $candidates = [$clean];
+            if (preg_match('/\.(png|jpe?g)$/i', $clean)) {
+                $candidates[] = preg_replace('/\.(png|jpe?g)$/i', '.webp', $clean);
+            }
+            foreach ($candidates as $cand) {
+                if (is_file(public_path($cand)) || is_file(base_path('../sim-inkindo-dki/public/' . $cand))) {
+                    return $cand;
+                }
+            }
+            return null;
+        };
+
         $galeriPhotos = [];
         if (!empty($row->galeri_foto_json)) {
             $decoded = json_decode($row->galeri_foto_json, true);
             if (is_array($decoded)) {
-                $galeriPhotos = array_values(array_filter($decoded));
+                foreach ($decoded as $p) {
+                    $resolved = $resolveExistingAsset((string) $p);
+                    if ($resolved !== null) {
+                        $galeriPhotos[] = $resolved;
+                    }
+                }
             }
         }
-        if (empty($galeriPhotos) && !empty($row->gambar)) {
-            $galeriPhotos = [$row->gambar];
+        $resolvedCover = $resolveExistingAsset((string) ($row->gambar ?? '')) ?? 'assets/gambar.webp';
+        if (empty($galeriPhotos)) {
+            $galeriPhotos = [$resolvedCover];
         }
 
         return [
